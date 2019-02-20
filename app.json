@@ -1,0 +1,47 @@
+{
+  "pages": [
+    "pages/create/createMusicList/index",
+    "pages/main/index",
+    "pages/authorition/index",
+    "pages/user/music/index",
+    "pages/user/mine/index",
+    "templates/musicList/index",
+    "pages/create/list/index",
+    "templates/createMusicList/index",
+    "pages/create/index/index"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "押韵神器",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#777",
+    "selectedColor": "#39393e",
+    "borderStyle": "black",
+    "list": [
+      {
+        "selectedIconPath": "assets/imgs/rhyme-active.png",
+        "iconPath": "assets/imgs/rhyme.png",
+        "pagePath": "pages/main/index",
+        "text": "押韵"
+      },
+      {
+        "selectedIconPath": "assets/imgs/create-active.png",
+        "iconPath": "assets/imgs/create.png",
+        "pagePath": "pages/create/list/index",
+        "text": "创作"
+      },
+      {
+        "selectedIconPath": "assets/imgs/mine-active.png",
+        "iconPath": "assets/imgs/mine.png",
+        "pagePath": "pages/user/mine/index",
+        "text": "我的"
+      }
+    ]
+  },
+  "networkTimeout": {
+    "request": 10000
+  }
+}

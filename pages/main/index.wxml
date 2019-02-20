@@ -1,0 +1,14 @@
+<view class="main-page">
+  <view class="search-container">
+    <input placeholder="搜索词汇" />
+    <image src="/assets/imgs/search.png" />
+  </view>
+  <view class="rhyme-groups">
+    <button class="active">单押</button>
+    <button>双押</button>
+    <button>三押</button>
+  </view>
+  <view class="rhyme-list-container">
+    <button wx:for="{{rhymeList}}" wx:for-index="index" wx:for-item="item" wx:key="index">{{item.text}}</button>
+  </view>
+</view>

@@ -1,0 +1,18 @@
+<view class="mine-container">
+  <view class="user-container">
+    <image src="../../../assets/imgs/checked.png"/>
+    <view>陈馨彤</view>
+  </view>
+  <view class="menu-container">
+    <view class="item" wx:for="{{menus}}" wx:for-index="index" wx:for-item="item" wx:key="{{index}}" data-index="{{index}}" catchtap="clickMenu">
+      {{item.text}}
+      <image src="../../../assets/imgs/arrow-left.png"/>
+    </view>
+  </view>
+  <view class="menu-container extral-container">
+    <view class="item" wx:for="{{extrals}}" wx:for-index="index" wx:for-item="item" wx:key="{{index}}" catchtap="clickExtralMenu">
+      {{item.text}}
+      <image src="../../../assets/imgs/arrow-left.png"/>
+    </view>
+  </view>
+</view>

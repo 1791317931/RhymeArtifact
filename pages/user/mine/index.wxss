@@ -1,0 +1,57 @@
+.user-container {
+  padding-left: 190rpx;
+  height: 210rpx;
+  line-height: 210rpx;
+  padding: 0 30rpx 0 190rpx;
+  position: relative;
+  font-size:36rpx;
+  font-family:PingFangSC-Semibold;
+  font-weight:600;
+  color:rgba(57,57,62,1);
+  letter-spacing:1rpx;
+  background: #fff;
+}
+
+.user-container image {
+  width: 120rpx;
+  height: 120rpx;
+  position: absolute;
+  top: 50%;
+  left: 30rpx;
+  transform: translateY(-50%);
+  border-radius: 50%;
+}
+
+.menu-container {
+  margin-top: 40rpx;
+  padding: 0 0 0 30rpx;
+  background: #fff;
+}
+
+.menu-container .item {
+  height: 100rpx;
+  line-height: 100rpx;
+  position: relative;
+  font-size:30rpx;
+  font-family:PingFangSC-Regular;
+  color:rgba(57,57,62,1);
+  letter-spacing:1rpx;
+  border-bottom:1rpx solid rgba(220,220,220,1);
+}
+
+.menu-container .item:last-child {
+  border-bottom: 0;
+}
+
+.menu-container .item image {
+  position: absolute;
+  width: 31rpx;
+  height: 31rpx;
+  top: 50%;
+  right: 30rpx;
+  transform: translateY(-50%) rotateZ(180deg);
+}
+
+.extral-container {
+  margin-top: 30rpx;
+}

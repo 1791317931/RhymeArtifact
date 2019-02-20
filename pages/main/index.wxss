@@ -1,0 +1,80 @@
+.main-page {
+  padding-top: 40rpx;
+}
+
+.search-container {
+  position: relative;
+  padding: 0 30rpx;
+}
+
+.search-container input {
+  height: 88rpx;
+  line-height: 88rpx;
+  padding: 0 0 0 84rpx;
+  font-size:28rpx;
+  font-family:PingFangSC-Medium;
+  font-weight:500;
+  color:rgba(29,29,29,1);
+  background: #fff;
+  border-radius: 16rpx;
+  border: 2rpx solid rgba(0,0,0,1);
+}
+
+.search-container image {
+  width: 50rpx;
+  height: 50rpx;
+  position: absolute;
+  left: 58rpx;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+.rhyme-groups {
+  margin-top: 30rpx;
+  padding: 0 30rpx;
+}
+
+.rhyme-groups button {
+  display: inline-block;
+  width: 210rpx;
+  height: 80rpx;
+  line-heihgt: 80rpx;
+  background:rgba(255,255,255,1);
+  border-radius:16rpx;
+  border: 2rpx solid rgba(0,0,0,1);
+  font-size:30rpx;
+  font-family:PingFangSC-Medium;
+  font-weight:500;
+  color:rgba(29,29,29,1);
+}
+
+.rhyme-groups button:not(:first-child) {
+  margin-left: 30rpx;
+}
+
+.rhyme-groups button.active {
+  background: #000;
+  border-color: #000;
+  color: #fff;
+}
+
+.rhyme-list-container {
+  margin-top: 70rpx;
+  padding: 0 30rpx 0 10rpx;
+}
+
+.rhyme-list-container button {
+  display: inline-block;
+  margin: 20rpx 0 0 20rpx;
+  padding: 0 22rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+  font-size:30rpx;
+  font-family:PingFangSC-Medium;
+  font-weight:500;
+  color:rgba(29,29,29,1);
+  letter-spacing:1rpx;
+  background: #fff;
+  border-radius:16rpx;
+}

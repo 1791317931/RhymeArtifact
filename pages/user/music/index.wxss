@@ -1,0 +1,5 @@
+@import "/templates/musicList/index.wxss";
+
+.music-container {
+  padding: 30rpx 20rpx;
+}
