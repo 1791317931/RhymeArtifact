@@ -1,0 +1,76 @@
+<!-- 伴奏默认需要一个audio -->
+<audio class="hide" src="{{accompanyPath}}" id="accompanyAudio" controls></audio>
+<!-- 试听时使用的audio -->
+<audio class="hide" src="{{recordForm.path}}" id="tryAudio" controls></audio>
+
+<view class="create-music-container">
+  <view class="scale-container-wrapper">
+    <view class="scale-container">
+      <view wx:for="{{scales}}" wx:for-index="index" wx:for-item="item" wx:key="{{index}}">{{item}}</view>
+    </view>
+    <view class="pointer-container">
+      <image src="/assets/imgs/pointer.png"/>
+    </view>
+  </view>
+  <view class="combine-container">
+    <view class="top-container">
+      <view class="switch-container">
+        <button>M</button>
+        <button>S</button>
+        <image class="active" src="/assets/imgs/M.png"/>
+        <image src="/assets/imgs/S.png"/>
+      </view>
+      <view class="track-container">
+        <view class="head-container">音频1 Beat</view>
+        <view class="high-container"></view>
+        <view class="low-container"></view>
+      </view>
+    </view>
+    <view class="bottom-container">
+      <view class="node">Beat</view>
+      <view class="time-start">00:00</view>
+      <view class="time-end">04:00</view>
+    </view>
+  </view>
+  <view class="combine-container">
+    <view class="top-container">
+      <view class="switch-container">
+        <button>M</button>
+        <button>S</button>
+        <image class="active" src="/assets/imgs/M.png"/>
+        <image src="/assets/imgs/S.png"/>
+      </view>
+      <view class="track-container">
+        <view class="head-container">Vocal-1</view>
+        <view class="high-container"></view>
+        <view class="low-container"></view>
+      </view>
+    </view>
+    <view class="bottom-container">
+      <view class="node">Vocal-1</view>
+      <view class="time-start">00:00</view>
+      <view class="time-end">04:00</view>
+    </view>
+  </view>
+  <view class="center-btn-container">
+    <image src="/assets/imgs/add-1.png"/>
+    <image src="/assets/imgs/lyrics.png"/>
+  </view>
+  <view class="lyrics-container">{{lyrics}}</view>
+  <view class="bottom-btn-container">
+    <view class="replay-container {{tryPlaying == false ? '' : 'hide'}}" catchtap="tryPlayStart">
+      <image src="/assets/imgs/replay.png"/>
+      <view>试听</view>
+    </view>
+    <view class="replay-container {{tryPlaying == false ? 'hide' : ''}}" catchtap="tryPlayEnd">
+      <image src="/assets/imgs/replay.png"/>
+      <view>暂停</view>
+    </view>
+    <image wx:if="{{recordState != 'recording'}}" class="record-state" src="/assets/imgs/record.png" catchtap="beginRecord"/>
+    <image wx:if="{{recordState == 'recording'}}" class="record-state" src="/assets/imgs/end-record.png" catchtap="pauseRecord"/>
+    <view class="complete-container" catchtap="endRecord">
+      <image src="/assets/imgs/complete.png"/>
+      <view>完成</view>
+    </view>
+  </view>
+</view>

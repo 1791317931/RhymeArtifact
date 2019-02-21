@@ -1,1 +1,218 @@
-/* pages/create/index/index.wxss */
+.create-music-container {
+  background: rgb(46, 46, 46);
+  height: 100%;
+}
+
+.scale-container-wrapper {
+  padding: 0 0 0 165rpx;
+}
+
+.scale-container-wrapper .scale-container {
+  display: flex;
+}
+
+.scale-container-wrapper .scale-container > view {
+  flex: 1;
+  height: 36rpx;
+  position: relative;
+  font-size:18rpx;
+  font-family:PingFangSC-Regular;
+  color:rgba(255,255,255,1);
+  text-align: center;
+}
+
+.scale-container-wrapper .scale-container > view:before {
+  content: '';
+  width:1rpx;
+  height:6rpx;
+  background:rgba(151,151,151,1);
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+}
+
+.scale-container-wrapper .pointer-container {
+  position: relative;
+}
+
+.scale-container-wrapper .pointer-container image {
+  width: 21rpx;
+  height: 360rpx;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 100000;
+}
+
+.combine-container .top-container {
+  height: 141rpx;
+  position: relative;
+}
+
+.switch-container {
+  width: 156rpx;
+  position: relative;
+}
+
+.switch-container button:not(:first-child) {
+  margin-top: 1rpx;
+}
+
+.switch-container button {
+  height: 70rpx;
+  line-height:70rpx;
+  background:rgba(97,98,97,1);
+  font-size:36rpx;
+  font-family:PingFangSC-Medium;
+  font-weight:500;
+  color:rgba(255,255,255,1);
+  border-radius: 0;
+}
+
+.switch-container image {
+  display: none;
+  width: 100%;
+  height: 70rpx;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.switch-container image:last-child {
+  top: auto;
+  bottom: 0;
+}
+
+.switch-container image.active {
+  display: block;
+}
+
+.track-container {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  left: 165rpx;
+  transform: translateY(-50%);
+  border:1rpx solid rgba(201,227,255,1);
+  border-radius: 0 0 0 13rpx;
+  overflow: hidden;
+}
+
+.track-container .head-container {
+  height:30rpx;
+  line-height:30rpx;
+  padding: 0 0 0 13rpx;
+  background:rgba(201,227,255,1);
+  font-size:18rpx;
+  font-family:PingFangSC-Regular;
+  color:rgba(19,62,107,1);
+}
+
+.track-container > view:not(:first-child) {
+  height: 45rpx;
+  background:rgba(49,88,130,1);
+}
+
+.track-container .high-container {
+  border-bottom: 1rpx solid rgba(116,156,198,1);
+}
+
+.combine-container .bottom-container {
+  line-height: 40rpx;
+  font-size:18rpx;
+  font-family:PingFangSC-Regular;
+  color:rgba(255,255,255,1);
+  padding: 0 0 0 165rpx;
+  position: relative;
+  background:rgba(51,51,51,1);
+}
+
+.combine-container .bottom-container .node {
+  position: absolute;
+  width: 165rpx;
+  text-align: center;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
+.combine-container .bottom-container .time-start {
+  width: 50%;
+  display: inline-block;
+}
+
+.combine-container .bottom-container .time-end {
+  width: 50%;
+  display: inline-block;
+  padding-right: 14rpx;
+  text-align: right;
+}
+
+.center-btn-container {
+  margin-top: 60rpx;
+  position: relative;
+  text-align: center;
+}
+
+.center-btn-container image:first-child {
+  width: 184rpx;
+  height: 102rpx;
+}
+
+.center-btn-container image:last-child {
+  width: 102rpx;
+  height: 102rpx;
+  position: absolute;
+  top: 0;
+  right: 50rpx;
+}
+
+.lyrics-container {
+  width: 654rpx;
+  height: 335rpx;
+  line-height:60rpx;
+  margin: 38rpx 48rpx 43rpx;
+  overflow-y: auto;
+  font-size:32rpx;
+  font-family:PingFangSC-Regular;
+  color:rgba(151,151,151,1);
+}
+
+.bottom-btn-container {
+  width: 550rpx;
+  margin-left: 100rpx;
+  position: relative;
+  text-align: center;
+}
+
+.bottom-btn-container .record-state {
+  width: 160rpx;
+  height: 160rpx;
+}
+
+.bottom-btn-container > view {
+  position: absolute;
+  bottom: 0;
+}
+
+.bottom-btn-container > view image {
+  width: 90rpx;
+  height: 90rpx;
+}
+
+.bottom-btn-container > view > view {
+  line-height:30rpx;
+  font-size:22rpx;
+  font-family:PingFangSC-Regular;
+  color:rgba(164,164,164,1);
+}
+
+.bottom-btn-container .replay-container {
+  left: 0;
+}
+
+.bottom-btn-container .complete-container {
+  right: 0;
+}
