@@ -1,0 +1,9 @@
+<template name="createLyricsList">
+  <view class="create-lyrics-list-container">
+    <view class="lyrics-item" wx:for="{{lyricsPage.list}}" wx:for-index="index" wx:for-item="item" wx:key="{{index}}">
+      <view class="create-time">{{item.createTime}}</view>
+      <view class="title">{{item.title}}</view>
+      <image class="share" src="/assets/imgs/share.png"/>
+    </view>
+  </view>
+</template>

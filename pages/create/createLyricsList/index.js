@@ -1,25 +1,21 @@
-Page({
+import DateUtil from '../../../assets/js/DateUtil';
 
+Page({
   /**
    * 页面的初始数据
    */
   data: {
-    musicPage: {
-      showHead: true,
+    lyricsPage: {
       list: [
         {
           id: 1,
-          createBy: '陈梓童',
-          title: '梦的远方',
-          author: '今晚吃鱼丸',
-          composer: '金光旭'
+          createTime: 1550820563116,
+          title: '《他，我会更好》'
         },
         {
           id: 2,
-          createBy: '陈梓童',
-          title: '当你走的45天',
-          author: 'Yinu Boy',
-          composer: '金光旭'
+          createTime: 1550820563116,
+          title: '《心中一个你》'
         }
       ]
     }
@@ -29,7 +25,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    let list = this.data.lyricsPage.list;
+    list.forEach((item, index) => {
+      item.createTime = DateUtil.getFormatTime(new Date(item.createTime));
+    });
+    this.setData({
+      'lyricsPage.list': list
+    });
   },
 
   /**
@@ -80,14 +82,9 @@ Page({
   onShareAppMessage: function () {
 
   },
-  toCreateMusicList() {
+  toAddLyrics() {
     wx.navigateTo({
-      url: '/pages/create/createMusicList/index'
-    });
-  },
-  toCreateLyricsList() {
-    wx.navigateTo({
-      url: '/pages/create/createLyricsList/index'
+      url: '/pages/create/lyrics/index'
     });
   }
 })

@@ -1,3 +1,4 @@
+<!-- 创作歌曲 -->
 <!-- 伴奏默认需要一个audio -->
 <audio class="hide" src="{{accompanyPath}}" id="accompanyAudio" controls bindended="accompanyAudioEnded" binderror="accompanyAudioError"></audio>
 <!-- 试听时使用的audio -->
@@ -54,7 +55,7 @@
   </view>
   <view class="center-btn-container">
     <image src="/assets/imgs/add-1.png"/>
-    <image src="/assets/imgs/lyrics.png"/>
+    <image catchtap="toEditLyrics" src="/assets/imgs/lyrics.png"/>
   </view>
   <view class="lyrics-container">{{lyrics}}</view>
   <view class="bottom-btn-container">

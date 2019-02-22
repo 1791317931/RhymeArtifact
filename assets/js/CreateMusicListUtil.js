@@ -11,7 +11,7 @@ let CreateMusicListUtil = {
   toRecord(e) {
     let index = e.currentTarget.dataset.index;
     wx.navigateTo({
-      url: '/pages/create/index/index'
+      url: '/pages/create/record/index'
     });
   }
 };

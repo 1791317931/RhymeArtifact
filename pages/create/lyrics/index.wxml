@@ -1,0 +1,15 @@
+<view class="lyrics-container">
+  <view class="top-btn-container">
+    <button catchtap="saveLyrics">保存</button>
+    <button catchtap="openSearch">歌词搜索</button>
+    <button catchtap="closeSearch">关闭词汇</button>
+  </view>
+  <view class="edit-container">
+    <view class="song-title-keyword">
+      <view>歌曲名称：</view>
+      <input value="{{lyricsForm.title}}" maxlength="{{lyricsForm.title.length}}" bindchange="changeTitle"
+        placeholder="最多{{lyricsForm.title.length}}字"></input>
+    </view>
+  </view>
+  <view class="content-container">{{content}}</view>
+</view>

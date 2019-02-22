@@ -1,0 +1,6 @@
+<view class="lyrics-container">
+  <view class="content-container">{{content}}</view>
+  <view class="save-btn-container">
+    <button catchtap="saveLyrics">保存</button>
+  </view>
+</view>

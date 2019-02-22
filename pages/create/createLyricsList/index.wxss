@@ -1,0 +1,27 @@
+@import "/templates/createLyricsList/index.wxss";
+
+.top-btn-container {
+  height: 110rpx;
+  padding: 20rpx 0;
+  background: #fff;
+  text-align: center;
+}
+
+.top-btn-container button {
+  width:280rpx;
+  height:70rpx;
+  line-height:70rpx;
+  background:rgba(255,255,255,1);
+  border-radius:14rpx;
+  border:2rpx solid rgba(0,0,0,1);
+  font-size:30rpx;
+  font-family:PingFangSC-Medium;
+  font-weight:500;
+  color:rgba(29,29,29,1);
+  letter-spacing:1rpx;
+}
+
+.list-container {
+  margin-top: 40rpx;
+  padding: 0 20rpx;
+}

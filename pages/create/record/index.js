@@ -205,5 +205,10 @@ Page({
   tryAudioError(e) {
     console.log(e)
     this.changeTryPlayState(false);
+  },
+  toEditLyrics() {
+    wx.navigateTo({
+      url: '/pages/create/record/lyrics/index'
+    });
   }
 })
