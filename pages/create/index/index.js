@@ -136,9 +136,14 @@ Page({
     let RM = this.data.RM,
     AAC = this.data.AAC;
 
+    if (this.data.tryPlaying) {
+      TipUtil.message('您正在试听，请关闭后再操作');
+      return;
+    }
+
     RM.start(this.data.recordOption);
     RM.onStart(() => {
-      if (this.recordState == 'ready') {
+      if (this.data.recordState == 'ready') {
         // 从头播放
         AAC.seek(0);
       }
@@ -183,5 +188,22 @@ Page({
         recordForm
       });
     });
+  },
+  accompanyAudioEnded() {
+    this.changeTryPlayState(false);
+  },
+  accompanyAudioError(e) {
+    console.log(e)
+    this.changeTryPlayState(false);
+  },
+  bindplay() {
+    
+  },
+  tryAudioEnded() {
+    this.changeTryPlayState(false);
+  },
+  tryAudioError(e) {
+    console.log(e)
+    this.changeTryPlayState(false);
   }
 })

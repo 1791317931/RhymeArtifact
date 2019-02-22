@@ -1,7 +1,7 @@
 <!-- 伴奏默认需要一个audio -->
-<audio class="hide" src="{{accompanyPath}}" id="accompanyAudio" controls></audio>
+<audio class="hide" src="{{accompanyPath}}" id="accompanyAudio" controls bindended="accompanyAudioEnded" binderror="accompanyAudioError"></audio>
 <!-- 试听时使用的audio -->
-<audio class="hide" src="{{recordForm.path}}" id="tryAudio" controls></audio>
+<audio class="hide" src="{{recordForm.path}}" id="tryAudio" controls bindended="tryAudioEnded" binderror="tryAudioError" bindplay="bindplay"></audio>
 
 <view class="create-music-container">
   <view class="scale-container-wrapper">
@@ -17,7 +17,7 @@
       <view class="switch-container">
         <button>M</button>
         <button>S</button>
-        <image class="active" src="/assets/imgs/M.png"/>
+        <image class="active-1" src="/assets/imgs/M.png"/>
         <image src="/assets/imgs/S.png"/>
       </view>
       <view class="track-container">
@@ -37,7 +37,7 @@
       <view class="switch-container">
         <button>M</button>
         <button>S</button>
-        <image class="active" src="/assets/imgs/M.png"/>
+        <image class="active-1" src="/assets/imgs/M.png"/>
         <image src="/assets/imgs/S.png"/>
       </view>
       <view class="track-container">
@@ -62,7 +62,7 @@
       <image src="/assets/imgs/replay.png"/>
       <view>试听</view>
     </view>
-    <view class="replay-container {{tryPlaying == false ? 'hide' : ''}}" catchtap="tryPlayEnd">
+    <view class="replay-container {{tryPlaying == false ? 'hide' : ''}}" catchtap="tryPlayPause">
       <image src="/assets/imgs/replay.png"/>
       <view>暂停</view>
     </view>

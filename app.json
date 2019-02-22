@@ -1,8 +1,8 @@
 {
   "pages": [
+    "pages/main/index",
     "pages/create/index/index",
     "pages/create/createMusicList/index",
-    "pages/main/index",
     "pages/authorition/index",
     "pages/user/music/index",
     "pages/user/mine/index",

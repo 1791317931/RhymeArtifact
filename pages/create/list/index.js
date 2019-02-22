@@ -82,7 +82,7 @@ Page({
   },
   toCreateMusic() {
     wx.navigateTo({
-      url: '/pages/create/createMusic/index'
+      url: '/pages/create/createMusicList/index'
     });
   }
 })
