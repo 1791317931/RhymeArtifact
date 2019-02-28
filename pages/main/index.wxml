@@ -1,14 +1,14 @@
 <view class="main-page">
   <view class="search-container">
-    <input placeholder="搜索词汇" />
-    <image src="/assets/imgs/search.png" />
+    <input placeholder="搜索词汇" bindchange="changeKeyword"/>
+    <image catchtap="getRhymeList" src="/assets/imgs/search.png" />
   </view>
   <view class="rhyme-groups">
-    <button class="active">单押</button>
-    <button>双押</button>
-    <button>三押</button>
+    <button wx:for="{{mortgageButtons}}" class="{{mortgage == item.value ? 'active' : null}}" data-item="item" data-index="index"         wx:key="{{index}}" data-value="{{item.value}}" catchtap="toggleMortgage">{{item.text}}</button>
   </view>
-  <view class="rhyme-list-container">
+  <view hidden="{{!rhymePage.loading}}" class="empty loading"></view>
+  <view hidden="{{rhymePage.loading || rhymePage.list.length != 0}}" class="empty"></view>
+  <view hidden="{{rhymePage.loading || rhymePage.list.length == 0}}" class="rhyme-list-container">
     <button wx:for="{{rhymeList}}" wx:for-index="index" wx:for-item="item" wx:key="index">{{item.text}}</button>
   </view>
 </view>

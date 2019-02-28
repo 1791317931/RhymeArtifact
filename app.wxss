@@ -58,13 +58,17 @@ button:after {
 .empty {
   display: table;
   width: 100%;
-  height: 80rpx;
+  height: 120rpx;
   text-align: center;
 }
 .empty:empty:before {
+  content: '暂无数据';
   display: table-cell;
   vertical-align: middle;
   font-size: 28rpx;
   color: #525252;
+}
+.empty.loading:empty:before {
+  content: '数据加载中...';
 }
 .hide {display: none !important;}

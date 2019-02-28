@@ -6,6 +6,12 @@ let ConfigUtil = {
   },
   isProd() {
     return ConfigUtil.env == 'production';
+  },
+  statusCode: {
+    SUCCESS: 1000
+  },
+  isSuccess(code) {
+    return ConfigUtil.statusCode.SUCCESS == code;
   }
 };
 

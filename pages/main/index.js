@@ -1,59 +1,33 @@
-Page({
+import * as api from '../../assets/js/api';
+import ConfigUtil from '../../assets/js/ConfigUtil';
+import TipUtil from '../../assets/js/TipUtil';
 
+Page({
   /**
    * 页面的初始数据
    */
   data: {
-    rhymeList: [
+    rhymePage: {
+      loading: false,
+      list: []
+    },
+    mortgageButtons: [
       {
-        id: 1,
-        text: '我今天'
+        value: 'single',
+        text: '单押'
       },
       {
-        id: 2,
-        text: '的心情'
+        value: 'double',
+        text: '双押'
       },
       {
-        id: 3,
-        text: '很不错'
-      },
-      {
-        id: 4,
-        text: '我今天'
-      },
-      {
-        id: 5,
-        text: '的心情'
-      },
-      {
-        id: 6,
-        text: '很不错'
-      },
-      {
-        id: 7,
-        text: '我今天'
-      },
-      {
-        id: 8,
-        text: '的心情'
-      },
-      {
-        id: 9,
-        text: '很不错'
-      },
-      {
-        id: 10,
-        text: '我今天'
-      },
-      {
-        id: 11,
-        text: '的心情'
-      },
-      {
-        id: 12,
-        text: '很不错'
+        value: 'three',
+        text: '三押'
       }
-    ]
+    ],
+    keyword: '',
+    // 押韵规则
+    mortgage: 'single'
   },
 
   /**
@@ -65,7 +39,10 @@ Page({
       wx.redirectTo({
         url: '/pages/authorition/index'
       });
+      return;
     }
+
+    this.getRhymeList();
   },
 
   /**
@@ -79,7 +56,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    
   },
 
   /**
@@ -115,5 +92,44 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  changeKeyword(e) {
+    this.setData({
+      keyword: e.detail.value
+    });
+  },
+  toggleMortgage(e) {
+    let value = e.currentTarget.dataset.value;
+
+    if (value != this.data.mortgage) {
+      this.setData({
+        mortgage: value
+      });
+      this.getRhymeList();
+    }
+  },
+  toggleRhymeLoading(loading) {
+    this.setData({
+      'rhymePage.loading': loading
+    });
+  },
+  getRhymeList() {
+    let data = this.data;
+
+    this.toggleRhymeLoading(true);
+    api.getRhymeList({
+      kwd: data.keyword,
+      mortgage: data.mortgage
+    }, (res) => {
+      if (ConfigUtil.isSuccess(res.code)) {
+        this.setData({
+          'rhymePage.list': res.data
+        });
+      } else {
+        TipUtil.errorCode(res.code);
+      }
+    }, () => {
+      this.toggleRhymeLoading(false);
+    });
   }
 })
