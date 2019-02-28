@@ -8,7 +8,8 @@ let ConfigUtil = {
     return ConfigUtil.env == 'production';
   },
   statusCode: {
-    SUCCESS: 1000
+    SUCCESS: 1000,
+    NOT_AUTHORITION: 1003
   },
   isSuccess(code) {
     return ConfigUtil.statusCode.SUCCESS == code;

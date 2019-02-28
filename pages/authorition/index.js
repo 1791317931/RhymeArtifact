@@ -1,4 +1,7 @@
-// pages/authorition/index.js
+import * as api from '../../assets/js/api';
+import ConfigUtil from '../../assets/js/ConfigUtil';
+import TipUtil from '../../assets/js/TipUtil';
+
 Page({
 
   /**
@@ -64,61 +67,36 @@ Page({
 
   },
   bindGetUserInfo(e) {
-    /**
-     * 在这一步的开发中，一定要按照这样的顺序 
-     * 1. 小程序请求login，拿到code 然后传给服务端； 
-     * 2.服务端拿到code 到微信服务器拿到sessionKey ；
-     * 3.然后小程序调用getuserinfo接口拿到encryptedData，iv,然后给服务端；
-     * 4.服务端拿到客户端的encryptedData，vi还有之前的sessionKey去解密得到 unionId等用户信息；
-     * 不然就会出现你这样的问题，你这种情况偶然出现的原因就是 
-     * 你在服务端还未去获取sessionKey的时候你就去调用了getuserinfo，有时候你会比服务端快，有时候你会比服务端慢，所以就出现了偶然性
-     */
-
     // 1、先在微信服务器登录
-    // wx.login({
-    //   success: (res) => {
-    //     // 2、服务端拿到code 到微信服务器拿到sessionKey
-    //     let code = res.code;
-    //     api.getSessionToken({
-    //       code
-    //     }, (res) => {
-    //       if (res.code == 200) {
-    //         let sessionToken = res.data;
-    //         // 3、调用getuserinfo接口拿到encryptedData，iv,然后给服务端
-    //         wx.getUserInfo({
-    //           success: (res) => {
-    //             let encryptedData = res.encryptedData,
-    //               iv = res.iv,
-    //               userInfo = res.userInfo;
-    //             wx.setStorageSync('userInfo', userInfo);
-
-    //             userInfo.sessionToken = sessionToken;
-    //             userInfo.encryptedData = encryptedData;
-    //             userInfo.iv = iv;
-
-    //             // 4、服务端拿到客户端的encryptedData，vi还有之前的sessionToken去解密得到 unionId等用户信息；
-    //             api.login(userInfo, (res) => {
-    //               if (res.code == 200) {
-    //                 CommonUtil.user.loginSuccess(res);
-    //                 this.back();
-    //               } else {
-    //                 this.checkResult(res);
-    //               }
-    //             });
-    //           }
-    //         });
-    //       } else {
-    //         this.checkResult(res);
-    //       }
-    //     });
-    //   }
-    // });
-
-    wx.getUserInfo({
+    wx.login({
       success: (res) => {
-        wx.setStorageSync('userInfo', res.userInfo);
-        wx.reLaunch({
-          url: '/pages/main/index'
+        let code = res.code;
+        // 2、调用getuserinfo接口拿到encryptedData，iv,然后给服务端
+        wx.getUserInfo({
+          lang: 'zh_CN',
+          success: (res) => {
+            let encryptedData = res.encryptedData,
+            iv = res.iv,
+            userInfo = res.userInfo;
+            console.log(userInfo);
+            wx.setStorageSync('userInfo', userInfo);
+
+            let obj = {};
+            obj.wx_code = code;
+            obj.wx_encrypted_data = encryptedData;
+            obj.wx_iv = iv;
+
+            api.login(obj, (res) => {
+              if (ConfigUtil.isSuccess(res.code)) {
+                wx.setStorageSync('token', res.data.token);
+                wx.switchTab({
+                  url: '/pages/main/index'
+                });
+              } else {
+                TipUtil.errorCode(res.code);
+              }
+            });
+          }
         });
       }
     });

@@ -14,11 +14,10 @@ let TipUtil = {
     });
   },
   errorCode(code, duration = 3000) {
-    wx.showToast({
-      code,
-      icon: 'none',
-      duration
-    });
+    TipUtil.error(TipUtil.statusCode[code], duration);
+  },
+  statusCode: {
+    1003: '登录失败'
   }
 };
 

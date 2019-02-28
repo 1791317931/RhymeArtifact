@@ -5,6 +5,8 @@
     <button catchtap="toAddLyrics">开始创作</button>
   </view>
   <view class="list-container">
+    <view hidden="{{!lyricsPage.loading}}" class="empty loading"></view>
+    <view hidden="{{lyricsPage.loading || lyricsPage.list.length != 0}}" class="empty"></view>
     <template is="createLyricsList" data="{{lyricsPage}}"></template>
   </view>
 </view>

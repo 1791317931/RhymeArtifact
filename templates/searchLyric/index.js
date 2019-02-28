@@ -1,31 +1,18 @@
-import * as api from '../../assets/js/api';
-import ConfigUtil from '../../assets/js/ConfigUtil';
-import TipUtil from '../../assets/js/TipUtil';
-import CommonUtil from '../../assets/js/CommonUtil';
-import SearchLyricUtil from '../../assets/js/templates/SearchLyricUtil';
-
+// templates/searchLyric/index.js
 Page({
+
   /**
    * 页面的初始数据
    */
-  
   data: {
-    rhymePage: CommonUtil.copyObject(SearchLyricUtil.rhymePage)
+
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let userInfo = wx.getStorageSync('userInfo');
-    if (!userInfo) {
-      wx.redirectTo({
-        url: '/pages/authorition/index'
-      });
-      return;
-    }
 
-    this.getRhymeList();
   },
 
   /**
@@ -39,7 +26,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
+
   },
 
   /**
@@ -75,14 +62,5 @@ Page({
    */
   onShareAppMessage: function () {
 
-  },
-  changeKeyword(e) {
-    SearchLyricUtil.changeKeyword(e, this);
-  },
-  toggleMortgage(e) {
-    SearchLyricUtil.toggleMortgage(e, this);
-  },
-  getRhymeList() {
-    SearchLyricUtil.getRhymeList(this);
   }
 })

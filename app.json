@@ -1,18 +1,19 @@
 {
   "pages": [
     "pages/main/index",
+    "pages/create/createLyricsList/index",
+    "pages/authorition/index",
     "pages/create/record/index",
     "pages/create/record/lyrics/index",
     "pages/create/createMusicList/index",
-    "pages/authorition/index",
     "pages/user/music/index",
     "pages/user/mine/index",
     "templates/musicList/index",
     "pages/create/list/index",
     "templates/createMusicList/index",
     "pages/create/lyrics/index",
-    "pages/create/createLyricsList/index",
-    "templates/createLyricsList/index"
+    "templates/createLyricsList/index",
+    "templates/searchLyric/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

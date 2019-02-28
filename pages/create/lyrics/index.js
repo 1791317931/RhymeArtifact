@@ -1,3 +1,6 @@
+import CommonUtil from '../../../assets/js/CommonUtil';
+import SearchLyricUtil from '../../../assets/js/templates/SearchLyricUtil';
+
 Page({
 
   /**
@@ -15,7 +18,10 @@ Page({
       content: {
         length: 1000
       }
-    }
+    },
+    // create创建   search搜索
+    mode: 'create',
+    rhymePage: CommonUtil.copyObject(SearchLyricUtil.rhymePage)
   },
 
   /**
@@ -83,5 +89,14 @@ Page({
     this.setData({
       'lyricsForm.title': title
     });
+  },
+  changeKeyword(e) {
+    SearchLyricUtil.changeKeyword(e, this);
+  },
+  toggleMortgage(e) {
+    SearchLyricUtil.toggleMortgage(e, this);
+  },
+  getRhymeList() {
+    SearchLyricUtil.getRhymeList(this);
   }
 })

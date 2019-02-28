@@ -1,4 +1,5 @@
 import ConfigUtil from 'ConfigUtil';
+import CommonUtil from 'CommonUtil';
 import TipUtil from 'TipUtil';
 import PathUtil from 'PathUtil';
 
@@ -28,10 +29,10 @@ let UrlUtil = {
       method,
       header: {
         'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + wx.getStorageSync('token')
+        'auth-token': wx.getStorageSync('token')
       },
       success(res) {
-        if (res.data.code == 401) {
+        if (res.data.code == ConfigUtil.statusCode.NOT_AUTHORITION) {
           UrlUtil.toLogin();
         } else {
           fn && fn(res.data);
@@ -62,10 +63,10 @@ let UrlUtil = {
     wx.request(param);
   },
   toLogin() {
-    // if (!UrlUtil.isLogin) {
-    //   UrlUtil.isLogin = true;
-    //   CommonUtil.user.toLogin();
-    // }
+    if (!UrlUtil.isLogin) {
+      UrlUtil.isLogin = true;
+      CommonUtil.toLogin();
+    }
   }
 };
 

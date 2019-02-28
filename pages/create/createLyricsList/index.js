@@ -1,4 +1,7 @@
 import DateUtil from '../../../assets/js/DateUtil';
+import ConfigUtil from '../../../assets/js/ConfigUtil';
+import TipUtil from '../../../assets/js/TipUtil';
+import * as api from '../../../assets/js/api';
 
 Page({
   /**
@@ -6,18 +9,10 @@ Page({
    */
   data: {
     lyricsPage: {
-      list: [
-        {
-          id: 1,
-          createTime: 1550820563116,
-          title: '《他，我会更好》'
-        },
-        {
-          id: 2,
-          createTime: 1550820563116,
-          title: '《心中一个你》'
-        }
-      ]
+      loading: false,
+      page: 1,
+      pageSize: 10,
+      list: []
     }
   },
 
@@ -25,13 +20,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let list = this.data.lyricsPage.list;
-    list.forEach((item, index) => {
-      item.createTime = DateUtil.getFormatTime(new Date(item.createTime));
-    });
-    this.setData({
-      'lyricsPage.list': list
-    });
+    // let list = this.data.lyricsPage.list;
+    // list.forEach((item, index) => {
+    //   item.createTime = DateUtil.getFormatTime(new Date(item.createTime));
+    // });
+    // this.setData({
+    //   'lyricsPage.list': list
+    // });
   },
 
   /**
@@ -45,7 +40,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.init();
   },
 
   /**
@@ -73,7 +68,8 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    let page = this.data.lyricsPage;
+    this.getLyricPage();
   },
 
   /**
@@ -82,9 +78,45 @@ Page({
   onShareAppMessage: function () {
 
   },
+  init() {
+    this.getLyricPage();
+  },
   toAddLyrics() {
     wx.navigateTo({
       url: '/pages/create/lyrics/index'
+    });
+  },
+  toggleLyricPageLoading(loading) {
+    this.setData({
+      'lyricsPage.loading': loading
+    });
+  },
+  getLyricPage(pageNum = 1) {
+    let page = this.data.lyricsPage;
+    if (page.loading) {
+      return;
+    }
+
+    let param = {
+      page: pageNum,
+      pageSize: page.pageSize
+    };
+    this.toggleLyricPageLoading(true);
+    this.setData({
+      'lyricsPage.page': pageNum
+    });
+
+    api.getLyricPage(param, (res) => {
+      if (ConfigUtil.isSuccess(res.code)) {
+        this.setData({
+          'lyricsPage.list': res.data,
+          // 'lyricsPage.maxPage': res
+        });
+      } else {
+        TipUtil.errorCode(res.code);
+      }
+    }, () => {
+      this.toggleLyricPageLoading(false);
     });
   }
 })
