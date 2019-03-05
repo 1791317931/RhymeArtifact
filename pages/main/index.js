@@ -1,8 +1,6 @@
 import * as api from '../../assets/js/api';
-import ConfigUtil from '../../assets/js/ConfigUtil';
-import TipUtil from '../../assets/js/TipUtil';
 import CommonUtil from '../../assets/js/CommonUtil';
-import SearchLyricUtil from '../../assets/js/templates/SearchLyricUtil';
+import SearchLyricUtil from '../../assets/js/components/SearchLyricUtil';
 
 Page({
   /**
@@ -10,7 +8,8 @@ Page({
    */
   
   data: {
-    rhymePage: CommonUtil.copyObject(SearchLyricUtil.rhymePage)
+    rhymePage: CommonUtil.copyObject(SearchLyricUtil.rhymePage),
+    lyricId: null
   },
 
   /**
@@ -18,11 +17,18 @@ Page({
    */
   onLoad: function (options) {
     let userInfo = wx.getStorageSync('userInfo');
+
     if (!userInfo) {
       wx.redirectTo({
         url: '/pages/authorition/index'
       });
       return;
+    }
+
+    if (options.lyricId) {      
+      this.setData({
+        lyricId: options.lyricId
+      });
     }
 
     this.getRhymeList();
@@ -39,7 +45,15 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
+    if (this.data.lyricId) {
+      wx.navigateTo({
+        url: '/pages/create/lyrics/index?readonly=Y&id=' + this.data.lyricId
+      });
+
+      this.setData({
+        lyricId: null
+      });
+    }
   },
 
   /**

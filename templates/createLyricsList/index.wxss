@@ -1,15 +1,24 @@
 .create-lyrics-list-container .lyrics-item {
-  padding: 20rpx 30rpx 25rpx;
   background: #fff;
   border-radius:14rpx;
   position: relative;
+  overflow-x: auto;
 }
 
 .create-lyrics-list-container .lyrics-item:not(:first-child) {
   margin-top: 30rpx;
 }
 
-.create-lyrics-list-container .lyrics-item .create-time {
+.create-lyrics-list-container .lyrics-item .lyrics-item-inner {
+  width: 924rpx;
+}
+
+.create-lyrics-list-container .lyrics-item .lyrics-item-inner .content-container {
+  width: 714rpx;
+  padding: 20rpx 30rpx 25rpx;
+}
+
+.create-lyrics-list-container .lyrics-item .lyrics-item-inner .content-container .create-time {
   font-size:24rpx;
   font-family:PingFangSC-Regular;
   color:rgba(119,119,119,1);
@@ -17,8 +26,9 @@
   letter-spacing:1rpx;
 }
 
-.create-lyrics-list-container .lyrics-item .title {
+.create-lyrics-list-container .lyrics-item .lyrics-item-inner .content-container .title {
   margin-top: 25rpx;
+  padding: 0 60rpx 0 0;
   font-size:32rpx;
   font-family:PingFangSC-Medium;
   font-weight:500;
@@ -27,11 +37,32 @@
   letter-spacing:1rpx;
 }
 
-.create-lyrics-list-container .lyrics-item .share {
+.create-lyrics-list-container .lyrics-item .lyrics-item-inner .content-container .share {
   width: 50rpx;
   height: 50rpx;
   position: absolute;
   right: 30rpx;
   top: 50%;
   transform: translateY(-50%);
+}
+
+.create-lyrics-list-container .lyrics-item .lyrics-item-inner .content-container .share-button {
+  position: absolute;
+  width: 70rpx;
+  height: 70rpx;
+  right: 20rpx;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+}
+
+.create-lyrics-list-container .lyrics-item .lyrics-item-inner .delete-container {
+  width: 210rpx;
+  height: 100%;
+  line-height: 148rpx;
+  background:rgba(255,96,96,1);
+  font-size:32rpx;
+  font-family:PingFang-SC-Regular;
+  color:rgba(255,255,255,1);
+  text-align: center;
 }

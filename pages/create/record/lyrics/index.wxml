@@ -1,6 +1,8 @@
 <view class="lyrics-container">
-  <view class="content-container">{{content}}</view>
-  <view class="save-btn-container">
-    <button catchtap="saveLyrics">保存</button>
-  </view>
+  <form bindsubmit="saveLyrics">
+      <textarea value="{{content}}" class="content-container" placeholder="请输入歌词（最多{{lyricsRule.content.length}}字）" name="content" maxlength="{{lyricsRule.content.length}}" placeholder-class="textarea-placeholder" bindblur="changeContent"/>
+    <view class="save-btn-container">
+      <button formType="submit">保存</button>
+    </view>
+  </form>
 </view>

@@ -4,14 +4,50 @@ export function login(data, fn, completeFn) {
   UrlUtil.post('wx-login', data, fn, completeFn);
 }
 
+export function uploadFile(data, fn, completeFn) {
+  UrlUtil.post('upload-file', data, fn, completeFn);
+}
+
 // ---------------------词汇------------------------
 export function getRhymeList(data, fn, completeFn) {
   UrlUtil.post('get-rhyme-lists', data, fn, completeFn);
 }
 // ---------------------词汇------------------------
 
-// ---------------------歌词列表------------------------
+// ---------------------歌词------------------------
+export function getLyricById(data, fn, completeFn) {
+  UrlUtil.post('lyric-info', data, fn, completeFn);
+}
+
+export function createLyric(data, fn, completeFn) {
+  UrlUtil.post('lyric-create', data, fn, completeFn);
+}
+
+export function updateLyricById(data, fn, completeFn) {
+  UrlUtil.post('lyric-update', data, fn, completeFn);
+}
+
+export function deleteLyricById(data, fn, completeFn) {
+  UrlUtil.post('lyric-delete', data, fn, completeFn);
+}
+
 export function getLyricPage(data, fn, completeFn) {
   UrlUtil.post('lyric-lists', data, fn, completeFn);
 }
-// ---------------------歌词列表------------------------
+// ---------------------歌词------------------------
+
+// ---------------------伴奏------------------------
+export function getBeatPage(data, fn, completeFn) {
+  UrlUtil.post('beat-lists', data, fn, completeFn);
+}
+// ---------------------伴奏------------------------
+
+// ---------------------创作------------------------
+export function createMusic(data, fn, completeFn) {
+  UrlUtil.post('music-create', data, fn, completeFn);
+}
+
+export function getMusicPage(data, fn, completeFn) {
+  UrlUtil.get('music-lists', data, fn, completeFn);
+}
+// ---------------------创作------------------------

@@ -1,15 +1,19 @@
 import CommonUtil from '../../../assets/js/CommonUtil';
-import SearchLyricUtil from '../../../assets/js/templates/SearchLyricUtil';
+import TipUtil from '../../../assets/js/TipUtil';
+import ConfigUtil from '../../../assets/js/ConfigUtil';
+import * as api from '../../../assets/js/api';
+import SearchLyricUtil from '../../../assets/js/components/SearchLyricUtil';
+import SubmittingUtil from '../../../assets/js/components/SubmittingUtil';
 
 Page({
-
   /**
    * 页面的初始数据
    */
   data: {
     lyricsForm: {
-      title: '',
-      content: '当我加强了我的脚步来到的2019年 Twenty-three的年纪 掌控这未来的主导权 回顾22年的经历 陪伴 微笑的味道 所有 错过的 爱过的 痛过的 恨过的 全新记号 16岁时出来混从来不需要家里罩 曾经住过的那间地下室 变成时空的隧道 如果能带我穿梭过去 在掩饰所有谎言 新理论的起点 在这骄傲的年纪 开启这新一轮赛点 新一轮的计划 不需要谁来评选 看清楚选择脚下走的路 让自己飞的更远 过去的时光消逝无影踪 笃定梦想可以占据我领空'
+      lyric_id: null,
+      lyric_title: '',
+      lyric_content: ''
     },
     lyricsRule: {
       title: {
@@ -21,14 +25,28 @@ Page({
     },
     // create创建   search搜索
     mode: 'create',
-    rhymePage: CommonUtil.copyObject(SearchLyricUtil.rhymePage)
+    rhymePage: CommonUtil.copyObject(SearchLyricUtil.rhymePage),
+    submittingForm: SubmittingUtil.submittingForm,
+    showSubmit: true,
+    readonly: false
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    if (options.readonly == 'Y') {
+      this.setData({
+        readonly: true
+      });
+    }
 
+    if (options.id) {
+      this.setData({
+        'lyricsForm.lyric_id': options.id
+      });
+      this.getLyricById();
+    }
   },
 
   /**
@@ -77,11 +95,20 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    
   },
-  saveLyrics() {
-    wx.navigateBack({
-      
+  getLyricById() {
+    let lyric_id = this.data.lyricsForm.lyric_id;
+    api.getLyricById({
+      lyric_id
+    }, (res) => {
+      if (ConfigUtil.isSuccess(res.code)) {
+        this.setData({
+          lyricsForm: res.data
+        });
+      } else {
+        TipUtil.errorCode(res.code);
+      }
     });
   },
   changeTitle(e) {
@@ -98,5 +125,75 @@ Page({
   },
   getRhymeList() {
     SearchLyricUtil.getRhymeList(this);
+  },
+  openSearch() {
+    this.setData({
+      mode: 'search'
+    });
+  },
+  closeSearch() {
+    this.setData({
+      mode: 'create'
+    });
+  },
+  changeTitle(e) {
+    this.setData({
+      'lyricsForm.lyric_title': e.detail.value.trim()
+    });
+  },
+  changeContent(e) {
+    this.setData({
+      'lyricsForm.lyric_content': e.detail.value.trim()
+    });
+  },
+  save() {
+    if (!this.data.showSubmit) {
+      return;
+    }
+
+    let form = this.data.lyricsForm;
+    if (!form.lyric_title.length) {
+      TipUtil.message('请填写标题');
+      return;
+    }
+
+    if (!form.lyric_content.length) {
+      TipUtil.message('请填写歌词内容');
+      return;
+    }
+
+    SubmittingUtil.toggleSubmitting(true, this);
+    if (!form.lyric_id) {
+      api.createLyric(form, (res) => {
+        this.editLyricCallback(res);
+      }, () => {
+        SubmittingUtil.toggleSubmitting(false, this);
+      });
+    } else {
+      let obj = {
+        ...form,
+        id: form.lyric_id
+      };
+      api.updateLyricById(obj, (res) => {
+        this.editLyricCallback(res);
+      }, () => {
+        SubmittingUtil.toggleSubmitting(false, this);
+      });
+    }
+  },
+  editLyricCallback(res) {
+    if (ConfigUtil.isSuccess(res.code)) {
+      this.setData({
+        showSubmit: false
+      });
+      TipUtil.message('操作成功');
+      setTimeout(() => {
+        wx.navigateBack({
+
+        });
+      }, 1500);
+    } else {
+      TipUtil.error(res.info);
+    }
   }
 })

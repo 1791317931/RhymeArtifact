@@ -1,4 +1,4 @@
-@import "/templates/musicList/index.wxss";
+@import "/templates/createMusicList/index.wxss";
 
 .music-container {
   padding: 30rpx 20rpx;

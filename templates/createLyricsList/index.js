@@ -1,4 +1,3 @@
-// templates/createLyricsList/inde.js
 Page({
 
   /**

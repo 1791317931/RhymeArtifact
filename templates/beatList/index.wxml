@@ -1,0 +1,34 @@
+<!-- 非成品 -->
+<template name="beatList">
+  <view class="beat-list-container">
+    <view class="beat-item" wx:for="{{beatPage.list}}" wx:for-index="index" wx:for-item="item" wx:key="{{index}}">
+      <view>
+        <view class="table top-container">
+          <view class="table-row">
+            <view class="table-cell status-container" data-index="{{index}}" catchtap="toggleBeatItemStatus">
+              <view>
+                <image class="disk" src="/assets/imgs/disk.png" />
+                <image hidden="{{item.playing}}" class="pause" src="/assets/imgs/pause.png" />
+                <image hidden="{{!item.playing}}" class="playing" src="/assets/imgs/playing.png" />
+              </view>
+            </view>
+            <view class="table-cell center-container">
+              <view class="title">{{item.music_title}}</view>
+              <view class="detail-container">
+                <text>{{item.music_duration}}</text>
+                <text>作词：{{item.music_author}}</text>
+              </view>
+            </view>
+            <view class="table-cell right-container" data-index="{{index}}" catchtap="clickCollectionItem">
+              <image src="/assets/imgs/collection.png"/>
+              <image class="hide" src="/assets/imgs/collection-active.png"/>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view hidden="{{!item.playing}}" class="start-record-container" catchtap="toRecord">
+        <button>开始录制</button>
+      </view>
+    </view>
+  </view>
+</template>

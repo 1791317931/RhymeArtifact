@@ -1,5 +1,5 @@
-<import src="/templates/musicList/index.wxml"/>
+<import src="/templates/createMusicList/index.wxml"/>
 
 <view class="music-container">
-  <template is="musicList" data="{{musicPage}}"></template>
+  <template is="createMusicList" data="{{createMusicList}}"></template>
 </view>

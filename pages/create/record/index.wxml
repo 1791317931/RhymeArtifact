@@ -1,9 +1,30 @@
+<import src="/templates/submitting/index.wxml"/>
+
+<template is="submitting" data="{{submittingForm}}"></template>
+
 <!-- 创作歌曲 -->
 <!-- 伴奏默认需要一个audio -->
 <audio class="hide" src="{{accompanyPath}}" id="accompanyAudio" controls bindended="accompanyAudioEnded" binderror="accompanyAudioError"></audio>
 <!-- 试听时使用的audio -->
 <audio class="hide" src="{{recordForm.path}}" id="tryAudio" controls bindended="tryAudioEnded" binderror="tryAudioError" bindplay="bindplay"></audio>
 
+<view hidden="{{hideSaveModal}}" class="z-modal">
+  <view class="z-modal-body save-modal-body">
+    <view class="modal-title">发布作品</view>
+    <view class="row">
+      <view>歌名：</view>
+      <input value="{{recordForm.title}}" bindchange="changeTitle" maxlength="{{recordRule.title.length}}" placeholder-class="input-placeholder"/>
+    </view>
+    <view class="row">
+      <view>作词：</view>
+      <input value="{{recordForm.author}}" bindchange="changeAuthor" maxlength="{{recordRule.author.length}}" placeholder-class="input-placeholder"/>
+    </view>
+    <view class="btn-container clearfix">
+      <button class="pull-left" catchtap="closeSaveModal">返回编辑</button>
+      <button class="pull-right" catchtap="submitRecord">发布分享</button>
+    </view>
+  </view>
+</view>
 <view class="create-music-container">
   <view class="scale-container-wrapper">
     <view class="scale-container">
@@ -57,7 +78,7 @@
     <image src="/assets/imgs/add-1.png"/>
     <image catchtap="toEditLyrics" src="/assets/imgs/lyrics.png"/>
   </view>
-  <view class="lyrics-container">{{lyrics}}</view>
+  <view class="lyrics-container">{{recordForm.lyrics}}</view>
   <view class="bottom-btn-container">
     <view class="replay-container {{tryPlaying == false ? '' : 'hide'}}" catchtap="tryPlayStart">
       <image src="/assets/imgs/replay.png"/>
@@ -69,7 +90,7 @@
     </view>
     <image wx:if="{{recordState != 'recording'}}" class="record-state" src="/assets/imgs/record.png" catchtap="beginRecord"/>
     <image wx:if="{{recordState == 'recording'}}" class="record-state" src="/assets/imgs/end-record.png" catchtap="pauseRecord"/>
-    <view class="complete-container" catchtap="endRecord">
+    <view class="complete-container" catchtap="saveRecord">
       <image src="/assets/imgs/complete.png"/>
       <view>完成</view>
     </view>

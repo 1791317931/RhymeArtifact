@@ -1,0 +1,96 @@
+.create-music-list-container .create-music-item {
+  border-radius: 14rpx;
+  overflow: hidden;
+  background: #fff;
+}
+
+.create-music-list-container .create-music-item:not(:first-child) {
+  margin-top: 30rpx;
+}
+
+.create-music-list-container .create-music-item > view:first-child {
+  padding: 40rpx 20rpx 0;
+}
+
+.create-music-list-container .create-music-item > view .top-container {
+  margin-bottom: 40rpx;
+}
+
+.create-music-list-container .create-music-item > view .top-container .status-container {
+  width: 133rpx;
+}
+
+.create-music-list-container .create-music-item > view .top-container .status-container view {
+  display: inline-block;
+  position: relative;
+}
+
+.create-music-list-container .create-music-item > view .top-container .status-container view .disk {
+  width: 133rpx;
+  height: 130rpx;
+  border-radius: 50%;
+}
+
+.create-music-list-container .create-music-item > view .top-container .status-container view .pause {
+  width: 60rpx;
+  height: 60rpx;
+  position: absolute;
+  top: 30rpx;
+  left: 42rpx;
+}
+
+.create-music-list-container .create-music-item > view .top-container .status-container view .playing {
+  width: 60rpx;
+  height: 60rpx;
+  position: absolute;
+  top: 30rpx;
+  left: 38rpx;
+}
+
+.create-music-list-container .create-music-item > view .top-container .center-container {
+  padding: 16rpx 20rpx;
+  min-height: 130rpx;
+}
+
+.create-music-list-container .create-music-item > view .top-container .center-container .title {
+  font-size:32rpx;
+  font-family:PingFangSC-Medium;
+  font-weight:500;
+  color:rgba(29,29,29,1);
+  line-height: 46rpx;
+  letter-spacing:1rpx;
+}
+
+.create-music-list-container .create-music-item > view .top-container .center-container .detail-container {
+  margin-top: 20rpx;
+  font-size:24rpx;
+  font-family:PingFangSC-Medium;
+  font-weight:500;
+  color:rgba(29,29,29,1);
+  line-height:34rpx;
+  letter-spacing:1rpx;
+}
+
+.create-music-list-container .create-music-item > view .top-container .center-container .detail-container > text:last-child {
+  margin-left: 20rpx;
+}
+
+.create-music-list-container .create-music-item > view .top-container .right-container {
+  width: 50rpx;
+}
+
+.create-music-list-container .create-music-item > view .top-container .right-container image {
+  width: 50rpx;
+  height: 50rpx;
+}
+
+.create-music-list-container .create-music-item .start-record-container button {
+  height: 82rpx;
+  line-height: 82rpx;
+  background:rgba(255,80,80,1);
+  font-size:30rpx;
+  font-family:PingFangSC-Regular;
+  color:rgba(255,255,255,1);
+  letter-spacing:1rpx;
+  border-radius: 0;
+}

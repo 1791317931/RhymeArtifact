@@ -1,5 +1,11 @@
 <import src="/templates/createMusicList/index.wxml"/>
 
-<view class="create-music-container">
-  <template is="createMusicList" data="{{createMusicPage}}"></template>
+<view class="create-container">
+  <view class="top-btn-container">
+    <button catchtap="toCreateMusicList">音乐创作</button>
+    <button catchtap="toCreateLyricsList">歌词创作</button>
+  </view>
+  <view class="list-container">
+    <template is="createMusicList" data="{{createMusicPage}}"></template>
+  </view>
 </view>

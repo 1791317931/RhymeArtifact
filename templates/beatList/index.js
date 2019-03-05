@@ -1,28 +1,11 @@
+// templates/beatList/index.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    musicPage: {
-      showHead: true,
-      list: [
-        {
-          id: 1,
-          createBy: '陈梓童',
-          title: '梦的远方',
-          author: '今晚吃鱼丸',
-          composer: '金光旭'
-        },
-        {
-          id: 2,
-          createBy: '陈梓童',
-          title: '当你走的45天',
-          author: 'Yinu Boy',
-          composer: '金光旭'
-        }
-      ]
-    }
+
   },
 
   /**
@@ -79,15 +62,5 @@ Page({
    */
   onShareAppMessage: function () {
 
-  },
-  toCreateMusicList() {
-    wx.navigateTo({
-      url: '/pages/create/createMusicList/index'
-    });
-  },
-  toCreateLyricsList() {
-    wx.navigateTo({
-      url: '/pages/create/createLyricsList/index'
-    });
   }
 })

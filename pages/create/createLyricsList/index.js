@@ -1,32 +1,23 @@
 import DateUtil from '../../../assets/js/DateUtil';
+import CommonUtil from '../../../assets/js/CommonUtil';
 import ConfigUtil from '../../../assets/js/ConfigUtil';
 import TipUtil from '../../../assets/js/TipUtil';
 import * as api from '../../../assets/js/api';
+import LyricListUtil from '../../../assets/js/components/LyricListUtil';
 
 Page({
   /**
    * 页面的初始数据
    */
   data: {
-    lyricsPage: {
-      loading: false,
-      page: 1,
-      pageSize: 10,
-      list: []
-    }
+    lyricsPage: CommonUtil.copyObject(LyricListUtil.lyricsPage)
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    // let list = this.data.lyricsPage.list;
-    // list.forEach((item, index) => {
-    //   item.createTime = DateUtil.getFormatTime(new Date(item.createTime));
-    // });
-    // this.setData({
-    //   'lyricsPage.list': list
-    // });
+    
   },
 
   /**
@@ -68,55 +59,30 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    let page = this.data.lyricsPage;
-    this.getLyricPage();
+    LyricListUtil.onReachBottom(this);
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
-
+  onShareAppMessage: function (e) {
+    LyricListUtil.shareLyric(e, this);
   },
   init() {
-    this.getLyricPage();
+    LyricListUtil.getLyricPage(1, this);
   },
   toAddLyrics() {
     wx.navigateTo({
       url: '/pages/create/lyrics/index'
     });
   },
-  toggleLyricPageLoading(loading) {
-    this.setData({
-      'lyricsPage.loading': loading
-    });
+  clickLyricItem(e) {
+    LyricListUtil.clickLyricItem(e, this);
   },
-  getLyricPage(pageNum = 1) {
-    let page = this.data.lyricsPage;
-    if (page.loading) {
-      return;
-    }
-
-    let param = {
-      page: pageNum,
-      pageSize: page.pageSize
-    };
-    this.toggleLyricPageLoading(true);
-    this.setData({
-      'lyricsPage.page': pageNum
-    });
-
-    api.getLyricPage(param, (res) => {
-      if (ConfigUtil.isSuccess(res.code)) {
-        this.setData({
-          'lyricsPage.list': res.data,
-          // 'lyricsPage.maxPage': res
-        });
-      } else {
-        TipUtil.errorCode(res.code);
-      }
-    }, () => {
-      this.toggleLyricPageLoading(false);
-    });
+  shareLyric(e) {
+    
+  },
+  toDeleteLyricItem(e) {
+    LyricListUtil.toDeleteLyricItem(e, this);
   }
 })

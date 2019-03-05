@@ -1,0 +1,6 @@
+<!-- 创作列表 -->
+<import src="/templates/beatList/index.wxml"/>
+
+<view class="create-music-container">
+  <template is="beatList" data="{{beatPage}}"></template>
+</view>

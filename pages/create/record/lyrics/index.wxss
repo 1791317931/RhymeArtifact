@@ -5,7 +5,10 @@
 }
 
 .content-container {
+  width: 710rpx;
   height: 482rpx;
+  display: block;
+  margin: 20rpx auto;
   padding: 35rpx 30rpx 0;
   font-size:28rpx;
   font-family:PingFangSC-Regular;
@@ -31,4 +34,10 @@
   font-family:PingFangSC-Light;
   color:rgba(255,255,255,1);
   letter-spacing:1rpx;
+}
+
+.textarea-placeholder {
+  color: #999;
+  font-size:28rpx;
+  font-family:PingFangSC-Medium;
 }

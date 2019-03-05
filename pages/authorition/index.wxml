@@ -1,6 +1,6 @@
 <view class="authorition-container">
   <view class="middle-container">
-    <image class="logo" src="/assets/imgs/checked.png" />
+    <image class="logo" src="/assets/imgs/logo.png" />
     <view class="tip-desc">授权登录，一起玩转嘻哈乐</view>
     <button open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">登录授权</button>
   </view>

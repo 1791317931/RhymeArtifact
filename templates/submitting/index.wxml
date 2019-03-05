@@ -1,0 +1,5 @@
+<template name="submitting">
+  <view hidden="{{!submittingForm.submitting}}" class="z-modal z-modal-submitting">
+    <view class="submitting-tip">{{submittingForm.message}}</view>
+  </view>
+</template>

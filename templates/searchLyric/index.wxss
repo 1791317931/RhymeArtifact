@@ -35,7 +35,7 @@
   display: inline-block;
   width: 210rpx;
   height: 80rpx;
-  line-heihgt: 80rpx;
+  line-height: 80rpx;
   background:rgba(255,255,255,1);
   border-radius:16rpx;
   border: 2rpx solid rgba(0,0,0,1);

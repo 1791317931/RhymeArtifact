@@ -1,6 +1,7 @@
 import * as api from '../../assets/js/api';
 import ConfigUtil from '../../assets/js/ConfigUtil';
 import TipUtil from '../../assets/js/TipUtil';
+import UrlUtil from '../../assets/js/UrlUtil';
 
 Page({
 
@@ -15,7 +16,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+    UrlUtil.isLogin = true;
   },
 
   /**
@@ -43,7 +44,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    UrlUtil.isLogin = false;
   },
 
   /**
@@ -78,7 +79,6 @@ Page({
             let encryptedData = res.encryptedData,
             iv = res.iv,
             userInfo = res.userInfo;
-            console.log(userInfo);
             wx.setStorageSync('userInfo', userInfo);
 
             let obj = {};

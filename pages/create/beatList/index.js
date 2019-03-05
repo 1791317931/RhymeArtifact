@@ -1,11 +1,12 @@
-// templates/musicList/index.js
-Page({
+import BeatListUtil from '../../../assets/js/components/BeatListUtil';
+import CommonUtil from '../../../assets/js/CommonUtil';
 
+Page({
   /**
    * 页面的初始数据
    */
   data: {
-
+    beatPage: CommonUtil.copyObject(BeatListUtil.beatPage)
   },
 
   /**
@@ -26,7 +27,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.init();
   },
 
   /**
@@ -54,7 +55,7 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    BeatListUtil.onReachBottom(this);
   },
 
   /**
@@ -62,5 +63,17 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  init() {
+    BeatListUtil.getBeatPage(1, this);
+  },
+  toggleBeatItemStatus(e) {
+    BeatListUtil.toggleBeatItemStatus(e, this);
+  },
+  clickCollectionItem(e) {
+    BeatListUtil.clickCollectionItem(e, this);
+  },
+  toRecord(e) {
+    BeatListUtil.toRecord(e);
   }
 })

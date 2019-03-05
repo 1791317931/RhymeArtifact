@@ -1,4 +1,4 @@
-// templates/musicList/index.js
+// templates/submitting/index.js
 Page({
 
   /**
