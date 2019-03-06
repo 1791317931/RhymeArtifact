@@ -1,3 +1,7 @@
+.music-list-container {
+  padding: 0rpx 20rpx
+}
+
 .music-list-container .music-item {
   background: #fff;
   border-radius:14rpx;

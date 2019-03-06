@@ -1,8 +1,19 @@
 @import "/templates/createMusicList/index.wxss";
 
+.create-container {
+  position: relative;
+  padding-top: 140rpx;
+}
+
 .top-btn-container {
   padding: 20rpx 57rpx;
   background: #fff;
+  position: fixed;
+  z-index: 99;
+  top: 0;
+  left: 0;
+  right: 0;
+  font-size: 0;
 }
 
 .top-btn-container button {
@@ -22,9 +33,4 @@
 
 .top-btn-container button:last-child {
   float: right;
-}
-
-.list-container {
-  margin-top: 30rpx;
-  padding: 0 20rpx;
 }

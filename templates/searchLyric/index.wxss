@@ -28,7 +28,9 @@
 
 .rhyme-groups {
   margin-top: 30rpx;
-  padding: 0 30rpx;
+  padding: 0 15rpx;
+  font-size: 0;
+  text-align: center;
 }
 
 .rhyme-groups button {
@@ -43,11 +45,10 @@
   font-family:PingFangSC-Medium;
   font-weight:500;
   color:rgba(29,29,29,1);
+  margin: 0 15rpx;
 }
 
-.rhyme-groups button:not(:first-child) {
-  margin-left: 30rpx;
-}
+
 
 .rhyme-groups button.active {
   background: #000;
