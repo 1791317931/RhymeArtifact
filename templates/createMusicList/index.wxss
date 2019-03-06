@@ -1,3 +1,7 @@
+.music-list-container {
+  padding: 0rpx 20rpx
+}
+
 .music-list-container .music-item {
   background: #fff;
   border-radius:14rpx;
@@ -34,8 +38,8 @@
   padding: 40rpx 20rpx;
 }
 
-.music-list-container .music-item:not(:first-child) {
-  margin-top: 30rpx;
+.music-list-container .music-item {
+  margin-bottom: 30rpx;
 }
 
 .music-list-container .music-item .music-body-container {
