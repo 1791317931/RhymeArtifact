@@ -6,14 +6,15 @@ Page({
    * 页面的初始数据
    */
   data: {
-    beatPage: CommonUtil.copyObject(BeatListUtil.beatPage)
+    beatPage: CommonUtil.copyObject(BeatListUtil.beatPage),
+    BAC: null
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    BeatListUtil.init(this);
   },
 
   /**
@@ -70,10 +71,16 @@ Page({
   toggleBeatItemStatus(e) {
     BeatListUtil.toggleBeatItemStatus(e, this);
   },
-  clickCollectionItem(e) {
-    BeatListUtil.clickCollectionItem(e, this);
+  toggleBeatCollectionItem(e) {
+    BeatListUtil.toggleBeatCollectionItem(e, this);
   },
   toRecord(e) {
-    BeatListUtil.toRecord(e);
+    BeatListUtil.toRecord(e, this);
+  },
+  beatPlayEnd(e) {
+    BeatListUtil.playEnd(e, this);
+  },
+  beatLoadError(e) {
+    BeatListUtil.beatLoadError(e, this);
   }
 })

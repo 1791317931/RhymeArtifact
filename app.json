@@ -1,9 +1,9 @@
 {
   "pages": [
-    "pages/create/createMusicList/index",
     "pages/create/beatList/index",
-    "pages/create/record/index",
     "pages/main/index",
+    "pages/create/createMusicList/index",
+    "pages/create/record/index",
     "pages/create/createLyricsList/index",
     "pages/create/lyrics/index",
     "pages/authorition/index",
@@ -14,7 +14,8 @@
     "templates/createLyricsList/index",
     "templates/searchLyric/index",
     "templates/submitting/index",
-    "templates/beatList/index"
+    "templates/beatList/index",
+    "pages/user/collection/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

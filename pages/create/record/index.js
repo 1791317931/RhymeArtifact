@@ -21,11 +21,11 @@ Page({
     },
     RM: null,
     // 伴奏音频
-    AAC: null,
+    BAC: null,
     // 试听音频
     TAC: null,
     // 伴奏音频路径
-    accompanyPath: 'http://ws.stream.qqmusic.qq.com/M500001VfvsJ21xFqb.mp3?guid=ffffffff82def4af4b12b3cd9337d5e7&uin=346897220&vkey=6292F51E1E384E06DCBDC9AB7C49FD713D632D313AC4858BACB8DDD29067D3C601481D36E62053BF8DFEAF74C0A5CCFADD6471160CAF3E6A&fromtag=46',
+    beatPath: null,
     recordForm: {
       beatId: 1,
       lyrics: '小程序歌曲内容',
@@ -54,8 +54,11 @@ Page({
   onLoad: function (options) {
     let userInfo = wx.getStorageSync('userInfo');
     this.setData({
-      'recordForm.author': userInfo.nickName
+      'recordForm.author': userInfo.nickName,
+      'recordForm.beatId': options.beatId,
+      beatPath: options.beatPath
     });
+    console.log(options.beatId)
 
     let scales = [];
     for (let i = 0; i <= 50; i += 2) {
@@ -70,11 +73,11 @@ Page({
     });
 
     let RM = wx.getRecorderManager(),
-    AAC = wx.createAudioContext('accompanyAudio'),
+    BAC = wx.createAudioContext('beatAudio'),
     TAC = wx.createAudioContext('tryAudio');
     this.setData({
       RM,
-      AAC,
+      BAC,
       TAC
     });
   },
@@ -158,7 +161,7 @@ Page({
   },
   beginRecord() {
     let RM = this.data.RM,
-    AAC = this.data.AAC;
+    BAC = this.data.BAC;
 
     if (this.data.tryPlaying) {
       TipUtil.message('您正在试听，请关闭后再操作');
@@ -169,9 +172,9 @@ Page({
     RM.onStart(() => {
       if (this.data.recordState == 'ready') {
         // 从头播放
-        AAC.seek(0);
+        BAC.seek(0);
       }
-      AAC.play();
+      BAC.play();
 
       this.changeRecordState('recording');
       TipUtil.message('录制中');
@@ -179,11 +182,11 @@ Page({
   },
   pauseRecord() {
     let RM = this.data.RM,
-    AAC = this.data.AAC;
+    BAC = this.data.BAC;
 
     RM.pause();
     RM.onPause(() => {
-      AAC.pause();
+      BAC.pause();
       if (this.data.recordState != 'pause') {
         this.changeRecordState('pause');
         TipUtil.message('已暂停录制');
@@ -201,12 +204,15 @@ Page({
     this.pauseRecord();
     this.toggleSaveModal(false);
   },
-  accompanyAudioEnded() {
+  beatAudioEnded() {
     this.changeTryPlayState(false);
   },
-  accompanyAudioError(e) {
+  beatAudioError(e) {
     console.log(e)
     this.changeTryPlayState(false);
+  },
+  beatAudioTimeUpdate(e) {
+    console.log(e);
   },
   bindplay() {
     
@@ -275,6 +281,9 @@ Page({
         title: form.title,
         type: FileType.VOICE
       },
+      header: {
+        'content-type': 'multipart/form-data'
+      },
       success: (res) => {
         if (res.statusCode == 200) {
           let data = JSON.parse(res.data),
@@ -285,7 +294,9 @@ Page({
             mixture_url: filePath,
             lyric_content: form.content,
             music_title: form.title,
-            music_author: form.author
+            music_author: form.author,
+            music_duration: form.duration,
+            music_size: form.fileSize
           };
 
           api.createMusic(param, (res) => {
@@ -304,6 +315,7 @@ Page({
         }
       },
       fail(e) {
+        TipUtil.message('上传失败');
         SubmittingUtil.toggleSubmitting(false, this);
       }
     });

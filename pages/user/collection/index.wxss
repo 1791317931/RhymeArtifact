@@ -1,0 +1,35 @@
+@import "/templates/beatList/index.wxss";
+@import "/templates/createMusicList/index.wxss";
+
+.collection-container {
+  padding: 30rpx 20rpx;
+}
+
+.collection-container .toggle-btn-container {
+  padding: 0 30rpx;
+  margin-bottom: 30rpx;
+}
+
+.collection-container .toggle-btn-container button {
+  float: left;
+  width:280rpx;
+  height:70rpx;
+  line-height:70rpx;
+  background:rgba(255,255,255,1);
+  border-radius:14rpx;
+  border:2rpx solid rgba(0,0,0,1);
+  font-size:30rpx;
+  font-family:PingFangSC-Medium;
+  font-weight:500;
+  color:rgba(29,29,29,1);
+  letter-spacing:1rpx;
+}
+
+.collection-container .toggle-btn-container button:last-child {
+  float: right;
+}
+
+.collection-container .toggle-btn-container button.active {
+  background: #000;
+  color: #fff;
+}

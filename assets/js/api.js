@@ -40,6 +40,14 @@ export function getLyricPage(data, fn, completeFn) {
 export function getBeatPage(data, fn, completeFn) {
   UrlUtil.post('beat-lists', data, fn, completeFn);
 }
+
+export function collectBeat(data, fn, completeFn) {
+  UrlUtil.post('collection-beat-create', data, fn, completeFn);
+}
+
+export function deleteBeat(data, fn, completeFn) {
+  UrlUtil.post('collection-beat-delete', data, fn, completeFn);
+}
 // ---------------------伴奏------------------------
 
 // ---------------------创作------------------------
@@ -49,5 +57,21 @@ export function createMusic(data, fn, completeFn) {
 
 export function getMusicPage(data, fn, completeFn) {
   UrlUtil.get('music-lists', data, fn, completeFn);
+}
+
+export function collectMusic(data, fn, completeFn) {
+  UrlUtil.post('collection-music-create', data, fn, completeFn);
+}
+
+export function deleteMusic(data, fn, completeFn) {
+  UrlUtil.post('collection-music-delete', data, fn, completeFn);
+}
+
+export function shareMusic(data, fn, completeFn) {
+  UrlUtil.post('music-share-add', data, fn, completeFn);
+}
+
+export function getCollection(data, fn, completeFn) {
+  UrlUtil.get('collection-list', data, fn, completeFn);
 }
 // ---------------------创作------------------------

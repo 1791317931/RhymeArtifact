@@ -1,10 +1,10 @@
 <view class="mine-container">
   <view class="user-container">
-    <image src="../../../assets/imgs/checked.png"/>
-    <view>陈馨彤</view>
+    <image src="{{userInfo.avatarUrl || '/assets/imgs/logo.png'}}"/>
+    <view>{{userInfo.nickName}}</view>
   </view>
   <view class="menu-container">
-    <view class="item" wx:for="{{menus}}" wx:for-index="index" wx:for-item="item" wx:key="{{index}}" data-index="{{index}}" catchtap="clickMenu">
+    <view hidden="{{item.show == false}}" class="item" wx:for="{{menus}}" wx:for-index="index" wx:for-item="item" wx:key="{{index}}" data-index="{{index}}" catchtap="clickMenu">
       {{item.text}}
       <image src="../../../assets/imgs/arrow-left.png"/>
     </view>

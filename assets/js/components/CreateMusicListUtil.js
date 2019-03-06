@@ -7,6 +7,7 @@ let CreateMusicListUtil = {
   createMusicPage: {
     loading: false,
     playingIndex: -1,
+    playing: false,
     page: 1,
     pageSize: 10,
     totalPage: 0,
@@ -14,50 +15,93 @@ let CreateMusicListUtil = {
     list: []
   },
   init(_this) {
-    let TAC = wx.createAudioContext('musicAudio');
+    let MAC = wx.createAudioContext('musicAudio');
     _this.setData({
-      TAC
+      MAC
     });
   },
   toggleMusicItemStatus(e, _this) {
     let index = e.currentTarget.dataset.index,
-    TAC = _this.data.TAC;
+    page = _this.data.createMusicPage,
+    playing = page.playing,
+    MAC = _this.data.MAC;
 
-    if (_this.data.createMusicPage.playingIndex == index) {
-      index = -1;
-      // 结束音频
-      TAC.pause();
+    if (page.playingIndex == index) {
+      if (playing) {
+        CreateMusicListUtil.pausePlay(e, _this);
+      } else {
+        CreateMusicListUtil.continuePlay(e, _this);
+      }
     } else {
-      // 播放音频
-      TAC.seek(0);
-      TAC.play();
+      CreateMusicListUtil.startPlay(e, _this);
     }
-
-    _this.setData({
-      'createMusicPage.playingIndex': index
-    });
   },
   clickCollectionItem(e, _this) {
     let index = e.currentTarget.dataset.index;
   },
-  toRecord(e, _this) {
-    let index = e.currentTarget.dataset.index;
-    wx.navigateTo({
-      url: '/pages/create/record/index'
-    });
-  },
   onReachBottom(_this) {
     let page = _this.data.createMusicPage;
     if (page.pageNum < page.totalPage) {
-      _this.getMusicPage();
+      CreateMusicListUtil.getMusicPage(page.pageNum + 1, _this);
     }
   },
-  getItem(e, _this) {
+  startPlay(e, _this) {
+    let index = CreateMusicListUtil.getIndex(e, _this),
+    MAC = _this.data.MAC;
+
+    _this.setData({
+      'createMusicPage.playingIndex': index,
+      'createMusicPage.playing': true
+    });
+
+    // 播放音频
+    MAC.seek(0);
+    MAC.play();
+  },
+  continuePlay(e, _this) {
+    let MAC = _this.data.MAC;
+
+    _this.setData({
+      'createMusicPage.playing': true
+    });
+
+    // 播放音频
+    MAC.play();
+  },
+  pausePlay(e, _this) {
+    let MAC = _this.data.MAC;
+
+    _this.setData({
+      'createMusicPage.playing': false
+    });
+
+    MAC.pause();
+  },
+  musicPlayEnd(e, _this) {
+    let MAC = _this.data.MAC;
+
+    _this.setData({
+      'createMusicPage.playing': false
+    });
+
+    MAC.seek(0);
+  },
+  musicLoadError(e, _this) {
+    if (e.detail.errMsg == 'MEDIA_ERR_SRC_NOT_SUPPORTED') {
+      TipUtil.message('播放失败');
+    }
+    CreateMusicListUtil.playEnd(e, _this);
+  },
+  getIndex(e, _this) {
     let index = e.target.dataset.index;
     if (isNaN(index)) {
       index = e.currentTarget.dataset.index;
     }
 
+    return index;
+  },
+  getItem(e, _this) {
+    let index = CreateMusicListUtil.getIndex(e, _this);
     return _this.data.createMusicPage.list[index];
   },
   toggleMusicPageLoading(loading, _this) {
@@ -71,9 +115,11 @@ let CreateMusicListUtil = {
       return;
     }
 
+    CreateMusicListUtil.pausePlay(null, _this);
     let param = {
       page: pageNum,
-      pageSize: page.pageSize
+      pageSize: page.pageSize,
+      type: 'music'
     },
       list = [];
 
@@ -86,7 +132,14 @@ let CreateMusicListUtil = {
       'createMusicPage.page': pageNum
     });
 
-    api.getMusicPage(param, (res) => {
+    let fn;
+    if (_this.data.createMusicPage.showMine) {
+      fn = api.getCollection;
+    } else {
+      fn = api.getMusicPage;
+    }
+
+    fn(param, (res) => {
       if (ConfigUtil.isSuccess(res.code)) {
         let obj = res.data;
         obj.data.forEach((item, index) => {
@@ -108,8 +161,88 @@ let CreateMusicListUtil = {
       CreateMusicListUtil.toggleMusicPageLoading(false, _this);
     });
   },
-  collectItem(e, _this) {
-    
+  toggleMusicCollectItem(e, _this) {
+    let item = CreateMusicListUtil.getItem(e, _this),
+    index = CreateMusicListUtil.getIndex(e, _this),
+    createMusicPage = _this.data.createMusicPage;
+
+    if (item.is_collection == 1 || createMusicPage.showMine) {
+      api.deleteMusic({
+        id: item.id
+      }, (res) => {
+        if (ConfigUtil.isSuccess(res.code)) {
+          TipUtil.message('已取消收藏');
+
+          // 显示我的收藏，把被取消收藏的创作去掉
+          if (_this.data.createMusicPage.showMine) {
+            let list = createMusicPage.list;
+            list.splice(index, 1);
+
+            _this.setData({
+              'createMusicPage.list': list
+            });
+          } else {
+            item.collection_num = item.collection_num - 1;
+            item.is_collection = '0';
+
+            _this.setData({
+              [`createMusicPage.list[${index}]`]: item
+            });
+          }
+        } else {
+          TipUtil.message(res.info);
+        }
+      });
+    } else {
+      api.collectMusic({
+        id: item.id
+      }, (res) => {
+        if (ConfigUtil.isSuccess(res.code)) {
+          TipUtil.message('收藏成功');
+          item.collection_num = item.collection_num + 1;
+          item.is_collection = '1';
+
+          _this.setData({
+            [`createMusicPage.list[${index}]`]: item
+          });
+        } else {
+          TipUtil.message(res.info);
+        }
+      });
+    }
+  },
+  shareItem(e, _this) {
+    if (e.from == 'button') {
+      let item = CreateMusicListUtil.getItem(e, _this),
+      index = CreateMusicListUtil.getIndex(e, _this);
+
+      api.shareMusic({
+        id: item.id
+      }, (res) => {
+        if (ConfigUtil.isSuccess(res.code)) {
+          item.share_num = item.share_num + 1;
+          _this.setData({
+            [`createMusicPage.list[${index}]`]: item
+          });
+        } else {
+          TipUtil.error(res.info);
+        }
+      });
+
+      return {
+        title: item.lyric_title,
+        path: '/pages/main/index',
+        success: (res) => {
+          
+        },
+        fail(res) {
+
+        },
+        complete(res) {
+
+        }
+      };
+    }
   }
 };
 

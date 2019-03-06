@@ -49,8 +49,8 @@ let SearchLyricUtil = {
 
     SearchLyricUtil.toggleRhymeLoading(true, _this);
     api.getRhymeList({
-      kwd: data.keyword,
-      mortgage: data.mortgage
+      kwd: data.rhymePage.keyword,
+      mortgage: data.rhymePage.mortgage
     }, (res) => {
       if (ConfigUtil.isSuccess(res.code)) {
         _this.setData({

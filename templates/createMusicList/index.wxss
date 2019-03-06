@@ -34,7 +34,7 @@
   padding: 40rpx 20rpx;
 }
 
-.music-list-container .music-item:not(:first-child) {
+.music-list-container .music-item:nth-child(n+5) {
   margin-top: 30rpx;
 }
 
@@ -142,4 +142,13 @@
   left: 0;
   top: 50%;
   transform: translateY(-50%);
+}
+
+.music-list-container .music-item .music-body-container .bottom-container .share button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: transparent;
 }

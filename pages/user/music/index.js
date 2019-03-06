@@ -1,32 +1,29 @@
-Page({
+import DateUtil from '../../../assets/js/DateUtil';
+import CommonUtil from '../../../assets/js/CommonUtil';
+import ConfigUtil from '../../../assets/js/ConfigUtil';
+import TipUtil from '../../../assets/js/TipUtil';
+import * as api from '../../../assets/js/api';
+import CreateMusicListUtil from '../../../assets/js/components/CreateMusicListUtil';
 
+Page({
   /**
    * 页面的初始数据
    */
   data: {
-    musicPage: {
-      list: [
-        {
-          id: 1,
-          title: '梦的远方',
-          author: '今晚吃鱼丸',
-          composer: '金光旭'
-        },
-        {
-          id: 2,
-          title: '当你走的45天',
-          author: 'Yinu Boy',
-          composer: '金光旭'
-        }
-      ]
-    }
+    createMusicPage: CommonUtil.copyObject(CreateMusicListUtil.createMusicPage),
+    // 试听音频
+    TAC: null
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    CreateMusicListUtil.init(this);
+    // 不显示头部信息
+    this.setData({
+      'createMusicPage.showHead': false
+    });
   },
 
   /**
@@ -40,7 +37,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.init();
   },
 
   /**
@@ -68,13 +65,28 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    CreateMusicListUtil.onReachBottom(this);
   },
 
   /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return CreateMusicListUtil.shareItem(e, this);
+  },
+  init() {
+    CreateMusicListUtil.getMusicPage(1, this);
+  },
+  toggleMusicItemStatus(e) {
+    CreateMusicListUtil.toggleMusicItemStatus(e, this);
+  },
+  toggleCollectItem(e) {
+    CreateMusicListUtil.toggleCollectItem(e, this);
+  },
+  playEnd(e) {
+    CreateMusicListUtil.playEnd(e, this);
+  },
+  loadError(e) {
+    CreateMusicListUtil.loadError(e, this);
   }
 })

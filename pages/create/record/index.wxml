@@ -4,7 +4,7 @@
 
 <!-- 创作歌曲 -->
 <!-- 伴奏默认需要一个audio -->
-<audio class="hide" src="{{accompanyPath}}" id="accompanyAudio" controls bindended="accompanyAudioEnded" binderror="accompanyAudioError"></audio>
+<audio class="hide" src="{{beatPath}}" id="beatAudio" controls bindended="beatAudioEnded" binderror="beatAudioError" bindtimeupdate="beatAudioTimeUpdate"></audio>
 <!-- 试听时使用的audio -->
 <audio class="hide" src="{{recordForm.path}}" id="tryAudio" controls bindended="tryAudioEnded" binderror="tryAudioError" bindplay="bindplay"></audio>
 

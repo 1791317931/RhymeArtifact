@@ -1,9 +1,11 @@
 <!-- 创作列表 -->
 <template name="createMusicList">
   <view class="music-list-container">
-    <audio class="hide" src="{{createMusicPage.list[createMusicPage.playingIndex].mixture_url}}" id="musicAudio"></audio>
-    <view class="music-item" wx:for="{{createMusicPage.list}}" wx:for-index="index" wx:for-item="item" wx:key="{{index}}">
-      <view class="music-head-container">
+    <audio class="hide" src="{{createMusicPage.list[createMusicPage.playingIndex].mixture_url}}" id="musicAudio" bindended="musicPlayEnd" binderror="musicLoadError"></audio>
+    <view hidden="{{!createMusicPage.loading || createMusicPage.pageNum > 1}}" class="empty loading"></view>
+    <view hidden="{{createMusicPage.loading || createMusicPage.list.length}}" class="empty"></view>
+    <view class="music-item" wx:for="{{createMusicPage.list}}" wx:for-index="index" wx:for-item="item" wx:key="{{item.id}}">
+      <view hidden="{{createMusicPage.showHead == false}}" class="music-head-container">
         <view>
           <image src="{{item.user.avatarurl || '/assets/imgs/logo.png'}}"/>
           {{item.user.nickname}}
@@ -11,13 +13,13 @@
       </view>
       <view class="music-content-body">
         <view class="music-body-container">
-          <view class="table top-container">
+          <view class="table top-container" data-index="{{index}}" catchtap="toggleMusicItemStatus">
             <view class="table-row" data-index="{{index}}" catchtap="toggleMusicItemStatus">
               <view class="table-cell status-container">
                 <view>
                   <image src="/assets/imgs/disk.png" />
-                  <image hidden="{{createMusicPage.playingIndex == index}}" src="/assets/imgs/to-play.png" />
-                  <image hidden="{{createMusicPage.playingIndex != index}}" src="/assets/imgs/to-pause.png" />
+                  <image hidden="{{createMusicPage.playingIndex == index && createMusicPage.playing}}" src="/assets/imgs/to-play.png" />
+                  <image hidden="{{createMusicPage.playingIndex != index || !createMusicPage.playing}}" src="/assets/imgs/to-pause.png" />
                 </view>
               </view>
               <view class="table-cell right-container">
@@ -30,17 +32,20 @@
             </view>
           </view>
           <view class="bottom-container">
-            <view class="collection" data-index="{{index}}" catchtap="collectItem">
-              <image src="/assets/imgs/collection-active.png"/>
+            <view class="collection" data-index="{{index}}" catchtap="toggleMusicCollectItem">
+              <image src="{{item.is_collection == 1 || createMusicPage.showMine ? '/assets/imgs/collection-active.png' : '/assets/imgs/collection.png'}}"/>
               {{item.collection_num}}
             </view>
-            <view class="share" data-index="{{index}}" catchtap="shareItem">
+            <view class="share">
               <image src="/assets/imgs/share.png"/>
+              <button open-type="share" data-index="{{index}}"></button>
               {{item.share_num}}
             </view>
           </view>
         </view>
       </view>
     </view>
+    <view hidden="{{!createMusicPage.loading || createMusicPage.pageNum == 1}}" class="empty loading"></view>
+    <view hidden="{{createMusicPage.loading || !createMusicPage.list.length || createMusicPage.pageNum < createMusicPage.totalPage}}" class="empty no-more-data"></view>
   </view>
 </template>

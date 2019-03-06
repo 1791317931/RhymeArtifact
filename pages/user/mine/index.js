@@ -10,7 +10,7 @@ Page({
         text: '音乐创作'
       },
       {
-        path: '',
+        path: '/pages/create/createLyricsList/index',
         text: '歌词创作'
       },
       {
@@ -20,10 +20,11 @@ Page({
       },
       {
         path: '',
-        text: '混音编曲'
+        text: '混音编曲',
+        show: false
       },
       {
-        path: '',
+        path: '/pages/user/collection/index',
         text: '我的收藏'
       }
     ],
@@ -36,14 +37,17 @@ Page({
         path: '',
         text: '商务合作'
       }
-    ]
+    ],
+    userInfo: null
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.setData({
+      userInfo: wx.getStorageSync('userInfo')
+    });
   },
 
   /**

@@ -66,7 +66,7 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function (e) {
-    LyricListUtil.shareLyric(e, this);
+    return LyricListUtil.shareLyric(e, this);
   },
   init() {
     LyricListUtil.getLyricPage(1, this);

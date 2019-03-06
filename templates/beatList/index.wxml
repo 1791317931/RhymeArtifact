@@ -1,34 +1,38 @@
-<!-- 非成品 -->
 <template name="beatList">
   <view class="beat-list-container">
-    <view class="beat-item" wx:for="{{beatPage.list}}" wx:for-index="index" wx:for-item="item" wx:key="{{index}}">
+    <audio class="hide" src="{{beatPage.list[beatPage.playingIndex].beat_url}}" id="beatAudio" bindended="beatPlayEnd" binderror="beatLoadError"></audio>
+    <view hidden="{{!beatPage.loading || beatPage.pageNum > 1}}" class="empty loading"></view>
+    <view hidden="{{beatPage.loading || beatPage.list.length}}" class="empty"></view>
+    <view class="beat-item" wx:for="{{beatPage.list}}" wx:for-index="index" wx:for-item="item" wx:key="{{item.beat_id}}">
       <view>
-        <view class="table top-container">
+        <view class="table top-container" data-index="{{index}}" catchtap="toggleBeatItemStatus">
           <view class="table-row">
-            <view class="table-cell status-container" data-index="{{index}}" catchtap="toggleBeatItemStatus">
+            <view class="table-cell status-container">
               <view>
                 <image class="disk" src="/assets/imgs/disk.png" />
-                <image hidden="{{item.playing}}" class="pause" src="/assets/imgs/pause.png" />
-                <image hidden="{{!item.playing}}" class="playing" src="/assets/imgs/playing.png" />
+                <image hidden="{{beatPage.playingIndex == index && beatPage.playing}}" src="/assets/imgs/to-play.png" />
+                <image hidden="{{beatPage.playingIndex != index || !beatPage.playing}}" src="/assets/imgs/to-pause.png" />
               </view>
             </view>
             <view class="table-cell center-container">
-              <view class="title">{{item.music_title}}</view>
+              <view class="title">{{item.beat_title}}</view>
               <view class="detail-container">
-                <text>{{item.music_duration}}</text>
-                <text>作词：{{item.music_author}}</text>
+                <text>{{item.beat_time}}</text>
+                <text>作词：{{item.beat_author}}</text>
               </view>
             </view>
-            <view class="table-cell right-container" data-index="{{index}}" catchtap="clickCollectionItem">
-              <image src="/assets/imgs/collection.png"/>
-              <image class="hide" src="/assets/imgs/collection-active.png"/>
+            <view class="table-cell right-container" data-index="{{index}}" catchtap="toggleBeatCollectionItem">
+              <image hidden="{{item.is_collection == 1 ||  beatPage.showMine}}" src="/assets/imgs/collection.png"/>
+              <image hidden="{{item.is_collection != 1 && !beatPage.showMine}}" src="/assets/imgs/collection-active.png"/>
             </view>
           </view>
         </view>
       </view>
-      <view hidden="{{!item.playing}}" class="start-record-container" catchtap="toRecord">
+      <view hidden="{{beatPage.playingIndex != index}}" class="start-record-container" data-index="{{index}}" catchtap="toRecord">
         <button>开始录制</button>
       </view>
     </view>
+    <view hidden="{{!beatPage.loading || beatPage.pageNum == 1}}" class="empty loading"></view>
+    <view hidden="{{beatPage.loading || !beatPage.list.length || beatPage.pageNum < beatPage.totalPage}}" class="empty no-more-data"></view>
   </view>
 </template>

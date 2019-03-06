@@ -4,22 +4,32 @@ import ConfigUtil from '../../../assets/js/ConfigUtil';
 import TipUtil from '../../../assets/js/TipUtil';
 import * as api from '../../../assets/js/api';
 import CreateMusicListUtil from '../../../assets/js/components/CreateMusicListUtil';
+import BeatListUtil from '../../../assets/js/components/BeatListUtil';
 
 Page({
   /**
    * 页面的初始数据
    */
   data: {
+    beatPage: CommonUtil.copyObject(BeatListUtil.beatPage),
     createMusicPage: CommonUtil.copyObject(CreateMusicListUtil.createMusicPage),
-    // 试听音频
-    MAC: null
+    BAC: null,
+    MAC: null,
+    // music beat
+    type: 'music'
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.setData({
+      'createMusicPage.showHead': false,
+      'createMusicPage.showMine': true,
+      'beatPage.showMine': true
+    });
     CreateMusicListUtil.init(this);
+    BeatListUtil.init(this);
   },
 
   /**
@@ -61,27 +71,48 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    CreateMusicListUtil.onReachBottom(this);
+    let type = this.data.type;
+    if (type == 'music') {
+      CreateMusicListUtil.onReachBottom(this);
+    } else if (type == 'beat') {
+      BeatListUtil.onReachBottom(this);
+    }
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function (e) {
-    return CreateMusicListUtil.shareItem(e, this);
+  onShareAppMessage: function () {
+    let type = this.data.type;
+    if (type == 'music') {
+      return CreateMusicListUtil.shareItem(e, this);
+    }
   },
   init() {
-    CreateMusicListUtil.getMusicPage(1, this);
+    let type = this.data.type;
+    if (type == 'music') {
+      CreateMusicListUtil.getMusicPage(1, this);
+    } else if (type == 'beat') {
+      BeatListUtil.getBeatPage(1, this);
+    }
   },
-  toCreateMusicList() {
-    wx.navigateTo({
-      url: '/pages/create/beatList/index'
-    });
-  },
-  toCreateLyricsList() {
-    wx.navigateTo({
-      url: '/pages/create/createLyricsList/index'
-    });
+  togglePage(e) {
+    let type = this.data.type;
+    if (type != e.target.dataset.value) {
+      if (type == 'music') {
+        type = 'beat';
+      } else if (type == 'beat') {
+        type = 'music';
+      }
+
+      this.setData({
+        type
+      });
+    }
+
+    CreateMusicListUtil.pausePlay(e, this);
+    BeatListUtil.pausePlay(e, this);
+    this.init();
   },
   toggleMusicItemStatus(e) {
     CreateMusicListUtil.toggleMusicItemStatus(e, this);
@@ -94,5 +125,20 @@ Page({
   },
   musicLoadError(e) {
     CreateMusicListUtil.musicLoadError(e, this);
+  },
+  toggleBeatItemStatus(e) {
+    BeatListUtil.toggleBeatItemStatus(e, this);
+  },
+  toggleBeatCollectionItem(e) {
+    BeatListUtil.toggleBeatCollectionItem(e, this);
+  },
+  toRecord(e) {
+    BeatListUtil.toRecord(e, this);
+  },
+  beatPlayEnd(e) {
+    BeatListUtil.beatPlayEnd(e, this);
+  },
+  beatLoadError(e) {
+    BeatListUtil.beatLoadError(e, this);
   }
 })

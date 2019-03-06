@@ -1,58 +1,57 @@
-.create-music-list-container .create-music-item {
+.beat-list-container .beat-item {
   border-radius: 14rpx;
   overflow: hidden;
   background: #fff;
 }
 
-.create-music-list-container .create-music-item:not(:first-child) {
+.beat-list-container .beat-item:nth-child(n+5) {
   margin-top: 30rpx;
 }
 
-.create-music-list-container .create-music-item > view:first-child {
+.beat-list-container .beat-item > view:first-child {
   padding: 40rpx 20rpx 0;
 }
 
-.create-music-list-container .create-music-item > view .top-container {
+.beat-list-container .beat-item > view .top-container {
   margin-bottom: 40rpx;
 }
 
-.create-music-list-container .create-music-item > view .top-container .status-container {
+.beat-list-container .beat-item > view .top-container .status-container {
   width: 133rpx;
 }
 
-.create-music-list-container .create-music-item > view .top-container .status-container view {
+.beat-list-container .beat-item > view .top-container .status-container view {
   display: inline-block;
   position: relative;
 }
 
-.create-music-list-container .create-music-item > view .top-container .status-container view .disk {
+.beat-list-container .beat-item > view .top-container .status-container view image:first-child {
   width: 133rpx;
   height: 130rpx;
   border-radius: 50%;
 }
 
-.create-music-list-container .create-music-item > view .top-container .status-container view .pause {
+.beat-list-container .beat-item > view .top-container .status-container view image:not(:first-child) {
   width: 60rpx;
   height: 60rpx;
   position: absolute;
   top: 30rpx;
+}
+
+.beat-list-container .beat-item > view .top-container .status-container view image:nth-child(2) {
   left: 42rpx;
 }
 
-.create-music-list-container .create-music-item > view .top-container .status-container view .playing {
-  width: 60rpx;
-  height: 60rpx;
-  position: absolute;
-  top: 30rpx;
+.beat-list-container .beat-item > view .top-container .status-container view image:nth-child(3) {
   left: 38rpx;
 }
 
-.create-music-list-container .create-music-item > view .top-container .center-container {
+.beat-list-container .beat-item > view .top-container .center-container {
   padding: 16rpx 20rpx;
   min-height: 130rpx;
 }
 
-.create-music-list-container .create-music-item > view .top-container .center-container .title {
+.beat-list-container .beat-item > view .top-container .center-container .title {
   font-size:32rpx;
   font-family:PingFangSC-Medium;
   font-weight:500;
@@ -61,7 +60,7 @@
   letter-spacing:1rpx;
 }
 
-.create-music-list-container .create-music-item > view .top-container .center-container .detail-container {
+.beat-list-container .beat-item > view .top-container .center-container .detail-container {
   margin-top: 20rpx;
   font-size:24rpx;
   font-family:PingFangSC-Medium;
@@ -71,20 +70,20 @@
   letter-spacing:1rpx;
 }
 
-.create-music-list-container .create-music-item > view .top-container .center-container .detail-container > text:last-child {
+.beat-list-container .beat-item > view .top-container .center-container .detail-container > text:last-child {
   margin-left: 20rpx;
 }
 
-.create-music-list-container .create-music-item > view .top-container .right-container {
+.beat-list-container .beat-item > view .top-container .right-container {
   width: 50rpx;
 }
 
-.create-music-list-container .create-music-item > view .top-container .right-container image {
+.beat-list-container .beat-item > view .top-container .right-container image {
   width: 50rpx;
   height: 50rpx;
 }
 
-.create-music-list-container .create-music-item .start-record-container button {
+.beat-list-container .beat-item .start-record-container button {
   height: 82rpx;
   line-height: 82rpx;
   background:rgba(255,80,80,1);

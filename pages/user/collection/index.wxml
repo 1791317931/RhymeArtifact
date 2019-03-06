@@ -1,0 +1,15 @@
+<import src="/templates/createMusicList/index.wxml"/>
+<import src="/templates/beatList/index.wxml"/>
+
+<view class="collection-container">
+  <view class="toggle-btn-container clearfix">
+    <button data-value="music" class="music-btn {{type == 'music' ? 'active' : ''}}" catchtap="togglePage">创作</button>
+    <button data-value="beat" class="music-btn {{type == 'beat' ? 'active' : ''}}" catchtap="togglePage">伴奏</button>
+  </view>
+  <view hidden="{{type == 'beat'}}">
+    <template is="createMusicList" data="{{createMusicPage}}"></template>
+  </view>
+  <view hidden="{{type == 'music'}}">
+    <template is="beatList" data="{{beatPage}}"></template>
+  </view>
+</view>
