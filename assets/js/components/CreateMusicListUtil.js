@@ -1,6 +1,7 @@
 import TipUtil from '../TipUtil';
 import ConfigUtil from '../ConfigUtil';
 import PathUtil from '../PathUtil';
+import TimeUtil from '../TimeUtil';
 import * as api from '../api';
 
 let CreateMusicListUtil = {
@@ -90,7 +91,26 @@ let CreateMusicListUtil = {
     if (e.detail.errMsg == 'MEDIA_ERR_SRC_NOT_SUPPORTED') {
       TipUtil.message('播放失败');
     }
-    CreateMusicListUtil.playEnd(e, _this);
+    CreateMusicListUtil.musicPlayEnd(e, _this);
+  },
+  musicAudioTimeUpdate(e, _this) {
+    let time = e.detail.currentTime,
+    totalTime = e.detail.duration;
+
+    CreateMusicListUtil.caculateSurplusTime(totalTime, time, _this);
+  },
+  // 计算剩余时间
+  caculateSurplusTime(totalTime, currentTime, _this) {
+    let surplusTime = parseInt(totalTime - currentTime),
+    playingIndex = _this.data.createMusicPage.playingIndex,
+    item = _this.data.createMusicPage.list[playingIndex];
+
+    item.surplusTime = surplusTime;
+    item.surplusTimeArr = TimeUtil.numberToArr(surplusTime);
+
+    _this.setData({
+      [`createMusicPage.list[${playingIndex}]`]: item
+    });
   },
   getIndex(e, _this) {
     let index = e.target.dataset.index;
@@ -146,6 +166,14 @@ let CreateMusicListUtil = {
           item.mixture_url = PathUtil.getFilePath(item.mixture_url) || '/assets/imgs/logo.png';
           item.collection_num = parseInt(item.collection_num);
           item.share_num = parseInt(item.share_num);
+
+          // 总时长
+          let totalTime = parseInt(parseInt(item.music_duration) / 1000);
+          item.totalTime = totalTime;
+          // 剩余时长
+          item.surplusTime = totalTime;
+          item.surplusTimeArr = TimeUtil.numberToArr(totalTime);
+
           list.push(item);
         });
 

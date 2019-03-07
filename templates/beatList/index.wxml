@@ -1,6 +1,6 @@
 <template name="beatList">
   <view class="beat-list-container">
-    <audio class="hide" src="{{beatPage.list[beatPage.playingIndex].beat_url}}" id="beatAudio" bindended="beatPlayEnd" binderror="beatLoadError"></audio>
+    <audio class="hide" src="{{beatPage.list[beatPage.playingIndex].beat_url}}" id="beatAudio" bindended="beatPlayEnd" binderror="beatLoadError" bindtimeupdate="beatAudioTimeUpdate"></audio>
     <view hidden="{{!beatPage.loading || beatPage.pageNum > 1}}" class="empty loading"></view>
     <view hidden="{{beatPage.loading || beatPage.list.length}}" class="empty"></view>
     <view class="beat-item" wx:for="{{beatPage.list}}" wx:for-index="index" wx:for-item="item" wx:key="{{item.beat_id}}">
@@ -17,7 +17,7 @@
             <view class="table-cell center-container">
               <view class="title">{{item.beat_title}}</view>
               <view class="detail-container">
-                <text>{{item.beat_time}}</text>
+                <text>{{item.surplusTimeArr[0]}}:{{item.surplusTimeArr[1]}}:{{item.surplusTimeArr[2]}}</text>
                 <text>作词：{{item.beat_author}}</text>
               </view>
             </view>

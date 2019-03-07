@@ -1,7 +1,7 @@
 <!-- 创作列表 -->
 <template name="createMusicList">
   <view class="music-list-container">
-    <audio class="hide" src="{{createMusicPage.list[createMusicPage.playingIndex].mixture_url}}" id="musicAudio" bindended="musicPlayEnd" binderror="musicLoadError"></audio>
+    <audio class="hide" src="{{createMusicPage.list[createMusicPage.playingIndex].mixture_url}}" id="musicAudio" bindended="musicPlayEnd" binderror="musicLoadError" bindtimeupdate="musicAudioTimeUpdate"></audio>
     <view hidden="{{!createMusicPage.loading || createMusicPage.pageNum > 1}}" class="empty loading"></view>
     <view hidden="{{createMusicPage.loading || createMusicPage.list.length}}" class="empty"></view>
     <view class="music-item" wx:for="{{createMusicPage.list}}" wx:for-index="index" wx:for-item="item" wx:key="{{item.id}}">
@@ -28,6 +28,7 @@
                   <text>作曲：{{item.beat.beat_author}}</text>
                   <text>作词：{{item.music_author}}</text>
                 </view>
+                <view class="duration">{{item.surplusTimeArr[0]}}:{{item.surplusTimeArr[1]}}:{{item.surplusTimeArr[2]}}</view>
               </view>
             </view>
           </view>

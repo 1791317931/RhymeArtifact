@@ -43,8 +43,8 @@
 }
 
 .music-list-container .music-item .music-body-container {
-  height: 220rpx;
-  overflow-y: auto;
+  /* height: 220rpx;
+  overflow-y: auto; */
 }
 
 .music-list-container .music-item .music-body-container .top-container .status-container {
@@ -92,6 +92,16 @@
 }
 
 .music-list-container .music-item .music-body-container .top-container .right-container .detail-container {
+  margin-top: 20rpx;
+  font-size:24rpx;
+  font-family:PingFangSC-Medium;
+  font-weight:500;
+  color:rgba(29,29,29,1);
+  line-height:34rpx;
+  letter-spacing:1rpx;
+}
+
+.music-list-container .music-item .music-body-container .top-container .right-container .duration {
   margin-top: 20rpx;
   font-size:24rpx;
   font-family:PingFangSC-Medium;

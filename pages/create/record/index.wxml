@@ -1,10 +1,13 @@
-<import src="/templates/submitting/index.wxml"/>
-
-<template is="submitting" data="{{submittingForm}}"></template>
-
 <!-- 创作歌曲 -->
 <!-- 伴奏默认需要一个audio -->
-<audio class="hide" src="{{beatItem.beat_url}}" id="beatAudio" bindended="beatAudioEnded" binderror="beatAudioError" bindtimeupdate="beatAudioTimeUpdate"></audio>
+<audio class="hide" src="{{beatItem.path || beatItem.beat_url}}" id="beatAudio" bindended="beatAudioEnded" binderror="beatAudioError" bindtimeupdate="beatAudioTimeUpdate"></audio>
+
+<view hidden="{{hideSubmittingModal}}" class="z-modal">
+  <view class="z-modal-body submitting-body">
+    <image src="/assets/imgs/circle-loading.png"/>
+    <view>发布中…</view>
+  </view>
+</view>
 
 <view hidden="{{hideSaveModal}}" class="z-modal">
   <view class="z-modal-body save-modal-body">
@@ -19,7 +22,7 @@
     </view>
     <view class="btn-container clearfix">
       <button class="pull-left" catchtap="closeSaveModal">返回编辑</button>
-      <button class="pull-right" catchtap="submitRecord">发布分享</button>
+      <button class="pull-right" catchtap="uploadRecordAndSubmit">发布分享</button>
     </view>
   </view>
 </view>
@@ -29,8 +32,8 @@
       <view wx:for="{{scales}}" wx:for-index="index" wx:for-item="item" wx:key="{{index}}">{{item}}</view>
     </view>
     <view class="pointer-container">
-      <image hidden="{{mode == 'record'}}" style="left: {{beatItem.playedPercent}}" src="/assets/imgs/pointer.png"/>
-      <image hidden="{{mode == 'try'}}" style="left: {{beatItem.playedPercent}}" src="/assets/imgs/pointer.png"/>
+      <image hidden="{{mode == 'record'}}" style="left: {{beatItem.tryBeatTimePercent}}%" src="/assets/imgs/pointer.png" catchtouchmove="moveTryBeatPointer" catchtouchstart="tryBeatTouchStart" catchtouchend="tryBeatTouchEnd"/>
+      <image hidden="{{mode == 'try'}}" style="left: {{beatItem.recordBeatTimePercent}}%" src="/assets/imgs/pointer.png" catchtouchmove="moveRecordBeatPointer" catchtouchstart="recordBeatTouchStart" catchtouchend="recordBeatTouchEnd"/>
     </view>
   </view>
   <view class="combine-container">
@@ -41,7 +44,7 @@
         <image class="active-1" src="/assets/imgs/M.png"/>
         <image src="/assets/imgs/S.png"/>
       </view>
-      <view class="track-container">
+      <view class="track-container" id="track-container">
         <view class="head-container">音频1 Beat</view>
         <view class="high-container"></view>
         <view class="low-container"></view>
@@ -49,7 +52,7 @@
     </view>
     <view class="bottom-container">
       <view class="node">Beat</view>
-      <view class="time-start">{{beatItem.playedTimeArr[1]}}:{{beatItem.playedTimeArr[2]}}</view>
+      <view class="time-start">{{beatItem.tryBeatTimeArr[1]}}:{{beatItem.tryBeatTimeArr[2]}}</view>
       <view class="time-end">{{beatItem.beatTimeArr[1]}}:{{beatItem.beatTimeArr[2]}}</view>
     </view>
   </view>
@@ -69,8 +72,8 @@
     </view>
     <view class="bottom-container">
       <view class="node">Vocal-1</view>
-      <view class="time-start">00:00</view>
-      <view class="time-end">04:00</view>
+      <view class="time-start">{{beatItem.recordBeatTimeArr[1]}}:{{beatItem.recordBeatTimeArr[2]}}</view>
+      <view class="time-end">{{beatItem.beatTimeArr[1]}}:{{beatItem.beatTimeArr[2]}}</view>
     </view>
   </view>
   <view class="center-btn-container">
@@ -84,11 +87,11 @@
       <view>试听</view>
     </view>
     <view class="replay-container {{tryPlaying == false ? 'hide' : ''}}" catchtap="tryPlayPause">
-      <image src="/assets/imgs/replay.png"/>
+      <image src="/assets/imgs/pause-play.png"/>
       <view>暂停</view>
     </view>
     <image wx:if="{{recordState != 'recording'}}" class="record-state" src="/assets/imgs/record.png" catchtap="beginRecord"/>
-    <image wx:if="{{recordState == 'recording'}}" class="record-state" src="/assets/imgs/end-record.png" catchtap="pauseRecord"/>
+    <image wx:if="{{recordState == 'recording'}}" class="record-state" src="/assets/imgs/end-record.png" catchtap="endRecord"/>
     <view class="complete-container" catchtap="saveRecord">
       <image src="/assets/imgs/complete.png"/>
       <view>完成</view>

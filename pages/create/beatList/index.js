@@ -78,9 +78,12 @@ Page({
     BeatListUtil.toRecord(e, this);
   },
   beatPlayEnd(e) {
-    BeatListUtil.playEnd(e, this);
+    BeatListUtil.beatPlayEnd(e, this);
   },
   beatLoadError(e) {
     BeatListUtil.beatLoadError(e, this);
+  },
+  beatAudioTimeUpdate(e) {
+    BeatListUtil.beatAudioTimeUpdate(e, this);
   }
 })
