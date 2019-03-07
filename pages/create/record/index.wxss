@@ -1,4 +1,34 @@
-@import "/templates/submitting/index.wxss";
+.submitting-body {
+  width: 180rpx;
+  height: 180rpx;
+  text-align: center;
+  padding: 40rpx 0 0 0;
+}
+
+@keyframes image-rotate {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.submitting-body image {
+  width: 66rpx;
+  height: 66rpx;
+  animation: image-rotate 1s linear infinite;
+}
+
+.submitting-body view {
+  margin-top: 10rpx;
+  font-size:24rpx;
+  font-family:PingFang-SC-Regular;
+  font-weight:400;
+  color:rgba(35,35,35,1);
+  line-height:34rpx;
+  letter-spacing:1rpx;
+}
 
 .save-modal-body {
   width: 614rpx;
@@ -242,14 +272,15 @@
 .center-btn-container image:first-child {
   width: 184rpx;
   height: 102rpx;
+  display: none;
 }
 
 .center-btn-container image:last-child {
   width: 102rpx;
   height: 102rpx;
-  position: absolute;
+  /* position: absolute;
   top: 0;
-  right: 50rpx;
+  right: 50rpx; */
 }
 
 .lyrics-container {

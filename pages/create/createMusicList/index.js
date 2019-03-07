@@ -74,11 +74,15 @@ Page({
     CreateMusicListUtil.getMusicPage(1, this);
   },
   toCreateMusicList() {
+    CreateMusicListUtil.pausePlay(null, this);
+
     wx.navigateTo({
       url: '/pages/create/beatList/index'
     });
   },
   toCreateLyricsList() {
+    CreateMusicListUtil.pausePlay(null, this);
+
     wx.navigateTo({
       url: '/pages/create/createLyricsList/index'
     });
@@ -94,5 +98,8 @@ Page({
   },
   musicLoadError(e) {
     CreateMusicListUtil.musicLoadError(e, this);
+  },
+  musicAudioTimeUpdate(e) {
+    CreateMusicListUtil.musicAudioTimeUpdate(e, this);
   }
 })

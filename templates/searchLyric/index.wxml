@@ -28,7 +28,7 @@
       wx:for="{{rhymePage.list}}" 
       wx:for-index="index" 
       wx:for-item="item" wx:key="index">
-      {{item.text}}
+      {{item}}
     </button>
   </view>
 </template>

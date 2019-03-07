@@ -4,7 +4,6 @@ import * as api from '../../../assets/js/api';
 import FileType from '../../../assets/js/FileType';
 import ConfigUtil from '../../../assets/js/ConfigUtil';
 import TimeUtil from '../../../assets/js/TimeUtil';
-import SubmittingUtil from '../../../assets/js/components/SubmittingUtil';
 
 Page({
   /**
@@ -13,7 +12,7 @@ Page({
   data: {
     scales: [],
     hideSaveModal: true,
-    // 录制状态：ready（准备就绪） recording（录制中） pause（已暂停）
+    // 录制状态：ready（准备就绪） recording（录制中）
     recordState: 'ready',
     recordOption: {
       // 最长4分钟
@@ -25,7 +24,7 @@ Page({
     BAC: null,
     recordForm: {
       beatId: 1,
-      lyrics: '小程序歌曲内容',
+      lyrics: '',
       duration: '',
       fileSize: 0,
       path: '',
@@ -45,9 +44,15 @@ Page({
     tryPlaying: false,
     // 试听伴奏是否播放结束，当再次点击试听，可以重新播放
     tryPlayEnded: false,
-    submittingForm: SubmittingUtil.submittingForm,
     // 模式  record（录制） try（试听）
-    mode: 'record'
+    mode: 'record',
+    // 记录指针初始位置
+    startTryBeatPageX: null,
+    startTryBeatPercent: null,
+    startRecordBeatPageX: null,
+    startRecordBeatPercent: null,
+    trackContainerWidth: null,
+    hideSubmittingModal: true
   },
 
   /**
@@ -63,8 +68,8 @@ Page({
       'recordForm.beatId': beatItem.beat_id,
       beatItem
     });
-    this.caculateBeatTime(0);
-    this.caculateRecordTime(0);
+    this.caculateTryBeatTime(0);
+    this.caculateRecordBeatTime(0);
 
     let scales = [];
     for (let i = 0; i <= 50; i += 2) {
@@ -80,6 +85,15 @@ Page({
 
     let RM = wx.getRecorderManager(),
     BAC = wx.createAudioContext('beatAudio');
+
+    const query = wx.createSelectorQuery();
+    query.select('#track-container').boundingClientRect();
+    query.exec((res) => {
+      this.setData({
+        trackContainerWidth: res[0].width 
+      });
+    });
+
     this.setData({
       RM,
       BAC
@@ -111,7 +125,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    
   },
 
   /**
@@ -149,18 +163,66 @@ Page({
       tryPlayEnded
     });
   },
-  tryPlayStart() {
-    let BAC = this.data.BAC;
+  // 计算试听-伴奏播放时长
+  caculateTryBeatTime(time) {
+    time = parseInt(time);
 
-    if (this.data.tryPlayEnded) {
-      // 这里不用修改palyedTime，会自动在tryAudioTimeUpdate方法中更新
-      BAC.seek(0);
+    let beatItem = this.data.beatItem;
+    // 已播放时长
+    beatItem.tryBeatTime = time;
+    beatItem.tryBeatTimeArr = TimeUtil.numberToArr(time);
+    beatItem.tryBeatTimePercent = (time / beatItem.totalTime * 100);
+    this.setData({
+      beatItem
+    });
+  },
+  // 计算录制-伴奏播放时长
+  caculateRecordBeatTime(time) {
+    time = parseInt(time);
+
+    let beatItem = this.data.beatItem;
+    // 已播放时长
+    beatItem.recordBeatTime = time;
+    beatItem.recordBeatTimeArr = TimeUtil.numberToArr(time);
+    beatItem.recordBeatTimePercent = (time / beatItem.totalTime * 100);
+    this.setData({
+      beatItem
+    });
+  },
+  tryPlayStart() {
+    let tryPlay = () => {
+      let BAC = this.data.BAC;
+      
+      if (this.data.tryPlayEnded || this.data.mode == 'record') {
+        // 这里不用修改palyedTime，会自动在tryAudioTimeUpdate方法中更新
+        BAC.seek(0);
+        this.caculateTryBeatTime(0);
+      } else {
+        BAC.seek(this.data.beatItem.tryBeatTime);
+      }
+
+      BAC.play();
+      this.changeTryPlayState(true);
+      this.changeTryPlayEndedState(false);
+      this.changeMode('try');
+    };
+
+    // 正在录制，需要给出提示结束并生成一个音频
+    if (this.data.recordState == 'recording') {
+      wx.showModal({
+        title: '系统提示',
+        content: '是否立即结束录制并试听？',
+        success: (res) => {
+          if (res.confirm) {
+            this.endRecord(() => {
+              tryPlay();
+            });
+          }
+        }
+      });
+    } else {
+      tryPlay();
     }
-    
-    BAC.play();
-    this.changeTryPlayState(true);
-    this.changeTryPlayEndedState(false);
-    this.changeMode('try');
   },
   tryPlayPause() {
     let BAC = this.data.BAC;
@@ -170,94 +232,183 @@ Page({
   },
   // 伴奏音频事件
   beatAudioTimeUpdate(e) {
-    let timeStamp = e.timeStamp;
-    this.caculateBeatTime(timeStamp);
+    let time = e.detail.currentTime;
+
+    this.caculateTryBeatTime(time);
+    if (this.data.mode == 'record') {
+      this.caculateRecordBeatTime(time);
+    }
   },
   beatAudioEnded() {
-    this.changeTryPlayState(false);
-    this.changeTryPlayEndedState(true);
+    if (this.data.mode == 'try') {
+      this.changeTryPlayState(false);
+      this.changeTryPlayEndedState(true);
+    } else {
+      // 如果正在录音，要强制结束
+      TipUtil.message('录音音频已生成');
+      this.endRecord();
+    }
   },
   beatAudioError(e) {
     // 后期调试，根据错误给出提示信息
-    console.log(e);
-    this.changeTryPlayState(false);
+    if (this.data.mode == 'try') {
+      this.changeTryPlayState(false);
+    } else {
+      this.changeRecordState(false);
+    }
   },
   changeRecordState(recordState) {
     this.setData({
       recordState
     });
   },
-  beginRecord() {
-    let RM = this.data.RM,
-    BAC = this.data.BAC;
+  // ---------------------拖动指针--------------------------
+  tryBeatTouchStart(e) {
+    this.setData({
+      startTryBeatPageX: e.touches[0].pageX,
+      startTryBeatPercent: this.data.beatItem.tryBeatTimePercent / 100
+    });
 
     if (this.data.tryPlaying) {
-      TipUtil.message('您正在试听，请关闭后再操作');
-      return;
+      this.tryPlayPause();
     }
+  },
+  moveTryBeatPointer(e) {
+    let touches = e.touches,
+    prePageX = this.data.startTryBeatPageX,
+    pageX = e.touches[0].pageX;
 
-    RM.start(this.data.recordOption);
-    RM.onStart(() => {
-      if (this.data.recordState == 'ready') {
+    let width = pageX - prePageX,
+    beatItem = this.data.beatItem,
+    percent = width / this.data.trackContainerWidth,
+    tryBeatTimePercent = this.data.startTryBeatPercent + percent;
+
+    tryBeatTimePercent = Math.min(1, tryBeatTimePercent);
+    tryBeatTimePercent = Math.max(0, tryBeatTimePercent);
+
+    let time = tryBeatTimePercent * beatItem.totalTime;
+
+    this.caculateTryBeatTime(time);
+  },
+  tryBeatTouchEnd(e) {
+    this.tryPlayStart();
+  },
+  recordBeatTouchStart(e) {
+    
+  },
+  moveRecordBeatPointer(e) {
+    
+  },
+  recordBeatTouchEnd(e) {
+    
+  },
+  // ---------------------拖动指针--------------------------
+  beginRecord() {
+    let record = () => {
+      let RM = this.data.RM,
+      BAC = this.data.BAC;
+
+      RM.start(this.data.recordOption);
+      RM.onStart(() => {
         // 从头播放
         BAC.seek(0);
-      }
-      BAC.play();
+        BAC.play();
 
-      this.changeRecordState('recording');
-      this.changeMode('record');
-      TipUtil.message('录制中');
-    });
+        // 清空已经录制的音频
+        this.setData({
+          'recordForm.path': null
+        });
+        this.changeTryPlayState(false);
+        this.changeRecordState('recording');
+        this.changeMode('record');
+      });
+    };
+
+    // 已经存在录制好的音频，需要提示是否重新录制
+    if (this.data.recordForm.path) {
+      wx.showModal({
+        title: '系统提示',
+        content: '存在已经录制完成的音频，是否重新录制？',
+        success: (res) => {
+          if (res.confirm) {
+            record();
+          }
+        },
+        fail: (res) => {
+
+        }
+      });
+    } else {
+      record();
+    }
   },
-  pauseRecord() {
+  endRecord(callback) {
     let RM = this.data.RM,
     BAC = this.data.BAC;
 
-    RM.pause();
-    RM.onPause((e) => {
+    // 结束录制
+    RM.stop();
+    RM.onStop((res) => {
       BAC.pause();
-      if (this.data.recordState != 'pause') {
-        this.changeRecordState('pause');
-        TipUtil.message('已暂停录制');
+
+      let recordForm = this.data.recordForm;
+      recordForm.duration = res.duration;
+      recordForm.fileSize = res.fileSize;
+      recordForm.path = res.tempFilePath;
+      this.setData({
+        recordForm
+      });
+
+      this.changeRecordState('ready');
+
+      if (typeof callback == 'function') {
+        callback();
       }
     });
   },
+  // 录制少于15秒，不能发布
   saveRecord() {
+    let MIN_TIME = 15;
+
+    let toSave = () => {
+      this.tryPlayPause();
+
+      if (this.data.recordState == 'recording') {
+        this.endRecord(() => {
+          this.toggleSaveModal(false);
+        });
+      } else {
+        this.toggleSaveModal(false);
+      }
+    };
+
     // 正在录制或者暂停
-    if (this.data.recordState == 'ready') {
-      TipUtil.message('您还没有录制');
-      return;
+    if (this.data.recordState == 'recording') {
+      if (this.data.beatItem.recordBeatTime < MIN_TIME) {
+        TipUtil.message('请至少录制' + MIN_TIME + '秒后再发布');
+      } else {
+        wx.showModal({
+          title: '系统提示',
+          content: '是否结束录制并发布',
+          success: (res) => {
+            if (res.confirm) {
+              toSave();
+            }
+          },
+          fail: (res) => {
+
+          }
+        });
+      }
+    } else if (this.data.recordForm.path) {
+      if (this.data.recordForm.duration < MIN_TIME * 1000) {
+        TipUtil.message('请至少录制' + MIN_TIME + '秒后再发布');
+      } else {
+        toSave();
+      }
+    } else {
+      TipUtil.message('请录制后再发布');
     }
-
-    // 先暂停录制
-    this.pauseRecord();
-    this.toggleSaveModal(false);
-  },
-  // 计算试听-伴奏播放时长
-  caculateTryBeatTime(time) {
-    time = parseInt(time / 1000);
-
-    let beatItem = this.data.beatItem;
-    // 已播放时长
-    beatItem.playedTime = time;
-    beatItem.playedTimeArr = TimeUtil.numberToArr(time);
-    beatItem.playedPercent = time / beatItem.totalTime;
-    this.setData({
-      beatItem
-    });
-  },
-  // 计算录制-伴奏播放时长
-  caculateRecordBeatTime(time) {
-    time = parseInt(time / 1000);
-
-    let beatItem = this.data.beatItem;
-    // 已播放时长
-    beatItem.playedTime = time;
-    beatItem.playedTimeArr = TimeUtil.numberToArr(time);
-    beatItem.playedPercent = time / beatItem.totalTime;
-    this.setData({
-      beatItem
-    });
   },
   toggleSaveModal(hideSaveModal) {
     this.setData({
@@ -277,20 +428,9 @@ Page({
   closeSaveModal() {
     this.toggleSaveModal(true);
   },
-  submitRecord() {
-    let RM = this.data.RM;
-    // 先结束录制，并且保存音频
-    RM.stop();
-    RM.onStop((res) => {
-      let recordForm = this.data.recordForm;
-      recordForm.duration = res.duration;
-      recordForm.fileSize = res.fileSize;
-      recordForm.path = res.tempFilePath;
-      this.setData({
-        recordForm
-      });
-
-      this.uploadRecordAndSubmit();
+  toggleSubmitting(hideSubmittingModal) {
+    this.setData({
+      hideSubmittingModal
     });
   },
   uploadRecordAndSubmit() {
@@ -306,7 +446,7 @@ Page({
       return;
     }
 
-    SubmittingUtil.toggleSubmitting(true, this);
+    this.toggleSubmitting(false);
     // 校验通过后，上传音频
     wx.uploadFile({
       url: PathUtil.getPath('upload-file'),
@@ -335,9 +475,9 @@ Page({
           };
 
           api.createMusic(param, (res) => {
-            SubmittingUtil.toggleSubmitting(false, this);
+            this.toggleSubmitting(true);
             if (ConfigUtil.isSuccess(res.code)) {
-              TipUtil.message('上传成功');
+              TipUtil.message('发布成功');
               setTimeout(() => {
                 wx.navigateBack({
                   
@@ -350,12 +490,20 @@ Page({
         }
       },
       fail(e) {
-        TipUtil.message('上传失败');
-        SubmittingUtil.toggleSubmitting(false, this);
+        TipUtil.message('发布失败');
+        this.toggleSubmitting(true);
       }
     });
   },
   toEditLyrics() {
+    if (this.data.tryPlaying) {
+      this.tryPlayPause();
+    }
+    
+    if (this.data.recordState == 'recording') {
+      this.endRecord();
+    }
+
     wx.navigateTo({
       url: '/pages/create/record/lyrics/index?content=' + this.data.recordForm.lyrics
     });

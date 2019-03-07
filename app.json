@@ -1,8 +1,8 @@
 {
   "pages": [
-    "pages/create/beatList/index",
     "pages/main/index",
     "pages/create/createMusicList/index",
+    "pages/create/beatList/index",
     "pages/create/record/index",
     "pages/create/createLyricsList/index",
     "pages/create/lyrics/index",

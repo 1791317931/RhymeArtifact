@@ -20,7 +20,7 @@ let BeatListUtil = {
     _this.setData({
       BAC
     });
-  },
+  },  
   toggleBeatItemStatus(e, _this) {
     let index = e.currentTarget.dataset.index,
     page = _this.data.beatPage,
@@ -130,7 +130,26 @@ let BeatListUtil = {
     if (e.detail.errMsg == 'MEDIA_ERR_SRC_NOT_SUPPORTED') {
       TipUtil.message('播放失败');
     }
-    BeatListUtil.playEnd(e, _this);
+    BeatListUtil.beatPlayEnd(e, _this);
+  },
+  beatAudioTimeUpdate(e, _this) {
+    let time = e.detail.currentTime,
+    totalTime = e.detail.duration;
+
+    BeatListUtil.caculateSurplusTime(totalTime, time, _this);
+  },
+  // 计算剩余时间
+  caculateSurplusTime(totalTime, currentTime, _this) {
+    let surplusTime = parseInt(totalTime - currentTime),
+    playingIndex = _this.data.beatPage.playingIndex,
+    item = _this.data.beatPage.list[playingIndex];
+
+    item.surplusTime = surplusTime;
+    item.surplusTimeArr = TimeUtil.numberToArr(surplusTime);
+
+    _this.setData({
+      [`beatPage.list[${playingIndex}]`]: item
+    });
   },
   toRecord(e, _this) {
     BeatListUtil.pausePlay(e, _this);
@@ -204,6 +223,7 @@ let BeatListUtil = {
           item.totalTime = totalTime;
           // 剩余时长
           item.surplusTime = totalTime;
+          item.surplusTimeArr = TimeUtil.numberToArr(totalTime);
 
           list.push(item);
         });
