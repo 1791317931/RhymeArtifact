@@ -3,6 +3,7 @@ import PathUtil from '../../../assets/js/PathUtil';
 import * as api from '../../../assets/js/api';
 import FileType from '../../../assets/js/FileType';
 import ConfigUtil from '../../../assets/js/ConfigUtil';
+import TimeUtil from '../../../assets/js/TimeUtil';
 import SubmittingUtil from '../../../assets/js/components/SubmittingUtil';
 
 Page({
@@ -22,10 +23,6 @@ Page({
     RM: null,
     // 伴奏音频
     BAC: null,
-    // 试听音频
-    TAC: null,
-    // 伴奏音频路径
-    beatPath: null,
     recordForm: {
       beatId: 1,
       lyrics: '小程序歌曲内容',
@@ -35,6 +32,7 @@ Page({
       title: '',
       author: ''
     },
+    beatItem: null,
     recordRule: {
       title: {
         length: 30
@@ -45,20 +43,28 @@ Page({
       }
     },
     tryPlaying: false,
-    submittingForm: SubmittingUtil.submittingForm
+    // 试听伴奏是否播放结束，当再次点击试听，可以重新播放
+    tryPlayEnded: false,
+    submittingForm: SubmittingUtil.submittingForm,
+    // 模式  record（录制） try（试听）
+    mode: 'record'
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let userInfo = wx.getStorageSync('userInfo');
+    let userInfo = wx.getStorageSync('userInfo'),
+    beatItem = JSON.parse(options.beatItem);
+    beatItem.beatTimeArr = TimeUtil.stringToArr(beatItem.beat_time);
+
     this.setData({
       'recordForm.author': userInfo.nickName,
-      'recordForm.beatId': options.beatId,
-      beatPath: options.beatPath
+      'recordForm.beatId': beatItem.beat_id,
+      beatItem
     });
-    console.log(options.beatId)
+    this.caculateBeatTime(0);
+    this.caculateRecordTime(0);
 
     let scales = [];
     for (let i = 0; i <= 50; i += 2) {
@@ -73,12 +79,10 @@ Page({
     });
 
     let RM = wx.getRecorderManager(),
-    BAC = wx.createAudioContext('beatAudio'),
-    TAC = wx.createAudioContext('tryAudio');
+    BAC = wx.createAudioContext('beatAudio');
     this.setData({
       RM,
-      BAC,
-      TAC
+      BAC
     });
   },
 
@@ -130,28 +134,52 @@ Page({
   onShareAppMessage: function () {
 
   },
+  changeMode(mode) {
+    this.setData({
+      mode
+    });
+  },
   changeTryPlayState(tryPlaying) {
     this.setData({
       tryPlaying
     });
   },
+  changeTryPlayEndedState(tryPlayEnded) {
+    this.setData({
+      tryPlayEnded
+    });
+  },
   tryPlayStart() {
-    let recordForm = this.data.recordForm,
-    TAC = this.data.TAC;
+    let BAC = this.data.BAC;
 
-    if (recordForm.path) {
-      TAC.seek(0);
-      TAC.play();
-      this.changeTryPlayState(true);
-    } else {
-      TipUtil.message('请录制完成后再试听');
+    if (this.data.tryPlayEnded) {
+      // 这里不用修改palyedTime，会自动在tryAudioTimeUpdate方法中更新
+      BAC.seek(0);
     }
+    
+    BAC.play();
+    this.changeTryPlayState(true);
+    this.changeTryPlayEndedState(false);
+    this.changeMode('try');
   },
   tryPlayPause() {
-    let recordForm = this.data.recordForm,
-    TAC = this.data.TAC;
+    let BAC = this.data.BAC;
 
-    TAC.pause();
+    BAC.pause();
+    this.changeTryPlayState(false);
+  },
+  // 伴奏音频事件
+  beatAudioTimeUpdate(e) {
+    let timeStamp = e.timeStamp;
+    this.caculateBeatTime(timeStamp);
+  },
+  beatAudioEnded() {
+    this.changeTryPlayState(false);
+    this.changeTryPlayEndedState(true);
+  },
+  beatAudioError(e) {
+    // 后期调试，根据错误给出提示信息
+    console.log(e);
     this.changeTryPlayState(false);
   },
   changeRecordState(recordState) {
@@ -177,6 +205,7 @@ Page({
       BAC.play();
 
       this.changeRecordState('recording');
+      this.changeMode('record');
       TipUtil.message('录制中');
     });
   },
@@ -185,7 +214,7 @@ Page({
     BAC = this.data.BAC;
 
     RM.pause();
-    RM.onPause(() => {
+    RM.onPause((e) => {
       BAC.pause();
       if (this.data.recordState != 'pause') {
         this.changeRecordState('pause');
@@ -204,25 +233,31 @@ Page({
     this.pauseRecord();
     this.toggleSaveModal(false);
   },
-  beatAudioEnded() {
-    this.changeTryPlayState(false);
+  // 计算试听-伴奏播放时长
+  caculateTryBeatTime(time) {
+    time = parseInt(time / 1000);
+
+    let beatItem = this.data.beatItem;
+    // 已播放时长
+    beatItem.playedTime = time;
+    beatItem.playedTimeArr = TimeUtil.numberToArr(time);
+    beatItem.playedPercent = time / beatItem.totalTime;
+    this.setData({
+      beatItem
+    });
   },
-  beatAudioError(e) {
-    console.log(e)
-    this.changeTryPlayState(false);
-  },
-  beatAudioTimeUpdate(e) {
-    console.log(e);
-  },
-  bindplay() {
-    
-  },
-  tryAudioEnded() {
-    this.changeTryPlayState(false);
-  },
-  tryAudioError(e) {
-    console.log(e)
-    this.changeTryPlayState(false);
+  // 计算录制-伴奏播放时长
+  caculateRecordBeatTime(time) {
+    time = parseInt(time / 1000);
+
+    let beatItem = this.data.beatItem;
+    // 已播放时长
+    beatItem.playedTime = time;
+    beatItem.playedTimeArr = TimeUtil.numberToArr(time);
+    beatItem.playedPercent = time / beatItem.totalTime;
+    this.setData({
+      beatItem
+    });
   },
   toggleSaveModal(hideSaveModal) {
     this.setData({

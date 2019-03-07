@@ -1,6 +1,7 @@
 import TipUtil from '../TipUtil';
 import ConfigUtil from '../ConfigUtil';
 import PathUtil from '../PathUtil';
+import TimeUtil from '../TimeUtil';
 import * as api from '../api';
 
 let BeatListUtil = {
@@ -136,7 +137,7 @@ let BeatListUtil = {
 
     let item = BeatListUtil.getItem(e, _this);
     wx.navigateTo({
-      url: '/pages/create/record/index?beatId=' + item.beat_id + '&beatPath=' + item.beat_url
+      url: '/pages/create/record/index?beatItem=' + JSON.stringify(item)
     });
   },
   onReachBottom(_this) {
@@ -197,12 +198,13 @@ let BeatListUtil = {
         let obj = res.data;
         obj.data.forEach((item, index) => {
           item.beat_url = PathUtil.getFilePath(item.beat_url);
-          // let beatTimeArr = item.beat_time.split(':'),
-          // // 总时长
-          // totalTime = parseInt(beatTimeArr[0]) * 3600 + parseInt(beatTimeArr[1]) * 60 + parseInt(beatTimeArr[2]) * 1;
-          // item.totalTime = totalTime;
-          // // 剩余时长
-          // item.surplusTime = totalTime;
+
+          // 总时长
+          let totalTime = TimeUtil.stringToNumber(item.beat_time);
+          item.totalTime = totalTime;
+          // 剩余时长
+          item.surplusTime = totalTime;
+
           list.push(item);
         });
 

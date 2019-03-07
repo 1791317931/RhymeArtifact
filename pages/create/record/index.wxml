@@ -4,9 +4,7 @@
 
 <!-- 创作歌曲 -->
 <!-- 伴奏默认需要一个audio -->
-<audio class="hide" src="{{beatPath}}" id="beatAudio" controls bindended="beatAudioEnded" binderror="beatAudioError" bindtimeupdate="beatAudioTimeUpdate"></audio>
-<!-- 试听时使用的audio -->
-<audio class="hide" src="{{recordForm.path}}" id="tryAudio" controls bindended="tryAudioEnded" binderror="tryAudioError" bindplay="bindplay"></audio>
+<audio class="hide" src="{{beatItem.beat_url}}" id="beatAudio" bindended="beatAudioEnded" binderror="beatAudioError" bindtimeupdate="beatAudioTimeUpdate"></audio>
 
 <view hidden="{{hideSaveModal}}" class="z-modal">
   <view class="z-modal-body save-modal-body">
@@ -31,7 +29,8 @@
       <view wx:for="{{scales}}" wx:for-index="index" wx:for-item="item" wx:key="{{index}}">{{item}}</view>
     </view>
     <view class="pointer-container">
-      <image src="/assets/imgs/pointer.png"/>
+      <image hidden="{{mode == 'record'}}" style="left: {{beatItem.playedPercent}}" src="/assets/imgs/pointer.png"/>
+      <image hidden="{{mode == 'try'}}" style="left: {{beatItem.playedPercent}}" src="/assets/imgs/pointer.png"/>
     </view>
   </view>
   <view class="combine-container">
@@ -50,8 +49,8 @@
     </view>
     <view class="bottom-container">
       <view class="node">Beat</view>
-      <view class="time-start">00:00</view>
-      <view class="time-end">04:00</view>
+      <view class="time-start">{{beatItem.playedTimeArr[1]}}:{{beatItem.playedTimeArr[2]}}</view>
+      <view class="time-end">{{beatItem.beatTimeArr[1]}}:{{beatItem.beatTimeArr[2]}}</view>
     </view>
   </view>
   <view class="combine-container">
