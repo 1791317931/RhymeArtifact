@@ -29,10 +29,10 @@ Page({
       }
     ],
     extrals: [
-      {
-        path: '',
-        text: '关注公众号'
-      },
+      // {
+      //   path: '',
+      //   text: '关注公众号'
+      // },
       {
         path: '',
         text: '商务合作'
@@ -107,6 +107,9 @@ Page({
     });
   },
   clickExtralMenu(e) {
-
+    let index = e.target.dataset.index
+    wx.makePhoneCall({
+      phoneNumber: '17301257015' // 仅为示例，并非真实的电话号码
+    })
   }
 })

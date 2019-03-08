@@ -10,7 +10,7 @@
     </view>
   </view>
   <view class="menu-container extral-container">
-    <view class="item" wx:for="{{extrals}}" wx:for-index="index" wx:for-item="item" wx:key="{{index}}" catchtap="clickExtralMenu">
+    <view class="item" wx:for="{{extrals}}" wx:for-index="index" data-index="{{index}}" wx:for-item="item" wx:key="{{index}}" catchtap="clickExtralMenu">
       {{item.text}}
       <image src="../../../assets/imgs/arrow-left.png"/>
     </view>
