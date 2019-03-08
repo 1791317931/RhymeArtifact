@@ -54,7 +54,12 @@ Page({
     startRecordBeatPageX: null,
     startRecordBeatPercent: null,
     trackContainerWidth: null,
-    hideSubmittingModal: true
+    hideSubmittingModal: true,
+    // 两组M、S
+    firstTrackButton: null,
+    secondTrackButton: null,
+    firstVideoMuted: false,
+    secondVideoMuted: false
   },
 
   /**
@@ -359,6 +364,14 @@ Page({
 
       RM.start(this.data.recordOption);
       RM.onStart(() => {
+        // 左侧状态按钮全部重置
+        this.setData({
+          firstVideoMuted: false,
+          secondVideoMuted: false,
+          firstTrackButton: null,
+          secondTrackButton: null
+        });
+
         // 从头播放
         BAC.seek(0);
         BAC.play();
@@ -559,5 +572,51 @@ Page({
     wx.navigateTo({
       url: '/pages/create/record/lyrics/index?content=' + this.data.recordForm.lyrics
     });
+  },
+  toggleFirstTrack(e) {
+    if (this.data.mode != 'try') {
+      return;
+    }
+
+    let value = e.target.dataset.value;
+
+    if (value == 'M') {
+      // 静音
+      this.setData({
+        firstVideoMuted: !this.data.firstVideoMuted,
+        firstTrackButton: this.data.firstTrackButton == value ? null : value
+      });
+    } else if (value == 'S') {
+      // 独奏
+      this.setData({
+        firstVideoMuted: false,
+        secondVideoMuted: this.data.firstTrackButton == value ? false : true,
+        firstTrackButton: this.data.firstTrackButton == value ? null : value,
+        secondTrackButton: this.data.firstTrackButton == value ? null : 'M'
+      });
+    }
+  },
+  toggleSecondTrack(e) {
+    if (this.data.mode != 'try') {
+      return;
+    }
+
+    let value = e.target.dataset.value;
+
+    if (value == 'M') {
+      // 静音
+      this.setData({
+        secondVideoMuted: !this.data.secondVideoMuted,
+        secondTrackButton: this.data.secondTrackButton == value ? null : value
+      });
+    } else if (value == 'S') {
+      // 独奏
+      this.setData({
+        secondVideoMuted: false,
+        firstVideoMuted: this.data.secondTrackButton == value ? false : true,
+        secondTrackButton: this.data.secondTrackButton == value ? null : value,
+        firstTrackButton: this.data.secondTrackButton == value ? null : 'M'
+      });
+    }
   }
 })
