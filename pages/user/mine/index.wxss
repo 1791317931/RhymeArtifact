@@ -55,3 +55,15 @@
 .extral-container {
   margin-top: 30rpx;
 }
+
+.extral-container button {
+  height:100rpx;
+  line-height:100rpx;
+  text-align:left;
+  padding:0;
+  background:transparent;
+  font-size:30rpx;
+  font-family:PingFangSC-Regular;
+  color:rgba(57,57,62,1);
+  letter-spacing:1rpx;
+}

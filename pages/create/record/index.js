@@ -22,6 +22,8 @@ Page({
     RM: null,
     // 伴奏音频
     BAC: null,
+    // 录制的音频
+    RAC: null,
     recordForm: {
       beatId: 1,
       lyrics: '',
@@ -42,7 +44,7 @@ Page({
       }
     },
     tryPlaying: false,
-    // 试听伴奏是否播放结束，当再次点击试听，可以重新播放
+    // 试听伴奏和已录制音频是否播放结束，当再次点击试听，可以重新播放
     tryPlayEnded: false,
     // 模式  record（录制） try（试听）
     mode: 'record',
@@ -84,7 +86,8 @@ Page({
     });
 
     let RM = wx.getRecorderManager(),
-    BAC = wx.createAudioContext('beatAudio');
+    BAC = wx.createAudioContext('beatAudio'),
+    RAC = wx.createAudioContext('recordAudio');
 
     const query = wx.createSelectorQuery();
     query.select('#track-container').boundingClientRect();
@@ -96,7 +99,8 @@ Page({
 
     this.setData({
       RM,
-      BAC
+      BAC,
+      RAC
     });
   },
 
@@ -191,20 +195,28 @@ Page({
   },
   tryPlayStart() {
     let tryPlay = () => {
-      let BAC = this.data.BAC;
+      let BAC = this.data.BAC,
+      RAC = this.data.RAC;
       
       if (this.data.tryPlayEnded || this.data.mode == 'record') {
         // 这里不用修改palyedTime，会自动在tryAudioTimeUpdate方法中更新
         BAC.seek(0);
+        RAC.seek(0);
         this.caculateTryBeatTime(0);
       } else {
         BAC.seek(this.data.beatItem.tryBeatTime);
+        RAC.seek(this.data.beatItem.recordBeatTime);
       }
 
       BAC.play();
       this.changeTryPlayState(true);
       this.changeTryPlayEndedState(false);
       this.changeMode('try');
+
+      // 如果有已经录制完成的音频
+      if (this.data.recordForm.path) {
+        RAC.play();
+      }
     };
 
     // 正在录制，需要给出提示结束并生成一个音频
@@ -225,10 +237,16 @@ Page({
     }
   },
   tryPlayPause() {
-    let BAC = this.data.BAC;
+    let BAC = this.data.BAC,
+    RAC = this.data.RAC;
 
     BAC.pause();
     this.changeTryPlayState(false);
+
+    // 如果有已经录制完成的音频
+    if (this.data.recordForm.path) {
+      RAC.pause();
+    }
   },
   // 伴奏音频事件
   beatAudioTimeUpdate(e) {
@@ -262,6 +280,30 @@ Page({
       recordState
     });
   },
+  recordAudioTimeUpdate(e) {
+    let time = e.detail.currentTime;
+
+    if (time > this.data.recordForm.duration) {
+      this.recordAudioEnded(e);
+    }
+  },
+  /**
+   * 如果录制的音频播放完成，伴奏不一定播放完成，所以需要主动结束伴奏
+   */
+  recordAudioEnded(e) {
+    let BAC = this.data.BAC;
+
+    BAC.pause();
+    this.changeTryPlayState(false);
+    this.changeTryPlayEndedState(true);
+  },
+  recordAudioError(e) {
+    // 后期调试，根据错误给出提示信息
+    let BAC = this.data.BAC;
+
+    BAC.pause(); 
+    this.changeTryPlayState(false);
+  },
   // ---------------------拖动指针--------------------------
   tryBeatTouchStart(e) {
     this.setData({
@@ -276,7 +318,8 @@ Page({
   moveTryBeatPointer(e) {
     let touches = e.touches,
     prePageX = this.data.startTryBeatPageX,
-    pageX = e.touches[0].pageX;
+    pageX = e.touches[0].pageX,
+    recordForm = this.data.recordForm;
 
     let width = pageX - prePageX,
     beatItem = this.data.beatItem,
@@ -287,6 +330,11 @@ Page({
     tryBeatTimePercent = Math.max(0, tryBeatTimePercent);
 
     let time = tryBeatTimePercent * beatItem.totalTime;
+
+    // 如果已经有被录制的音频，并且拖动的时间已经超出了被录制的音频总时长（录制的音频时长肯定<=伴奏音频），那么只能拖动到这个时长
+    if (recordForm.path && time >= recordForm.duration / 1000) {
+      time = recordForm.duration / 1000;
+    }
 
     this.caculateTryBeatTime(time);
   },
@@ -306,13 +354,16 @@ Page({
   beginRecord() {
     let record = () => {
       let RM = this.data.RM,
-      BAC = this.data.BAC;
+      BAC = this.data.BAC,
+      RAC = this.data.RAC;
 
       RM.start(this.data.recordOption);
       RM.onStart(() => {
         // 从头播放
         BAC.seek(0);
         BAC.play();
+        // 暂停录制的音频播放
+        RAC.pause();
 
         // 清空已经录制的音频
         this.setData({
@@ -480,7 +531,8 @@ Page({
               TipUtil.message('发布成功');
               setTimeout(() => {
                 wx.navigateBack({
-                  
+                  // delta: 2
+                  delta: 1
                 });
               }, 1000);
             } else {

@@ -44,7 +44,12 @@ let SearchLyricUtil = {
       'rhymePage.loading': loading
     });
   },
-  getRhymeList(_this) {
+  getRhymeList(e, _this) {
+    // 通过点击'搜索'触发该事件
+    if (e && e.type == 'confirm') {
+      SearchLyricUtil.changeKeyword(e, _this);
+    }
+
     let data = _this.data;
 
     SearchLyricUtil.toggleRhymeLoading(true, _this);

@@ -29,13 +29,15 @@ Page({
       }
     ],
     extrals: [
-      // {
-      //   path: '',
-      //   text: '关注公众号'
-      // },
       {
         path: '',
-        text: '商务合作'
+        text: '关注公众号',
+        show: false
+      },
+      {
+        path: '',
+        text: '商务合作',
+        openType: 'contact'
       }
     ],
     userInfo: null
@@ -102,9 +104,11 @@ Page({
     let index = e.target.dataset.index,
     url = this.data.menus[index].path;
 
-    wx.navigateTo({
-      url
-    });
+    if (url) {
+      wx.navigateTo({
+        url
+      });
+    }
   },
   clickExtralMenu(e) {
     let index = e.target.dataset.index
