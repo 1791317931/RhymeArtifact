@@ -480,7 +480,7 @@ Page({
               TipUtil.message('发布成功');
               setTimeout(() => {
                 wx.navigateBack({
-                  
+                  delta: 2
                 });
               }, 1000);
             } else {
