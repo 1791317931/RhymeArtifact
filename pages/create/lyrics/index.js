@@ -123,8 +123,8 @@ Page({
   toggleMortgage(e) {
     SearchLyricUtil.toggleMortgage(e, this);
   },
-  getRhymeList() {
-    SearchLyricUtil.getRhymeList(this);
+  getRhymeList(e) {
+    SearchLyricUtil.getRhymeList(e, this);
   },
   openSearch() {
     this.setData({

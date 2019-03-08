@@ -1,6 +1,7 @@
 <!-- 创作歌曲 -->
 <!-- 伴奏默认需要一个audio -->
-<audio class="hide" src="{{beatItem.path || beatItem.beat_url}}" id="beatAudio" bindended="beatAudioEnded" binderror="beatAudioError" bindtimeupdate="beatAudioTimeUpdate"></audio>
+<audio class="hide" src="{{beatItem.beat_url}}" id="beatAudio" bindended="beatAudioEnded" binderror="beatAudioError" bindtimeupdate="beatAudioTimeUpdate"></audio>
+<audio class="hide" src="{{recordForm.path}}" id="recordAudio" bindended="recordAudioEnded" binderror="recordAudioError" bindtimeupdate="recordAudioTimeUpdate"></audio>
 
 <view hidden="{{hideSubmittingModal}}" class="z-modal">
   <view class="z-modal-body submitting-body">
@@ -48,6 +49,13 @@
         <view class="head-container">音频1 Beat</view>
         <view class="high-container"></view>
         <view class="low-container"></view>
+        <view class="voice-container">
+          <image src="/assets/imgs/voice.png"/>
+          <image src="/assets/imgs/voice.png"/>
+          <image src="/assets/imgs/voice.png"/>
+          <image src="/assets/imgs/voice.png"/>
+          <image src="/assets/imgs/voice.png"/>
+        </view>
       </view>
     </view>
     <view class="bottom-container">
@@ -65,9 +73,19 @@
         <image src="/assets/imgs/S.png"/>
       </view>
       <view class="track-container">
-        <view class="head-container">Vocal-1</view>
+        <view class="head-container">{{mode == 'record' && recordState == 'recording' ? '录制中' : 'Vocal-1'}}</view>
         <view class="high-container"></view>
         <view class="low-container"></view>
+        <view hidden="{{mode == 'try' && !recordForm.path}}" class="voice-container">
+          <image src="/assets/imgs/{{mode == 'record' ? 'voicing' : 'voice'}}.png"/>
+          <image src="/assets/imgs/{{mode == 'record' ? 'voicing' : 'voice'}}.png"/>
+          <image src="/assets/imgs/{{mode == 'record' ? 'voicing' : 'voice'}}.png"/>
+          <image src="/assets/imgs/{{mode == 'record' ? 'voicing' : 'voice'}}.png"/>
+          <image src="/assets/imgs/{{mode == 'record' ? 'voicing' : 'voice'}}.png"/>
+        </view>
+        <view hidden="{{mode == 'record'}}" class="voice-mask-container" style="left: {{recordForm.duration / 10 / beatItem.totalTime}}%"></view>
+        <view hidden="{{mode == 'try'}}" class="voice-mask-container" style="left: {{beatItem.recordBeatTimePercent}}%"></view>
+        <view hidden="{{mode != 'record' || recordState != 'recording'}}" class="recoding-container"></view>
       </view>
     </view>
     <view class="bottom-container">
