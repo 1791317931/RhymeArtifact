@@ -1,4 +1,3 @@
-<import src="/templates/searchLyric/index.wxml"/>
 <import src="/templates/submitting/index.wxml"/>
 
 <template is="submitting" data="{{submittingForm}}"></template>
