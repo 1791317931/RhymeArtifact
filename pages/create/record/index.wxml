@@ -1,7 +1,7 @@
 <!-- 创作歌曲 -->
 <!-- 伴奏默认需要一个audio -->
-<audio class="hide" src="{{beatItem.beat_url}}" id="beatAudio" muted="{{firstVideoMuted}}" bindended="beatAudioEnded" binderror="beatAudioError" bindtimeupdate="beatAudioTimeUpdate"></audio>
-<audio class="hide" src="{{recordForm.path}}" id="recordAudio" muted="{{secondVideoMuted}}" bindended="recordAudioEnded" binderror="recordAudioError" bindtimeupdate="recordAudioTimeUpdate"></audio>
+<audio class="hide" controls src="{{beatItem.beat_url}}" id="beatAudio" muted="{{firstVideoMuted}}" bindended="beatAudioEnded" binderror="beatAudioError" bindtimeupdate="beatAudioTimeUpdate"></audio>
+<audio class="hide" controls src="{{recordForm.path}}" id="recordAudio" muted="{{secondVideoMuted}}" bindended="recordAudioEnded" binderror="recordAudioError" bindtimeupdate="recordAudioTimeUpdate"></audio>
 
 <view hidden="{{hideSubmittingModal}}" class="z-modal">
   <view class="z-modal-body submitting-body">

@@ -92,7 +92,8 @@ Page({
 
     let RM = wx.getRecorderManager(),
     BAC = wx.createAudioContext('beatAudio'),
-    RAC = wx.createAudioContext('recordAudio');
+    RAC = wx.createAudioContext('recordAudio'),
+    IBAC = wx.createInnerAudioContext();
 
     const query = wx.createSelectorQuery();
     query.select('#track-container').boundingClientRect();
@@ -120,14 +121,20 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    // 这里不能继续播放，调用BAC.play()无法播放
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
+    if (this.data.mode == 'try' && this.data.tryPlaying) {
+      this.tryPlayPause();
+    }
 
+    if (this.data.mode == 'record' && this.data.recordState == 'recording') {
+      this.endRecord();
+    }
   },
 
   /**
@@ -210,7 +217,7 @@ Page({
         this.caculateTryBeatTime(0);
       } else {
         BAC.seek(this.data.beatItem.tryBeatTime);
-        RAC.seek(this.data.beatItem.recordBeatTime);
+        RAC.seek(this.data.beatItem.tryBeatTime);
       }
 
       BAC.play();
@@ -561,14 +568,6 @@ Page({
     });
   },
   toEditLyrics() {
-    if (this.data.tryPlaying) {
-      this.tryPlayPause();
-    }
-    
-    if (this.data.recordState == 'recording') {
-      this.endRecord();
-    }
-
     wx.navigateTo({
       url: '/pages/create/record/lyrics/index?content=' + this.data.recordForm.lyrics
     });
