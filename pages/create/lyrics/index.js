@@ -118,13 +118,13 @@ Page({
     });
   },
   changeKeyword(e) {
-    SearchLyricUtil.changeKeyword(e, this);
+    SearchLyricUtil.changeKeyword(e && e.detail || '', this);
   },
   toggleMortgage(e) {
-    SearchLyricUtil.toggleMortgage(e, this);
+    SearchLyricUtil.toggleMortgage(e && e.detail || '', this);
   },
   getRhymeList(e) {
-    SearchLyricUtil.getRhymeList(e, this);
+    SearchLyricUtil.getRhymeList(e && e.detail || '', this);
   },
   openSearch() {
     this.setData({

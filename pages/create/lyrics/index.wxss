@@ -1,5 +1,8 @@
-@import "/templates/searchLyric/index.wxss";
 @import "/templates/submitting/index.wxss";
+
+.lyrics-container {
+  padding-bottom: 20rpx;
+}
 
 .top-btn-container {
   padding: 20rpx 57rpx;

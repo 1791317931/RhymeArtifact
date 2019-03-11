@@ -1,5 +1,8 @@
-<import src="/templates/searchLyric/index.wxml"/>
-
 <view class="main-page">
-  <template is="searchLyric" data="{{rhymePage}}"></template>
+  <searchLyric 
+    placement="bottom" 
+    rhymePage="{{rhymePage}}"
+    bind:getRhymeList="getRhymeList" 
+    bind:changeKeyword="changeKeyword"
+    bind:toggleMortgage="toggleMortgage"/>
 </view>

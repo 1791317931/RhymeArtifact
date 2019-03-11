@@ -1,0 +1,48 @@
+<!--components/searchLyric/index.wxml-->
+<view class="searchLyric searchLyric_{{placement}}">
+  <view class="searchLyric_placement searchLyric_placement_{{placement}}">
+    <view class="searchLyric_container">
+        <input placeholder="搜索词汇" 
+          bindchange="changeKeyword"
+          bindconfirm="getRhymeList"
+          confirm-type='search'/>
+        <image catchtap="getRhymeList" src="/assets/imgs/search.png" />
+    </view>
+    <view class="rhyme-groups">
+      <button
+        wx:for="{{rhymePage.mortgageButtons}}" 
+        class="{{rhymePage.mortgage == item.value ? 'active' : null}}" 
+        data-item="item" 
+        data-index="index" wx:key="{{index}}" 
+        data-value="{{item.value}}" 
+        catchtap="toggleMortgage">{{item.text}}</button>
+    </view>
+  </view>
+  <view class="searchLyric_list">
+    <button 
+      wx:for="{{rhymePage.list}}" 
+      wx:for-index="index"
+      data-value="{{item}}"
+      catchtap="setClipboardData"
+      wx:for-item="item" wx:key="index">{{item}}</button>
+  </view>
+  <view>
+    <button catchtap="handleOpenModal"
+      hidden="{{placement != 'bottom' || rhymePage.list.length}}"
+      class="wechat_btn">添加微信群</button>
+  </view>
+  <loading hidden="{{!rhymePage.loading}}">
+    搜索中...
+  </loading>
+  <view class="modal" hidden="{{!showShareModal}}">
+    <view class="mask"></view>
+    <view class="content">
+      <text class="tips">提示</text>
+      <text class="article">请添加管理员微信
+      <text class="special">"{{wechat}}"</text>拉你进群
+      和rapper一起交流学习</text>
+      <button class="ok" catchtap="setClipboardData">点击复制去添加</button>
+      <button class="cancel" catchtap="handleOpenModal">返回</button>
+    </view>
+  </view>
+</view>

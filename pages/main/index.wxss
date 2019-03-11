@@ -1,5 +1,0 @@
-@import "/templates/searchLyric/index.wxss";
-
-.main-page {
-  padding-top: 40rpx;
-}
