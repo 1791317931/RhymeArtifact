@@ -1,7 +1,7 @@
 <!-- 创作歌曲 -->
 <!-- 伴奏默认需要一个audio -->
-<audio class="hide" src="{{beatItem.beat_url}}" id="beatAudio" bindended="beatAudioEnded" binderror="beatAudioError" bindtimeupdate="beatAudioTimeUpdate"></audio>
-<audio class="hide" src="{{recordForm.path}}" id="recordAudio" bindended="recordAudioEnded" binderror="recordAudioError" bindtimeupdate="recordAudioTimeUpdate"></audio>
+<audio class="hide" controls src="{{beatItem.beat_url}}" id="beatAudio" muted="{{firstVideoMuted}}" bindended="beatAudioEnded" binderror="beatAudioError" bindtimeupdate="beatAudioTimeUpdate"></audio>
+<audio class="hide" controls src="{{recordForm.path}}" id="recordAudio" muted="{{secondVideoMuted}}" bindended="recordAudioEnded" binderror="recordAudioError" bindtimeupdate="recordAudioTimeUpdate"></audio>
 
 <view hidden="{{hideSubmittingModal}}" class="z-modal">
   <view class="z-modal-body submitting-body">
@@ -40,10 +40,10 @@
   <view class="combine-container">
     <view class="top-container">
       <view class="switch-container">
-        <button>M</button>
-        <button>S</button>
-        <image class="active-1" src="/assets/imgs/M.png"/>
-        <image src="/assets/imgs/S.png"/>
+        <button data-value="M" catchtap="toggleFirstTrack">M</button>
+        <button data-value="S" catchtap="toggleFirstTrack">S</button>
+        <image class="{{firstTrackButton == 'M' ? 'active' : ''}}" src="/assets/imgs/M.png" data-value="M" catchtap="toggleFirstTrack"/>
+        <image class="{{firstTrackButton == 'S' ? 'active' : ''}}" src="/assets/imgs/S.png" data-value="S" catchtap="toggleFirstTrack"/>
       </view>
       <view class="track-container" id="track-container">
         <view class="head-container">音频1 Beat</view>
@@ -67,10 +67,10 @@
   <view class="combine-container">
     <view class="top-container">
       <view class="switch-container">
-        <button>M</button>
-        <button>S</button>
-        <image class="active-1" src="/assets/imgs/M.png"/>
-        <image src="/assets/imgs/S.png"/>
+        <button data-value="M" catchtap="toggleSecondTrack">M</button>
+        <button data-value="S" catchtap="toggleSecondTrack">S</button>
+        <image class="{{secondTrackButton == 'M' ? 'active' : ''}}" src="/assets/imgs/M.png" data-value="M" catchtap="toggleSecondTrack"/>
+        <image class="{{secondTrackButton == 'S' ? 'active' : ''}}" src="/assets/imgs/S.png" data-value="S" catchtap="toggleSecondTrack"/>
       </view>
       <view class="track-container">
         <view class="head-container">{{mode == 'record' && recordState == 'recording' ? '录制中' : 'Vocal-1'}}</view>
