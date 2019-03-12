@@ -7,7 +7,9 @@ Page({
    */
   data: {
     beatPage: CommonUtil.copyObject(BeatListUtil.beatPage),
-    BAC: null
+    BAC: null,
+    // 需要跳转的页面
+    targetPath: null
   },
 
   /**
@@ -28,6 +30,16 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    if (this.data.targetPath) {
+      wx.navigateTo({
+        url: this.data.targetPath
+      });
+      this.setData({
+        targetPath: null
+      });
+      return;
+    }
+
     this.init();
   },
 
@@ -67,6 +79,20 @@ Page({
   },
   init() {
     BeatListUtil.getBeatPage(1, this);
+  },
+  toCreateMusicList() {
+    BeatListUtil.pausePlay(null, this);
+
+    wx.navigateTo({
+      url: '/pages/create/createMusicList/index'
+    });
+  },
+  toCreateLyricsList() {
+    BeatListUtil.pausePlay(null, this);
+
+    wx.navigateTo({
+      url: '/pages/create/createLyricsList/index'
+    });
   },
   toggleBeatItemStatus(e) {
     BeatListUtil.toggleBeatItemStatus(e, this);

@@ -610,8 +610,12 @@ Page({
             if (ConfigUtil.isSuccess(res.code)) {
               TipUtil.message('发布成功');
               setTimeout(() => {
+                let pages = getCurrentPages();
+                pages[pages.length - 2].setData({
+                  targetPath: '/pages/create/createMusicList/index'
+                });
+                
                 wx.navigateBack({
-                  // delta: 2
                   delta: 1
                 });
               }, 1000);

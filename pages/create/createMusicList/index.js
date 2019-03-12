@@ -73,20 +73,6 @@ Page({
   init() {
     CreateMusicListUtil.getMusicPage(1, this);
   },
-  toCreateMusicList() {
-    CreateMusicListUtil.pausePlay(null, this);
-
-    wx.navigateTo({
-      url: '/pages/create/beatList/index'
-    });
-  },
-  toCreateLyricsList() {
-    CreateMusicListUtil.pausePlay(null, this);
-
-    wx.navigateTo({
-      url: '/pages/create/createLyricsList/index'
-    });
-  },
   toggleMusicItemStatus(e) {
     CreateMusicListUtil.toggleMusicItemStatus(e, this);
   },

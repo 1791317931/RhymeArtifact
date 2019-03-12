@@ -1,6 +1,16 @@
 <!-- 创作列表 -->
 <import src="/templates/beatList/index.wxml"/>
 
-<view class="create-music-container">
+<!-- <view class="create-music-container">
   <template is="beatList" data="{{beatPage}}"></template>
+</view> -->
+
+<view class="create-container">
+  <view class="top-btn-container">
+    <button catchtap="toCreateMusicList">音乐创作</button>
+    <button catchtap="toCreateLyricsList">歌词创作</button>
+  </view>
+  <view class="list-container">
+    <template is="beatList" data="{{beatPage}}"></template>
+  </view>
 </view>

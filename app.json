@@ -37,7 +37,7 @@
       {
         "selectedIconPath": "assets/imgs/create-active.png",
         "iconPath": "assets/imgs/create.png",
-        "pagePath": "pages/create/createMusicList/index",
+        "pagePath": "pages/create/beatList/index",
         "text": "创作"
       },
       {
