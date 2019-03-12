@@ -34,7 +34,7 @@
           </view>
           <view class="bottom-container">
             <view class="collection" data-index="{{index}}" catchtap="toggleMusicCollectItem">
-              <image src="{{item.is_collection == 1 || createMusicPage.showMine ? '/assets/imgs/collection-active.png' : '/assets/imgs/collection.png'}}"/>
+              <image src="{{item.is_collection == 1 || createMusicPage.showCollection ? '/assets/imgs/collection-active.png' : '/assets/imgs/collection.png'}}"/>
               {{item.collection_num}}
             </view>
             <view class="share">

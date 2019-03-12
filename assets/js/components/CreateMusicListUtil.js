@@ -138,10 +138,9 @@ let CreateMusicListUtil = {
     CreateMusicListUtil.pausePlay(null, _this);
     let param = {
       page: pageNum,
-      pageSize: page.pageSize,
-      type: 'music'
+      pageSize: page.pageSize
     },
-      list = [];
+    list = [];
 
     if (pageNum > 1) {
       list = page.list;
@@ -153,10 +152,16 @@ let CreateMusicListUtil = {
     });
 
     let fn;
-    if (_this.data.createMusicPage.showMine) {
+    if (_this.data.createMusicPage.showCollection) {
       fn = api.getCollection;
+
+      param.type = 'music';
     } else {
       fn = api.getMusicPage;
+
+      if (_this.data.createMusicPage.showMine) {
+        param.showMine = 'Y';
+      }
     }
 
     fn(param, (res) => {
@@ -194,7 +199,7 @@ let CreateMusicListUtil = {
     index = CreateMusicListUtil.getIndex(e, _this),
     createMusicPage = _this.data.createMusicPage;
 
-    if (item.is_collection == 1 || createMusicPage.showMine) {
+    if (item.is_collection == 1 || createMusicPage.showCollection) {
       api.deleteMusic({
         id: item.id
       }, (res) => {
@@ -202,7 +207,7 @@ let CreateMusicListUtil = {
           TipUtil.message('已取消收藏');
 
           // 显示我的收藏，把被取消收藏的创作去掉
-          if (_this.data.createMusicPage.showMine) {
+          if (_this.data.createMusicPage.showCollection) {
             let list = createMusicPage.list;
             list.splice(index, 1);
 

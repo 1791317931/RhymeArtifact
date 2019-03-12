@@ -22,8 +22,8 @@
               </view>
             </view>
             <view class="table-cell right-container" data-index="{{index}}" catchtap="toggleBeatCollectionItem">
-              <image hidden="{{item.is_collection == 1 ||  beatPage.showMine}}" src="/assets/imgs/collection.png"/>
-              <image hidden="{{item.is_collection != 1 && !beatPage.showMine}}" src="/assets/imgs/collection-active.png"/>
+              <image hidden="{{item.is_collection == 1 ||  beatPage.showCollection}}" src="/assets/imgs/collection.png"/>
+              <image hidden="{{item.is_collection != 1 && !beatPage.showCollection}}" src="/assets/imgs/collection-active.png"/>
             </view>
           </view>
         </view>

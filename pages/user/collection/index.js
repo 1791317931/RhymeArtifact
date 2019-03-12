@@ -24,9 +24,8 @@ Page({
    */
   onLoad: function (options) {
     this.setData({
-      'createMusicPage.showHead': false,
-      'createMusicPage.showMine': true,
-      'beatPage.showMine': true
+      'createMusicPage.showCollection': true,
+      'beatPage.showCollection': true
     });
     CreateMusicListUtil.init(this);
     BeatListUtil.init(this);
@@ -126,6 +125,9 @@ Page({
   musicLoadError(e) {
     CreateMusicListUtil.musicLoadError(e, this);
   },
+  musicAudioTimeUpdate(e) {
+    CreateMusicListUtil.musicAudioTimeUpdate(e, this);
+  },
   toggleBeatItemStatus(e) {
     BeatListUtil.toggleBeatItemStatus(e, this);
   },
@@ -140,5 +142,8 @@ Page({
   },
   beatLoadError(e) {
     BeatListUtil.beatLoadError(e, this);
+  },
+  beatAudioTimeUpdate(e) {
+    BeatListUtil.beatAudioTimeUpdate(e, this);
   }
 })

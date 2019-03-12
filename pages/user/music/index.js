@@ -89,5 +89,8 @@ Page({
   },
   loadError(e) {
     CreateMusicListUtil.loadError(e, this);
+  },
+  musicAudioTimeUpdate(e) {
+    CreateMusicListUtil.musicAudioTimeUpdate(e, this);
   }
 })

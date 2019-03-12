@@ -42,7 +42,7 @@ let BeatListUtil = {
     index = BeatListUtil.getIndex(e, _this),
     beatPage = _this.data.beatPage;
 
-    if (item.is_collection == 1 || beatPage.showMine) {
+    if (item.is_collection == 1 || beatPage.showCollection) {
       api.deleteBeat({
         id: item.beat_id
       }, (res) => {
@@ -50,7 +50,7 @@ let BeatListUtil = {
           TipUtil.message('已取消收藏');
 
           // 显示我的收藏，把被取消收藏的伴奏去掉
-          if (beatPage.showMine) {
+          if (beatPage.showCollection) {
             let list = beatPage.list;
             list.splice(index, 1);
 
@@ -191,8 +191,7 @@ let BeatListUtil = {
     BeatListUtil.pausePlay(null, _this);
     let param = {
       page: pageNum,
-      pageSize: page.pageSize,
-      type: 'beat'
+      pageSize: page.pageSize
     },
     list = [];
 
@@ -206,8 +205,10 @@ let BeatListUtil = {
     });
 
     let fn;
-    if (_this.data.beatPage.showMine) {
+    if (_this.data.beatPage.showCollection) {
       fn = api.getCollection;
+
+      param.type = 'beat';
     } else {
       fn = api.getBeatPage;
     }
