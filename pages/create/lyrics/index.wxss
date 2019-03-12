@@ -76,6 +76,7 @@
 .content-container textarea {
   padding: 10rpx 30rpx 0;
   font-size:32rpx;
+  width: 100%;
   font-family:PingFangSC-Medium;
   font-weight:400;
   color:rgba(29,29,29,1);

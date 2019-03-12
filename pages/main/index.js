@@ -17,7 +17,6 @@ Page({
    */
   onLoad: function (options) {
     let userInfo = wx.getStorageSync('userInfo');
-
     if (!userInfo) {
       wx.redirectTo({
         url: '/pages/authorition/index'

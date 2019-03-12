@@ -22,7 +22,7 @@ let SearchLyricUtil = {
     ],
     keyword: '',
     // 押韵规则
-    mortgage: 'single'
+    mortgage: 'double'
   },
   changeKeyword(e, _this) {
     _this.setData({

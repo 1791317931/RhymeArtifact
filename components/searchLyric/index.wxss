@@ -65,12 +65,15 @@
 }
 
 .searchLyric_list {
-  padding: 30rpx 20rpx 0;
+  margin: 30rpx 20rpx 0;
   font-size: 0;
+  max-height: 330rpx;
+  overflow: scroll;
 }
 
-.searchLyric_list_bottom {
-
+.searchLyric_list.searchLyric_list_bottom {
+  max-height: none;
+  overflow: normal;
 }
 
 .searchLyric_list button {
