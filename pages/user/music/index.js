@@ -25,6 +25,8 @@ Page({
       'createMusicPage.showHead': false,
       'createMusicPage.showMine': true
     });
+
+    this.init();
   },
 
   /**
@@ -38,7 +40,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.init();
+    
   },
 
   /**
@@ -59,7 +61,8 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    wx.stopPullDownRefresh();
+    CreateMusicListUtil.getMusicPage(1, this);
   },
 
   /**
