@@ -53,6 +53,7 @@ Page({
    */
   onPullDownRefresh: function () {
     wx.stopPullDownRefresh();
+    wx.vibrateShort()
     LyricListUtil.getLyricPage(1, this);
   },
 
@@ -78,12 +79,13 @@ Page({
     });
   },
   clickLyricItem(e) {
-    LyricListUtil.clickLyricItem(e, this);
+    console.log(e)
+    LyricListUtil.clickLyricItem(e && e.detail || '', this);
   },
   shareLyric(e) {
     
   },
   toDeleteLyricItem(e) {
-    LyricListUtil.toDeleteLyricItem(e, this);
+    LyricListUtil.toDeleteLyricItem(e && e.detail || '', this);
   }
 })

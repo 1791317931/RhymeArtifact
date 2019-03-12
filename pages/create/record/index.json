@@ -1,4 +1,5 @@
 {
   "usingComponents": {},
-  "enablePullDownRefresh": false
+  "enablePullDownRefresh": false,
+  "navigationBarTitleText": "录音棚"
 }

@@ -1,0 +1,70 @@
+/* components/createLyricsList/index.wxss */
+
+.createLyricsList_list {
+  padding: 30rpx 20rpx 10rpx;
+}
+
+.createLyricsList_item {
+  background: #fff;
+  border-radius:14rpx;
+  position: relative;
+  margin-bottom: 30rpx;
+}
+
+.createLyricsList_item_content {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  height: 148rpx;
+  padding: 0 30rpx;
+}
+
+.createLyricsList_item_content .info {
+  flex: 1;
+}
+
+.createLyricsList_item_content .info .time {
+  font-size:24rpx;
+  font-family:PingFangSC-Regular;
+  color:rgba(119,119,119,1);
+  letter-spacing:1rpx;
+}
+
+.createLyricsList_item_content .info .title {
+  margin-top: 25rpx;
+  font-size:32rpx;
+  font-weight:500;
+  color:rgba(29,29,29,1);
+  letter-spacing:1rpx;
+}
+
+.createLyricsList_item_content .operate {
+  display: inline-flex;
+  align-content: center;
+}
+
+.createLyricsList_item_content .operate .btn {
+  display: inline-block;
+  width: 70rpx;
+  height: 70rpx;
+  padding: 10rpx;
+  position: relative;
+}
+
+.createLyricsList_item_content .operate .btn.remove {
+  padding: 6rpx;
+}
+
+.createLyricsList_item_content .operate .btn.share button {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: transparent;
+}
+
+.createLyricsList_item_content .operate .btn image {
+  width: 100%;
+  height: 100%;
+}

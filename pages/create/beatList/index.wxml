@@ -3,8 +3,8 @@
 
 <view class="create-container">
   <view class="top-btn-container">
-    <button catchtap="toCreateMusicList">创作中心</button>
-    <button catchtap="toCreateLyricsList">歌词创作</button>
+    <button catchtap="toCreateMusicList">作品中心</button>
+    <button catchtap="toCreateLyricsList">写歌词</button>
   </view>
   <view class="list-container">
     <template is="beatList" data="{{beatPage}}"></template>

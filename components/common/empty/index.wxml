@@ -1,0 +1,6 @@
+<!--components/common/empty/index.wxml-->
+<view>
+  <view hidden="{{loading || hasData}}" class="empty"></view>
+  <view hidden="{{!loading}}" class="empty loading"></view>
+  <view hidden="{{loading || !hasData || hasMore}}" class="empty no-more-data"></view>
+</view>

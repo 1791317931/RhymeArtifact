@@ -1,0 +1,22 @@
+/* components/common/empty/index.wxss */
+.empty {
+  display: table;
+  width: 100%;
+  text-align: center;
+}
+
+.empty:empty:before {
+  content: '暂无数据';
+  display: table-cell;
+  vertical-align: middle;
+  font-size: 28rpx;
+  color: #525252;
+}
+
+.empty.loading:empty:before {
+  content: '数据加载中...';
+}
+
+.empty.no-more-data:empty:before {
+  content: '没有更多数据了';
+}

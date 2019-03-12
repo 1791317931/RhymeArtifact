@@ -1,10 +1,18 @@
 @import "/templates/createLyricsList/index.wxss";
 
+.create-lyrics-container {
+  padding-top: 110rpx;
+}
+
 .top-btn-container {
   height: 110rpx;
   padding: 20rpx 0;
   background: #fff;
   text-align: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
 }
 
 .top-btn-container button {
@@ -19,9 +27,4 @@
   font-weight:500;
   color:rgba(29,29,29,1);
   letter-spacing:1rpx;
-}
-
-.list-container {
-  margin-top: 40rpx;
-  padding: 0 20rpx;
 }

@@ -4,7 +4,8 @@
   <view class="top-btn-container">
     <button catchtap="toAddLyrics">开始创作</button>
   </view>
-  <view class="list-container">
-    <template is="createLyricsList" data="{{lyricsPage}}"></template>
-  </view>
+  <createLyricsList 
+    lyricsPage="{{lyricsPage}}"
+    bind:clickLyricItem="clickLyricItem"
+    bind:removeLyric="toDeleteLyricItem"/>
 </view>
