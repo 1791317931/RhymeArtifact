@@ -20,12 +20,11 @@ Page({
       format: 'mp3'
     },
     RM: null,
-    // 伴奏音频
     BAC: null,
     // 录制的音频
     RAC: null,
     recordForm: {
-      beatId: 1,
+      beatId: null,
       lyrics: '',
       duration: '',
       fileSize: 0,
@@ -59,7 +58,9 @@ Page({
     firstTrackButton: null,
     secondTrackButton: null,
     firstVideoMuted: false,
-    secondVideoMuted: false
+    secondVideoMuted: false,
+    // 0 ~ 1
+    volume: 1
   },
 
   /**
@@ -91,9 +92,8 @@ Page({
     });
 
     let RM = wx.getRecorderManager(),
-    BAC = wx.createAudioContext('beatAudio'),
-    RAC = wx.createAudioContext('recordAudio'),
-    IBAC = wx.createInnerAudioContext();
+    BAC = wx.createInnerAudioContext(),
+    RAC = wx.createInnerAudioContext();
 
     const query = wx.createSelectorQuery();
     query.select('#track-container').boundingClientRect();
@@ -108,6 +108,8 @@ Page({
       BAC,
       RAC
     });
+
+    this.init();
   },
 
   /**
@@ -122,6 +124,9 @@ Page({
    */
   onShow: function () {
     // 这里不能继续播放，调用BAC.play()无法播放
+    if (this.data.mode == 'try' && this.data.tryPlaying) {
+      this.tryPlayStart();
+    }
   },
 
   /**
@@ -130,6 +135,8 @@ Page({
   onHide: function () {
     if (this.data.mode == 'try' && this.data.tryPlaying) {
       this.tryPlayPause();
+
+      this.changeTryPlayState(true);
     }
 
     if (this.data.mode == 'record' && this.data.recordState == 'recording') {
@@ -141,7 +148,8 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    
+    this.data.BAC.destroy();
+    this.data.RAC.destroy();
   },
 
   /**
@@ -163,6 +171,22 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  init() {
+    let data = this.data,
+    BAC = data.BAC,
+    RAC = data.RAC,
+    option = {
+      // 仅在ios生效（IOS默认）  是否遵循静音开关，设置为 false 之后，即使是在静音模式下，也能播放声音
+      obeyMuteSwitch: false
+    };
+
+    wx.setInnerAudioOption({
+      option
+    });
+
+    this.bindBACEvent(BAC);
+    this.bindRACEvent(RAC);
   },
   changeMode(mode) {
     this.setData({
@@ -260,10 +284,23 @@ Page({
       RAC.pause();
     }
   },
-  // 伴奏音频事件
-  beatAudioTimeUpdate(e) {
-    let time = e.detail.currentTime;
+  bindBACEvent(BAC) {
+    BAC.onTimeUpdate((res) => {
+      this.beatAudioTimeUpdate(BAC.currentTime);
+    });
 
+    BAC.onError((res) => {
+      this.beatAudioError();
+    });
+
+    BAC.onEnded((res) => {
+      this.beatAudioEnded();
+    });
+
+    BAC.src = this.data.beatItem.beat_url;
+  },
+  // 伴奏音频事件
+  beatAudioTimeUpdate(time) {
     this.caculateTryBeatTime(time);
     if (this.data.mode == 'record') {
       this.caculateRecordBeatTime(time);
@@ -292,11 +329,29 @@ Page({
       recordState
     });
   },
-  recordAudioTimeUpdate(e) {
-    let time = e.detail.currentTime;
+  bindRACEvent(RAC) {
+    RAC.onTimeUpdate((res) => {
+      this.recordAudioTimeUpdate(RAC.currentTime);
+    });
 
+    RAC.onError((res) => {
+      if (ConfigUtil.isDev()) {
+        console.log('RAC.onError');
+      }
+      this.recordAudioError(res);
+    });
+
+    RAC.onEnded((res) => {
+      if (ConfigUtil.isDev()) {
+        console.log('RAC.onEnded');
+      }
+      
+      this.recordAudioEnded();
+    });
+  },
+  recordAudioTimeUpdate(time) {
     if (time > this.data.recordForm.duration) {
-      this.recordAudioEnded(e);
+      this.recordAudioEnded(time);
     }
   },
   /**
@@ -378,6 +433,8 @@ Page({
           firstTrackButton: null,
           secondTrackButton: null
         });
+        BAC.volume = this.data.volume;
+        RAC.volume = this.data.volume;
 
         // 从头播放
         BAC.seek(0);
@@ -415,7 +472,8 @@ Page({
   },
   endRecord(callback) {
     let RM = this.data.RM,
-    BAC = this.data.BAC;
+    BAC = this.data.BAC,
+    RAC = this.data.RAC;
 
     // 结束录制
     RM.stop();
@@ -429,6 +487,8 @@ Page({
       this.setData({
         recordForm
       });
+
+      RAC.src = res.tempFilePath;
 
       this.changeRecordState('ready');
 
@@ -577,14 +637,21 @@ Page({
       return;
     }
 
-    let value = e.target.dataset.value;
+    let value = e.target.dataset.value,
+    BAC = this.data.BAC,
+    RAC = this.data.RAC;
 
     if (value == 'M') {
       // 静音
       this.setData({
         firstVideoMuted: !this.data.firstVideoMuted,
-        firstTrackButton: this.data.firstTrackButton == value ? null : value
+        firstTrackButton: this.data.firstTrackButton == value ? null : value,
+        // 如果录音是独奏，需要取消独奏
+        secondTrackButton: this.data.secondTrackButton == 'S' ? null : this.data.secondTrackButton
       });
+
+      BAC.volume = this.data.firstVideoMuted ? 0 : this.data.volume;
+      RAC.volume = this.data.secondTrackButton == 'M' ? 0 : this.data.volume;
     } else if (value == 'S') {
       // 独奏
       this.setData({
@@ -593,6 +660,9 @@ Page({
         firstTrackButton: this.data.firstTrackButton == value ? null : value,
         secondTrackButton: this.data.firstTrackButton == value ? null : 'M'
       });
+
+      BAC.volume = this.data.volume;
+      RAC.volume = this.data.secondVideoMuted ? 0 : this.data.volume;
     }
   },
   toggleSecondTrack(e) {
@@ -600,14 +670,21 @@ Page({
       return;
     }
 
-    let value = e.target.dataset.value;
+    let value = e.target.dataset.value,
+    BAC = this.data.BAC,
+    RAC = this.data.RAC;
 
     if (value == 'M') {
       // 静音
       this.setData({
         secondVideoMuted: !this.data.secondVideoMuted,
-        secondTrackButton: this.data.secondTrackButton == value ? null : value
+        secondTrackButton: this.data.secondTrackButton == value ? null : value,
+        // 如果伴奏是独奏，需要取消独奏
+        firstTrackButton: this.data.firstTrackButton == 'S' ? null : this.data.firstTrackButton
       });
+
+      BAC.volume = this.data.firstTrackButton == 'M' ? 0 : this.data.volume;
+      RAC.volume = this.data.secondVideoMuted ? 0 : this.data.volume;
     } else if (value == 'S') {
       // 独奏
       this.setData({
@@ -616,6 +693,9 @@ Page({
         secondTrackButton: this.data.secondTrackButton == value ? null : value,
         firstTrackButton: this.data.secondTrackButton == value ? null : 'M'
       });
+
+      RAC.volume = this.data.volume;
+      BAC.volume = this.data.firstVideoMuted ? 0 : this.data.volume;
     }
   }
 })

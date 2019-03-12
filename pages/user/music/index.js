@@ -22,7 +22,8 @@ Page({
     CreateMusicListUtil.init(this);
     // 不显示头部信息
     this.setData({
-      'createMusicPage.showHead': false
+      'createMusicPage.showHead': false,
+      'createMusicPage.showMine': true
     });
   },
 
