@@ -34,3 +34,7 @@
 .top-btn-container button:last-child {
   float: right;
 }
+
+.list-container {
+  padding: 0 20rpx;
+}
