@@ -18,7 +18,7 @@
         catchtap="toggleMortgage">{{item.text}}</button>
     </view>
   </view>
-  <view class="searchLyric_list">
+  <view class="searchLyric_list searchLyric_list_{{placement}}">
     <button 
       wx:for="{{rhymePage.list}}" 
       wx:for-index="index"

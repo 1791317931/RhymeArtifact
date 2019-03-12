@@ -17,6 +17,7 @@
     "pages/user/collection/index"
   ],
   "window": {
+    "backgroundColor": "#f7f7f7",
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "押韵rap",

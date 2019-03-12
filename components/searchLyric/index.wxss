@@ -69,6 +69,10 @@
   font-size: 0;
 }
 
+.searchLyric_list_bottom {
+
+}
+
 .searchLyric_list button {
   display: inline-block;
   margin: 10rpx;
