@@ -67,10 +67,11 @@
 .searchLyric_list {
   padding: 30rpx 20rpx 0;
   font-size: 0;
+  max-height: 324rpx;
 }
 
-.searchLyric_list_bottom {
-
+.searchLyric_list.searchLyric_list_bottom {
+  max-height: none;
 }
 
 .searchLyric_list button {
