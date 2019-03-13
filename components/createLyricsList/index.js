@@ -18,11 +18,7 @@ Component({
    */
   methods: {
     clickLyricItem(e) {
-      console.log(e)
       this.triggerEvent('clickLyricItem', e)
-    },
-    shareLyric(e) {
-      this.triggerEvent('shareLyric', e)
     },
     removeLyric(e) {
       this.triggerEvent('removeLyric', e)

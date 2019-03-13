@@ -79,11 +79,7 @@ Page({
     });
   },
   clickLyricItem(e) {
-    console.log(e)
     LyricListUtil.clickLyricItem(e && e.detail || '', this);
-  },
-  shareLyric(e) {
-    
   },
   toDeleteLyricItem(e) {
     LyricListUtil.toDeleteLyricItem(e && e.detail || '', this);
