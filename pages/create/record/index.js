@@ -4,6 +4,7 @@ import * as api from '../../../assets/js/api';
 import FileType from '../../../assets/js/FileType';
 import ConfigUtil from '../../../assets/js/ConfigUtil';
 import TimeUtil from '../../../assets/js/TimeUtil';
+import CommonUtil from '../../../assets/js/CommonUtil';
 
 Page({
   /**
@@ -169,8 +170,10 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
-
+  onShareAppMessage: function (e) {
+    if (e.from == 'menu') {
+      return CommonUtil.shareApp(e);
+    }
   },
   init() {
     let data = this.data,

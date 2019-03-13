@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/main/index",
+    "pages/activity/match",
     "pages/create/beatList/index",
     "pages/create/createMusicList/index",
     "pages/create/record/index",

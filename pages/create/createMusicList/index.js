@@ -70,7 +70,11 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function (e) {
-    return CreateMusicListUtil.shareItem(e, this);
+    if (e.from == 'menu') {
+      return CommonUtil.shareApp(e);
+    } else {
+      return CreateMusicListUtil.shareItem(e, this);
+    }
   },
   init() {
     CreateMusicListUtil.getMusicPage(1, this);
