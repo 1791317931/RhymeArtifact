@@ -1,4 +1,5 @@
 {
   "usingComponents": {},
-  "navigationBarTitleText": "作品中心"
+  "navigationBarTitleText": "作品中心",
+  "enablePullDownRefresh": true
 }

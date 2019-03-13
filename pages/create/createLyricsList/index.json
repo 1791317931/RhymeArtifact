@@ -2,5 +2,6 @@
   "usingComponents": {
     "createLyricsList": "/components/createLyricsList/index"
   },
-  "navigationBarTitleText": "我的歌词"
+  "navigationBarTitleText": "我的歌词",
+  "enablePullDownRefresh": true
 }

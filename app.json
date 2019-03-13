@@ -22,7 +22,7 @@
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "押韵rap",
     "navigationBarTextStyle": "black",
-    "enablePullDownRefresh": true
+    "enablePullDownRefresh": false
   },
   "tabBar": {
     "color": "#777",
