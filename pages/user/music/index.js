@@ -86,11 +86,14 @@ Page({
   init() {
     CreateMusicListUtil.getMusicPage(1, this);
   },
-  toggleMusicItemStatus(e) {
-    CreateMusicListUtil.toggleMusicItemStatus(e, this);
+  removeMusicItem(e) {
+    CreateMusicListUtil.removeMusicItem(e && e.detail || '', this);
   },
-  toggleCollectItem(e) {
-    CreateMusicListUtil.toggleCollectItem(e, this);
+  toggleMusicItemStatus(e) {
+    CreateMusicListUtil.toggleMusicItemStatus(e && e.detail || '', this);
+  },
+  toggleMusicCollectItem(e) {
+    CreateMusicListUtil.toggleMusicCollectItem(e && e.detail || '', this);
   },
   playEnd(e) {
     CreateMusicListUtil.playEnd(e, this);

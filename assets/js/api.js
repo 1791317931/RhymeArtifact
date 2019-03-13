@@ -67,6 +67,10 @@ export function deleteMusic(data, fn, completeFn) {
   UrlUtil.post('collection-music-delete', data, fn, completeFn);
 }
 
+export function removeMusic(data, fn, completeFn) {
+  UrlUtil.post('music-delete', data, fn, completeFn);
+}
+
 export function shareMusic(data, fn, completeFn) {
   UrlUtil.post('music-share-add', data, fn, completeFn);
 }

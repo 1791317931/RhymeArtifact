@@ -7,7 +7,8 @@
     bindended="musicPlayEnd" 
     binderror="musicLoadError" 
     bindtimeupdate="musicAudioTimeUpdate"></audio>
-  <createMusicList 
+  <createMusicList
+    bind:removeMusicItem="removeMusicItem"
     bind:toggleMusicItemStatus="toggleMusicItemStatus"
     bind:toggleMusicCollectItem="toggleMusicCollectItem"
     createMusicPage="{{createMusicPage}}"/>

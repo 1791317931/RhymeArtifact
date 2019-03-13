@@ -18,20 +18,22 @@ Component({
    * 组件的方法列表
    */
   methods: {
+    removeMusicItem(e) {
+      wx.showModal({
+        title: '系统提示',
+        content: '是否删除当前音乐作品？',
+        success: (res) => {
+          if (res.confirm) {
+            this.triggerEvent('removeMusicItem', e)
+          }
+        }
+      });
+    },
     toggleMusicCollectItem(e) {
       this.triggerEvent('toggleMusicCollectItem', e)
     },
     toggleMusicItemStatus(e) {
       this.triggerEvent('toggleMusicItemStatus', e)
-    },
-    musicPlayEnd(e) {
-      this.triggerEvent('musicPlayEnd', e)
-    },
-    musicLoadError(e) {
-      this.triggerEvent('musicLoadError', e)
-    },
-    musicAudioTimeUpdate(e) {
-      this.triggerEvent('musicAudioTimeUpdate', e)
     }
   }
 })

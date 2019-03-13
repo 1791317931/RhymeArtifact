@@ -35,16 +35,22 @@
           </view>
         </view>
         <view class="createMusicList_item_operate">
-           <view class="collection" 
+           <view class="btn collection" 
             data-index="{{index}}" 
             catchtap="toggleMusicCollectItem">
               <image src="{{item.is_collection == 1 || createMusicPage.showCollection ? '/assets/imgs/collection-active.png' : '/assets/imgs/collection.png'}}"/>
               {{item.collection_num}}
             </view>
-            <view class="share">
+            <view class="btn share">
               <image src="/assets/imgs/share.png"/>
               <button open-type="share" data-index="{{index}}"></button>
               {{item.share_num}}
+            </view>
+            <view class="btn remove"
+              hidden="{{createMusicPage.showHead != false}}" 
+              catchtap="removeMusicItem" data-index="{{index}}">
+              <image src="/assets/imgs/delete.png" 
+                hidden="{{createMusicPage.showHead != false}}" />
             </view>
         </view>
       </view>

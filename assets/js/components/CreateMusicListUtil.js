@@ -195,6 +195,16 @@ let CreateMusicListUtil = {
       CreateMusicListUtil.toggleMusicPageLoading(false, _this);
     });
   },
+  removeMusicItem(e, _this) {
+    let item = CreateMusicListUtil.getItem(e, _this)
+    console.log(item)
+    api.removeMusic({
+      id: item.id
+    }, (res)=>{
+      // 删除成功
+      CreateMusicListUtil.getMusicPage(1, _this)
+    })
+  },
   toggleMusicCollectItem(e, _this) {
     let item = CreateMusicListUtil.getItem(e, _this),
     index = CreateMusicListUtil.getIndex(e, _this),

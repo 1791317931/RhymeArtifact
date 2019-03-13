@@ -1,4 +1,6 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "createMusicList": "/components/createMusicList/index"
+  },
   "navigationBarTitleText": "我的收藏"
 }

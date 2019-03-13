@@ -126,10 +126,10 @@ Page({
     this.init();
   },
   toggleMusicItemStatus(e) {
-    CreateMusicListUtil.toggleMusicItemStatus(e, this);
+    CreateMusicListUtil.toggleMusicItemStatus(e && e.detail || '', this);
   },
   toggleMusicCollectItem(e) {
-    CreateMusicListUtil.toggleMusicCollectItem(e, this);
+    CreateMusicListUtil.toggleMusicCollectItem(e && e.detail || '', this);
   },
   musicPlayEnd(e) {
     CreateMusicListUtil.musicPlayEnd(e, this);

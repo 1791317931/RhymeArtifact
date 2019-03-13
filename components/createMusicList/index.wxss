@@ -7,6 +7,7 @@
   background: #fff;
   border-radius:14rpx;
   margin-bottom: 30rpx;
+  position: relative;
 }
 
 .hide {
@@ -106,8 +107,6 @@
   font-size:32rpx;
   font-weight:bold;
   color:rgba(29,29,29,1);
-  line-height:38rpx;
-  letter-spacing:1rpx;
 }
 
 .createMusicList_item_operate .collection {
@@ -149,4 +148,18 @@
   bottom: 0;
   left: 0;
   background: transparent;
+}
+
+.createMusicList_item_operate .remove {
+  line-height: 32rpx;
+  padding: 0 0 0 52rpx;
+  position: absolute;
+  display: inline-block;
+  right: 20rpx;
+  top: 52rpx
+}
+
+.createMusicList_item_operate .remove image {
+  width: 50rpx;
+  height: 50rpx;
 }
