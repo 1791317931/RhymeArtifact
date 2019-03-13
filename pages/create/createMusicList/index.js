@@ -56,6 +56,7 @@ Page({
    */
   onPullDownRefresh: function () {
     wx.stopPullDownRefresh();
+    wx.vibrateShort()
     CreateMusicListUtil.getMusicPage(1, this);
   },
 
@@ -80,10 +81,11 @@ Page({
     CreateMusicListUtil.getMusicPage(1, this);
   },
   toggleMusicItemStatus(e) {
-    CreateMusicListUtil.toggleMusicItemStatus(e, this);
+    console.log(e && e.detail)
+    CreateMusicListUtil.toggleMusicItemStatus(e && e.detail || '', this);
   },
   toggleMusicCollectItem(e) {
-    CreateMusicListUtil.toggleMusicCollectItem(e, this);
+    CreateMusicListUtil.toggleMusicCollectItem(e && e.detail || '', this);
   },
   musicPlayEnd(e) {
     CreateMusicListUtil.musicPlayEnd(e, this);

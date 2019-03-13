@@ -1,5 +1,14 @@
 <import src="/templates/createMusicList/index.wxml"/>
 
 <view class="music-container">
-  <template is="createMusicList" data="{{createMusicPage}}"></template>
+  <audio class="hide" 
+    src="{{createMusicPage.list[createMusicPage.playingIndex].mixture_url}}" 
+    id="musicAudio" 
+    bindended="musicPlayEnd" 
+    binderror="musicLoadError" 
+    bindtimeupdate="musicAudioTimeUpdate"></audio>
+  <createMusicList 
+    bind:toggleMusicItemStatus="toggleMusicItemStatus"
+    bind:toggleMusicCollectItem="toggleMusicCollectItem"
+    createMusicPage="{{createMusicPage}}"/>
 </view>

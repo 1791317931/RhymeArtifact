@@ -62,6 +62,7 @@ Page({
    */
   onPullDownRefresh: function () {
     wx.stopPullDownRefresh();
+    wx.vibrateShort()
     CreateMusicListUtil.getMusicPage(1, this);
   },
 

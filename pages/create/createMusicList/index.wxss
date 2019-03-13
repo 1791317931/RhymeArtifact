@@ -1,5 +1,2 @@
-@import "/templates/createMusicList/index.wxss";
 
-.list-container {
-  padding: 30rpx 0;
-}
+@import "/templates/createMusicList/index.wxss";

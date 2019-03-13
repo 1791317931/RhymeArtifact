@@ -1,5 +1,7 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "createMusicList": "/components/createMusicList/index"
+  },
   "navigationBarTitleText": "音乐创作",
   "enablePullDownRefresh": true
 }
