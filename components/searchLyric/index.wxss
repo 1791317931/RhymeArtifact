@@ -25,6 +25,7 @@
   background: #fff;
   border-radius: 16rpx;
   border: 2rpx solid rgba(0,0,0,1);
+  margin-bottom: 30rpx;
 }
 .searchLyric_container image {
   width: 50rpx;
@@ -37,7 +38,6 @@
 }
 
 .rhyme-groups {
-  margin-top: 30rpx;
   padding: 0 15rpx;
   font-size: 0;
   text-align: center;
