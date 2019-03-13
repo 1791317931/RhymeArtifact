@@ -3,6 +3,7 @@ import ConfigUtil from '../ConfigUtil';
 import PathUtil from '../PathUtil';
 import TimeUtil from '../TimeUtil';
 import * as api from '../api';
+import CommonUtil from '../CommonUtil';
 
 let CreateMusicListUtil = {
   createMusicPage: {
@@ -263,7 +264,8 @@ let CreateMusicListUtil = {
       });
 
       return {
-        title: item.lyric_title,
+        title: item.music_title,
+        imageUrl: CommonUtil.getShareImage(),
         path: '/pages/main/index',
         success: (res) => {
           

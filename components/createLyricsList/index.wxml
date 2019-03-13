@@ -24,13 +24,11 @@
             <view 
                 open-type="share" 
                 class="btn share" 
-                data-index="{{index}}" 
-                catchtap="shareLyric">
+                data-index="{{index}}">
                 <image src="/assets/imgs/share.png"/>
                 <button open-type="share" 
                   class="share-button" 
-                  data-index="{{index}}" 
-                  catchtap="shareLyric"></button>
+                  data-index="{{index}}"></button>
             </view>
           </view>
       </view>

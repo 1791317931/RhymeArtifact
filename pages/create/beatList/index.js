@@ -40,6 +40,11 @@ Page({
       });
       return;
     }
+
+    // 如果token过期，进入该页面，默认会先进入登录页面成功后切换到这个页面不会重新执行onLoad事件，造成假数据
+    if (!this.data.beatPage.list.length) {
+      this.init();
+    }
   },
 
   /**
@@ -74,8 +79,10 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
-
+  onShareAppMessage: function (e) {
+    if (e.from == 'menu') {
+      return CommonUtil.shareApp(e);
+    }
   },
   init() {
     BeatListUtil.getBeatPage(1, this);

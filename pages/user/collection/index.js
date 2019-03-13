@@ -89,10 +89,14 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
-    let type = this.data.type;
-    if (type == 'music') {
-      return CreateMusicListUtil.shareItem(e, this);
+  onShareAppMessage: function (e) {
+    if (e.from == 'menu') {
+      return CommonUtil.shareApp(e);
+    } else {
+      let type = this.data.type;
+      if (type == 'music') {
+        return CreateMusicListUtil.shareItem(e, this);
+      }
     }
   },
   init() {

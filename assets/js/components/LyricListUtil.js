@@ -1,6 +1,7 @@
 import TipUtil from '../TipUtil';
 import ConfigUtil from '../ConfigUtil';
 import * as api from '../api';
+import CommonUtil from '../CommonUtil';
 
 let LyricListUtil = {
   lyricsPage: {
@@ -29,6 +30,7 @@ let LyricListUtil = {
 
       return {
         title: item.lyric_title,
+        imageUrl: CommonUtil.getShareImage(),
         path: '/pages/main/index?lyricId=' + item.lyric_id,
         success: (res) => {
           

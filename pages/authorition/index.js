@@ -1,5 +1,6 @@
 import * as api from '../../assets/js/api';
 import ConfigUtil from '../../assets/js/ConfigUtil';
+import CommonUtil from '../../assets/js/CommonUtil';
 import TipUtil from '../../assets/js/TipUtil';
 import UrlUtil from '../../assets/js/UrlUtil';
 
@@ -64,8 +65,8 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
-
+  onShareAppMessage: function (e) {
+    return CommonUtil.shareApp(e);
   },
   bindGetUserInfo(e) {
     // 1、先在微信服务器登录

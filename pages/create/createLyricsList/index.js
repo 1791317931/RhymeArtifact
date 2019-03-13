@@ -68,7 +68,11 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function (e) {
-    return LyricListUtil.shareLyric(e, this);
+    if (e.from == 'menu') {
+      return CommonUtil.shareApp(e);
+    } else {
+      return LyricListUtil.shareLyric(e, this);
+    }
   },
   init() {
     LyricListUtil.getLyricPage(1, this);

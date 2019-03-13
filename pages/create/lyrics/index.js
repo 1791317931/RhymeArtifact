@@ -95,7 +95,9 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function (e) {
-    
+    if (e.from == 'menu') {
+      return CommonUtil.shareApp(e);
+    }
   },
   getLyricById() {
     let lyric_id = this.data.lyricsForm.lyric_id;
