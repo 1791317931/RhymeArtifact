@@ -40,6 +40,11 @@ Page({
       });
       return;
     }
+
+    // 如果token过期，进入该页面，默认会先进入登录页面成功后切换到这个页面不会重新执行onLoad事件，造成假数据
+    if (!this.data.beatPage.list.length) {
+      this.init();
+    }
   },
 
   /**
