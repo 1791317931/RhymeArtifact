@@ -1,5 +1,3 @@
-@import "/templates/createLyricsList/index.wxss";
-
 .create-lyrics-container {
   padding-top: 110rpx;
 }
