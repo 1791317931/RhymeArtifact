@@ -1,4 +1,5 @@
 {
   "usingComponents": {},
-  "navigationBarTitleText": "音乐创作"
+  "navigationBarTitleText": "音乐创作",
+  "enablePullDownRefresh": true
 }
