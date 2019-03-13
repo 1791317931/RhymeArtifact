@@ -264,7 +264,7 @@ let CreateMusicListUtil = {
       });
 
       return {
-        title: item.lyric_title,
+        title: item.music_title,
         imageUrl: CommonUtil.getShareImage(),
         path: '/pages/main/index',
         success: (res) => {
