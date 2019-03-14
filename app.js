@@ -57,6 +57,7 @@ App({
     });
   },
   globalData: {
-    userInfo: null
+    userInfo: null,
+    appName: '押韵rap'
   }
 })

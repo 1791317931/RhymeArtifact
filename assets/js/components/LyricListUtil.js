@@ -15,7 +15,7 @@ let LyricListUtil = {
   onReachBottom(_this) {
     let page = _this.data.lyricsPage;
     if (page.pageNum < page.totalPage) {
-      _this.getLyricPage();
+      _this.getLyricPage(page.pageNum + 1);
     }
   },
   clickLyricItem(e, _this) {
@@ -108,8 +108,8 @@ let LyricListUtil = {
 
         _this.setData({
           'lyricsPage.list': list,
-          'lyricsPage.totalPage': obj.maxPage || 0,
-          'lyricsPage.pageNum': obj.page || 1
+          'lyricsPage.totalPage': parseInt(obj.maxPage || 0),
+          'lyricsPage.pageNum': parseInt(obj.page || 1)
         });
       } else {
         TipUtil.errorCode(res.code);

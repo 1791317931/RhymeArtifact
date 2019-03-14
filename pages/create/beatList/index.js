@@ -9,7 +9,8 @@ Page({
     beatPage: CommonUtil.copyObject(BeatListUtil.beatPage),
     BAC: null,
     // 需要跳转的页面
-    targetPath: null
+    targetPath: null,
+    posterId: 'poster-canvas'
   },
 
   /**

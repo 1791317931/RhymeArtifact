@@ -80,3 +80,11 @@ button:after {
   content: '没有更多数据了';
 }
 .hide {display: none !important;}
+
+.poster-canvas {
+  position: fixed;
+  left: 120%;
+  top: 120%;
+  width: 610px;
+  height: 660px;
+}

@@ -14,7 +14,8 @@
     "templates/createMusicList/index",
     "templates/submitting/index",
     "templates/beatList/index",
-    "pages/user/collection/index"
+    "pages/user/collection/index",
+    "components/musicPoster/index"
   ],
   "window": {
     "backgroundColor": "#f7f7f7",

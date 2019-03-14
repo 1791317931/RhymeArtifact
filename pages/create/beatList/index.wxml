@@ -1,6 +1,8 @@
 <!-- 创作列表 -->
 <import src="/templates/beatList/index.wxml"/>
 
+<!-- <canvas class="poster-canvas" canvas-id="{{posterId}}"></canvas>
+<musicPoster posterId="{{posterId}}"/> -->
 <view class="create-container">
   <view class="top-btn-container">
     <button catchtap="toCreateMusicList">作品中心</button>

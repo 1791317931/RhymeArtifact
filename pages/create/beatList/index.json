@@ -1,4 +1,6 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "musicPoster": "/components/musicPoster/index"
+  },
   "navigationBarTitleText": "音乐创作"
 }

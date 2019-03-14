@@ -231,8 +231,8 @@ let BeatListUtil = {
 
         _this.setData({
           'beatPage.list': list,
-          'beatPage.totalPage': obj.maxPage || 0,
-          'beatPage.pageNum': obj.page || 1
+          'beatPage.totalPage': parseInt(obj.maxPage || 0),
+          'beatPage.pageNum': parseInt(obj.page || 1)
         });
       } else {
         TipUtil.errorCode(res.code);

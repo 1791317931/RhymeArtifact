@@ -185,8 +185,8 @@ let CreateMusicListUtil = {
 
         _this.setData({
           'createMusicPage.list': list,
-          'createMusicPage.totalPage': obj.maxPage || 0,
-          'createMusicPage.pageNum': obj.page || 1
+          'createMusicPage.totalPage': parseInt(obj.maxPage || 0),
+          'createMusicPage.pageNum': parseInt(obj.page || 1)
         });
       } else {
         TipUtil.errorCode(res.code);
