@@ -171,7 +171,7 @@ let BeatListUtil = {
       index = e.currentTarget.dataset.index;
     }
 
-    return index;
+    return parseInt(index);
   },
   getItem(e, _this) {
     let index = BeatListUtil.getIndex(e, _this);

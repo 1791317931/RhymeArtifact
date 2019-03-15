@@ -1,8 +1,8 @@
 {
   "pages": [
     "pages/main/index",
-    "pages/activity/match",
     "pages/create/beatList/index",
+    "pages/activity/match",
     "pages/create/createMusicList/index",
     "pages/create/record/index",
     "pages/create/createLyricsList/index",

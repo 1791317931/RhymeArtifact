@@ -103,13 +103,13 @@ Page({
     });
   },
   toggleBeatItemStatus(e) {
-    BeatListUtil.toggleBeatItemStatus(e, this);
+    BeatListUtil.toggleBeatItemStatus(e.detail, this);
   },
   toggleBeatCollectionItem(e) {
-    BeatListUtil.toggleBeatCollectionItem(e, this);
+    BeatListUtil.toggleBeatCollectionItem(e.detail, this);
   },
   toRecord(e) {
-    BeatListUtil.toRecord(e, this);
+    BeatListUtil.toRecord(e.detail, this);
   },
   beatPlayEnd(e) {
     BeatListUtil.beatPlayEnd(e, this);

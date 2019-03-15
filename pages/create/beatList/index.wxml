@@ -1,14 +1,15 @@
 <!-- 创作列表 -->
-<import src="/templates/beatList/index.wxml"/>
-
-<!-- <canvas class="poster-canvas" canvas-id="{{posterId}}"></canvas>
-<musicPoster posterId="{{posterId}}"/> -->
 <view class="create-container">
   <view class="top-btn-container">
     <button catchtap="toCreateMusicList">作品中心</button>
     <button catchtap="toCreateLyricsList">写歌词</button>
   </view>
   <view class="list-container">
-    <template is="beatList" data="{{beatPage}}"></template>
+    <audio class="hide" src="{{beatPage.list[beatPage.playingIndex].beat_url}}" id="beatAudio" bindended="beatPlayEnd" binderror="beatLoadError" bindtimeupdate="beatAudioTimeUpdate"></audio>
+    <beatList 
+      bind:toggleBeatItemStatus="toggleBeatItemStatus"
+      bind:toggleBeatCollectionItem="toggleBeatCollectionItem"
+      bind:toRecord="toRecord"
+      beatPage="{{beatPage}}"/>
   </view>
 </view>

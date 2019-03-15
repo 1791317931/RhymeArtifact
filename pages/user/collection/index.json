@@ -1,6 +1,7 @@
 {
   "usingComponents": {
-    "createMusicList": "/components/createMusicList/index"
+    "createMusicList": "/components/createMusicList/index",
+    "beatList": "/components/beatList/index"
   },
   "navigationBarTitleText": "我的收藏"
 }

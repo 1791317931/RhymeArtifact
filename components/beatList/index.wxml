@@ -1,0 +1,35 @@
+<view class="beat-list-container">
+    <view class="beat-item" wx:for="{{beatPage.list}}" wx:for-index="index" wx:for-item="item" wx:key="{{item.beat_id}}">
+      <view>
+        <view class="table top-container" data-index="{{index}}" catchtap="toggleBeatItemStatus">
+          <view class="table-row">
+            <view class="table-cell status-container">
+              <view>
+                <image class="disk" src="/assets/imgs/disk.png" />
+                <image hidden="{{beatPage.playingIndex == index && beatPage.playing}}" src="/assets/imgs/to-play.png" />
+                <image hidden="{{beatPage.playingIndex != index || !beatPage.playing}}" src="/assets/imgs/to-pause.png" />
+              </view>
+            </view>
+            <view class="table-cell center-container">
+              <view class="title">{{item.beat_title}}</view>
+              <view class="detail-container">
+                <text>{{item.surplusTimeArr[0]}}:{{item.surplusTimeArr[1]}}:{{item.surplusTimeArr[2]}}</text>
+                <text>作词：{{item.beat_author}}</text>
+              </view>
+            </view>
+            <view class="table-cell right-container" data-index="{{index}}" catchtap="toggleBeatCollectionItem">
+              <image hidden="{{item.is_collection == 1 ||  beatPage.showCollection}}" src="/assets/imgs/collection.png"/>
+              <image hidden="{{item.is_collection != 1 && !beatPage.showCollection}}" src="/assets/imgs/collection-active.png"/>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view hidden="{{beatPage.playingIndex != index}}" class="start-record-container" data-index="{{index}}" catchtap="toRecord">
+        <button>开始录制</button>
+      </view>
+    </view>
+    <empty 
+      loading="{{beatPage.loading}}"
+      hasData="{{!!beatPage.list.length}}"
+      hasMore="{{beatPage.pageNum < beatPage.totalPage}}"/>
+  </view>

@@ -81,7 +81,6 @@ Page({
     CreateMusicListUtil.getMusicPage(1, this);
   },
   toggleMusicItemStatus(e) {
-    console.log(e && e.detail)
     CreateMusicListUtil.toggleMusicItemStatus(e && e.detail || '', this);
   },
   toggleMusicCollectItem(e) {

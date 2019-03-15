@@ -119,7 +119,7 @@ let CreateMusicListUtil = {
       index = e.currentTarget.dataset.index;
     }
 
-    return index;
+    return parseInt(index);
   },
   getItem(e, _this) {
     let index = CreateMusicListUtil.getIndex(e, _this);
@@ -197,7 +197,6 @@ let CreateMusicListUtil = {
   },
   removeMusicItem(e, _this) {
     let item = CreateMusicListUtil.getItem(e, _this)
-    console.log(item)
     api.removeMusic({
       id: item.id
     }, (res)=>{

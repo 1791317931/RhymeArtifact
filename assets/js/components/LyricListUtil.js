@@ -66,12 +66,17 @@ let LyricListUtil = {
     });
   },
   getItem(e, _this) {
+    let index = LyricListUtil.getIndex(e, _this);
+
+    return _this.data.lyricsPage.list[index];
+  },
+  getIndex(e, _this) {
     let index = e.target.dataset.index;
     if (isNaN(index)) {
       index = e.currentTarget.dataset.index;
     }
 
-    return _this.data.lyricsPage.list[index];
+    return parseInt(index);
   },
   toggleLyricPageLoading(loading, _this) {
     _this.setData({
