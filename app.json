@@ -11,9 +11,7 @@
     "pages/create/record/lyrics/index",
     "pages/user/music/index",
     "pages/user/mine/index",
-    "templates/createMusicList/index",
     "templates/submitting/index",
-    "templates/beatList/index",
     "pages/user/collection/index",
     "components/musicPoster/index"
   ],

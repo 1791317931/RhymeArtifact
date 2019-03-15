@@ -10,7 +10,7 @@ Component({
    * 组件的初始数据
    */
   data: {
-
+    
   },
 
   /**
@@ -18,13 +18,16 @@ Component({
    */
   methods: {
     toggleBeatCollectionItem(e) {
-      this.triggerEvent('toggleBeatCollectionItem', e)
+      this.triggerEvent('toggleBeatCollectionItem', e);
     },
     toggleBeatItemStatus(e) {
-      this.triggerEvent('toggleBeatItemStatus', e)
+      this.triggerEvent('toggleBeatItemStatus', e);
     },
     toRecord(e) {
-      this.triggerEvent('toRecord', e)
+      this.triggerEvent('toRecord', e);
+    },
+    generatePoster(e) {
+      this.triggerEvent('generatePoster', e);
     }
   }
 })

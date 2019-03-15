@@ -28,7 +28,8 @@
                 <image src="/assets/imgs/share.png"/>
                 <button open-type="share" 
                   class="share-button" 
-                  data-index="{{index}}"></button>
+                  data-index="{{index}}"
+                  catchtap="share"></button>
             </view>
           </view>
       </view>

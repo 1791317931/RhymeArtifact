@@ -28,9 +28,10 @@ let LyricListUtil = {
     if (e.from == 'button') {
       let item = LyricListUtil.getItem(e, _this);
 
+      let random = CommonUtil.getShareRandom();
       return {
-        title: item.lyric_title,
-        imageUrl: CommonUtil.getShareImage(),
+        title: CommonUtil.shareRandomMsgs[random],
+        imageUrl: CommonUtil.getShareImage(random),
         path: '/pages/main/index?lyricId=' + item.lyric_id,
         success: (res) => {
           

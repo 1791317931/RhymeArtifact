@@ -10,7 +10,7 @@ Page({
     BAC: null,
     // 需要跳转的页面
     targetPath: null,
-    posterId: 'poster-canvas'
+    posterUrl: null
   },
 
   /**
@@ -83,6 +83,8 @@ Page({
   onShareAppMessage: function (e) {
     if (e.from == 'menu') {
       return CommonUtil.shareApp(e);
+    } else if (e.from == 'button') {
+      return BeatListUtil.shareBeatItem(e, this);
     }
   },
   init() {
@@ -110,6 +112,14 @@ Page({
   },
   toRecord(e) {
     BeatListUtil.toRecord(e.detail, this);
+  },
+  generatePoster(e) {
+    BeatListUtil.generatePoster(e.detail, this);
+  },
+  closePoster() {
+    this.setData({
+      posterUrl: null
+    });
   },
   beatPlayEnd(e) {
     BeatListUtil.beatPlayEnd(e, this);

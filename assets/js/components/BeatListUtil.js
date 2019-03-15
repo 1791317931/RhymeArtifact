@@ -1,7 +1,10 @@
 import TipUtil from '../TipUtil';
+import CommonUtil from '../CommonUtil';
 import ConfigUtil from '../ConfigUtil';
 import PathUtil from '../PathUtil';
 import TimeUtil from '../TimeUtil';
+import DownloadUtil from '../DownloadUtil';
+import PosterCanvasUtil from './PosterCanvasUtil';
 import * as api from '../api';
 
 let BeatListUtil = {
@@ -59,6 +62,7 @@ let BeatListUtil = {
             });
           } else {
             item.is_collection = '0';
+            item.collection_num -= 1;
 
             _this.setData({
               [`beatPage.list[${index}]`]: item
@@ -75,6 +79,7 @@ let BeatListUtil = {
         if (ConfigUtil.isSuccess(res.code)) {
           TipUtil.message('收藏成功');
           item.is_collection = '1';
+          item.collection_num += 1;
 
           _this.setData({
             [`beatPage.list[${index}]`]: item
@@ -84,6 +89,29 @@ let BeatListUtil = {
         }
       });
     }
+  },
+  shareBeatItem(e, _this) {
+    let random = CommonUtil.getShareRandom();
+
+    return {
+      title: CommonUtil.shareRandomMsgs[random],
+      imageUrl: CommonUtil.getShareImage(random),
+      path: '/pages/main/index',
+      success: (res) => {
+
+      },
+      fail(res) {
+
+      },
+      complete(res) {
+
+      }
+    };
+  },
+  // 下载海报
+  generatePoster(e, _this) {
+    let item = BeatListUtil.getItem(e, _this);
+    PosterCanvasUtil.draw(_this, item, 'beat');
   },
   startPlay(e, _this) {
     let index = BeatListUtil.getIndex(e, _this),
@@ -218,6 +246,7 @@ let BeatListUtil = {
         let obj = res.data;
         obj.data.forEach((item, index) => {
           item.beat_url = PathUtil.getFilePath(item.beat_url);
+          item.collection_num = parseInt(item.collection_num);
 
           // 总时长
           let totalTime = TimeUtil.stringToNumber(item.beat_time);

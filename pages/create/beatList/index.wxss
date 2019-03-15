@@ -1,5 +1,3 @@
-@import "/templates/beatList/index.wxss";
-
 .create-container {
   position: relative;
   padding-top: 125rpx;

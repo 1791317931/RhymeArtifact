@@ -22,6 +22,10 @@ Component({
     },
     removeLyric(e) {
       this.triggerEvent('removeLyric', e)
+    },
+    // catchtap
+    share() {
+
     }
   }
 })

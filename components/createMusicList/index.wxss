@@ -8,6 +8,7 @@
   border-radius:14rpx;
   margin-bottom: 30rpx;
   position: relative;
+  transform: translate(0);
 }
 
 .hide {
@@ -41,7 +42,7 @@
 }
 
 .createMusicList_item_content {
-  padding: 40rpx 20rpx;
+  padding: 20rpx;
 }
 
 .createMusicList_item_info {
@@ -95,6 +96,10 @@
   font-weight:400;
 }
 
+.createMusicList_item_detail .detail-container text:first-child {
+  margin-right: 10rpx;
+}
+
 .createMusicList_item_detail .duration {
   margin-top: 10rpx;
   font-size:24rpx;
@@ -104,41 +109,55 @@
 .createMusicList_item_operate {
   margin-top: 30rpx;
   padding: 0 0 0 30rpx;
-  font-size:32rpx;
-  font-weight:bold;
-  color:rgba(29,29,29,1);
+  position: relative;
 }
 
 .createMusicList_item_operate .collection {
-  line-height: 32rpx;
-  padding: 0 50rpx 0 56rpx;
-  position: relative;
   display: inline-block;
 }
 
-.createMusicList_item_operate .collection image{
+.createMusicList_item_operate .collection image {
   width: 50rpx;
   height: 50rpx;
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
+}
+
+.createMusicList_item_operate .collection text {
+  display: inline-block;
+  margin-left: 10rpx;
+  width: 150rpx;
+  overflow: hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  font-size:32rpx;
+  font-family:DINAlternate-Bold;
+  font-weight:bold;
+  color:rgba(29,29,29,1);
+  line-height:50rpx;
+  letter-spacing:1rpx;
 }
 
 .createMusicList_item_operate .share {
-  line-height: 32rpx;
-  padding: 0 0 0 52rpx;
-  position: relative;
   display: inline-block;
+  position: relative;
 }
 
 .createMusicList_item_operate .share image {
   width: 50rpx;
   height: 50rpx;
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
+}
+
+.createMusicList_item_operate .share text {
+  display: inline-block;
+  margin-left: 10rpx;
+  font-size:32rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(29,29,29,1);
+  line-height:50rpx;
+  width: 180rpx;
+  overflow: hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
 }
 
 .createMusicList_item_operate .share button {
@@ -147,13 +166,35 @@
   right: 0;
   bottom: 0;
   left: 0;
+  z-index: 1;
   background: transparent;
+}
+
+.createMusicList_item_operate .moments-container {
+  float: right;
+  margin-right: 20rpx;
+}
+
+.createMusicList_item_operate .moments-container image {
+  width: 50rpx;
+  height: 50rpx;
+}
+
+.createMusicList_item_operate .moments-container text {
+  display: inline-block;
+  margin-left: 10rpx;
+  font-size:22rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(29,29,29,1);
+  line-height:50rpx;
+  overflow: hidden;
 }
 
 .createMusicList_item_operate .remove {
   line-height: 32rpx;
   padding: 0 0 0 52rpx;
-  position: absolute;
+  position: fixed;
   display: inline-block;
   right: 20rpx;
   top: 52rpx

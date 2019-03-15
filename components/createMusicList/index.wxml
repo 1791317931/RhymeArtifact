@@ -38,13 +38,18 @@
            <view class="btn collection" 
             data-index="{{index}}" 
             catchtap="toggleMusicCollectItem">
-              <image src="{{item.is_collection == 1 || createMusicPage.showCollection ? '/assets/imgs/collection-active.png' : '/assets/imgs/collection.png'}}"/>
-              {{item.collection_num}}
+              <image hidden="{{item.is_collection == 1 ||  createMusicPage.showCollection}}" src="/assets/imgs/collection.png"/>
+              <image hidden="{{item.is_collection != 1 && !createMusicPage.showCollection}}" src="/assets/imgs/collection-active.png"/>
+              <text>{{item.collection_num}}</text>
             </view>
             <view class="btn share">
               <image src="/assets/imgs/share.png"/>
+              <text>{{item.share_num}}</text>
               <button open-type="share" data-index="{{index}}"></button>
-              {{item.share_num}}
+            </view>
+            <view class="moments-container" data-index="{{index}}" catchtap="generatePoster">
+              <image src="/assets/imgs/moments.png"/>
+              <text>海报分享</text>
             </view>
             <view class="btn remove"
               hidden="{{createMusicPage.showHead != false}}" 

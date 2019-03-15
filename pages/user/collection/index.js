@@ -16,7 +16,8 @@ Page({
     BAC: null,
     MAC: null,
     // music beat
-    type: 'music'
+    type: 'music',
+    posterUrl: null
   },
 
   /**
@@ -96,6 +97,8 @@ Page({
       let type = this.data.type;
       if (type == 'music') {
         return CreateMusicListUtil.shareItem(e, this);
+      } else if (type == 'beat') {
+        return BeatListUtil.shareBeatItem(e, this);
       }
     }
   },
@@ -131,6 +134,15 @@ Page({
   toggleMusicCollectItem(e) {
     CreateMusicListUtil.toggleMusicCollectItem(e && e.detail || '', this);
   },
+  generatePoster(e) {
+    let type = this.data.type;
+
+    if (type == 'music') {
+      CreateMusicListUtil.generatePoster(e.detail, this);
+    } else if (type == 'beat') {
+      BeatListUtil.generatePoster(e.detail, this);
+    }
+  },
   musicPlayEnd(e) {
     CreateMusicListUtil.musicPlayEnd(e, this);
   },
@@ -148,6 +160,11 @@ Page({
   },
   toRecord(e) {
     BeatListUtil.toRecord(e.detail, this);
+  },
+  closePoster() {
+    this.setData({
+      posterUrl: null
+    });
   },
   beatPlayEnd(e) {
     BeatListUtil.beatPlayEnd(e, this);

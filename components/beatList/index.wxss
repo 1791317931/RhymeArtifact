@@ -88,6 +88,87 @@
   height: 50rpx;
 }
 
+.beat-list-container .beat-item > view .operation-container {
+  padding: 0 0 0 30rpx;
+  position: relative;
+}
+
+.beat-list-container .beat-item > view .operation-container .collection-container {
+  display: inline-block;
+}
+
+.beat-list-container .beat-item > view .operation-container .collection-container image {
+  width: 50rpx;
+  height: 50rpx;
+}
+
+.beat-list-container .beat-item > view .operation-container .collection-container text {
+  display: inline-block;
+  margin-left: 10rpx;
+  width: 150rpx;
+  overflow: hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  font-size:32rpx;
+  font-family:DINAlternate-Bold;
+  font-weight:bold;
+  color:rgba(29,29,29,1);
+  line-height:50rpx;
+  letter-spacing:1rpx;
+}
+
+.beat-list-container .beat-item > view .operation-container .share-container {
+  display: inline-block;
+  position: relative;
+}
+
+.beat-list-container .beat-item > view .operation-container .share-container image {
+  width: 50rpx;
+  height: 50rpx;
+}
+
+.beat-list-container .beat-item > view .operation-container .share-container text {
+  display: inline-block;
+  margin-left: 10rpx;
+  font-size:22rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(29,29,29,1);
+  line-height:50rpx;
+  overflow: hidden;
+}
+
+.beat-list-container .beat-item > view .operation-container .share-container button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  background: transparent;
+}
+
+.beat-list-container .beat-item > view .operation-container .moments-container {
+  float: right;
+  margin-right: 20rpx;
+}
+
+.beat-list-container .beat-item > view .operation-container .moments-container image {
+  width: 50rpx;
+  height: 50rpx;
+}
+
+.beat-list-container .beat-item > view .operation-container .moments-container text {
+  display: inline-block;
+  margin-left: 10rpx;
+  font-size:22rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(29,29,29,1);
+  line-height:50rpx;
+  overflow: hidden;
+}
+
 .beat-list-container .beat-item .start-record-container button {
   height: 82rpx;
   line-height: 82rpx;

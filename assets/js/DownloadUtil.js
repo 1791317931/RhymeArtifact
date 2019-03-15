@@ -48,11 +48,11 @@ let DownloadUtil = {
         wx.saveImageToPhotosAlbum({
           filePath,
           success(res) {
-            CommonUtil.tip.success('保存成功');
+            TipUtil.message('保存成功');
           },
           fail(res) {
             // if (['saveImageToPhotosAlbum:fail cancel', 'saveImageToPhotosAlbum:fail: auth denied'].indexOf(res.errMsg) == -1) {
-            //   CommonUtil.tip.error('图片保存失败');
+            //   TipUtil.message('图片保存失败');
             // }
           },
           complete(res) {

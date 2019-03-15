@@ -12,7 +12,8 @@ Page({
   data: {
     createMusicPage: CommonUtil.copyObject(CreateMusicListUtil.createMusicPage),
     // 试听音频
-    TAC: null
+    TAC: null,
+    posterUrl: null
   },
 
   /**
@@ -94,6 +95,14 @@ Page({
   },
   toggleMusicCollectItem(e) {
     CreateMusicListUtil.toggleMusicCollectItem(e && e.detail || '', this);
+  },
+  generatePoster(e) {
+    CreateMusicListUtil.generatePoster(e.detail, this);
+  },
+  closePoster() {
+    this.setData({
+      posterUrl: null
+    });
   },
   playEnd(e) {
     CreateMusicListUtil.playEnd(e, this);

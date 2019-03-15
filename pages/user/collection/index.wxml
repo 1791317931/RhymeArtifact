@@ -3,7 +3,12 @@
     <button data-value="music" class="music-btn {{type == 'music' ? 'active' : ''}}" catchtap="togglePage">创作</button>
     <button data-value="beat" class="music-btn {{type == 'beat' ? 'active' : ''}}" catchtap="togglePage">伴奏</button>
   </view>
-  <view hidden="{{type == 'beat'}}">
+  <canvas class="poster-canvas" canvas-id="poster-canvas"/>
+  <musicPoster 
+    posterUrl="{{posterUrl}}"
+    bind:closePoster="closePoster"
+  />
+  <view class="music-container" hidden="{{type == 'beat'}}">
     <audio class="hide" 
       src="{{createMusicPage.list[createMusicPage.playingIndex].mixture_url}}" 
       id="musicAudio" 
@@ -13,14 +18,17 @@
     <createMusicList
       bind:toggleMusicItemStatus="toggleMusicItemStatus"
       bind:toggleMusicCollectItem="toggleMusicCollectItem"
+      bind:generatePoster="generatePoster"
       createMusicPage="{{createMusicPage}}"/>
   </view>
-  <view hidden="{{type == 'music'}}">
+  <view class="beat-container" hidden="{{type == 'music'}}">
     <audio class="hide" src="{{beatPage.list[beatPage.playingIndex].beat_url}}" id="beatAudio" bindended="beatPlayEnd" binderror="beatLoadError" bindtimeupdate="beatAudioTimeUpdate"></audio>
     <beatList 
       bind:toggleBeatItemStatus="toggleBeatItemStatus"
       bind:toggleBeatCollectionItem="toggleBeatCollectionItem"
       bind:toRecord="toRecord"
-      beatPage="{{beatPage}}"/>
+      bind:generatePoster="generatePoster"
+      beatPage="{{beatPage}}"
+    />
   </view>
 </view>

@@ -1,13 +1,9 @@
-@import "/templates/beatList/index.wxss";
-@import "/templates/createMusicList/index.wxss";
-
 .collection-container {
-  padding: 30rpx 20rpx;
+  padding: 30rpx 0;
 }
 
 .collection-container .toggle-btn-container {
   padding: 0 30rpx;
-  margin-bottom: 30rpx;
 }
 
 .collection-container .toggle-btn-container button {
@@ -32,4 +28,8 @@
 .collection-container .toggle-btn-container button.active {
   background: #000;
   color: #fff;
+}
+
+.beat-container {
+  padding: 30rpx 20rpx 0;
 }

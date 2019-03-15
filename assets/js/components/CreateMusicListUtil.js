@@ -4,6 +4,7 @@ import PathUtil from '../PathUtil';
 import TimeUtil from '../TimeUtil';
 import * as api from '../api';
 import CommonUtil from '../CommonUtil';
+import PosterCanvasUtil from './PosterCanvasUtil';
 
 let CreateMusicListUtil = {
   createMusicPage: {
@@ -46,6 +47,11 @@ let CreateMusicListUtil = {
     if (page.pageNum < page.totalPage) {
       CreateMusicListUtil.getMusicPage(page.pageNum + 1, _this);
     }
+  },
+  // 下载海报
+  generatePoster(e, _this) {
+    let item = CreateMusicListUtil.getItem(e, _this);
+    PosterCanvasUtil.draw(_this, item, 'music');
   },
   startPlay(e, _this) {
     let index = CreateMusicListUtil.getIndex(e, _this),
@@ -272,9 +278,10 @@ let CreateMusicListUtil = {
         }
       });
 
+      let random = CommonUtil.getShareRandom();
       return {
-        title: item.music_title,
-        imageUrl: CommonUtil.getShareImage(),
+        title: CommonUtil.shareRandomMsgs[random],
+        imageUrl: CommonUtil.getShareImage(random),
         path: '/pages/main/index',
         success: (res) => {
           

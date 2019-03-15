@@ -34,6 +34,9 @@ Component({
     },
     toggleMusicItemStatus(e) {
       this.triggerEvent('toggleMusicItemStatus', e)
+    },
+    generatePoster(e) {
+      this.triggerEvent('generatePoster', e);
     }
   }
 })
