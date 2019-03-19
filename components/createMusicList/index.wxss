@@ -114,11 +114,18 @@
 
 .createMusicList_item_operate .collection {
   display: inline-block;
+  position: relative;
+  height: 50rpx;
+  padding: 0 0 0 50rpx;
 }
 
 .createMusicList_item_operate .collection image {
   width: 50rpx;
   height: 50rpx;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
 }
 
 .createMusicList_item_operate .collection text {
@@ -139,11 +146,17 @@
 .createMusicList_item_operate .share {
   display: inline-block;
   position: relative;
+  height: 50rpx;
+  padding: 0 0 0 50rpx;
 }
 
 .createMusicList_item_operate .share image {
   width: 50rpx;
   height: 50rpx;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
 }
 
 .createMusicList_item_operate .share text {
@@ -173,11 +186,18 @@
 .createMusicList_item_operate .moments-container {
   float: right;
   margin-right: 20rpx;
+  height: 50rpx;
+  padding: 0 0 0 50rpx;
+  position: relative;
 }
 
 .createMusicList_item_operate .moments-container image {
   width: 50rpx;
   height: 50rpx;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
 }
 
 .createMusicList_item_operate .moments-container text {

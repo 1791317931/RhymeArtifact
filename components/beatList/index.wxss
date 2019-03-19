@@ -14,7 +14,7 @@
 }
 
 .beat-list-container .beat-item > view:first-child {
-  padding: 40rpx 20rpx 0;
+  padding: 40rpx 20rpx 10rpx;
 }
 
 .beat-list-container .beat-item > view .top-container {
@@ -95,11 +95,18 @@
 
 .beat-list-container .beat-item > view .operation-container .collection-container {
   display: inline-block;
+  position: relative;
+  height: 50rpx;
+  padding: 0 0 0 50rpx;
 }
 
 .beat-list-container .beat-item > view .operation-container .collection-container image {
   width: 50rpx;
   height: 50rpx;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
 }
 
 .beat-list-container .beat-item > view .operation-container .collection-container text {
@@ -120,11 +127,17 @@
 .beat-list-container .beat-item > view .operation-container .share-container {
   display: inline-block;
   position: relative;
+  height: 50rpx;
+  padding: 0 0 0 50rpx;
 }
 
 .beat-list-container .beat-item > view .operation-container .share-container image {
   width: 50rpx;
   height: 50rpx;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
 }
 
 .beat-list-container .beat-item > view .operation-container .share-container text {
@@ -151,11 +164,18 @@
 .beat-list-container .beat-item > view .operation-container .moments-container {
   float: right;
   margin-right: 20rpx;
+  position: relative;
+  height: 50rpx;
+  padding: 0 0 0 50rpx;
 }
 
 .beat-list-container .beat-item > view .operation-container .moments-container image {
   width: 50rpx;
   height: 50rpx;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
 }
 
 .beat-list-container .beat-item > view .operation-container .moments-container text {
