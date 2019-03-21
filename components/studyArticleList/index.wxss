@@ -1,0 +1,115 @@
+.study-article-container {
+  padding:  0 0 30rpx 0;
+}
+
+.study-article-container .item {
+  margin-top: 20rpx;
+  background: #fff;
+  padding: 20rpx 30rpx 30rpx;
+}
+
+.study-article-container .item:first-child {
+  margin-top: 0;
+}
+
+.study-article-container .item .head-info {
+  height: 60rpx;
+  padding: 0 0 0 84rpx;
+  position: relative;
+}
+
+.study-article-container .item .head-info image {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.study-article-container .item .head-info view {
+  height: 60rpx;
+  line-height: 60rpx;
+  font-size:32rpx;
+  font-family:PingFangSC-Medium;
+  font-weight:500;
+  color:rgba(29,29,29,1);
+  letter-spacing:1rpx;
+}
+
+.study-article-container .item .content-image {
+  width: 690rpx;
+  height: 370rpx;
+  margin-top: 20rpx;
+}
+
+.study-article-container .item .title {
+  margin: 30rpx 0;
+  font-size:38rpx;
+  font-family:PingFangSC-Medium;
+  font-weight:500;
+  color:rgba(29,29,29,1);
+  line-height:53rpx;
+  letter-spacing:1rpx;
+}
+
+.operation-container {
+  height: 50rpx;
+}
+
+.operation-container .share {
+  float: right;
+  position: relative;
+  padding: 0 0 0 60rpx;
+  margin-right: 95rpx;
+}
+
+.operation-container .share image {
+  width: 50rpx;
+  height: 50rpx;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
+.operation-container .share text {
+  font-size:22rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(29,29,29,1);
+  line-height:50rpx;
+}
+
+.operation-container .share button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+  z-index: 1;
+}
+
+.operation-container .moments-container {
+  float: right;
+  position: relative;
+  padding: 0 0 0 60rpx;
+}
+
+.operation-container .moments-container image {
+  width: 50rpx;
+  height: 50rpx;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
+.operation-container .moments-container text {
+  font-size:22rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(29,29,29,1);
+  line-height:50rpx;
+}

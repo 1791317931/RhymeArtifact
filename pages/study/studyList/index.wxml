@@ -1,0 +1,25 @@
+<view class="tab-container">
+  <view class="clearfix">
+    <view wx:for="{{tabs}}" wx:for-item="item" wx:for-index="index" wx:key="{{item.flag}}"
+    class="item {{activeIndex == index ? 'active' : ''}} item-{{index}}" data-index="{{index}}" catchtap="toggleTab">
+      {{item.text}}
+    </view>
+  </view>
+</view>
+<canvas class="poster-canvas" canvas-id="poster-canvas"/>
+<musicPoster 
+  posterUrl="{{posterUrl}}"
+  bind:closePoster="closePoster"
+/>
+<view wx:if="{{tabs[activeIndex].flag == 'video'}}">
+  <studyVideoList
+    studyVideoPage="{{studyVideoPage}}"
+  />
+</view>
+<view wx:if="{{tabs[activeIndex].flag == 'article'}}" class="article-container">
+  <studyArticleList 
+    studyArticlePage="{{studyArticlePage}}"
+    bind:generatePoster="generatePoster"
+    bind:clickStudyArticleItem="clickStudyArticleItem"
+  />
+</view>

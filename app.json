@@ -13,7 +13,10 @@
     "pages/user/mine/index",
     "templates/submitting/index",
     "pages/user/collection/index",
-    "components/musicPoster/index"
+    "components/musicPoster/index",
+    "components/components/studyArticleList/index",
+    "components/components/studyVideoList/index",
+    "pages/study/studyList/index"
   ],
   "window": {
     "backgroundColor": "#f7f7f7",
@@ -33,6 +36,12 @@
         "iconPath": "assets/imgs/rhyme.png",
         "pagePath": "pages/main/index",
         "text": "押韵"
+      },
+      {
+        "selectedIconPath": "assets/imgs/study-active.png",
+        "iconPath": "assets/imgs/study.png",
+        "pagePath": "pages/study/studyList/index",
+        "text": "学习"
       },
       {
         "selectedIconPath": "assets/imgs/create-active.png",

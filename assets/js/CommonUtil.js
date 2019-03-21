@@ -6,6 +6,7 @@ let CommonUtil = {
       url: '/pages/authorition/index'
     });
   },
+  // 禁止出现正则、function
   copyObject(obj) {
     return JSON.parse(JSON.stringify(obj));
   },

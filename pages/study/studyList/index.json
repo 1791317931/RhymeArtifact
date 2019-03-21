@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "musicPoster": "/components/musicPoster/index",
+    "studyVideoList": "/components/studyVideoList/index",
+    "studyArticleList": "/components/studyArticleList/index"
+  },
+  "navigationBarTitleText": "学习",
+  "enablePullDownRefresh": true
+}

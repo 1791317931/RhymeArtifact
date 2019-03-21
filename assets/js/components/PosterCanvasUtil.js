@@ -23,19 +23,19 @@ let PosterCanvasUtil = {
       success: (res) => {
         let qrCodePath = res.tempFilePath;
 
-        // _this.setData({
-        //   posterUrl: qrCodePath
-        // });
+        _this.setData({
+          posterUrl: qrCodePath
+        });
       },
       fail: (res) => {
         console.log(res);
       }
     });
-    // return;
+    return;
 
     PosterCanvasUtil.drawLogo(context, '/assets/imgs/rect-logo.png', (totalWidth - logoWidth) / 2, 40, logoWidth, logoHeight);
     PosterCanvasUtil.fillAppName(context, totalWidth);
-    PosterCanvasUtil.drawContent(context, data, type);
+    // PosterCanvasUtil.drawContent(context, data, type);
     PosterCanvasUtil.drawLine(context, totalWidth);
     PosterCanvasUtil.drawQrCodeInfo(context, '/assets/imgs/rect-logo.png');
 
