@@ -164,10 +164,10 @@ let CreateMusicListUtil = {
 
       param.type = 'music';
     } else {
-      fn = api.getMusicPage;
-
       if (_this.data.createMusicPage.showMine) {
-        param.showMine = 'Y';
+        fn = api.getMyMusicPage;
+      } else {
+        fn = api.getMusicPage;
       }
     }
 

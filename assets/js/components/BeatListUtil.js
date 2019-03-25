@@ -12,10 +12,9 @@ let BeatListUtil = {
     loading: false,
     playingIndex: -1,
     playing: false,
-    page: 1,
-    pageSize: 10,
-    totalPage: 0,
-    pageNum: 1,
+    current_page: 1,
+    per_page: 10,
+    total_pages: 0,
     list: []
   },
   init(_this) {
@@ -189,8 +188,8 @@ let BeatListUtil = {
   },
   onReachBottom(_this) {
     let page = _this.data.beatPage;
-    if (page.pageNum < page.totalPage) {
-      BeatListUtil.getBeatPage(page.pageNum + 1, _this);
+    if (page.current_page < page.total_pages) {
+      BeatListUtil.getBeatPage(page.current_page + 1, _this);
     }
   },
   getIndex(e, _this) {
@@ -210,7 +209,7 @@ let BeatListUtil = {
       'beatPage.loading': loading
     });
   },
-  getBeatPage(pageNum = 1, _this) {
+  getBeatPage(current_page = 1, _this) {
     let page = _this.data.beatPage;
     if (page.loading) {
       return;
@@ -218,18 +217,18 @@ let BeatListUtil = {
 
     BeatListUtil.pausePlay(null, _this);
     let param = {
-      page: pageNum,
-      pageSize: page.pageSize
+      current_page,
+      per_page: page.per_page
     },
     list = [];
 
-    if (pageNum > 1) {
+    if (current_page > 1) {
       list = page.list;
     }
 
     BeatListUtil.toggleBeatPageLoading(true, _this);
     _this.setData({
-      'beatPage.page': pageNum
+      'beatPage.current_page': current_page
     });
 
     let fn;
@@ -260,8 +259,8 @@ let BeatListUtil = {
 
         _this.setData({
           'beatPage.list': list,
-          'beatPage.totalPage': parseInt(obj.maxPage || 0),
-          'beatPage.pageNum': parseInt(obj.page || 1)
+          'beatPage.total_pages': parseInt(obj.total_pages || 0),
+          'beatPage.current_page': parseInt(obj.current_page || 1)
         });
       } else {
         TipUtil.errorCode(res.code);

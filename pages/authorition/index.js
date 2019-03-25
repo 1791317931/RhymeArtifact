@@ -83,18 +83,18 @@ Page({
             wx.setStorageSync('userInfo', userInfo);
 
             let obj = {};
-            obj.wx_code = code;
-            obj.wx_encrypted_data = encryptedData;
-            obj.wx_iv = iv;
+            obj.code = code;
+            obj.encryptData = encryptedData;
+            obj.iv = iv;
 
-            api.login(obj, (res) => {
-              if (ConfigUtil.isSuccess(res.code)) {
-                wx.setStorageSync('token', res.data.token);
+            api.login(obj, (data) => {
+              if (res.code) {
+                TipUtil.errorCode(data.code);
+              } else {
+                wx.setStorageSync('token', data.api_token);
                 wx.switchTab({
                   url: '/pages/main/index'
                 });
-              } else {
-                TipUtil.errorCode(res.code);
               }
             });
           }

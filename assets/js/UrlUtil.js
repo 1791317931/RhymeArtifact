@@ -32,7 +32,7 @@ let UrlUtil = {
         'auth-token': wx.getStorageSync('token')
       },
       success(res) {
-        if (res.data.code == ConfigUtil.statusCode.NOT_AUTHORITION) {
+        if (res.statusCode == ConfigUtil.statusCode.NOT_AUTHORITION) {
           UrlUtil.toLogin();
         } else {
           fn && fn(res.data);

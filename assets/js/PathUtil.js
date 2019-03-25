@@ -1,7 +1,7 @@
 let PathUtil = {
   filePrefix: 'https://file.ihammer.cn',
-  prefix: 'https://wapi.ihammer.cn/wxapi/',
-  // prefix: 'https://yayun.sydy1314.com/wxapi/',
+  // prefix: 'https://wapi.ihammer.cn/wxapi/',
+  prefix: 'https://yayun.sydy1314.com/wxapp/',
   getPath(url) {
     return PathUtil.prefix + url;
   },

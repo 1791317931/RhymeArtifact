@@ -43,5 +43,5 @@
   <empty 
     loading="{{beatPage.loading}}"
     hasData="{{!!beatPage.list.length}}"
-    hasMore="{{beatPage.pageNum < beatPage.totalPage}}"/>
+    hasMore="{{beatPage.current_page < beatPage.total_pages}}"/>
 </view>

@@ -1,7 +1,7 @@
 import UrlUtil from 'UrlUtil';
 
 export function login(data, fn, completeFn) {
-  UrlUtil.post('wx-login', data, fn, completeFn);
+  UrlUtil.post('authorizations', data, fn, completeFn);
 }
 
 export function uploadFile(data, fn, completeFn) {
@@ -38,7 +38,7 @@ export function getLyricPage(data, fn, completeFn) {
 
 // ---------------------伴奏------------------------
 export function getBeatPage(data, fn, completeFn) {
-  UrlUtil.post('beat-lists', data, fn, completeFn);
+  UrlUtil.get('beats', data, fn, completeFn);
 }
 
 export function collectBeat(data, fn, completeFn) {
@@ -56,7 +56,11 @@ export function createMusic(data, fn, completeFn) {
 }
 
 export function getMusicPage(data, fn, completeFn) {
-  UrlUtil.get('music-lists', data, fn, completeFn);
+  UrlUtil.get('musics', data, fn, completeFn);
+}
+
+export function getMyMusicPage(data, fn, completeFn) {
+  UrlUtil.get('user/musics', data, fn, completeFn);
 }
 
 export function collectMusic(data, fn, completeFn) {

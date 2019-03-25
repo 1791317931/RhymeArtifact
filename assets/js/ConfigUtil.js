@@ -9,7 +9,7 @@ let ConfigUtil = {
   },
   statusCode: {
     SUCCESS: 1000,
-    NOT_AUTHORITION: 1003
+    NOT_AUTHORITION: 401
   },
   isSuccess(code) {
     return ConfigUtil.statusCode.SUCCESS == code;
