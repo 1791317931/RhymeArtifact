@@ -1,0 +1,26 @@
+<view class="video-container">
+  <video class="video" src="{{list[playIndex].url}}" controls></video>
+  <view class="title-container">{{list[playIndex].title}}</view>
+</view>
+<view class="bottom-container">
+  <view class="operation-container clearfix">
+    <view class="poster-share-container">
+      <image src="/assets/imgs/moments.png"/>
+      <text>海报分享</text>
+      <button open-type="share"></button>
+    </view>
+    <view class="wechat-share-container">
+      <image src="/assets/imgs/wechat-share.png"/>
+      <text>微信分享</text>
+      <button open-type="share"></button>
+    </view>
+  </view>
+  <view class="video-list-wrapper">
+    <view class="list-label">课程专辑</view>
+    <view class="video-list-inner">
+      <view wx:for="{{list}}" class="item" wx:for-index="index" wx:for-item="item" wx:key="{{index}}">
+
+      </view>
+    </view>
+  </view>
+</view>

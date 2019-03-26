@@ -1,5 +1,5 @@
 <view class="main-page">
-  <searchLyric 
+  <searchRhyme 
     placement="bottom" 
     rhymePage="{{rhymePage}}"
     bind:getRhymeList="getRhymeList" 

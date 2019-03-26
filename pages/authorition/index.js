@@ -88,14 +88,10 @@ Page({
             obj.iv = iv;
 
             api.login(obj, (data) => {
-              if (res.code) {
-                TipUtil.errorCode(data.code);
-              } else {
-                wx.setStorageSync('token', data.api_token);
-                wx.switchTab({
-                  url: '/pages/main/index'
-                });
-              }
+              wx.setStorageSync('token', data.api_token);
+              wx.switchTab({
+                url: '/pages/main/index'
+              });
             });
           }
         });

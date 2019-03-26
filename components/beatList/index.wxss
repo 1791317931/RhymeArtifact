@@ -199,7 +199,3 @@
   letter-spacing:1rpx;
   border-radius: 0;
 }
-
-.beat-list-container empty {
-  padding:30rpx 20rpx 10rpx;
-}

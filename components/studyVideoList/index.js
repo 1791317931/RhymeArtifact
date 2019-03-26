@@ -1,10 +1,9 @@
-// components/studyVideoList/index.js
 Component({
   /**
    * 组件的属性列表
    */
   properties: {
-
+    studyVideoPage: Object
   },
 
   /**
@@ -18,6 +17,15 @@ Component({
    * 组件的方法列表
    */
   methods: {
+    // 阻止跳转
+    clickShare() {
 
+    },
+    toggleStudyVideoCollectionItem(e) {
+      this.triggerEvent('toggleStudyVideoCollectionItem', e);
+    },
+    clickStudyVideoItem(e) {
+      this.triggerEvent('clickStudyVideoItem', e);
+    }
   }
 })

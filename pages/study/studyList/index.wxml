@@ -14,6 +14,8 @@
 <view wx:if="{{tabs[activeIndex].flag == 'video'}}">
   <studyVideoList
     studyVideoPage="{{studyVideoPage}}"
+    bind:toggleVideoCollectionItem="toggleVideoCollectionItem"
+    bind:clickStudyVideoItem="clickStudyVideoItem"
   />
 </view>
 <view wx:if="{{tabs[activeIndex].flag == 'article'}}" class="article-container">

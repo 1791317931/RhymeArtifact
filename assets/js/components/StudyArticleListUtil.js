@@ -9,10 +9,9 @@ let StudyArticleListUtil = {
   studyArticlePage: {
     list: [],
     loading: false,
-    page: 1,
-    pageSize: 10,
-    totalPage: 0,
-    pageNum: 1
+    current_page: 1,
+    per_page: 10,
+    total_pages: 0
   },
   getIndex(e, _this) {
     let index = e.target.dataset.index;
@@ -68,8 +67,8 @@ let StudyArticleListUtil = {
   },
   onReachBottom(_this) {
     let page = _this.data.studyArticlePage;
-    if (page.pageNum < page.totalPage) {
-      StudyArticleListUtil.getStudyArticlePage(page.pageNum + 1, _this);
+    if (page.current_page < page.total_pages) {
+      StudyArticleListUtil.getStudyArticlePage(page.current_page + 1, _this);
     }
   },
   clickStudyArticleItem(e, _this) {
@@ -86,32 +85,35 @@ let StudyArticleListUtil = {
       'studyArticlePage.loading': loading
     });
   },
-  getStudyArticlePage(pageNum = 1, _this) {
+  getStudyArticlePage(current_page = 1, _this) {
     let page = _this.data.studyArticlePage;
     if (page.loading) {
       return;
     }
 
     let param = {
-      page: pageNum,
-      pageSize: page.pageSize
+      page: current_page,
+      per_page: page.per_page
     },
     list = [];
 
-    if (pageNum > 1) {
+    if (current_page > 1) {
       list = page.list;
     }
 
     StudyArticleListUtil.toggleStudyArticlePageLoading(true, _this);
     _this.setData({
-      'studyArticlePage.page': pageNum
+      'studyArticlePage.current_page': current_page
     });
 
 
     setTimeout(() => {
 
       
-      let obj = {};
+      let obj = {
+        current_page: 1,
+        total_pages: 1
+      };
       list = [
         {
           id: 1,
@@ -149,8 +151,8 @@ let StudyArticleListUtil = {
 
       _this.setData({
         'studyArticlePage.list': list,
-        'studyArticlePage.totalPage': parseInt(obj.maxPage || 0),
-        'studyArticlePage.pageNum': parseInt(obj.page || 1)
+        'studyArticlePage.total_pages': parseInt(obj.total_pages || 0),
+        'studyArticlePage.current_page': parseInt(obj.current_page || 1)
       });
       _this.setData({
         'studyArticlePage.loading': false

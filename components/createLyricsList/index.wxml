@@ -1,42 +1,40 @@
-<!--components/createLyricsList/index.wxml-->
 <view class="createLyricsList_list">
-   <view 
-      class="createLyricsList_item" 
-      wx:for="{{lyricsPage.list}}" 
-      wx:for-index="index" 
-      wx:for-item="item" 
-      wx:key="{{index}}"
-      data-index="{{index}}" 
-      catchtap="clickLyricItem">
-      <view class="createLyricsList_item_content">
-          <view class="info">
-            <view class="time">{{item.created_at}}</view>
-            <view class="title">{{item.lyric_title}}</view>
+  <view 
+    class="createLyricsList_item" 
+    wx:for="{{lyricsPage.list}}" 
+    wx:for-index="index" 
+    wx:for-item="item" 
+    wx:key="{{index}}"
+    data-index="{{index}}" 
+    catchtap="clickLyricItem">
+    <view class="createLyricsList_item_content">
+        <view class="info">
+          <view class="time">{{item.created_at}}</view>
+          <view class="title">{{item.lyric_title}}</view>
+        </view>
+        <view class="operate">
+          <view 
+              open-type="share" 
+              class="btn remove" 
+              data-index="{{index}}" 
+              catchtap="removeLyric">
+              <image src="/assets/imgs/delete.png"/>
           </view>
-          <view class="operate">
-            <view 
-                open-type="share" 
-                class="btn remove" 
-                data-index="{{index}}" 
-                catchtap="removeLyric">
-                <image src="/assets/imgs/delete.png"/>
-            </view>
-            <view 
-                open-type="share" 
-                class="btn share" 
-                data-index="{{index}}">
-                <image src="/assets/imgs/share.png"/>
-                <button open-type="share" 
-                  class="share-button" 
-                  data-index="{{index}}"
-                  catchtap="share"></button>
-            </view>
+          <view 
+              open-type="share" 
+              class="btn share" 
+              data-index="{{index}}">
+              <image src="/assets/imgs/wechat-share.png"/>
+              <button open-type="share" 
+                class="share-button" 
+                data-index="{{index}}"
+                catchtap="share"></button>
           </view>
-      </view>
+        </view>
     </view>
-    <empty 
-      loading="{{lyricsPage.loading}}"
-      hasData="{{!!lyricsPage.list.length}}"
-      hasMore="{{lyricsPage.pageNum < lyricsPage.totalPage}}"/>
+  </view>
 </view>
-
+<empty 
+  loading="{{lyricsPage.loading}}"
+  hasData="{{!!lyricsPage.list.length}}"
+  hasMore="{{lyricsPage.current_page < lyricsPage.total_pages}}"/>

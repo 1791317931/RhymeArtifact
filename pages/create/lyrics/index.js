@@ -2,7 +2,7 @@ import CommonUtil from '../../../assets/js/CommonUtil';
 import TipUtil from '../../../assets/js/TipUtil';
 import ConfigUtil from '../../../assets/js/ConfigUtil';
 import * as api from '../../../assets/js/api';
-import SearchLyricUtil from '../../../assets/js/components/SearchLyricUtil';
+import SearchRhymeUtil from '../../../assets/js/components/SearchRhymeUtil';
 import SubmittingUtil from '../../../assets/js/components/SubmittingUtil';
 
 Page({
@@ -25,7 +25,7 @@ Page({
     },
     // create创建   search搜索
     mode: 'create',
-    rhymePage: CommonUtil.copyObject(SearchLyricUtil.rhymePage),
+    rhymePage: CommonUtil.copyObject(SearchRhymeUtil.rhymePage),
     submittingForm: SubmittingUtil.submittingForm,
     showSubmit: true,
     readonly: false
@@ -102,15 +102,12 @@ Page({
   getLyricById() {
     let lyric_id = this.data.lyricsForm.lyric_id;
     api.getLyricById({
-      lyric_id
+      lyric_id,
+      include: 'user'
     }, (res) => {
-      if (ConfigUtil.isSuccess(res.code)) {
-        this.setData({
-          lyricsForm: res.data
-        });
-      } else {
-        TipUtil.errorCode(res.code);
-      }
+      this.setData({
+        lyricsForm: res.data
+      });
     });
   },
   changeTitle(e) {
@@ -120,13 +117,13 @@ Page({
     });
   },
   changeKeyword(e) {
-    SearchLyricUtil.changeKeyword(e && e.detail || '', this);
+    SearchRhymeUtil.changeKeyword(e && e.detail || '', this);
   },
   toggleMortgage(e) {
-    SearchLyricUtil.toggleMortgage(e && e.detail || '', this);
+    SearchRhymeUtil.toggleMortgage(e && e.detail || '', this);
   },
   getRhymeList(e) {
-    SearchLyricUtil.getRhymeList(e && e.detail || '', this);
+    SearchRhymeUtil.getRhymeList(e && e.detail || '', this);
   },
   openSearch() {
     this.setData({
@@ -165,7 +162,7 @@ Page({
     }
 
     SubmittingUtil.toggleSubmitting(true, this);
-    if (!form.lyric_id) {
+    if (!form.id) {
       api.createLyric(form, (res) => {
         this.editLyricCallback(res);
       }, () => {
@@ -174,7 +171,7 @@ Page({
     } else {
       let obj = {
         ...form,
-        id: form.lyric_id
+        id: form.id
       };
       api.updateLyricById(obj, (res) => {
         this.editLyricCallback(res);
@@ -184,18 +181,14 @@ Page({
     }
   },
   editLyricCallback(res) {
-    if (ConfigUtil.isSuccess(res.code)) {
-      this.setData({
-        showSubmit: false
-      });
-      TipUtil.message('操作成功');
-      setTimeout(() => {
-        wx.navigateBack({
+    this.setData({
+      showSubmit: false
+    });
+    TipUtil.message('操作成功');
+    setTimeout(() => {
+      wx.navigateBack({
 
-        });
-      }, 1500);
-    } else {
-      TipUtil.error(res.info);
-    }
+      });
+    }, 1500);
   }
 })

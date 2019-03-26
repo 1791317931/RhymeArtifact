@@ -26,7 +26,7 @@
           <text>{{item.collection_num}}</text>
         </view>
         <view class="share-container">
-          <image src="/assets/imgs/share.png"/>
+          <image src="/assets/imgs/wechat-share.png"/>
           <text>Beat分享</text>
           <button open-type="share" data-index="{{index}}" class="hide"></button>
         </view>
@@ -40,8 +40,8 @@
       <button>开始录制</button>
     </view>
   </view>
-  <empty 
-    loading="{{beatPage.loading}}"
-    hasData="{{!!beatPage.list.length}}"
-    hasMore="{{beatPage.current_page < beatPage.total_pages}}"/>
 </view>
+<empty 
+  loading="{{beatPage.loading}}"
+  hasData="{{!!beatPage.list.length}}"
+  hasMore="{{beatPage.current_page < beatPage.total_pages}}"/>

@@ -1,0 +1,113 @@
+.video-container {
+  background: #fff;
+}
+
+.video {
+  display: block;
+  width: 750rpx;
+  height: 422rpx;
+}
+
+.title-container {
+  line-height: 100rpx;
+  padding: 0 30rpx;
+  font-size:32rpx;
+  font-family:PingFangSC-Medium;
+  font-weight:500;
+  color:rgba(51,51,51,1);
+  box-shadow:0px 0px 30rpx 0px rgba(147,147,147,0.45);
+}
+
+.bottom-container {
+  height: 690rpx;
+  overflow: auto;
+}
+
+.operation-container {
+  padding: 20rpx 50rpx;
+  background: #fff;
+}
+
+.operation-container .poster-share-container {
+  float: left;
+  width:310rpx;
+  height:78rpx;
+  text-align: center;
+  border-radius:14rpx;
+  border:2rpx solid rgba(0,0,0,1);
+  position: relative;
+}
+
+.operation-container .poster-share-container image {
+  width: 50rpx;
+  height: 50rpx;
+  vertical-align: middle;
+}
+
+.operation-container .poster-share-container text {
+  margin-left: 10rpx;
+  font-size:22rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(29,29,29,1);
+  line-height: 78rpx;
+}
+
+.operation-container .poster-share-container button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  opacity: 0;
+}
+
+.operation-container .wechat-share-container {
+  float: right;
+  width:310rpx;
+  height:78rpx;
+  text-align: center;
+  border-radius:14rpx;
+  border:2rpx solid rgba(0,0,0,1);
+  position: relative;
+}
+
+.operation-container .wechat-share-container image {
+  width: 50rpx;
+  height: 50rpx;
+  vertical-align: middle;
+}
+
+.operation-container .wechat-share-container text {
+  margin-left: 10rpx;
+  font-size:22rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(29,29,29,1);
+  line-height: 78rpx;
+}
+
+.operation-container .wechat-share-container button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  opacity: 0;
+}
+
+.video-list-wrapper {
+  margin-top: 10rpx;
+  background: #fff;
+  padding: 0 30rpx;
+}
+
+.video-list-wrapper .list-label {
+  line-height: 88rpx;
+  font-size:30rpx;
+  font-family:PingFangSC-Medium;
+  font-weight:500;
+  color:rgba(96,96,96,1);
+}

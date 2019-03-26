@@ -1,1 +1,114 @@
-/* components/studyVideoList/index.wxss */
+.study-video-container .item {
+  background: #fff;
+}
+
+.study-video-container .item .poster image {
+  display: block;
+  width: 750rpx;
+  height: 420rpx;
+}
+
+.operation-container {
+  height: 90rpx;
+  padding: 0 0 0 20rpx;
+}
+
+.operation-container .collection {
+  float: left;
+  position: relative;
+  height: 90rpx;
+  padding: 0 0 0 50rpx;
+}
+
+.operation-container .collection image {
+  width: 50rpx;
+  height: 50rpx;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
+.operation-container .collection text {
+  display: inline-block;
+  margin-left: 10rpx;
+  width: 150rpx;
+  overflow: hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  font-size:32rpx;
+  font-family:DINAlternate-Bold;
+  font-weight:bold;
+  color:rgba(29,29,29,1);
+  line-height:90rpx;
+  letter-spacing:1rpx;
+}
+
+.operation-container .share {
+  float: left;
+  position: relative;
+  height: 90rpx;
+  padding: 0 0 0 50rpx;
+}
+
+.operation-container .share image {
+  width: 50rpx;
+  height: 50rpx;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
+.operation-container .share text {
+  display: inline-block;
+  margin-left: 10rpx;
+  width: 150rpx;
+  overflow: hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  font-size:32rpx;
+  font-family:DINAlternate-Bold;
+  font-weight:bold;
+  color:rgba(29,29,29,1);
+  line-height:90rpx;
+  letter-spacing:1rpx;
+}
+
+.operation-container .share button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  background: transparent;
+}
+
+.operation-container .moments-container {
+  float: right;
+  margin-right: 20rpx;
+  height: 90rpx;
+  padding: 0 0 0 50rpx;
+  position: relative;
+}
+
+.operation-container .moments-container image {
+  width: 50rpx;
+  height: 50rpx;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
+.operation-container .moments-container text {
+  display: inline-block;
+  margin-left: 10rpx;
+  font-size:22rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(29,29,29,1);
+  line-height:90rpx;
+  overflow: hidden;
+}

@@ -1,6 +1,6 @@
 import * as api from '../../assets/js/api';
 import CommonUtil from '../../assets/js/CommonUtil';
-import SearchLyricUtil from '../../assets/js/components/SearchLyricUtil';
+import SearchRhymeUtil from '../../assets/js/components/SearchRhymeUtil';
 
 Page({
   /**
@@ -8,7 +8,7 @@ Page({
    */
   
   data: {
-    rhymePage: CommonUtil.copyObject(SearchLyricUtil.rhymePage),
+    rhymePage: CommonUtil.copyObject(SearchRhymeUtil.rhymePage),
     lyricId: null
   },
 
@@ -88,12 +88,12 @@ Page({
     return CommonUtil.shareApp(e);
   },
   changeKeyword(e) {
-    SearchLyricUtil.changeKeyword(e && e.detail || '', this);
+    SearchRhymeUtil.changeKeyword(e && e.detail || '', this);
   },
   toggleMortgage(e) {
-    SearchLyricUtil.toggleMortgage(e && e.detail || '', this);
+    SearchRhymeUtil.toggleMortgage(e && e.detail || '', this);
   },
   getRhymeList(e) {
-    SearchLyricUtil.getRhymeList(e && e.detail || '', this);
+    SearchRhymeUtil.getRhymeList(e && e.detail || '', this);
   }
 })

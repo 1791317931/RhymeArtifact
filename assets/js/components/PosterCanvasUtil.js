@@ -15,50 +15,45 @@ let PosterCanvasUtil = {
 
     // 首先下载二维码
     wx.downloadFile({
-      url: PathUtil.getPath('get-qrcode') + '?path=/pages/main/index&type=' + type + '&id=' + id,
+      url: PathUtil.getPath('utils/qrcode-unlimited') + '?path=pages/main/index&type=' + type + '&id=' + id,
       header: {
         'Content-Type': 'application/json',
-        'auth-token': wx.getStorageSync('token')
+        'Authorization': 'Bearer ' + wx.getStorageSync('token')
       },
       success: (res) => {
         let qrCodePath = res.tempFilePath;
 
-        _this.setData({
-          posterUrl: qrCodePath
+        PosterCanvasUtil.drawLogo(context, '/assets/imgs/rect-logo.png', (totalWidth - logoWidth) / 2, 40, logoWidth, logoHeight);
+        PosterCanvasUtil.fillAppName(context, totalWidth);
+        // PosterCanvasUtil.drawContent(context, data, type);
+        PosterCanvasUtil.drawLine(context, totalWidth);
+        PosterCanvasUtil.drawQrCodeInfo(context, qrCodePath);
+
+        context.draw(false, (res) => {
+          wx.canvasToTempFilePath({
+            canvasId: posterId,
+            fileType: 'jpg',
+            quality: 0.92,
+            success: (res) => {
+              let path = res.tempFilePath;
+
+              _this.setData({
+                posterUrl: path
+              });
+
+              // 下载海报
+              DownloadUtil.authorize(path);
+            },
+            fail(res) {
+              console.log(res)
+              // TipUtil.message('服务器繁忙，请稍后重试');
+            }
+          });
         });
       },
       fail: (res) => {
         console.log(res);
       }
-    });
-    return;
-
-    PosterCanvasUtil.drawLogo(context, '/assets/imgs/rect-logo.png', (totalWidth - logoWidth) / 2, 40, logoWidth, logoHeight);
-    PosterCanvasUtil.fillAppName(context, totalWidth);
-    // PosterCanvasUtil.drawContent(context, data, type);
-    PosterCanvasUtil.drawLine(context, totalWidth);
-    PosterCanvasUtil.drawQrCodeInfo(context, '/assets/imgs/rect-logo.png');
-
-    context.draw(false, (res) => {
-      wx.canvasToTempFilePath({
-        canvasId: posterId,
-        fileType: 'jpg',
-        quality: 0.92,
-        success: (res) => {
-          let path = res.tempFilePath;
-
-          _this.setData({
-            posterUrl: path
-          });
-
-          // 下载海报
-          DownloadUtil.authorize(path);
-        },
-        fail(res) {
-          console.log(res)
-          // TipUtil.message('服务器繁忙，请稍后重试');
-        }
-      });
     });
   },
   drawLogo(context, url, marginLeft, marginTop, width, height) {

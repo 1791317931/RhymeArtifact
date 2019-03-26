@@ -1,7 +1,3 @@
-.study-article-container {
-  padding:  0 0 30rpx 0;
-}
-
 .study-article-container .item {
   margin-top: 20rpx;
   background: #fff;

@@ -9,11 +9,11 @@ Page({
     menus: [
       {
         path: '/pages/user/music/index',
-        text: '音乐创作'
+        text: '我的音乐创作'
       },
       {
         path: '/pages/create/createLyricsList/index',
-        text: '歌词创作'
+        text: '我的歌词创作'
       },
       {
         path: '',

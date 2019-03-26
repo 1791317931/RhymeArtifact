@@ -1,6 +1,6 @@
 {
   "usingComponents": {
-    "searchLyric": "/components/searchLyric/index"
+    "searchLyric": "/components/searchRhyme/index"
   },
   "navigationBarTitleText": "写歌词"
 }

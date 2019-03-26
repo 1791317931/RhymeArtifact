@@ -58,6 +58,6 @@ App({
   },
   globalData: {
     userInfo: null,
-    appName: '押韵rap'
+    appName: '押韵Rap'
   }
 })

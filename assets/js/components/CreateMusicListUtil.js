@@ -12,9 +12,9 @@ let CreateMusicListUtil = {
     playingIndex: -1,
     playing: false,
     page: 1,
-    pageSize: 10,
+    per_page: 10,
     totalPage: 0,
-    pageNum: 1,
+    current_page: 1,
     list: []
   },
   init(_this) {
@@ -39,13 +39,10 @@ let CreateMusicListUtil = {
       CreateMusicListUtil.startPlay(e, _this);
     }
   },
-  clickCollectionItem(e, _this) {
-    let index = e.currentTarget.dataset.index;
-  },
   onReachBottom(_this) {
     let page = _this.data.createMusicPage;
-    if (page.pageNum < page.totalPage) {
-      CreateMusicListUtil.getMusicPage(page.pageNum + 1, _this);
+    if (page.current_page < page.totalPage) {
+      CreateMusicListUtil.getMusicPage(page.current_page + 1, _this);
     }
   },
   // 下载海报
@@ -136,7 +133,7 @@ let CreateMusicListUtil = {
       'createMusicPage.loading': loading
     });
   },
-  getMusicPage(pageNum = 1, _this) {
+  getMusicPage(current_page = 1, _this) {
     let page = _this.data.createMusicPage;
     if (page.loading) {
       return;
@@ -144,18 +141,18 @@ let CreateMusicListUtil = {
 
     CreateMusicListUtil.pausePlay(null, _this);
     let param = {
-      page: pageNum,
-      pageSize: page.pageSize
+      page: current_page,
+      per_page: page.per_page
     },
     list = [];
 
-    if (pageNum > 1) {
+    if (current_page > 1) {
       list = page.list;
     }
 
     CreateMusicListUtil.toggleMusicPageLoading(true, _this);
     _this.setData({
-      'createMusicPage.page': pageNum
+      'createMusicPage.page': current_page
     });
 
     let fn;
@@ -163,40 +160,40 @@ let CreateMusicListUtil = {
       fn = api.getCollection;
 
       param.type = 'music';
+      param.include = 'beat,user';
     } else {
       if (_this.data.createMusicPage.showMine) {
         fn = api.getMyMusicPage;
+        param.include = 'beat';
       } else {
         fn = api.getMusicPage;
+        param.include = 'beat,user';
       }
     }
 
     fn(param, (res) => {
-      if (ConfigUtil.isSuccess(res.code)) {
-        let obj = res.data;
-        obj.data.forEach((item, index) => {
-          item.mixture_url = PathUtil.getFilePath(item.mixture_url) || '/assets/imgs/logo.png';
-          item.collection_num = parseInt(item.collection_num);
-          item.share_num = parseInt(item.share_num);
+      let pagination = res.meta.pagination;
 
-          // 总时长
-          let totalTime = parseInt(parseInt(item.music_duration) / 1000);
-          item.totalTime = totalTime;
-          // 剩余时长
-          item.surplusTime = totalTime;
-          item.surplusTimeArr = TimeUtil.numberToArr(totalTime);
+      res.data.forEach((item, index) => {
+        item.mixture_url = PathUtil.getFilePath(item.mixture_url) || '/assets/imgs/logo.png';
+        item.collection_num = parseInt(item.collection_num);
+        item.share_num = parseInt(item.share_num);
 
-          list.push(item);
-        });
+        // 总时长
+        let totalTime = parseInt(parseInt(item.music_duration) / 1000);
+        item.totalTime = totalTime;
+        // 剩余时长
+        item.surplusTime = totalTime;
+        item.surplusTimeArr = TimeUtil.numberToArr(totalTime);
 
-        _this.setData({
-          'createMusicPage.list': list,
-          'createMusicPage.totalPage': parseInt(obj.maxPage || 0),
-          'createMusicPage.pageNum': parseInt(obj.page || 1)
-        });
-      } else {
-        TipUtil.errorCode(res.code);
-      }
+        list.push(item);
+      });
+
+      _this.setData({
+        'createMusicPage.list': list,
+        'createMusicPage.current_page': pagination.current_page || 1,
+        'createMusicPage.total_pages': pagination.total_pages || 0
+      });
     }, () => {
       CreateMusicListUtil.toggleMusicPageLoading(false, _this);
     });
@@ -219,44 +216,36 @@ let CreateMusicListUtil = {
       api.deleteMusic({
         id: item.id
       }, (res) => {
-        if (ConfigUtil.isSuccess(res.code)) {
-          TipUtil.message('已取消收藏');
+        TipUtil.message('已取消收藏');
 
-          // 显示我的收藏，把被取消收藏的创作去掉
-          if (_this.data.createMusicPage.showCollection) {
-            let list = createMusicPage.list;
-            list.splice(index, 1);
+        // 显示我的收藏，把被取消收藏的创作去掉
+        if (_this.data.createMusicPage.showCollection) {
+          let list = createMusicPage.list;
+          list.splice(index, 1);
 
-            _this.setData({
-              'createMusicPage.list': list
-            });
-          } else {
-            item.collection_num = item.collection_num - 1;
-            item.is_collection = '0';
-
-            _this.setData({
-              [`createMusicPage.list[${index}]`]: item
-            });
-          }
+          _this.setData({
+            'createMusicPage.list': list
+          });
         } else {
-          TipUtil.message(res.info);
+          item.collection_num = item.collection_num - 1;
+          item.is_collection = '0';
+
+          _this.setData({
+            [`createMusicPage.list[${index}]`]: item
+          });
         }
       });
     } else {
       api.collectMusic({
         id: item.id
       }, (res) => {
-        if (ConfigUtil.isSuccess(res.code)) {
-          TipUtil.message('收藏成功');
-          item.collection_num = item.collection_num + 1;
-          item.is_collection = '1';
+        TipUtil.message('收藏成功');
+        item.collection_num = item.collection_num + 1;
+        item.is_collection = '1';
 
-          _this.setData({
-            [`createMusicPage.list[${index}]`]: item
-          });
-        } else {
-          TipUtil.message(res.info);
-        }
+        _this.setData({
+          [`createMusicPage.list[${index}]`]: item
+        });
       });
     }
   },
@@ -268,14 +257,10 @@ let CreateMusicListUtil = {
       api.shareMusic({
         id: item.id
       }, (res) => {
-        if (ConfigUtil.isSuccess(res.code)) {
-          item.share_num = item.share_num + 1;
-          _this.setData({
-            [`createMusicPage.list[${index}]`]: item
-          });
-        } else {
-          TipUtil.error(res.info);
-        }
+        item.share_num = item.share_num + 1;
+        _this.setData({
+          [`createMusicPage.list[${index}]`]: item
+        });
       });
 
       let random = CommonUtil.getShareRandom();

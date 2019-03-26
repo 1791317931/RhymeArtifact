@@ -1,5 +1,7 @@
 {
   "pages": [
+    "pages/study/studyVideo/index",
+    "pages/study/studyList/index",
     "pages/main/index",
     "pages/create/beatList/index",
     "pages/activity/match",
@@ -14,9 +16,8 @@
     "templates/submitting/index",
     "pages/user/collection/index",
     "components/musicPoster/index",
-    "components/components/studyArticleList/index",
-    "components/components/studyVideoList/index",
-    "pages/study/studyList/index"
+    "components/studyArticleList/index",
+    "components/studyVideoList/index"
   ],
   "window": {
     "backgroundColor": "#f7f7f7",

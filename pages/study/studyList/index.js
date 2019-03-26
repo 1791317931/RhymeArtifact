@@ -124,6 +124,12 @@ Page({
         break;
     }
   },
+  toggleVideoCollectionItem(e) {
+    StudyVideoListUtil.toggleVideoCollectionItem(e.detail, this);
+  },
+  clickStudyVideoItem(e) {
+    StudyVideoListUtil.clickStudyVideoItem(e.detail, this);
+  },
   clickStudyArticleItem(e) {
     StudyArticleListUtil.clickStudyArticleItem(e.detail, this);
   }

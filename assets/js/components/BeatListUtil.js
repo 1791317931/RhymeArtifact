@@ -48,27 +48,23 @@ let BeatListUtil = {
       api.deleteBeat({
         id: item.beat_id
       }, (res) => {
-        if (ConfigUtil.isSuccess(res.code)) {
-          TipUtil.message('已取消收藏');
+        TipUtil.message('已取消收藏');
 
-          // 显示我的收藏，把被取消收藏的伴奏去掉
-          if (beatPage.showCollection) {
-            let list = beatPage.list;
-            list.splice(index, 1);
+        // 显示我的收藏，把被取消收藏的伴奏去掉
+        if (beatPage.showCollection) {
+          let list = beatPage.list;
+          list.splice(index, 1);
 
-            _this.setData({
-              'beatPage.list': list
-            });
-          } else {
-            item.is_collection = '0';
-            item.collection_num -= 1;
-
-            _this.setData({
-              [`beatPage.list[${index}]`]: item
-            });
-          }
+          _this.setData({
+            'beatPage.list': list
+          });
         } else {
-          TipUtil.message(res.info);
+          item.is_collection = '0';
+          item.collection_num -= 1;
+
+          _this.setData({
+            [`beatPage.list[${index}]`]: item
+          });
         }
       });
     } else {
@@ -217,7 +213,7 @@ let BeatListUtil = {
 
     BeatListUtil.pausePlay(null, _this);
     let param = {
-      current_page,
+      page: current_page,
       per_page: page.per_page
     },
     list = [];
@@ -241,30 +237,28 @@ let BeatListUtil = {
     }
 
     fn(param, (res) => {
-      if (ConfigUtil.isSuccess(res.code)) {
-        let obj = res.data;
-        obj.data.forEach((item, index) => {
-          item.beat_url = PathUtil.getFilePath(item.beat_url);
-          item.collection_num = parseInt(item.collection_num);
+      let list = res.data,
+      pagination = res.meta.pagination;
 
-          // 总时长
-          let totalTime = TimeUtil.stringToNumber(item.beat_time);
-          item.totalTime = totalTime;
-          // 剩余时长
-          item.surplusTime = totalTime;
-          item.surplusTimeArr = TimeUtil.numberToArr(totalTime);
+      list.forEach((item, index) => {
+        item.beat_url = PathUtil.getFilePath(item.beat_url);
+        item.collection_num = parseInt(item.collection_num);
 
-          list.push(item);
-        });
+        // 总时长
+        let totalTime = TimeUtil.stringToNumber(item.beat_time);
+        item.totalTime = totalTime;
+        // 剩余时长
+        item.surplusTime = totalTime;
+        item.surplusTimeArr = TimeUtil.numberToArr(totalTime);
 
-        _this.setData({
-          'beatPage.list': list,
-          'beatPage.total_pages': parseInt(obj.total_pages || 0),
-          'beatPage.current_page': parseInt(obj.current_page || 1)
-        });
-      } else {
-        TipUtil.errorCode(res.code);
-      }
+        list.push(item);
+      });
+
+      _this.setData({
+        'beatPage.list': list,
+        'beatPage.total_pages': pagination.total_pages || 0,
+        'beatPage.current_page': pagination.current_page || 1
+      });
     }, () => {
       BeatListUtil.toggleBeatPageLoading(false, _this);
     });

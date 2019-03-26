@@ -1,6 +1,6 @@
 {
   "usingComponents": {
-    "searchLyric": "/components/searchLyric/index"
+    "searchRhyme": "/components/searchRhyme/index"
   },
   "enablePullDownRefresh": false
 }

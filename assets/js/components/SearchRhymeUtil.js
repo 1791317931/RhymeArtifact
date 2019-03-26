@@ -2,7 +2,7 @@ import * as api from '../api';
 import TipUtil from '../TipUtil';
 import ConfigUtil from '../ConfigUtil';
 
-let SearchLyricUtil = {
+let SearchRhymeUtil = {
   rhymePage: {
     loading: false,
     list: [],
@@ -47,27 +47,23 @@ let SearchLyricUtil = {
   getRhymeList(e, _this) {
     // 通过点击'搜索'触发该事件
     if (e && e.type == 'confirm') {
-      SearchLyricUtil.changeKeyword(e, _this);
+      SearchRhymeUtil.changeKeyword(e, _this);
     }
 
     let data = _this.data;
 
-    SearchLyricUtil.toggleRhymeLoading(true, _this);
+    SearchRhymeUtil.toggleRhymeLoading(true, _this);
     api.getRhymeList({
       kwd: data.rhymePage.keyword,
       mortgage: data.rhymePage.mortgage
     }, (res) => {
-      if (ConfigUtil.isSuccess(res.code)) {
-        _this.setData({
-          'rhymePage.list': res.data
-        });
-      } else {
-        TipUtil.errorCode(res.code);
-      }
+      _this.setData({
+        'rhymePage.list': res.words_res
+      });
     }, () => {
-      SearchLyricUtil.toggleRhymeLoading(false, _this);
+      SearchRhymeUtil.toggleRhymeLoading(false, _this);
     });
   }
 };
 
-export default SearchLyricUtil;
+export default SearchRhymeUtil;

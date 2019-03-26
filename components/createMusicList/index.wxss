@@ -1,12 +1,11 @@
-/* components/createMusicList/index.wxss */
 .createMusicList_list {
-  padding: 30rpx 20rpx 30rpx;
+  padding: 0 20rpx;
 }
 
 .createMusicList_item {
   background: #fff;
   border-radius:14rpx;
-  margin-bottom: 30rpx;
+  margin-top: 30rpx;
   position: relative;
   transform: translate(0);
 }

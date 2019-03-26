@@ -6,22 +6,21 @@ import CommonUtil from '../CommonUtil';
 let LyricListUtil = {
   lyricsPage: {
     loading: false,
-    page: 1,
-    pageSize: 10,
-    totalPage: 0,
-    pageNum: 1,
+    current_page: 1,
+    per_page: 10,
+    total_pages: 0,
     list: []
   },
   onReachBottom(_this) {
     let page = _this.data.lyricsPage;
-    if (page.pageNum < page.totalPage) {
-      _this.getLyricPage(page.pageNum + 1);
+    if (page.current_page < page.total_pages) {
+      LyricListUtil.getLyricPage(page.current_page + 1, _this);
     }
   },
   clickLyricItem(e, _this) {
     let item = LyricListUtil.getItem(e, _this);
     wx.navigateTo({
-      url: '/pages/create/lyrics/index?id=' + item.lyric_id
+      url: '/pages/create/lyrics/index?id=' + item.id
     });
   },
   shareLyric(e, _this) {
@@ -32,7 +31,7 @@ let LyricListUtil = {
       return {
         title: CommonUtil.shareRandomMsgs[random],
         imageUrl: CommonUtil.getShareImage(random),
-        path: '/pages/main/index?lyricId=' + item.lyric_id,
+        path: '/pages/main/index?lyricId=' + item.id,
         success: (res) => {
           
         },
@@ -53,14 +52,10 @@ let LyricListUtil = {
       success(e) {
         if (e.confirm) {
           api.deleteLyricById({
-            lyric_id: item.lyric_id
+            lyric_id: item.id
           }, (res) => {
-            if (ConfigUtil.isSuccess(res.code)) {
-              TipUtil.message('操作成功');
-              LyricListUtil.getLyricPage(1, _this);
-            } else {
-              TipUtil.error(res.info);
-            }
+            TipUtil.message('操作成功');
+            LyricListUtil.getLyricPage(1, _this);
           });
         }
       }
@@ -84,42 +79,40 @@ let LyricListUtil = {
       'lyricsPage.loading': loading
     });
   },
-  getLyricPage(pageNum = 1, _this) {
+  getLyricPage(current_page = 1, _this) {
     let page = _this.data.lyricsPage;
     if (page.loading) {
       return;
     }
 
     let param = {
-      page: pageNum,
-      pageSize: page.pageSize
+      page: current_page,
+      per_page: page.per_page,
+      include: 'user'
     },
-      list = [];
+    list = [];
 
-    if (pageNum > 1) {
+    if (current_page > 1) {
       list = page.list;
     }
 
     LyricListUtil.toggleLyricPageLoading(true, _this);
     _this.setData({
-      'lyricsPage.page': pageNum
+      'lyricsPage.current_page': current_page
     });
 
     api.getLyricPage(param, (res) => {
-      if (ConfigUtil.isSuccess(res.code)) {
-        let obj = res.data;
-        obj.data.forEach((item, index) => {
-          list.push(item);
-        });
+      let pagination = res.meta.pagination;
 
-        _this.setData({
-          'lyricsPage.list': list,
-          'lyricsPage.totalPage': parseInt(obj.maxPage || 0),
-          'lyricsPage.pageNum': parseInt(obj.page || 1)
-        });
-      } else {
-        TipUtil.errorCode(res.code);
-      }
+      res.data.forEach((item, index) => {
+        list.push(item);
+      });
+
+      _this.setData({
+        'lyricsPage.list': list,
+        'lyricsPage.total_pages': pagination.page || 0,
+        'lyricsPage.current_page': pagination.page || 1
+      });
     }, () => {
       LyricListUtil.toggleLyricPageLoading(false, _this);
     });

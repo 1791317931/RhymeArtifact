@@ -23,4 +23,4 @@
 <empty 
   loading="{{studyArticlePage.loading}}"
   hasData="{{!!studyArticlePage.list.length}}"
-  hasMore="{{studyArticlePage.pageNum < studyArticlePage.totalPage}}"/>
+  hasMore="{{studyArticlePage.current_page < studyArticlePage.total_pages}}"/>

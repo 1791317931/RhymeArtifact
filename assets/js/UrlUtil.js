@@ -29,11 +29,14 @@ let UrlUtil = {
       method,
       header: {
         'Content-Type': 'application/json',
-        'auth-token': wx.getStorageSync('token')
+        'Authorization': 'Bearer ' + wx.getStorageSync('token')
       },
       success(res) {
-        if (res.statusCode == ConfigUtil.statusCode.NOT_AUTHORITION) {
+        let statusCode = res.statusCode;
+        if (statusCode == ConfigUtil.statusCode.NOT_AUTHORITION) {
           UrlUtil.toLogin();
+        } else if (statusCode >= 400) {
+          TipUtil.errorCode(res.data.code);
         } else {
           fn && fn(res.data);
         }

@@ -3,6 +3,6 @@
     "createMusicList": "/components/createMusicList/index",
     "musicPoster": "/components/musicPoster/index"
   },
-  "navigationBarTitleText": "音乐创作",
+  "navigationBarTitleText": "我的音乐创作",
   "enablePullDownRefresh": true
 }
