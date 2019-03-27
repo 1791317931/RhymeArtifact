@@ -70,11 +70,11 @@ Page({
   onLoad: function (options) {
     let userInfo = wx.getStorageSync('userInfo'),
     beatItem = JSON.parse(options.beatItem);
-    beatItem.beatTimeArr = TimeUtil.stringToArr(beatItem.beat_time);
+    beatItem.beatTimeArr = TimeUtil.numberToArr(Math.ceil(beatItem.beat_duration / 1000));
 
     this.setData({
       'recordForm.author': userInfo.nickName,
-      'recordForm.beatId': beatItem.beat_id,
+      'recordForm.beatId': beatItem.id,
       beatItem
     });
     this.caculateTryBeatTime(0);
@@ -584,28 +584,35 @@ Page({
       return;
     }
 
+    this.uploadToOss();
+  },
+  uploadToOss() {
     this.toggleSubmitting(false);
-    // 校验通过后，上传音频
-    wx.uploadFile({
-      url: PathUtil.getPath('upload-file'),
-      filePath: form.path,
-      name: 'file',
-      formData: {
-        title: form.title,
-        type: FileType.VOICE
-      },
-      header: {
-        'content-type': 'multipart/form-data'
-      },
-      success: (res) => {
-        if (res.statusCode == 200) {
-          let data = JSON.parse(res.data),
-          filePath = data.data.file;
 
+    CommonUtil.getPolicyParam((data) => {
+      let form = this.data.recordForm,
+      path = form.path,
+      key = data.getKey('music', path),
+      host = data.host;
+      
+      // 上传
+      wx.uploadFile({
+        url: host,
+        // 本地文件路径
+        filePath: path,
+        name: 'file',
+        formData: {
+          OSSAccessKeyId: data.OSSAccessKeyId,
+          policy: data.policy,
+          signature: data.signature,
+          key,
+          success_action_status: '200'
+        },
+        success: (res) => {
           let param = {
             beat_id: form.beatId,
-            mixture_url: filePath,
-            lyric_content: form.content,
+            origin_url: '/' + key,
+            music_lyric: form.lyrics,
             music_title: form.title,
             music_author: form.author,
             music_duration: form.duration,
@@ -613,29 +620,28 @@ Page({
           };
 
           api.createMusic(param, (res) => {
+            TipUtil.message('发布成功');
+            setTimeout(() => {
+              let pages = getCurrentPages();
+              pages[pages.length - 2].setData({
+                targetPath: '/pages/create/createMusicList/index'
+              });
+
+              wx.navigateBack({
+                delta: 1
+              });
+            }, 1000);
+          }, () => {
             this.toggleSubmitting(true);
-            if (ConfigUtil.isSuccess(res.code)) {
-              TipUtil.message('发布成功');
-              setTimeout(() => {
-                let pages = getCurrentPages();
-                pages[pages.length - 2].setData({
-                  targetPath: '/pages/create/createMusicList/index'
-                });
-                
-                wx.navigateBack({
-                  delta: 1
-                });
-              }, 1000);
-            } else {
-              TipUtil.error(res.info);
-            }
           });
+        },
+        fail: (res) => {
+          this.toggleSubmitting(true);
+          CommonUtil.tip.error('服务器繁忙，请稍后重试');
         }
-      },
-      fail(e) {
-        TipUtil.message('发布失败');
+      }, null, () => {
         this.toggleSubmitting(true);
-      }
+      });
     });
   },
   toEditLyrics() {

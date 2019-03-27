@@ -1,5 +1,12 @@
 <view class="video-container">
-  <video class="video" src="{{list[playIndex].url}}" controls></video>
+  <video 
+    class="video"
+    id="studyVideo"
+    src="{{list[playIndex].url}}"
+    controls
+    bindtimeupdate="bindTimeUpdate"
+    bindended="bindEnded"
+    binderror="bindError"/>
   <view class="title-container">{{list[playIndex].title}}</view>
 </view>
 <view class="bottom-container">
@@ -18,8 +25,14 @@
   <view class="video-list-wrapper">
     <view class="list-label">课程专辑</view>
     <view class="video-list-inner">
-      <view wx:for="{{list}}" class="item" wx:for-index="index" wx:for-item="item" wx:key="{{index}}">
-
+      <view wx:for="{{list}}" class="item" wx:for-index="index" wx:for-item="item" wx:key="{{index}}" data-index="{{index}}" catchtap="toggleVideoItem">
+        <view class="left-container">
+          <image class="poster" src="{{item.poster}}"/>
+        </view>
+        <view class="right-container">
+          <view class="title">{{item.title}}</view>
+          <view class="play-desc">{{item.play_num}}次播放</view>
+        </view>
       </view>
     </view>
   </view>

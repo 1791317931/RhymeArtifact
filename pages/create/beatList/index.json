@@ -3,5 +3,6 @@
     "beatList": "/components/beatList/index",
     "musicPoster": "/components/musicPoster/index"
   },
-  "navigationBarTitleText": "音乐创作"
+  "navigationBarTitleText": "音乐创作",
+  "enablePullDownRefresh": true
 }

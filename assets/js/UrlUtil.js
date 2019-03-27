@@ -5,19 +5,19 @@ import PathUtil from 'PathUtil';
 
 let UrlUtil = {
   isLogin: false,
-  get(url, data, fn, completeFn) {
-    UrlUtil.sendRequest(url, data, 'get', fn, completeFn);
+  get(url, data, fn, completeFn, failFn) {
+    UrlUtil.sendRequest(url, data, 'get', fn, completeFn, failFn);
   },
-  post(url, data, fn, completeFn) {
-    UrlUtil.sendRequest(url, data, 'post', fn, completeFn);
+  post(url, data, fn, completeFn, failFn) {
+    UrlUtil.sendRequest(url, data, 'post', fn, completeFn, failFn);
   },
-  put(url, data, fn, completeFn) {
-    UrlUtil.sendRequest(url, data, 'put', fn, completeFn);
+  put(url, data, fn, completeFn, failFn) {
+    UrlUtil.sendRequest(url, data, 'put', fn, completeFn, failFn);
   },
-  delete(url, data, fn, completeFn) {
-    UrlUtil.sendRequest(url, data, 'delete', fn, completeFn);
+  delete(url, data, fn, completeFn, failFn) {
+    UrlUtil.sendRequest(url, data, 'delete', fn, completeFn, failFn);
   },
-  sendRequest(url, data, method, fn, completeFn) {
+  sendRequest(url, data, method, fn, completeFn, failFn) {
     let originUrl = url;
     if (!/^http/.test(url)) {
       url = PathUtil.getPath(url);
@@ -37,6 +37,7 @@ let UrlUtil = {
           UrlUtil.toLogin();
         } else if (statusCode >= 400) {
           TipUtil.errorCode(res.data.code);
+          failFn && failFn();
         } else {
           fn && fn(res.data);
         }
@@ -55,6 +56,7 @@ let UrlUtil = {
           }
         }
 
+        failFn && failFn();
       },
       complete() {
         if (typeof completeFn == 'function') {

@@ -37,8 +37,8 @@
           <view class="btn collection" 
           data-index="{{index}}" 
           catchtap="toggleMusicCollectItem">
-            <image hidden="{{item.is_collection == 1 ||  createMusicPage.showCollection}}" src="/assets/imgs/collection.png"/>
-            <image hidden="{{item.is_collection != 1 && !createMusicPage.showCollection}}" src="/assets/imgs/collection-active.png"/>
+            <image hidden="{{item.isCollection ||  createMusicPage.showCollection}}" src="/assets/imgs/collection.png"/>
+            <image hidden="{{!item.isCollection && !createMusicPage.showCollection}}" src="/assets/imgs/collection-active.png"/>
             <text>{{item.collection_num}}</text>
           </view>
           <view class="btn share">

@@ -11,9 +11,7 @@ let CreateMusicListUtil = {
     loading: false,
     playingIndex: -1,
     playing: false,
-    page: 1,
     per_page: 10,
-    totalPage: 0,
     current_page: 1,
     list: []
   },
@@ -41,7 +39,7 @@ let CreateMusicListUtil = {
   },
   onReachBottom(_this) {
     let page = _this.data.createMusicPage;
-    if (page.current_page < page.totalPage) {
+    if (page.current_page < page.total_pages) {
       CreateMusicListUtil.getMusicPage(page.current_page + 1, _this);
     }
   },
@@ -142,7 +140,8 @@ let CreateMusicListUtil = {
     CreateMusicListUtil.pausePlay(null, _this);
     let param = {
       page: current_page,
-      per_page: page.per_page
+      per_page: page.per_page,
+      hasCollection: 1
     },
     list = [];
 
@@ -175,12 +174,12 @@ let CreateMusicListUtil = {
       let pagination = res.meta.pagination;
 
       res.data.forEach((item, index) => {
-        item.mixture_url = PathUtil.getFilePath(item.mixture_url) || '/assets/imgs/logo.png';
+        item.origin_url = PathUtil.getFilePath(item.origin_url) || '/assets/imgs/logo.png';
         item.collection_num = parseInt(item.collection_num);
         item.share_num = parseInt(item.share_num);
 
         // 总时长
-        let totalTime = parseInt(parseInt(item.music_duration) / 1000);
+        let totalTime = Math.ceil(parseInt(item.music_duration) / 1000);
         item.totalTime = totalTime;
         // 剩余时长
         item.surplusTime = totalTime;
@@ -203,7 +202,7 @@ let CreateMusicListUtil = {
     api.removeMusic({
       id: item.id
     }, (res)=>{
-      // 删除成功
+      TipUtil.message('操作成功');
       CreateMusicListUtil.getMusicPage(1, _this)
     })
   },
@@ -212,8 +211,8 @@ let CreateMusicListUtil = {
     index = CreateMusicListUtil.getIndex(e, _this),
     createMusicPage = _this.data.createMusicPage;
 
-    if (item.is_collection == 1 || createMusicPage.showCollection) {
-      api.deleteMusic({
+    if (item.isCollection || createMusicPage.showCollection) {
+      api.deleteMusicCollection({
         id: item.id
       }, (res) => {
         TipUtil.message('已取消收藏');
@@ -228,7 +227,7 @@ let CreateMusicListUtil = {
           });
         } else {
           item.collection_num = item.collection_num - 1;
-          item.is_collection = '0';
+          item.isCollection = false;
 
           _this.setData({
             [`createMusicPage.list[${index}]`]: item
@@ -236,12 +235,12 @@ let CreateMusicListUtil = {
         }
       });
     } else {
-      api.collectMusic({
+      api.addMusicCollection({
         id: item.id
       }, (res) => {
         TipUtil.message('收藏成功');
         item.collection_num = item.collection_num + 1;
-        item.is_collection = '1';
+        item.isCollection = true;
 
         _this.setData({
           [`createMusicPage.list[${index}]`]: item

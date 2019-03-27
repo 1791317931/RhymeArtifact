@@ -1,6 +1,6 @@
 <view class="list-container">
   <audio class="hide" 
-    src="{{createMusicPage.list[createMusicPage.playingIndex].mixture_url}}" 
+    src="{{createMusicPage.list[createMusicPage.playingIndex].origin_url}}" 
     id="musicAudio" 
     bindended="musicPlayEnd" 
     binderror="musicLoadError" 

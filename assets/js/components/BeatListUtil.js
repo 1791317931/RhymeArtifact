@@ -44,9 +44,9 @@ let BeatListUtil = {
     index = BeatListUtil.getIndex(e, _this),
     beatPage = _this.data.beatPage;
 
-    if (item.is_collection == 1 || beatPage.showCollection) {
-      api.deleteBeat({
-        id: item.beat_id
+    if (item.isCollection || beatPage.showCollection) {
+      api.deleteBeatCollection({
+        id: item.id
       }, (res) => {
         TipUtil.message('已取消收藏');
 
@@ -59,7 +59,7 @@ let BeatListUtil = {
             'beatPage.list': list
           });
         } else {
-          item.is_collection = '0';
+          item.isCollection = false;
           item.collection_num -= 1;
 
           _this.setData({
@@ -68,20 +68,16 @@ let BeatListUtil = {
         }
       });
     } else {
-      api.collectBeat({
-        id: item.beat_id
+      api.addBeatCollection({
+        id: item.id
       }, (res) => {
-        if (ConfigUtil.isSuccess(res.code)) {
-          TipUtil.message('收藏成功');
-          item.is_collection = '1';
-          item.collection_num += 1;
+        TipUtil.message('收藏成功');
+        item.isCollection = true;
+        item.collection_num += 1;
 
-          _this.setData({
-            [`beatPage.list[${index}]`]: item
-          });
-        } else {
-          TipUtil.message(res.info);
-        }
+        _this.setData({
+          [`beatPage.list[${index}]`]: item
+        });
       });
     }
   },
@@ -214,7 +210,8 @@ let BeatListUtil = {
     BeatListUtil.pausePlay(null, _this);
     let param = {
       page: current_page,
-      per_page: page.per_page
+      per_page: page.per_page,
+      hasCollection: 1
     },
     list = [];
 
@@ -237,15 +234,14 @@ let BeatListUtil = {
     }
 
     fn(param, (res) => {
-      let list = res.data,
-      pagination = res.meta.pagination;
+      let pagination = res.meta.pagination;
 
-      list.forEach((item, index) => {
+      res.data.forEach((item, index) => {
         item.beat_url = PathUtil.getFilePath(item.beat_url);
         item.collection_num = parseInt(item.collection_num);
 
         // 总时长
-        let totalTime = TimeUtil.stringToNumber(item.beat_time);
+        let totalTime = Math.ceil(item.beat_duration / 1000);
         item.totalTime = totalTime;
         // 剩余时长
         item.surplusTime = totalTime;

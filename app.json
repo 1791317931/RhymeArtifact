@@ -1,8 +1,8 @@
 {
   "pages": [
+    "pages/main/index",
     "pages/study/studyVideo/index",
     "pages/study/studyList/index",
-    "pages/main/index",
     "pages/create/beatList/index",
     "pages/activity/match",
     "pages/create/createMusicList/index",

@@ -11,7 +11,7 @@ let PosterCanvasUtil = {
     totalHeight = 660,
     logoWidth = 144,
     logoHeight = 144,
-    id = type == 'beat' ? data.beat_id : data.id;
+    id = data.id;
 
     // 首先下载二维码
     wx.downloadFile({
@@ -25,7 +25,7 @@ let PosterCanvasUtil = {
 
         PosterCanvasUtil.drawLogo(context, '/assets/imgs/rect-logo.png', (totalWidth - logoWidth) / 2, 40, logoWidth, logoHeight);
         PosterCanvasUtil.fillAppName(context, totalWidth);
-        // PosterCanvasUtil.drawContent(context, data, type);
+        PosterCanvasUtil.drawContent(context, data, type);
         PosterCanvasUtil.drawLine(context, totalWidth);
         PosterCanvasUtil.drawQrCodeInfo(context, qrCodePath);
 
@@ -82,27 +82,29 @@ let PosterCanvasUtil = {
       composer = data.beat_author;
     }
 
-    if (title.length > 10) {
-      title = title.substring(0, 10) + '...';
+    if (title.length > 15) {
+      title = title.substring(0, 15) + '...';
     }
 
     PosterCanvasUtil.fillTitle(context, title);
+    let text = '',
+    width = 0,
+    // 可绘制区域长度
+    totalWidth = 500;
     if (type == 'music') {
-      if (author.length > 5) {
-        author = author.substring(0, 5) + '...';
-      }
-
-      if (composer.length > 5) {
-        composer = composer.substring(0, 5) + '...';
-      }
-
-      PosterCanvasUtil.fillAuthor(context, '作者：' + author + '  作词：' + composer);
+      text = '作者：' + author + '  作词：' + composer;
     } else if (type == 'beat') {
-      if (composer.length > 8) {
-        composer = composer.substring(0, 8) + '...';
-      }
+      text = '作词：' + composer;
+    }
 
-      PosterCanvasUtil.fillAuthor(context, '作词：' + composer);
+    for (let i = 0; i < text.length; i++) {
+      width += context.measureText(text[i]).width;
+      if (width >= totalWidth) {
+        PosterCanvasUtil.fillAuthor(context, text.substring(0, i));
+        break;
+      } else if (i == text.length - 1) {
+        PosterCanvasUtil.fillAuthor(context, text.substring(0, i));
+      }
     }
   },
   fillTitle(context, title) {

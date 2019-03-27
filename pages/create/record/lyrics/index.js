@@ -79,14 +79,16 @@ Page({
     });
   },
   saveLyrics() {
-    let pages = getCurrentPages(),
-    prevPage = pages[pages.length - 2];
-    prevPage.setData({
-      'recordForm.lyrics': this.data.content
-    });
-
-    wx.navigateBack({
+    setTimeout(() => {
+      let pages = getCurrentPages(),
+      prevPage = pages[pages.length - 2];
+      prevPage.setData({
+        'recordForm.lyrics': this.data.content
+      });
       
+      wx.navigateBack({
+
+      });
     });
   }
 })

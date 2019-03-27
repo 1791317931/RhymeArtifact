@@ -21,8 +21,8 @@
       </view>
       <view class="operation-container">
         <view class="collection-container" data-index="{{index}}" catchtap="toggleBeatCollectionItem">
-          <image hidden="{{item.is_collection == 1 ||  beatPage.showCollection}}" src="/assets/imgs/collection.png"/>
-          <image hidden="{{item.is_collection != 1 && !beatPage.showCollection}}" src="/assets/imgs/collection-active.png"/>
+          <image hidden="{{item.isCollection ||  beatPage.showCollection}}" src="/assets/imgs/collection.png"/>
+          <image hidden="{{!item.isCollection && !beatPage.showCollection}}" src="/assets/imgs/collection-active.png"/>
           <text>{{item.collection_num}}</text>
         </view>
         <view class="share-container">
