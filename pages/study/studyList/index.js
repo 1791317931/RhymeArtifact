@@ -12,11 +12,12 @@ Page({
       {
         flag: 'video',
         text: '视频'
-      },
-      {
-        flag: 'article',
-        text: '文章'
       }
+      // ,
+      // {
+      //   flag: 'article',
+      //   text: '文章'
+      // }
     ],
     activeIndex: 0,
     posterUrl: '',

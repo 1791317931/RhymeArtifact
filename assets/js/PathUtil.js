@@ -1,10 +1,11 @@
 import ConfigUtil from './ConfigUtil'
 
 let PathUtil = {
-  prodApiPrefix: 'https://wapi.ihammer.cn/wxapi/',
-  devApiPrefix: 'https://yayun.sydy1314.com/wxapp/',
+  prodApiPrefix: 'https://rapper-api.miyupp.com/wxapp/',
+  devApiPrefix: 'https://rapper-test.miyupp.com/wxapp/',
   prodFilePrefix: 'https://file.ihammer.cn',
-  devFilePrefix: 'http://miyupp.oss-cn-beijing.aliyuncs.com',
+  // devFilePrefix: 'http://miyupp.oss-cn-beijing.aliyuncs.com',
+  devFilePrefix: 'https://file.ihammer.cn',
   getPath(url) {
     if (ConfigUtil.isProd()) {
       return PathUtil.prodApiPrefix + url;

@@ -43,7 +43,6 @@ let DownloadUtil = {
       title: '图片保存中',
     });
 
-    console.log(url)
     wx.downloadFile({
       url,
       success: (res) => {

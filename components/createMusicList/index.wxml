@@ -7,7 +7,7 @@
     <view hidden="{{createMusicPage.showHead == false}}" 
       class="createMusicList_item_name">
       <view>
-        <image src="{{item.user.avatarurl || '/assets/imgs/logo.png'}}"/>
+        <image src="{{item.user.data.avatar || '/assets/imgs/logo.png'}}"/>
         {{item.user.data.nickname}}
       </view>
     </view>
