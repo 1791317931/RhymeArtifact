@@ -2,10 +2,29 @@
   background: #fff;
 }
 
+.study-video-container .item .poster {
+  position: relative;
+}
+
 .study-video-container .item .poster image {
   display: block;
   width: 750rpx;
   height: 420rpx;
+}
+
+.study-video-container .item .poster .title {
+  width: 730rpx;
+  padding: 0 20rpx;
+  position: absolute;
+  left: 0;
+  top: 20rpx;
+  font-size:32rpx;
+  font-family:PingFangSC-Medium;
+  font-weight:500;
+  color:#fff;
+  overflow: hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
 }
 
 .operation-container {

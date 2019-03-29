@@ -3,5 +3,5 @@
     "loadModal": "/components/common/loadModal/index",
     "musicPoster": "/components/musicPoster/index"
   },
-  "navigationBarTitleText": "视频教程"
+  "navigationBarTitleText": "文章详情"
 }

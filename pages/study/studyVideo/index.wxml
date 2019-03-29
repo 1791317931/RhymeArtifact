@@ -1,20 +1,25 @@
+<canvas class="poster-canvas" canvas-id="poster-canvas"/>
+<musicPoster 
+  posterUrl="{{posterUrl}}"
+  bind:closePoster="closePoster"
+/>
+<loadModal id="loadModal" />
 <view class="video-container">
   <video 
     class="video"
     id="studyVideo"
-    src="{{list[playIndex].url}}"
+    src="{{list[playIndex].section_url}}"
     controls
     bindtimeupdate="bindTimeUpdate"
     bindended="bindEnded"
     binderror="bindError"/>
-  <view class="title-container">{{list[playIndex].title}}</view>
+  <view class="title-container">{{list[playIndex].section_title}}</view>
 </view>
 <view class="bottom-container">
   <view class="operation-container clearfix">
-    <view class="poster-share-container">
+    <view class="poster-share-container" catchtap="generatePoster">
       <image src="/assets/imgs/moments.png"/>
       <text>海报分享</text>
-      <button open-type="share"></button>
     </view>
     <view class="wechat-share-container">
       <image src="/assets/imgs/wechat-share.png"/>
@@ -22,16 +27,18 @@
       <button open-type="share"></button>
     </view>
   </view>
+  <view class="split-container"></view>
   <view class="video-list-wrapper">
     <view class="list-label">课程专辑</view>
     <view class="video-list-inner">
       <view wx:for="{{list}}" class="item" wx:for-index="index" wx:for-item="item" wx:key="{{index}}" data-index="{{index}}" catchtap="toggleVideoItem">
         <view class="left-container">
-          <image class="poster" src="{{item.poster}}"/>
+          <image class="poster" src="{{item.section_cover}}"/>
+          <view hidden="{{playIndex != index}}" class="status"></view>
         </view>
         <view class="right-container">
-          <view class="title">{{item.title}}</view>
-          <view class="play-desc">{{item.play_num}}次播放</view>
+          <view class="title">{{item.section_title}}</view>
+          <view class="play-desc">{{item.click_num}}次播放</view>
         </view>
       </view>
     </view>

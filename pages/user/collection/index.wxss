@@ -1,9 +1,11 @@
-.collection-container {
-  padding: 30rpx 0;
-}
-
 .collection-container .toggle-btn-container {
-  padding: 0 30rpx;
+  width: 100%;
+  padding: 30rpx;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #fff;
+  z-index: 1;
 }
 
 .collection-container .toggle-btn-container button {
@@ -30,6 +32,10 @@
   color: #fff;
 }
 
+.music-container {
+  padding: 120rpx 0 0;
+}
+
 .beat-container {
-  padding: 30rpx 20rpx 0;
+  padding: 150rpx 20rpx 0;
 }

@@ -209,11 +209,13 @@ let CreateMusicListUtil = {
   toggleMusicCollectItem(e, _this) {
     let item = CreateMusicListUtil.getItem(e, _this),
     index = CreateMusicListUtil.getIndex(e, _this),
-    createMusicPage = _this.data.createMusicPage;
+    createMusicPage = _this.data.createMusicPage,
+    type = 'music';
 
     if (item.isCollection || createMusicPage.showCollection) {
-      api.deleteMusicCollection({
-        id: item.id
+      api.deleteCollection({
+        id: item.id,
+        type
       }, (res) => {
         TipUtil.message('已取消收藏');
 
@@ -226,7 +228,7 @@ let CreateMusicListUtil = {
             'createMusicPage.list': list
           });
         } else {
-          item.collection_num = item.collection_num - 1;
+          item.collection_num--;
           item.isCollection = false;
 
           _this.setData({
@@ -235,11 +237,12 @@ let CreateMusicListUtil = {
         }
       });
     } else {
-      api.addMusicCollection({
-        id: item.id
+      api.addCollection({
+        id: item.id,
+        type
       }, (res) => {
         TipUtil.message('收藏成功');
-        item.collection_num = item.collection_num + 1;
+        item.collection_num++;
         item.isCollection = true;
 
         _this.setData({
@@ -253,8 +256,9 @@ let CreateMusicListUtil = {
       let item = CreateMusicListUtil.getItem(e, _this),
       index = CreateMusicListUtil.getIndex(e, _this);
 
-      api.shareMusic({
-        id: item.id
+      api.share({
+        id: item.id,
+        type: 'music'
       }, (res) => {
         item.share_num = item.share_num + 1;
         _this.setData({
@@ -266,7 +270,7 @@ let CreateMusicListUtil = {
       return {
         title: CommonUtil.shareRandomMsgs[random],
         imageUrl: CommonUtil.getShareImage(random),
-        path: '/pages/main/index',
+        path: '/pages/create/beatList/index?type=music',
         success: (res) => {
           
         },

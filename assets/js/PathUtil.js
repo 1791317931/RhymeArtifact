@@ -1,15 +1,15 @@
 import ConfigUtil from './ConfigUtil'
 
 let PathUtil = {
+  prodApiPrefix: 'https://wapi.ihammer.cn/wxapi/',
+  devApiPrefix: 'https://yayun.sydy1314.com/wxapp/',
   prodFilePrefix: 'https://file.ihammer.cn',
-  // devFilePrefix: 'http://miyupp.oss-cn-beijing.aliyuncs.com',
-  prodPrefix: 'https://wapi.ihammer.cn/wxapi/',
-  devPrefix: 'https://yayun.sydy1314.com/wxapp/',
+  devFilePrefix: 'http://miyupp.oss-cn-beijing.aliyuncs.com',
   getPath(url) {
     if (ConfigUtil.isProd()) {
-      return PathUtil.prodPrefix + url;
+      return PathUtil.prodApiPrefix + url;
     } else {
-      return PathUtil.devPrefix + url;
+      return PathUtil.devApiPrefix + url;
     }
   },
   // 获取资源路径
@@ -18,7 +18,7 @@ let PathUtil = {
       if (ConfigUtil.isProd()) {
         return PathUtil.prodFilePrefix + url;
       } else {
-        return PathUtil.prodFilePrefix + url;
+        return PathUtil.devFilePrefix + url;
       }
     }
 

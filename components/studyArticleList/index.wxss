@@ -34,6 +34,7 @@
 }
 
 .study-article-container .item .content-image {
+  display: block;
   width: 690rpx;
   height: 370rpx;
   margin-top: 20rpx;
@@ -45,7 +46,7 @@
   font-family:PingFangSC-Medium;
   font-weight:500;
   color:rgba(29,29,29,1);
-  line-height:53rpx;
+  line-height:40rpx;
   letter-spacing:1rpx;
 }
 

@@ -1,6 +1,8 @@
 import * as api from '../../../assets/js/api';
 import CommonUtil from '../../../assets/js/CommonUtil';
+import PathUtil from '../../../assets/js/PathUtil';
 import TipUtil from '../../../assets/js/TipUtil';
+import PosterCanvasUtil from '../../../assets/js/components/PosterCanvasUtil';
 
 Page({
 
@@ -12,12 +14,16 @@ Page({
     playIndex: null,
     loading: false,
     // 课程分组id
-    courseId: null,
+    groupId: null,
+    // 点击分享时，进入要播放的章节id
+    shareSectionId: null,
     // 播放记录章节id
     videoRecordId: null,
     // 播放记录时间
     seekTime: null,
-    videoContext: null
+    videoContext: null,
+    posterUrl: null,
+    loadModal: null
   },
 
   /**
@@ -25,9 +31,16 @@ Page({
    */
   onLoad: function (options) {
     this.setData({
-      courseId: options.id,
-      videoContext: wx.createVideoContext('studyVideo')
+      groupId: options.id,
+      videoContext: wx.createVideoContext('studyVideo'),
+      loadModal: this.selectComponent('#loadModal')
     });
+
+    if (options.sectionId) {
+      this.setData({
+        shareSectionId: options.sectionId
+      });
+    }
 
     this.init();
   },
@@ -78,67 +91,70 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function (e) {
-    return CommonUtil.shareApp(e);
+    let data = this.data,
+    item = data.list[data.playIndex];
+    return {
+      title: item.section_title,
+      path: '/pages/study/studyList/index?t=video&id=' + data.groupId + '&sId=' + item.id,
+      success: (res) => {
+
+      },
+      fail(res) {
+
+      },
+      complete(res) {
+
+      }
+    };
   },
   init() {
-    // 找出播放记录
-    let videoPlayRecord = wx.getStorageSync('videoPlayRecord') || {},
-    data = this.data,
-    courseId = data.courseId,
-    course = videoPlayRecord[courseId];
+    // 先判断是否是点击分享进来的
+    if (!this.data.shareSectionId) {
+      // 找出播放记录
+      let videoPlayRecord = wx.getStorageSync('videoPlayRecord') || {},
+      data = this.data,
+      groupId = data.groupId,
+      course = videoPlayRecord[groupId];
 
-    // 查看播放记录
-    if (course) {
+      // 查看播放记录
+      if (course) {
+        this.setData({
+          videoRecordId: course.videoId,
+          seekTime: course.seekTime
+        });
+      }
+    } else {
       this.setData({
-        videoRecordId: course.videoId,
-        seekTime: course.seekTime
+        videoRecordId: this.data.shareSectionId,
+        seekTime: 0
       });
     }
 
     this.getVideoList();
   },
   toggleLoading(loading) {
-    this.setData({
+    let loadModal = this.data.loadModal;
+
+    loadModal.setData({
       loading
     });
   },
   getVideoList() {
-    if (this.data.loading) {
-      return;
-    }
-
     this.toggleLoading(true);
-    setTimeout(() => {
-      let list = [
-        {
-          id: 1,
-          title: '基础教程【从0学乐理-01】何为“音”',
-          url: 'https://v.qikevip.com/course/1552495672665_94270.mp4',
-          poster: 'https://wx.qlogo.cn/mmopen/vi_32/rJh9HD3gjEpOT5Wicv0K59nmg08dOqdHQu4k7cjrf1wwf5XK7tBmib0V6xO2dic01rfCcqqnuJU8EZreqKKR2l3ibw/132',
-          play_num: 10002
-        },
-        {
-          id: 2,
-          title: '第二课【XJ012】如何让你的人声变干净—EQ教',
-          poster: 'https://wx.qlogo.cn/mmopen/vi_32/rJh9HD3gjEpOT5Wicv0K59nmg08dOqdHQu4k7cjrf1wwf5XK7tBmib0V6xO2dic01rfCcqqnuJU8EZreqKKR2l3ibw/132',
-          url: 'https://v.qikevip.com/course/1552495826683_425859.mp4',
-          play_num: 11002
-        },
-        {
-          id: 3,
-          title: '金毛疯玩不愿回家，直接倒地装死，女主气哭, …狗，我不要了！',
-          poster: 'https://wx.qlogo.cn/mmopen/vi_32/rJh9HD3gjEpOT5Wicv0K59nmg08dOqdHQu4k7cjrf1wwf5XK7tBmib0V6xO2dic01rfCcqqnuJU8EZreqKKR2l3ibw/132',
-          url: 'https://v.qikevip.com/course/1552496505028_216057.mp4',
-          play_num: 10202
-        },
-        {
-          id: 4,
-          title: '第三课【XJ012】如何让你的人声变干净—EQ教',
-          poster: 'https://wx.qlogo.cn/mmopen/vi_32/rJh9HD3gjEpOT5Wicv0K59nmg08dOqdHQu4k7cjrf1wwf5XK7tBmib0V6xO2dic01rfCcqqnuJU8EZreqKKR2l3ibw/132',
-          url: 'https://v.qikevip.com/course/1552496323056_623698.mp4',
-          play_num: 10102
-        }
-      ];
+
+    let groupId = this.data.groupId;
+    api.getVideoById({
+      id: groupId,
+      include: 'sections'
+    }, (res) => {
+      let list = res.data.sections.data;
+      list.forEach((item, index) => {
+        item.section_cover = PathUtil.getFilePath(item.section_cover);
+        item.section_url = PathUtil.getFilePath(item.section_url);
+        // 为了海报分享使用分辨参数
+        item.groupId = groupId;
+        item.sectionId = item.id;
+      });
 
       let playIndex = 0,
       data = this.data,
@@ -164,30 +180,26 @@ Page({
         seekTime
       });
 
-      let videoContext = data.videoContext;
-      // 如果seekTime超出了视频总时长，会自动重新播放
-      videoContext.seek(seekTime);
-      videoContext.play();
-
-      this.toggleLoading(true);
+      this.playVideo(videoRecordId, seekTime);
+    }, () => {
+      this.toggleLoading(false);
     });
   },
   toggleVideoItem(e) {
     let index = e.currentTarget.dataset.index,
     data = this.data,
     videoContext = data.videoContext,
-    videoId = data.list[index].id,
+    videoRecordId = data.list[index].id,
     seekTime = 0;
 
     this.setData({
       playIndex: index,
-      videoRecordId: videoId,
+      videoRecordId,
       seekTime
     });
 
     this.setHistory();
-    videoContext.seek(seekTime);
-    videoContext.play();
+    this.playVideo(videoRecordId, seekTime);
   },
   bindTimeUpdate(e) {
     this.setData({
@@ -206,11 +218,42 @@ Page({
   setHistory() {
     let data = this.data,
     videoPlayRecord = wx.getStorageSync('videoPlayRecord') || {};
-    videoPlayRecord[data.courseId + ''] = {
+    videoPlayRecord[data.groupId + ''] = {
       videoId: data.videoRecordId,
       seekTime: data.seekTime
     };
 
     wx.setStorageSync('videoPlayRecord', videoPlayRecord);
+  },
+  playVideo(videoId, seekTime) {
+    let data = this.data,
+    videoContext = data.videoContext;
+    // 如果seekTime超出了视频总时长，会自动重新播放
+    videoContext.seek(seekTime);
+    videoContext.play();
+
+    api.addClickNum({
+      id: videoId,
+      type: 'course-sections'
+    }, (res) => {
+      this.data.list.forEach((item, index) => {
+        if (item.id == videoId) {
+          item.click_num++;
+
+          this.setData({
+            [`list[${index}]`]: item
+          });
+        }
+      });
+    });
+  },
+  generatePoster(e) {
+    let item = this.data.list[this.data.playIndex];
+    PosterCanvasUtil.draw(this, item, 'video');
+  },
+  closePoster() {
+    this.setData({
+      posterUrl: null
+    });
   }
 })

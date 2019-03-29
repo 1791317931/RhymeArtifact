@@ -1,0 +1,5 @@
+<view class="modal {{!loading ? 'hide' : ''}}">
+  <view class="{{loading ? '' : 'hide'}} loading">
+    {{loadingMessage}}
+  </view>
+</view>

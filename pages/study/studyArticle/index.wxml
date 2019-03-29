@@ -1,0 +1,6 @@
+<canvas class="poster-canvas" canvas-id="poster-canvas"/>
+<musicPoster 
+  posterUrl="{{posterUrl}}"
+  bind:closePoster="closePoster"
+/>
+<loadModal id="loadModal" />

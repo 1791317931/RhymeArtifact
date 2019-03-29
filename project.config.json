@@ -37,8 +37,15 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
-			"list": []
+			"current": 0,
+			"list": [
+				{
+					"id": -1,
+					"name": "扫码进入",
+					"pathName": "pages/study/studyList/index",
+					"query": "type=video&id=3&sectionId=29"
+				}
+			]
 		}
 	}
 }

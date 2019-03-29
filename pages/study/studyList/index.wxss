@@ -1,6 +1,11 @@
 .tab-container {
+  width: 100%;
+  height: 90rpx;
   overflow: auto;
   background: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 
 .tab-container .item {
@@ -30,6 +35,10 @@
   left: 50%;
   transform: translateX(-50%);
   bottom: 10rpx;
+}
+
+.study-wrapper {
+  padding-top: 90rpx;
 }
 
 .article-container {

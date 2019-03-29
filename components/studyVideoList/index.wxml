@@ -2,7 +2,8 @@
   <view wx:for="{{studyVideoPage.list}}" wx:for-item="item" wx:for-index="index" wx:key="{{item.id}}" data-index="{{index}}"
     class="item" catchtap="clickStudyVideoItem">
     <view class="poster">
-      <image src="{{item.poster}}"/>
+      <image src="{{item.course_cover}}"/>
+      <text class="title">{{item.course_title}}</text>
     </view>
     <view class="operation-container clearfix">
       <view class="btn collection" 

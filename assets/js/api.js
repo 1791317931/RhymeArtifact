@@ -8,6 +8,32 @@ export function getPolicyParam(fn, completeFn, failFn) {
   UrlUtil.get('utils/oss-policy', null, fn, completeFn, failFn);
 }
 
+// ---------------------收藏------------------------
+export function getCollection(data, fn, completeFn) {
+  UrlUtil.get('user/collections/' + data.type, data, fn, completeFn);
+}
+
+export function addCollection(data, fn, completeFn) {
+  UrlUtil.post(`collections/${data.type}/${data.id}`, data, fn, completeFn);
+}
+
+export function deleteCollection(data, fn, completeFn) {
+  UrlUtil.delete(`collections/${data.type}/${data.id}`, data, fn, completeFn);
+}
+// ---------------------收藏------------------------
+
+// ---------------------分享------------------------
+export function share(data, fn, completeFn) {
+  UrlUtil.post(`shares/${data.type}/${data.id}`, data, fn, completeFn);
+}
+// ---------------------分享------------------------
+
+// ---------------------点击------------------------
+export function addClickNum(data, fn, completeFn) {
+  UrlUtil.put(`${data.type}/${data.id}/click`, data, fn, completeFn);
+}
+// ---------------------点击------------------------
+
 // ---------------------词汇------------------------
 export function getRhymeList(data, fn, completeFn) {
   UrlUtil.get('utils/rhyme', data, fn, completeFn);
@@ -40,18 +66,6 @@ export function getLyricPage(data, fn, completeFn) {
 export function getBeatPage(data, fn, completeFn) {
   UrlUtil.get('beats', data, fn, completeFn);
 }
-
-export function addBeatCollection(data, fn, completeFn) {
-  UrlUtil.post('collections/beat/' + data.id, data, fn, completeFn);
-}
-
-export function deleteBeatCollection(data, fn, completeFn) {
-  UrlUtil.delete('collections/beat/' + data.id, data, fn, completeFn);
-}
-
-export function shareBeat(data, fn, completeFn) {
-  UrlUtil.post('shares/beat/' + data.id, data, fn, completeFn);
-}
 // ---------------------伴奏------------------------
 
 // ---------------------创作------------------------
@@ -67,23 +81,21 @@ export function getMyMusicPage(data, fn, completeFn) {
   UrlUtil.get('user/musics', data, fn, completeFn);
 }
 
-export function addMusicCollection(data, fn, completeFn) {
-  UrlUtil.post('collections/music/' + data.id, data, fn, completeFn);
-}
-
-export function deleteMusicCollection(data, fn, completeFn) {
-  UrlUtil.delete('collections/music/' + data.id, data, fn, completeFn);
-}
-
 export function removeMusic(data, fn, completeFn) {
   UrlUtil.delete('musics/' + data.id, data, fn, completeFn);
 }
-
-export function shareMusic(data, fn, completeFn) {
-  UrlUtil.post('shares/music/' + data.id, data, fn, completeFn);
-}
-
-export function getCollection(data, fn, completeFn) {
-  UrlUtil.get('collections', data, fn, completeFn);
-}
 // ---------------------创作------------------------
+
+// ---------------------学习------------------------
+export function getStudyPage(data, fn, completeFn) {
+  UrlUtil.get(data.type, data, fn, completeFn);
+}
+
+export function getVideoById(data, fn, completeFn) {
+  UrlUtil.get(`courses/${data.id}`, data, fn, completeFn);
+}
+
+export function getArticleById(data, fn, completeFn) {
+  UrlUtil.get(`posts/${data.id}`, data, fn, completeFn);
+}
+// ---------------------学习------------------------

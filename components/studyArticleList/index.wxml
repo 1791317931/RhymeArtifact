@@ -2,10 +2,10 @@
   <view wx:for="{{studyArticlePage.list}}" wx:for-item="item" wx:for-index="index" wx:key="{{item.id}}" data-index="{{index}}"
     class="item" catchtap="clickStudyArticleItem">
     <view class="head-info">
-      <image src="{{item.userType == 'system' ? '/assets/imgs/logo.png' : item.avatorUrl}}"/>
-      <view>{{item.userType == 'system' ? '押韵Rap' : item.createdBy}}</view>
+      <image src="/assets/imgs/logo.png"/>
+      <view>{{systemName}}</view>
     </view>
-    <image class="content-image" src="{{item.imageUrl}}"/>
+    <image class="content-image" src="{{item.cover}}"/>
     <view class="title">{{item.title}}</view>
     <view class="operation-container">
       <view class="moments-container" data-index="{{index}}" catchtap="generatePoster">
@@ -15,7 +15,7 @@
       <view class="btn share">
         <image src="/assets/imgs/wechat-share.png"/>
         <text>分享好友</text>
-        <button open-type="share" data-index="{{index}}"></button>
+        <button open-type="share" data-index="{{index}}" catchtap="preventEvent"></button>
       </view>
     </view>
   </view>

@@ -21,11 +21,14 @@ Component({
     clickShare() {
 
     },
-    toggleStudyVideoCollectionItem(e) {
-      this.triggerEvent('toggleStudyVideoCollectionItem', e);
+    toggleVideoCollectionItem(e) {
+      this.triggerEvent('toggleVideoCollectionItem', e);
     },
     clickStudyVideoItem(e) {
       this.triggerEvent('clickStudyVideoItem', e);
+    },
+    generatePoster(e) {
+      this.triggerEvent('generatePoster', e);
     }
   }
 })

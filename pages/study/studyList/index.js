@@ -20,6 +20,7 @@ Page({
     ],
     activeIndex: 0,
     posterUrl: '',
+    downloadPoster: false,
     studyVideoPage: CommonUtil.copyObject(StudyVideoListUtil.studyVideoPage),
     studyArticlePage: CommonUtil.copyObject(StudyArticleListUtil.studyArticlePage)
   },
@@ -28,6 +29,26 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let type = options.t,
+    url = '';
+    if (type == 'video') {
+      url = '/pages/study/studyVideo/index?id=' + options.id;
+
+      if (options.sectionId) {
+        url += '&sectionId=' + options.sId;
+      }
+      
+      wx.navigateTo({
+        url
+      });
+    } else if (type == 'article') {
+      url = '/pages/study/studyArticle/index?id=' + options.id;
+
+      wx.navigateTo({
+        url
+      });
+    }
+
     this.getPage(1);
   },
 
@@ -42,7 +63,21 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
+    let data = this.data;
+    switch (data.tabs[data.activeIndex].flag) {
+      case 'video':
+        if (!data.studyVideoPage.list.length) {
+          this.getPage(1);
+        }
+        break;
+      case 'article':
+        if (!data.studyArticlePage.list.length) {
+          this.getPage(1);
+        }
+        break;
+      default:
+        break;
+    }
   },
 
   /**
@@ -75,6 +110,7 @@ Page({
     let data = this.data;
     switch (data.tabs[data.activeIndex].flag) {
       case 'video':
+        StudyVideoListUtil.onReachBottom(this);
         break;
       case 'article':
         StudyArticleListUtil.onReachBottom(this);
@@ -89,9 +125,26 @@ Page({
    */
   onShareAppMessage: function (e) {
     if (e.from == 'menu') {
-      return CommonUtil.shareApp(e);
-    } else {
-      return StudyArticleListUtil.shareStudyArticleItem(e, this);
+      return {
+        title: getApp().globalData.appName,
+        path: '/pages/study/studyList/index',
+        success: (res) => {
+
+        },
+        fail(res) {
+
+        },
+        complete(res) {
+
+        }
+      };
+    } else if (e.from == 'button') {
+      let flag = this.data.tabs[this.data.activeIndex].flag;
+      if (flag == 'video') {
+        return StudyVideoListUtil.shareStudyVideoItem(e, this);
+      } else if (flag == 'article') {
+        return StudyArticleListUtil.shareStudyArticleItem(e, this);
+      }
     }
   },
   toggleTab(e) {
@@ -103,22 +156,14 @@ Page({
       this.getPage(1);
     }
   },
-  generatePoster(e) {
-    StudyArticleListUtil.generatePoster(e.detail, this)
-  },
-  closePoster() {
-    this.setData({
-      posterUrl: null
-    });
-  },
-  getPage(pageNum = 1) {
+  getPage(current_page = 1) {
     let data = this.data;
     switch(data.tabs[data.activeIndex].flag) {
       case 'video':
-        StudyVideoListUtil.getStudyVideoPage(pageNum, this);
+        StudyVideoListUtil.getStudyVideoPage(current_page, this);
         break;
       case 'article':
-        StudyArticleListUtil.getStudyArticlePage(pageNum, this);
+        StudyArticleListUtil.getStudyArticlePage(current_page, this);
         break;
       default:
         break;
@@ -132,5 +177,16 @@ Page({
   },
   clickStudyArticleItem(e) {
     StudyArticleListUtil.clickStudyArticleItem(e.detail, this);
+  },
+  generateVideoPoster(e) {
+    StudyVideoListUtil.generatePoster(e.detail, this)
+  },
+  generateArticlePoster(e) {
+    StudyArticleListUtil.generatePoster(e.detail, this)
+  },
+  closePoster() {
+    this.setData({
+      posterUrl: null
+    });
   }
 })

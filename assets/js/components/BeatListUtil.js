@@ -42,11 +42,13 @@ let BeatListUtil = {
   toggleBeatCollectionItem(e, _this) {
     let item = BeatListUtil.getItem(e, _this),
     index = BeatListUtil.getIndex(e, _this),
-    beatPage = _this.data.beatPage;
+    beatPage = _this.data.beatPage,
+    type = 'beat';
 
     if (item.isCollection || beatPage.showCollection) {
-      api.deleteBeatCollection({
-        id: item.id
+      api.deleteCollection({
+        id: item.id,
+        type
       }, (res) => {
         TipUtil.message('已取消收藏');
 
@@ -60,7 +62,7 @@ let BeatListUtil = {
           });
         } else {
           item.isCollection = false;
-          item.collection_num -= 1;
+          item.collection_num--;
 
           _this.setData({
             [`beatPage.list[${index}]`]: item
@@ -68,12 +70,13 @@ let BeatListUtil = {
         }
       });
     } else {
-      api.addBeatCollection({
-        id: item.id
+      api.addCollection({
+        id: item.id,
+        type
       }, (res) => {
         TipUtil.message('收藏成功');
         item.isCollection = true;
-        item.collection_num += 1;
+        item.collection_num++;
 
         _this.setData({
           [`beatPage.list[${index}]`]: item
@@ -87,7 +90,7 @@ let BeatListUtil = {
     return {
       title: CommonUtil.shareRandomMsgs[random],
       imageUrl: CommonUtil.getShareImage(random),
-      path: '/pages/main/index',
+      path: '/pages/create/beatList/index',
       success: (res) => {
 
       },

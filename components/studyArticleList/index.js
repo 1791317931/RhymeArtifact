@@ -10,7 +10,7 @@ Component({
    * 组件的初始数据
    */
   data: {
-
+    systemName: getApp().globalData.appName
   },
 
   /**
@@ -22,6 +22,9 @@ Component({
     },
     clickStudyArticleItem(e) {
       this.triggerEvent('clickStudyArticleItem', e);
+    },
+    preventEvent() {
+      
     }
   }
 })

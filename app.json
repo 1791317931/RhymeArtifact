@@ -17,7 +17,8 @@
     "pages/user/collection/index",
     "components/musicPoster/index",
     "components/studyArticleList/index",
-    "components/studyVideoList/index"
+    "components/studyVideoList/index",
+    "pages/study/studyArticle/index"
   ],
   "window": {
     "backgroundColor": "#f7f7f7",

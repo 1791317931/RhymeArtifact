@@ -11,17 +11,20 @@
   posterUrl="{{posterUrl}}"
   bind:closePoster="closePoster"
 />
-<view wx:if="{{tabs[activeIndex].flag == 'video'}}">
-  <studyVideoList
-    studyVideoPage="{{studyVideoPage}}"
-    bind:toggleVideoCollectionItem="toggleVideoCollectionItem"
-    bind:clickStudyVideoItem="clickStudyVideoItem"
-  />
-</view>
-<view wx:if="{{tabs[activeIndex].flag == 'article'}}" class="article-container">
-  <studyArticleList 
-    studyArticlePage="{{studyArticlePage}}"
-    bind:generatePoster="generatePoster"
-    bind:clickStudyArticleItem="clickStudyArticleItem"
-  />
+<view class="study-wrapper">
+  <view wx:if="{{tabs[activeIndex].flag == 'video'}}">
+    <studyVideoList
+      studyVideoPage="{{studyVideoPage}}"
+      bind:generatePoster="generateVideoPoster"
+      bind:toggleVideoCollectionItem="toggleVideoCollectionItem"
+      bind:clickStudyVideoItem="clickStudyVideoItem"
+    />
+  </view>
+  <view wx:if="{{tabs[activeIndex].flag == 'article'}}" class="article-container">
+    <studyArticleList 
+      studyArticlePage="{{studyArticlePage}}"
+      bind:generatePoster="generateArticlePoster"
+      bind:clickStudyArticleItem="clickStudyArticleItem"
+    />
+  </view>
 </view>
