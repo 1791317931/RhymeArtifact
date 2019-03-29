@@ -147,6 +147,7 @@ let StudyVideoListUtil = {
       let pagination = res.meta.pagination;
       res.data.forEach((item, index) => {
         item.course_cover = PathUtil.getFilePath(item.course_cover);
+        StudyVideoListUtil.getPosterInfo(_this, list.length, item.course_cover);
         item.groupId = item.id;
         list.push(item);
       });
@@ -160,6 +161,19 @@ let StudyVideoListUtil = {
       _this.setData({
         'studyVideoPage.loading': false
       });
+    });
+  },
+  getPosterInfo(_this, index, url) {
+    wx.getImageInfo({
+      src: url,
+      success: (res) => {
+        _this.setData({
+          [`studyVideoPage.list[${index}].course_cover`]: res.path
+        });
+      },
+      fail: (res) => {
+        
+      }
     });
   }
 };

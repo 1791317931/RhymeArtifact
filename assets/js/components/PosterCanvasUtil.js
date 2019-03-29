@@ -1,3 +1,4 @@
+import ConfigUtil from '../ConfigUtil';
 import TipUtil from '../TipUtil';
 import PathUtil from '../PathUtil';
 import DownloadUtil from '../DownloadUtil';
@@ -79,7 +80,11 @@ let PosterCanvasUtil = {
               TipUtil.message('服务器繁忙，请稍后重试');
             },
             complete: (res) => {
-              // console.log(res);
+              if (ConfigUtil.isDev()) {
+                return;
+                console.log(res);
+                TipUtil.message(JSON.stringify(res), 10000);
+              }
             }
           });
         });
@@ -89,7 +94,11 @@ let PosterCanvasUtil = {
         TipUtil.message('服务器繁忙，请稍后重试');
       },
       complete: (res) => {
-        // console.log(res);
+        if (ConfigUtil.isDev()) {
+          return;
+          console.log(res);
+          TipUtil.message(JSON.stringify(res), 10000);
+        }
       }
     });
   },
@@ -115,7 +124,13 @@ let PosterCanvasUtil = {
           callback(host + '/' + key);
         },
         fail: (res) => {
-          CommonUtil.tip.error('服务器繁忙，请稍后重试');
+          if (ConfigUtil.isDev()) {
+            return;
+            // console.log(res);
+            TipUtil.message(JSON.stringify(res), 10000);
+          } else if (ConfigUtil.isProd()) {
+            TipUtil.message('服务器繁忙，请稍后重试');
+          }
         }
       });
     });

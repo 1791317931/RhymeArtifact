@@ -46,8 +46,16 @@
   font-family:PingFangSC-Medium;
   font-weight:500;
   color:rgba(29,29,29,1);
-  line-height:40rpx;
+  line-height:50rpx;
   letter-spacing:1rpx;
+  word-break: break-all;
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 .operation-container {

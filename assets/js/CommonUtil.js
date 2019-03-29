@@ -77,6 +77,20 @@ let CommonUtil = {
         }
       }, completeFn, failFn);
     });
+  },
+  getImageInfo(url, successFn, failFn, completeFn) {
+    wx.getImageInfo({
+      src: url,
+      success: (res) => {
+        successFn && successFn(res.path);
+      },
+      fail: (res) => {
+        failFn && failFn(res);
+      },
+      complete: (res) => {
+        completeFn && completeFn(res);
+      }
+    });
   }
 };
 

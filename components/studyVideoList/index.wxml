@@ -3,7 +3,10 @@
     class="item" catchtap="clickStudyVideoItem">
     <view class="poster">
       <image src="{{item.course_cover}}"/>
-      <text class="title">{{item.course_title}}</text>
+      <view class="modal">
+        <image src="/assets/imgs/to-play.png"/>
+        <view class="title">{{item.course_title}}</view>
+      </view>
     </view>
     <view class="operation-container clearfix">
       <view class="btn collection" 
@@ -15,7 +18,7 @@
       </view>
       <view class="btn share" catchtap="clickShare">
         <image src="/assets/imgs/wechat-share.png"/>
-        <text>{{item.share_num}}</text>
+        <text>微信分享</text>
         <button open-type="share" data-index="{{index}}"></button>
       </view>
       <view class="moments-container" data-index="{{index}}" catchtap="generatePoster">

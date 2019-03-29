@@ -6,14 +6,23 @@
   position: relative;
 }
 
-.study-video-container .item .poster image {
+.study-video-container .item .poster > image {
   display: block;
   width: 750rpx;
   height: 420rpx;
 }
 
-.study-video-container .item .poster .title {
-  width: 730rpx;
+.study-video-container .item .poster .modal {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(to bottom,  rgba(0, 0, 0, .5), transparent);
+}
+
+.study-video-container .item .poster .modal .title {
+  width: 750rpx;
   padding: 0 20rpx;
   position: absolute;
   left: 0;
@@ -22,9 +31,23 @@
   font-family:PingFangSC-Medium;
   font-weight:500;
   color:#fff;
+  word-break: break-all;
+  text-overflow: -o-ellipsis-lastline;
   overflow: hidden;
-  white-space:nowrap;
-  text-overflow:ellipsis;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.study-video-container .item .poster .modal image {
+  width: 100rpx;
+  height: 100rpx;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .operation-container {
@@ -86,9 +109,9 @@
   overflow: hidden;
   white-space:nowrap;
   text-overflow:ellipsis;
-  font-size:32rpx;
+  font-size:22rpx;
   font-family:DINAlternate-Bold;
-  font-weight:bold;
+  font-weight:500;
   color:rgba(29,29,29,1);
   line-height:90rpx;
   letter-spacing:1rpx;

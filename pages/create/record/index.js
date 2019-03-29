@@ -637,7 +637,7 @@ Page({
         },
         fail: (res) => {
           this.toggleSubmitting(true);
-          CommonUtil.tip.error('服务器繁忙，请稍后重试');
+          TipUtil.message('服务器繁忙，请稍后重试');
         }
       }, null, () => {
         this.toggleSubmitting(true);

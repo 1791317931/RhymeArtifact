@@ -150,6 +150,7 @@ Page({
       let list = res.data.sections.data;
       list.forEach((item, index) => {
         item.section_cover = PathUtil.getFilePath(item.section_cover);
+        this.getPosterInfo(index, item.section_cover);
         item.section_url = PathUtil.getFilePath(item.section_url);
         // 为了海报分享使用分辨参数
         item.groupId = groupId;
@@ -254,6 +255,19 @@ Page({
   closePoster() {
     this.setData({
       posterUrl: null
+    });
+  },
+  getPosterInfo(index, url) {
+    wx.getImageInfo({
+      src: url,
+      success: (res) => {
+        this.setData({
+          [`list[${index}].section_cover`]: res.path
+        });
+      },
+      fail: (res) => {
+
+      }
     });
   }
 })
