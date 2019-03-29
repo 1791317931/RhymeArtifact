@@ -24,18 +24,18 @@ let StudyUtil = {
     title;
     // 章节内容
     if (data.sectionId) {
-      poster = PathUtil.getFilePath(data.section_cover);
+      poster = data.section_cover;
       title = data.section_title;
     } else {
       // 封面内容
-      poster = PathUtil.getFilePath(data.course_cover);
+      poster = data.course_cover;
       title = data.course_title;
     }
     context.drawImage(poster, 0, 0, 610, 327);
     StudyUtil.fillTitle(context, title);
   },
   drawArticleContent(context, data) {
-    let cover = PathUtil.getFilePath(data.cover),
+    let cover = data.cover,
     title = data.title;
 
     context.drawImage(cover, 0, 0, 610, 327);

@@ -142,16 +142,18 @@ Page({
   getVideoList() {
     this.toggleLoading(true);
 
-    let groupId = this.data.groupId;
+    let groupId = this.data.groupId,
+    defaultImage = getApp().globalData.defaultImage;
+    
     api.getVideoById({
       id: groupId,
       include: 'sections'
     }, (res) => {
       let list = res.data.sections.data;
       list.forEach((item, index) => {
-        item.section_cover = PathUtil.getFilePath(item.section_cover);
-        this.getPosterInfo(index, item.section_cover);
-        item.section_url = PathUtil.getFilePath(item.section_url);
+        let section_cover = PathUtil.getFilePath(item.section_cover);
+        item.section_cover = section_cover || defaultImage;
+        this.getPosterInfo(index, section_cover);
         // 为了海报分享使用分辨参数
         item.groupId = groupId;
         item.sectionId = item.id;
@@ -258,6 +260,10 @@ Page({
     });
   },
   getPosterInfo(index, url) {
+    if (!url) {
+      return;
+    }
+    
     wx.getImageInfo({
       src: url,
       success: (res) => {

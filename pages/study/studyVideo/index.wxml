@@ -10,6 +10,7 @@
     id="studyVideo"
     src="{{list[playIndex].section_url}}"
     controls
+    autoplay
     bindtimeupdate="bindTimeUpdate"
     bindended="bindEnded"
     binderror="bindError"/>

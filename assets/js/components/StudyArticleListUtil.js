@@ -99,11 +99,14 @@ let StudyArticleListUtil = {
     }
 
     StudyArticleListUtil.toggleStudyArticlePageLoading(true, _this);
+    let defaultImage = getApp().globalData.defaultImage;
+
     api.getStudyPage(param, (res) => {
       let pagination = res.meta.pagination;
       res.data.forEach((item, index) => {
-        item.cover = PathUtil.getFilePath(item.cover);
-        StudyArticleListUtil.getPosterInfo(_this, list.length, item.cover);
+        let cover = PathUtil.getFilePath(item.cover);
+        item.cover = cover || defaultImage;
+        StudyArticleListUtil.getPosterInfo(_this, list.length, cover);
         list.push(item);
       });
 
@@ -119,6 +122,10 @@ let StudyArticleListUtil = {
     });
   },
   getPosterInfo(_this, index, url) {
+    if (!url) {
+      return;
+    }
+    
     wx.getImageInfo({
       src: url,
       success: (res) => {

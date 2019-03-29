@@ -81,9 +81,8 @@ let PosterCanvasUtil = {
             },
             complete: (res) => {
               if (ConfigUtil.isDev()) {
-                return;
-                console.log(res);
-                TipUtil.message(JSON.stringify(res), 10000);
+                // console.log(res);
+                // TipUtil.message(JSON.stringify(res), 10000);
               }
             }
           });
@@ -95,9 +94,8 @@ let PosterCanvasUtil = {
       },
       complete: (res) => {
         if (ConfigUtil.isDev()) {
-          return;
-          console.log(res);
-          TipUtil.message(JSON.stringify(res), 10000);
+          // console.log(res);
+          // TipUtil.message(JSON.stringify(res), 10000);
         }
       }
     });

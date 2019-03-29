@@ -144,10 +144,13 @@ let StudyVideoListUtil = {
 
     StudyVideoListUtil.toggleStudyVideoPageLoading(true, _this);
     api.getStudyPage(param, (res) => {
-      let pagination = res.meta.pagination;
+      let pagination = res.meta.pagination,
+      defaultImage = getApp().globalData.defaultImage;
+
       res.data.forEach((item, index) => {
-        item.course_cover = PathUtil.getFilePath(item.course_cover);
-        StudyVideoListUtil.getPosterInfo(_this, list.length, item.course_cover);
+        let course_cover = PathUtil.getFilePath(item.course_cover);
+        item.course_cover = course_cover || defaultImage;
+        StudyVideoListUtil.getPosterInfo(_this, list.length, course_cover);
         item.groupId = item.id;
         list.push(item);
       });
@@ -164,6 +167,10 @@ let StudyVideoListUtil = {
     });
   },
   getPosterInfo(_this, index, url) {
+    if (!url) {
+      return;
+    }
+    
     wx.getImageInfo({
       src: url,
       success: (res) => {

@@ -58,6 +58,7 @@ App({
   },
   globalData: {
     userInfo: null,
-    appName: '押韵Rap'
+    appName: '押韵Rap',
+    defaultImage: '/assets/imgs/default.png'
   }
 })
