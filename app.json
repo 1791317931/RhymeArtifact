@@ -40,12 +40,6 @@
         "text": "押韵"
       },
       {
-        "selectedIconPath": "assets/imgs/study-active.png",
-        "iconPath": "assets/imgs/study.png",
-        "pagePath": "pages/study/studyList/index",
-        "text": "学习"
-      },
-      {
         "selectedIconPath": "assets/imgs/create-active.png",
         "iconPath": "assets/imgs/create.png",
         "pagePath": "pages/create/beatList/index",

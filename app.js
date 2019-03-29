@@ -1,4 +1,10 @@
-//app.js
+// {
+//   "selectedIconPath": "assets/imgs/study-active.png",
+//   "iconPath": "assets/imgs/study.png",
+//   "pagePath": "pages/study/studyList/index",
+//   "text": "学习"
+// },
+
 App({
   onLaunch: function () {
     // 展示本地存储能力
