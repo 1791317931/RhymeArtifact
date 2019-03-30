@@ -28,6 +28,9 @@
       <button open-type="share"></button>
     </view>
   </view>
+  <view class="adver">
+      <ad unit-id="adunit-7353167c5b368b0e"></ad>
+  </view>
   <view class="split-container"></view>
   <view class="video-list-wrapper">
     <view class="list-label">课程专辑</view>

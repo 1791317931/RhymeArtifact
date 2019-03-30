@@ -38,5 +38,5 @@ Component({
     generatePoster(e) {
       this.triggerEvent('generatePoster', e);
     }
-  }
+  },
 })

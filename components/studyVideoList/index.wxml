@@ -16,14 +16,14 @@
         <image hidden="{{item.is_collection != 1 && !studyVideoPage.showCollection}}" src="/assets/imgs/collection-active.png"/>
         <text>{{item.collection_num}}</text>
       </view>
-      <view class="btn share" catchtap="clickShare">
-        <image src="/assets/imgs/wechat-share.png"/>
-        <text>微信分享</text>
-        <button open-type="share" data-index="{{index}}"></button>
-      </view>
       <view class="moments-container" data-index="{{index}}" catchtap="generatePoster">
         <image src="/assets/imgs/moments.png"/>
         <text>海报分享</text>
+      </view>
+      <view class="btn share" catchtap="clickShare">
+        <image src="/assets/imgs/wechat-share.png"/>
+        <text>分享好友</text>
+        <button open-type="share" data-index="{{index}}"></button>
       </view>
     </view>
   </view>

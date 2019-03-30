@@ -6,6 +6,14 @@
   z-index: 1;
 }
 
+.adver {
+  padding: 20rpx 30rpx;
+}
+
+.adver ad {
+  border-radius: 20rpx;
+}
+
 .video {
   display: block;
   width: 750rpx;

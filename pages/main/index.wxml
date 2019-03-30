@@ -1,4 +1,7 @@
 <view class="main-page">
+  <view class="adver">
+    <ad unit-id="adunit-c8c2d9e4ba6bd4dc"></ad>
+  </view>
   <searchRhyme 
     placement="bottom" 
     rhymePage="{{rhymePage}}"

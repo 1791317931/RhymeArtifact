@@ -18,7 +18,7 @@ Page({
         text: '文章'
       }
     ],
-    activeIndex: 0,
+    activeIndex: 1,
     posterUrl: '',
     downloadPoster: false,
     studyVideoPage: CommonUtil.copyObject(StudyVideoListUtil.studyVideoPage),

@@ -1,5 +1,6 @@
 {
   "usingComponents": {
+    "wxparser": "plugin://wxparserPlugin/wxparser",
     "loadModal": "/components/common/loadModal/index",
     "musicPoster": "/components/musicPoster/index"
   },

@@ -4,3 +4,24 @@
   bind:closePoster="closePoster"
 />
 <loadModal id="loadModal" />
+<view class="article">
+  <text class="title">{{article.title}}</text>
+  <view>
+    <text class="info">{{article.updated_at}}</text>
+  </view>
+  <view class="content">
+    <wxparser rich-text="{{article.content}}" />
+  </view>
+</view>
+<view class="operation-container clearfix">
+    <view class="poster-share-container" catchtap="generatePoster">
+      <image src="/assets/imgs/moments.png"/>
+      <text>海报分享</text>
+    </view>
+    <view class="line"></view>
+    <view class="wechat-share-container">
+      <image src="/assets/imgs/wechat-share.png"/>
+      <text>微信分享</text>
+      <button open-type="share"></button>
+    </view>
+  </view>

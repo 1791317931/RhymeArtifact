@@ -87,10 +87,11 @@
 }
 
 .operation-container .share {
-  float: left;
+  float: right;
   position: relative;
   height: 90rpx;
   padding: 0 0 0 50rpx;
+  margin-right: 95rpx;
 }
 
 .operation-container .share image {
@@ -105,7 +106,6 @@
 .operation-container .share text {
   display: inline-block;
   margin-left: 10rpx;
-  width: 150rpx;
   overflow: hidden;
   white-space:nowrap;
   text-overflow:ellipsis;

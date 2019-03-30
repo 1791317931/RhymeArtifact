@@ -2,8 +2,8 @@
   <view wx:for="{{studyArticlePage.list}}" wx:for-item="item" wx:for-index="index" wx:key="{{item.id}}" data-index="{{index}}"
     class="item" catchtap="clickStudyArticleItem">
     <view class="head-info">
-      <image src="/assets/imgs/logo.png"/>
-      <view>{{systemName}}</view>
+      <image src="{{item.author.data.avatar}}"/>
+      <view>{{item.author.data.name}}</view>
     </view>
     <image class="content-image" src="{{item.cover}}"/>
     <view class="title">{{item.title}}</view>
