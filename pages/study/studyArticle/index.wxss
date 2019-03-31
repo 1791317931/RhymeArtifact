@@ -1,4 +1,6 @@
 /* pages/study/studyArticle/index.wxss */
+@import "../../wxParse/wxParse.wxss";
+
 .article {
   padding: 30rpx 30rpx 98rpx 30rpx;
   background-color: #fff;
@@ -19,7 +21,9 @@
   line-height:45rpx;
   letter-spacing:1rpx;
 }
-
+.wxparser--wxParser-img {
+  width: 100%;
+}
 .operation-container {
   width: 100%;
   padding: 10rpx 50rpx;

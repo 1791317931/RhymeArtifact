@@ -1,3 +1,5 @@
+
+<import src="../../wxParse/wxParse.wxml"/>
 <canvas class="poster-canvas" canvas-id="poster-canvas"/>
 <musicPoster 
   posterUrl="{{posterUrl}}"
@@ -10,7 +12,7 @@
     <text class="info">{{article.updated_at}}</text>
   </view>
   <view class="content">
-    <wxparser rich-text="{{article.content}}" />
+    <template is="wxParse" data="{{wxParseData:wxParseData.nodes}}"/>
   </view>
 </view>
 <view class="operation-container clearfix">

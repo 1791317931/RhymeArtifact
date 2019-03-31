@@ -2,7 +2,7 @@ import * as api from '../../../assets/js/api';
 import PathUtil from '../../../assets/js/PathUtil';
 import TipUtil from '../../../assets/js/TipUtil';
 import PosterCanvasUtil from '../../../assets/js/components/PosterCanvasUtil';
-
+import WxParse from '../../../pages/wxParse/wxParse.js';
 Page({
 
   /**
@@ -95,6 +95,8 @@ Page({
     api.getArticleById({
       id: this.data.id
     }, (res) => {
+      var article = `<div>${res.data.content}</div>`
+      WxParse.wxParse('wxParseData', 'html', article, this, 0);
       this.setData({
         article: res.data
       });

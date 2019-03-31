@@ -1,6 +1,15 @@
 .adver {
   padding: 30rpx 30rpx 0 30rpx;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  background-color: #f7f7f7;
 }
 .adver ad {
   border-radius: 20rpx;
+}
+.main-page {
+  padding-top: 236rpx;
 }
