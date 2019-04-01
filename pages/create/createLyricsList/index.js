@@ -1,22 +1,23 @@
-import DateUtil from '../../../assets/js/DateUtil';
 import CommonUtil from '../../../assets/js/CommonUtil';
-import ConfigUtil from '../../../assets/js/ConfigUtil';
-import TipUtil from '../../../assets/js/TipUtil';
-import * as api from '../../../assets/js/api';
-import LyricListUtil from '../../../assets/js/components/LyricListUtil';
 
 Page({
   /**
    * 页面的初始数据
    */
   data: {
-    lyricsPage: CommonUtil.copyObject(LyricListUtil.lyricsPage)
+    lyricComponent: null
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let lyricComponent = this.selectComponent('#lyricComponent');
+    lyricComponent.init(this);
+    this.setData({
+      lyricComponent
+    });
+
     this.init();
   },
 
@@ -54,14 +55,14 @@ Page({
   onPullDownRefresh: function () {
     wx.stopPullDownRefresh();
     wx.vibrateShort()
-    LyricListUtil.getLyricPage(1, this);
+    this.data.lyricComponent.getPage(1);
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    LyricListUtil.onReachBottom(this);
+    this.data.lyricComponent.onReachBottom();
   },
 
   /**
@@ -71,21 +72,15 @@ Page({
     if (e.from == 'menu') {
       return CommonUtil.shareApp(e);
     } else {
-      return LyricListUtil.shareLyric(e, this);
+      return this.data.lyricComponent.shareLyric(e);
     }
   },
   init() {
-    LyricListUtil.getLyricPage(1, this);
+    this.data.lyricComponent.getPage(1);
   },
   toAddLyrics() {
     wx.navigateTo({
       url: '/pages/create/lyrics/index'
     });
-  },
-  clickLyricItem(e) {
-    LyricListUtil.clickLyricItem(e && e.detail || '', this);
-  },
-  toDeleteLyricItem(e) {
-    LyricListUtil.toDeleteLyricItem(e && e.detail || '', this);
   }
 })

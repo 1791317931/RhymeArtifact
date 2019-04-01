@@ -1,12 +1,12 @@
 <view class="createLyricsList_list">
   <view 
     class="createLyricsList_item" 
-    wx:for="{{lyricsPage.list}}" 
+    wx:for="{{page.list}}" 
     wx:for-index="index" 
     wx:for-item="item" 
     wx:key="{{index}}"
     data-index="{{index}}" 
-    catchtap="clickLyricItem">
+    catchtap="clickItem">
     <view class="createLyricsList_item_content">
         <view class="info">
           <view class="time">{{item.created_at}}</view>
@@ -17,7 +17,7 @@
               open-type="share" 
               class="btn remove" 
               data-index="{{index}}" 
-              catchtap="removeLyric">
+              catchtap="remove">
               <image src="/assets/imgs/delete.png"/>
           </view>
           <view 
@@ -35,6 +35,6 @@
   </view>
 </view>
 <empty 
-  loading="{{lyricsPage.loading}}"
-  hasData="{{!!lyricsPage.list.length}}"
-  hasMore="{{lyricsPage.current_page < lyricsPage.total_pages}}"/>
+  loading="{{page.loading}}"
+  hasData="{{!!page.list.length}}"
+  hasMore="{{page.current_page < page.total_pages}}"/>
