@@ -4,6 +4,7 @@ import PathUtil from '../../../assets/js/PathUtil';
 import TipUtil from '../../../assets/js/TipUtil';
 import PosterCanvasUtil from '../../../assets/js/components/PosterCanvasUtil';
 
+let shareKey = 'shareObj';
 Page({
 
   /**
@@ -23,7 +24,9 @@ Page({
     seekTime: null,
     videoContext: null,
     posterUrl: null,
-    loadModal: null
+    loadModal: null,
+    // 是否需要分享（要求用户每天至少分享一次）
+    needShare: true
   },
 
   /**
@@ -42,6 +45,15 @@ Page({
       });
     }
 
+    let shareObj = wx.getStorageSync(shareKey) || {},
+    shareTimeStamp = shareObj.shareTimeStamp;
+    // 间隔小于24小时，不需要强制分享
+    if (shareTimeStamp && Date.now() - shareTimeStamp < 24 * 60 * 60 * 1000) {
+      this.setData({
+        needShare: false
+      });
+    }
+
     this.init();
   },
 
@@ -56,7 +68,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    
   },
 
   /**
@@ -131,6 +143,14 @@ Page({
     }
 
     this.getVideoList();
+  },
+  share() {
+    this.setData({
+      needShare: false
+    });
+    wx.setStorageSync(shareKey, {
+      shareTimeStamp: Date.now()
+    });
   },
   toggleLoading(loading) {
     let loadModal = this.data.loadModal;
@@ -233,7 +253,10 @@ Page({
     videoContext = data.videoContext;
     // 如果seekTime超出了视频总时长，会自动重新播放
     videoContext.seek(seekTime);
-    videoContext.play();
+
+    if (!this.data.needShare) {
+      videoContext.play();
+    }
 
     api.addClickNum({
       id: videoId,

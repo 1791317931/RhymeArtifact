@@ -10,10 +10,14 @@
     id="studyVideo"
     src="{{list[playIndex].section_url}}"
     controls
-    autoplay
+    autoplay="{{!needShare}}"
     bindtimeupdate="bindTimeUpdate"
     bindended="bindEnded"
     binderror="bindError"/>
+  <view hidden="{{!needShare}}" class="share-container">
+    <view class="tip">点击分享群后可进行观看</view>
+    <button open-type="share" catchtap="share"></button>
+  </view>
   <view class="title-container">{{list[playIndex].section_title}}</view>
 </view>
 <view class="bottom-container">
