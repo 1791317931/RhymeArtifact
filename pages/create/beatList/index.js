@@ -1,4 +1,3 @@
-import BeatListUtil from '../../../assets/js/components/BeatListUtil';
 import CommonUtil from '../../../assets/js/CommonUtil';
 
 Page({
@@ -6,8 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    beatPage: CommonUtil.copyObject(BeatListUtil.beatPage),
-    BAC: null,
+    beatComponent: null,
     // 需要跳转的页面
     targetPath: null,
     posterUrl: null
@@ -23,8 +21,11 @@ Page({
       });
     }
 
-    BeatListUtil.init(this);
-    this.init();
+    let beatComponent = this.selectComponent('#beatComponent');
+    this.setData({
+      beatComponent
+    });
+    beatComponent.init(this);
   },
 
   /**
@@ -49,8 +50,9 @@ Page({
     }
 
     // 如果token过期，进入该页面，默认会先进入登录页面成功后切换到这个页面不会重新执行onLoad事件，造成假数据
-    if (!this.data.beatPage.list.length) {
-      this.init();
+    let beatComponent = this.data.beatComponent;
+    if (!beatComponent.data.beatPage.list.length) {
+      beatComponent.init(this);
     }
   },
 
@@ -73,14 +75,14 @@ Page({
    */
   onPullDownRefresh: function () {
     wx.stopPullDownRefresh();
-    BeatListUtil.getBeatPage(1, this);
+    this.data.beatComponent.getBeatPage(1, this);
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    BeatListUtil.onReachBottom(this);
+    this.data.beatComponent.onReachBottom(this);
   },
 
   /**
@@ -90,50 +92,26 @@ Page({
     if (e.from == 'menu') {
       return CommonUtil.shareApp(e);
     } else if (e.from == 'button') {
-      return BeatListUtil.shareBeatItem(e, this);
+      return this.data.beatComponent.shareBeatItem(e, this);
     }
   },
-  init() {
-    BeatListUtil.getBeatPage(1, this);
-  },
   toCreateMusicList() {
-    BeatListUtil.pausePlay(null, this);
+    this.data.beatComponent.pausePlay(null);
 
     wx.navigateTo({
       url: '/pages/create/createMusicList/index'
     });
   },
   toCreateLyricsList() {
-    BeatListUtil.pausePlay(null, this);
+    this.data.beatComponent.pausePlay(null);
 
     wx.navigateTo({
       url: '/pages/create/createLyricsList/index'
     });
   },
-  toggleBeatItemStatus(e) {
-    BeatListUtil.toggleBeatItemStatus(e.detail, this);
-  },
-  toggleBeatCollectionItem(e) {
-    BeatListUtil.toggleBeatCollectionItem(e.detail, this);
-  },
-  toRecord(e) {
-    BeatListUtil.toRecord(e.detail, this);
-  },
-  generatePoster(e) {
-    BeatListUtil.generatePoster(e.detail, this);
-  },
   closePoster() {
     this.setData({
       posterUrl: null
     });
-  },
-  beatPlayEnd(e) {
-    BeatListUtil.beatPlayEnd(e, this);
-  },
-  beatLoadError(e) {
-    BeatListUtil.beatLoadError(e, this);
-  },
-  beatAudioTimeUpdate(e) {
-    BeatListUtil.beatAudioTimeUpdate(e, this);
   }
 })

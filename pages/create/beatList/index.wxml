@@ -5,18 +5,11 @@
     <button catchtap="toCreateLyricsList">写歌词</button>
   </view>
   <view class="list-container">
-    <audio class="hide" src="{{beatPage.list[beatPage.playingIndex].beat_url}}" id="beatAudio" bindended="beatPlayEnd" binderror="beatLoadError" bindtimeupdate="beatAudioTimeUpdate"></audio>
     <canvas class="poster-canvas" canvas-id="poster-canvas"/>
     <musicPoster 
       posterUrl="{{posterUrl}}"
       bind:closePoster="closePoster"
     />
-    <beatList 
-      bind:toggleBeatItemStatus="toggleBeatItemStatus"
-      bind:toggleBeatCollectionItem="toggleBeatCollectionItem"
-      bind:toRecord="toRecord"
-      bind:generatePoster="generatePoster"
-      beatPage="{{beatPage}}"
-    />
+    <beatList id="beatComponent"/>
   </view>
 </view>
