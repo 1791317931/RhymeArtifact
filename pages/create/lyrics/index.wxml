@@ -17,11 +17,7 @@
     </view>
     <view hidden="{{mode == 'create'}}" class="search-lyric-wrapper">
       <view class="main-page">
-        <searchLyric 
-          rhymePage="{{rhymePage}}"
-          bind:getRhymeList="getRhymeList" 
-          bind:changeKeyword="changeKeyword"
-          bind:toggleMortgage="toggleMortgage"/>
+        <searchLyric/>
       </view>
     </view>
     <view class="content-container">

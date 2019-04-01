@@ -1,8 +1,6 @@
 import CommonUtil from '../../../assets/js/CommonUtil';
 import TipUtil from '../../../assets/js/TipUtil';
-import ConfigUtil from '../../../assets/js/ConfigUtil';
 import * as api from '../../../assets/js/api';
-import SearchRhymeUtil from '../../../assets/js/components/SearchRhymeUtil';
 import SubmittingUtil from '../../../assets/js/components/SubmittingUtil';
 
 Page({
@@ -25,7 +23,6 @@ Page({
     },
     // create创建   search搜索
     mode: 'create',
-    rhymePage: CommonUtil.copyObject(SearchRhymeUtil.rhymePage),
     submittingForm: SubmittingUtil.submittingForm,
     showSubmit: true,
     readonly: false
@@ -115,15 +112,6 @@ Page({
     this.setData({
       'lyricsForm.title': title
     });
-  },
-  changeKeyword(e) {
-    SearchRhymeUtil.changeKeyword(e && e.detail || '', this);
-  },
-  toggleMortgage(e) {
-    SearchRhymeUtil.toggleMortgage(e && e.detail || '', this);
-  },
-  getRhymeList(e) {
-    SearchRhymeUtil.getRhymeList(e && e.detail || '', this);
   },
   openSearch() {
     this.setData({
