@@ -9,26 +9,9 @@
     bind:closePoster="closePoster"
   />
   <view class="music-container" hidden="{{type == 'beat'}}">
-    <audio class="hide" 
-      src="{{createMusicPage.list[createMusicPage.playingIndex].mixture_url}}" 
-      id="musicAudio" 
-      bindended="musicPlayEnd" 
-      binderror="musicLoadError" 
-      bindtimeupdate="musicAudioTimeUpdate"></audio>
-    <createMusicList
-      bind:toggleMusicItemStatus="toggleMusicItemStatus"
-      bind:toggleMusicCollectItem="toggleMusicCollectItem"
-      bind:generatePoster="generatePoster"
-      createMusicPage="{{createMusicPage}}"/>
+    <createMusicList id="musicComponent"/>
   </view>
   <view class="beat-container" hidden="{{type == 'music'}}">
-    <audio class="hide" src="{{beatPage.list[beatPage.playingIndex].beat_url}}" id="beatAudio" bindended="beatPlayEnd" binderror="beatLoadError" bindtimeupdate="beatAudioTimeUpdate"></audio>
-    <beatList 
-      bind:toggleBeatItemStatus="toggleBeatItemStatus"
-      bind:toggleBeatCollectionItem="toggleBeatCollectionItem"
-      bind:toRecord="toRecord"
-      bind:generatePoster="generatePoster"
-      beatPage="{{beatPage}}"
-    />
+    <beatList id="beatComponent"/>
   </view>
 </view>

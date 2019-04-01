@@ -1,18 +1,11 @@
-import DateUtil from '../../../assets/js/DateUtil';
 import CommonUtil from '../../../assets/js/CommonUtil';
-import ConfigUtil from '../../../assets/js/ConfigUtil';
-import TipUtil from '../../../assets/js/TipUtil';
-import * as api from '../../../assets/js/api';
-import CreateMusicListUtil from '../../../assets/js/components/CreateMusicListUtil';
 
 Page({
   /**
    * 页面的初始数据
    */
   data: {
-    createMusicPage: CommonUtil.copyObject(CreateMusicListUtil.createMusicPage),
-    // 试听音频
-    MAC: null,
+    musicComponent: null,
     posterUrl: null
   },
 
@@ -20,7 +13,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    CreateMusicListUtil.init(this);
+    let musicComponent = this.selectComponent('#musicComponent');
+    this.setData({
+      musicComponent
+    });
+
+    musicComponent.init(this);
     this.init();
   },
 
@@ -49,7 +47,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    this.data.musicComponent.onUnload();
   },
 
   /**
@@ -58,14 +56,14 @@ Page({
   onPullDownRefresh: function () {
     wx.stopPullDownRefresh();
     wx.vibrateShort()
-    CreateMusicListUtil.getMusicPage(1, this);
+    this.data.musicComponent.getMusicPage(1);
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    CreateMusicListUtil.onReachBottom(this);
+    this.data.musicComponent.onReachBottom();
   },
 
   /**
@@ -75,33 +73,15 @@ Page({
     if (e.from == 'menu') {
       return CommonUtil.shareApp(e);
     } else {
-      return CreateMusicListUtil.shareItem(e, this);
+      return this.data.musicComponent.shareItem(e);
     }
   },
   init() {
-    CreateMusicListUtil.getMusicPage(1, this);
-  },
-  toggleMusicItemStatus(e) {
-    CreateMusicListUtil.toggleMusicItemStatus(e && e.detail || '', this);
-  },
-  toggleMusicCollectItem(e) {
-    CreateMusicListUtil.toggleMusicCollectItem(e && e.detail || '', this);
-  },
-  generatePoster(e) {
-    CreateMusicListUtil.generatePoster(e.detail, this);
+    this.data.musicComponent.getPage(1);
   },
   closePoster() {
     this.setData({
       posterUrl: null
     });
-  },
-  musicPlayEnd(e) {
-    CreateMusicListUtil.musicPlayEnd(e, this);
-  },
-  musicLoadError(e) {
-    CreateMusicListUtil.musicLoadError(e, this);
-  },
-  musicAudioTimeUpdate(e) {
-    CreateMusicListUtil.musicAudioTimeUpdate(e, this);
   }
 })

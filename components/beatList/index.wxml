@@ -1,13 +1,13 @@
 <view class="beat-list-container">
-  <view class="beat-item" wx:for="{{beatPage.list}}" wx:for-index="index" wx:for-item="item" wx:key="{{item.beat_id}}">
+  <view class="beat-item" wx:for="{{page.list}}" wx:for-index="index" wx:for-item="item" wx:key="{{item.beat_id}}">
     <view>
-      <view class="table top-container" data-index="{{index}}" catchtap="toggleBeatItemStatus">
+      <view class="table top-container" data-index="{{index}}" catchtap="toggleItemStatus">
         <view class="table-row">
           <view class="table-cell status-container">
             <view>
               <image class="disk" src="/assets/imgs/disk.png" />
-              <image hidden="{{beatPage.playingIndex == index && beatPage.playing}}" src="/assets/imgs/to-play.png" />
-              <image hidden="{{beatPage.playingIndex != index || !beatPage.playing}}" src="/assets/imgs/to-pause.png" />
+              <image hidden="{{page.playingIndex == index && page.playing}}" src="/assets/imgs/to-play.png" />
+              <image hidden="{{page.playingIndex != index || !page.playing}}" src="/assets/imgs/to-pause.png" />
             </view>
           </view>
           <view class="table-cell center-container">
@@ -20,9 +20,9 @@
         </view>
       </view>
       <view class="operation-container">
-        <view class="collection-container" data-index="{{index}}" catchtap="toggleBeatCollectionItem">
-          <image hidden="{{item.isCollection ||  beatPage.showCollection}}" src="/assets/imgs/collection.png"/>
-          <image hidden="{{!item.isCollection && !beatPage.showCollection}}" src="/assets/imgs/collection-active.png"/>
+        <view class="collection-container" data-index="{{index}}" catchtap="toggleCollectionItem">
+          <image hidden="{{item.isCollection ||  page.showCollection}}" src="/assets/imgs/collection.png"/>
+          <image hidden="{{!item.isCollection && !page.showCollection}}" src="/assets/imgs/collection-active.png"/>
           <text>{{item.collection_num}}</text>
         </view>
         <view class="share-container">
@@ -36,12 +36,12 @@
         </view>
       </view>
     </view>
-    <view hidden="{{beatPage.playingIndex != index}}" class="start-record-container" data-index="{{index}}" catchtap="toRecord">
+    <view hidden="{{page.playingIndex != index}}" class="start-record-container" data-index="{{index}}" catchtap="toRecord">
       <button>开始录制</button>
     </view>
   </view>
 </view>
 <empty 
-  loading="{{beatPage.loading}}"
-  hasData="{{!!beatPage.list.length}}"
-  hasMore="{{beatPage.current_page < beatPage.total_pages}}"/>
+  loading="{{page.loading}}"
+  hasData="{{!!page.list.length}}"
+  hasMore="{{page.current_page < page.total_pages}}"/>

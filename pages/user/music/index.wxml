@@ -1,19 +1,8 @@
 <view class="music-container">
-  <audio class="hide" 
-    src="{{createMusicPage.list[createMusicPage.playingIndex].origin_url}}" 
-    id="musicAudio" 
-    bindended="musicPlayEnd" 
-    binderror="musicLoadError" 
-    bindtimeupdate="musicAudioTimeUpdate"></audio>
   <canvas class="poster-canvas" canvas-id="poster-canvas"/>
   <musicPoster 
     posterUrl="{{posterUrl}}"
     bind:closePoster="closePoster"
   />
-  <createMusicList
-    bind:removeMusicItem="removeMusicItem"
-    bind:toggleMusicItemStatus="toggleMusicItemStatus"
-    bind:toggleMusicCollectItem="toggleMusicCollectItem"
-    bind:generatePoster="generatePoster"
-    createMusicPage="{{createMusicPage}}"/>
+  <createMusicList id="musicComponent"/>
 </view>

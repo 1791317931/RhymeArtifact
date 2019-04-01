@@ -1,35 +1,37 @@
-import DateUtil from '../../../assets/js/DateUtil';
 import CommonUtil from '../../../assets/js/CommonUtil';
-import ConfigUtil from '../../../assets/js/ConfigUtil';
-import TipUtil from '../../../assets/js/TipUtil';
-import * as api from '../../../assets/js/api';
-import CreateMusicListUtil from '../../../assets/js/components/CreateMusicListUtil';
-import BeatListUtil from '../../../assets/js/components/BeatListUtil';
 
 Page({
   /**
    * 页面的初始数据
    */
   data: {
-    beatPage: CommonUtil.copyObject(BeatListUtil.beatPage),
-    createMusicPage: CommonUtil.copyObject(CreateMusicListUtil.createMusicPage),
-    BAC: null,
-    MAC: null,
     // music beat
     type: 'music',
-    posterUrl: null
+    posterUrl: null,
+    beatComponent: null,
+    musicComponent: null
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.setData({
-      'createMusicPage.showCollection': true,
-      'beatPage.showCollection': true
+    let beatComponent = this.selectComponent('#beatComponent'),
+    musicComponent = this.selectComponent('#musicComponent');
+
+    beatComponent.setData({
+      'page.showCollection': true
     });
-    CreateMusicListUtil.init(this);
-    BeatListUtil.init(this);
+    musicComponent.setData({
+      'page.showCollection': true
+    });
+    this.setData({
+      beatComponent,
+      musicComponent
+    });
+
+    musicComponent.init(this);
+    beatComponent.init(this);
     this.init();
   },
 
@@ -58,7 +60,8 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    this.data.beatComponent.onUnload();
+    this.data.musicComponent.onUnload();
   },
 
   /**
@@ -69,9 +72,9 @@ Page({
 
     let type = this.data.type;
     if (type == 'music') {
-      CreateMusicListUtil.getMusicPage(1, this);
+      this.data.musicComponent.getPage(1);
     } else if (type == 'beat') {
-      BeatListUtil.getBeatPage(1, this);
+      this.data.beatComponent.getPage(1);
     }
   },
 
@@ -81,9 +84,9 @@ Page({
   onReachBottom: function () {
     let type = this.data.type;
     if (type == 'music') {
-      CreateMusicListUtil.onReachBottom(this);
+      this.data.musicComponent.onReachBottom();
     } else if (type == 'beat') {
-      BeatListUtil.onReachBottom(this);
+      this.data.beatComponent.onReachBottom();
     }
   },
 
@@ -96,18 +99,18 @@ Page({
     } else {
       let type = this.data.type;
       if (type == 'music') {
-        return CreateMusicListUtil.shareItem(e, this);
+        return this.data.musicComponent.shareItem(e);
       } else if (type == 'beat') {
-        return BeatListUtil.shareBeatItem(e, this);
+        return this.data.beatComponent.shareItem(e);
       }
     }
   },
   init() {
     let type = this.data.type;
     if (type == 'music') {
-      CreateMusicListUtil.getMusicPage(1, this);
+      this.data.musicComponent.getPage(1);
     } else if (type == 'beat') {
-      BeatListUtil.getBeatPage(1, this);
+      this.data.beatComponent.getPage(1);
     }
   },
   togglePage(e) {
@@ -124,55 +127,13 @@ Page({
       });
     }
 
-    CreateMusicListUtil.pausePlay(e, this);
-    BeatListUtil.pausePlay(e, this);
+    this.data.musicComponent.pausePlay(e);
+    this.data.beatComponent.pausePlay(e);
     this.init();
-  },
-  toggleMusicItemStatus(e) {
-    CreateMusicListUtil.toggleMusicItemStatus(e && e.detail || '', this);
-  },
-  toggleMusicCollectItem(e) {
-    CreateMusicListUtil.toggleMusicCollectItem(e && e.detail || '', this);
-  },
-  generatePoster(e) {
-    let type = this.data.type;
-
-    if (type == 'music') {
-      CreateMusicListUtil.generatePoster(e.detail, this);
-    } else if (type == 'beat') {
-      BeatListUtil.generatePoster(e.detail, this);
-    }
-  },
-  musicPlayEnd(e) {
-    CreateMusicListUtil.musicPlayEnd(e, this);
-  },
-  musicLoadError(e) {
-    CreateMusicListUtil.musicLoadError(e, this);
-  },
-  musicAudioTimeUpdate(e) {
-    CreateMusicListUtil.musicAudioTimeUpdate(e, this);
-  },
-  toggleBeatItemStatus(e) {
-    BeatListUtil.toggleBeatItemStatus(e.detail, this);
-  },
-  toggleBeatCollectionItem(e) {
-    BeatListUtil.toggleBeatCollectionItem(e.detail, this);
-  },
-  toRecord(e) {
-    BeatListUtil.toRecord(e.detail, this);
   },
   closePoster() {
     this.setData({
       posterUrl: null
     });
-  },
-  beatPlayEnd(e) {
-    BeatListUtil.beatPlayEnd(e, this);
-  },
-  beatLoadError(e) {
-    BeatListUtil.beatLoadError(e, this);
-  },
-  beatAudioTimeUpdate(e) {
-    BeatListUtil.beatAudioTimeUpdate(e, this);
   }
 })

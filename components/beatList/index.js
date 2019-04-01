@@ -18,7 +18,7 @@ Component({
    * 组件的初始数据
    */
   data: {
-    beatPage: {
+    page: {
       loading: false,
       playingIndex: -1,
       playing: false,
@@ -28,8 +28,7 @@ Component({
       list: []
     },
     BAC: null,
-    scope: null,
-    posterUrl: null
+    scope: null
   },
 
   /**
@@ -48,7 +47,7 @@ Component({
         BAC
       });
       this.bindBACEvent();
-      this.getBeatPage(1);
+      this.getPage(1);
     },
     onUnload() {
       this.data.BAC.destroy();
@@ -58,20 +57,20 @@ Component({
       
       BAC.autoplay = true;
       BAC.onTimeUpdate(() => {
-        this.beatAudioTimeUpdate(BAC.duration, BAC.currentTime);
+        this.audioTimeUpdate(BAC.duration, BAC.currentTime);
       });
 
       BAC.onError((res) => {
-        this.beatAudioError();
+        this.audioError();
       });
 
       BAC.onEnded((res) => {
-        this.beatAudioEnded();
+        this.audioEnded();
       });
     },
-    toggleBeatItemStatus(e) {
+    toggleItemStatus(e) {
       let index = e.currentTarget.dataset.index,
-        page = this.data.beatPage,
+        page = this.data.page,
         playing = page.playing,
         BAC = this.data.BAC;
 
@@ -85,13 +84,13 @@ Component({
         this.startPlay(e);
       }
     },
-    toggleBeatCollectionItem(e) {
+    toggleCollectionItem(e) {
       let item = this.getItem(e),
         index = this.getIndex(e),
-        beatPage = this.data.beatPage,
+        page = this.data.page,
         type = 'beat';
 
-      if (item.isCollection || beatPage.showCollection) {
+      if (item.isCollection || page.showCollection) {
         api.deleteCollection({
           id: item.id,
           type
@@ -99,19 +98,19 @@ Component({
           TipUtil.message('已取消收藏');
 
           // 显示我的收藏，把被取消收藏的伴奏去掉
-          if (beatPage.showCollection) {
-            let list = beatPage.list;
+          if (page.showCollection) {
+            let list = page.list;
             list.splice(index, 1);
 
             this.setData({
-              'beatPage.list': list
+              'page.list': list
             });
           } else {
             item.isCollection = false;
             item.collection_num--;
 
             this.setData({
-              [`beatPage.list[${index}]`]: item
+              [`page.list[${index}]`]: item
             });
           }
         });
@@ -125,12 +124,12 @@ Component({
           item.collection_num++;
 
           this.setData({
-            [`beatPage.list[${index}]`]: item
+            [`page.list[${index}]`]: item
           });
         });
       }
     },
-    shareBeatItem(e) {
+    shareItem(e) {
       let random = CommonUtil.getShareRandom();
 
       return {
@@ -159,8 +158,8 @@ Component({
 
       BAC.src = this.getItem(e).beat_url;
       this.setData({
-        'beatPage.playingIndex': index,
-        'beatPage.playing': true
+        'page.playingIndex': index,
+        'page.playing': true
       });
 
       // 播放音频
@@ -171,7 +170,7 @@ Component({
       let BAC = this.data.BAC;
 
       this.setData({
-        'beatPage.playing': true
+        'page.playing': true
       });
 
       // 播放音频
@@ -181,7 +180,7 @@ Component({
       let BAC = this.data.BAC;
 
       this.setData({
-        'beatPage.playing': false
+        'page.playing': false
       });
 
       BAC.pause();
@@ -190,31 +189,31 @@ Component({
       let BAC = this.data.BAC;
 
       this.setData({
-        'beatPage.playing': false
+        'page.playing': false
       });
 
       BAC.seek(0);
     },
-    beatAudioError(e) {
+    audioError(e) {
       if (e.detail.errMsg == 'MEDIA_ERR_SRC_NOT_SUPPORTED') {
         TipUtil.message('播放失败');
       }
-      this.beatPlayEnd(e);
+      this.playEnd(e);
     },
-    beatAudioTimeUpdate(totalTime, time) {
+    audioTimeUpdate(totalTime, time) {
       this.caculateSurplusTime(totalTime, time);
     },
     // 计算剩余时间
     caculateSurplusTime(totalTime, currentTime) {
       let surplusTime = parseInt(totalTime - currentTime),
-        playingIndex = this.data.beatPage.playingIndex,
-        item = this.data.beatPage.list[playingIndex];
+        playingIndex = this.data.page.playingIndex,
+        item = this.data.page.list[playingIndex];
 
       item.surplusTime = surplusTime;
       item.surplusTimeArr = TimeUtil.numberToArr(surplusTime);
 
       this.setData({
-        [`beatPage.list[${playingIndex}]`]: item
+        [`page.list[${playingIndex}]`]: item
       });
     },
     toRecord(e) {
@@ -226,9 +225,9 @@ Component({
       });
     },
     onReachBottom(scope) {
-      let page = this.data.beatPage;
+      let page = this.data.page;
       if (page.current_page < page.total_pages) {
-        this.getBeatPage(page.current_page + 1);
+        this.getPage(page.current_page + 1);
       }
     },
     getIndex(e) {
@@ -241,15 +240,15 @@ Component({
     },
     getItem(e) {
       let index = this.getIndex(e);
-      return this.data.beatPage.list[index];
+      return this.data.page.list[index];
     },
-    toggleBeatPageLoading(loading) {
+    togglePageLoading(loading) {
       this.setData({
-        'beatPage.loading': loading
+        'page.loading': loading
       });
     },
-    getBeatPage(current_page = 1) {
-      let page = this.data.beatPage;
+    getPage(current_page = 1) {
+      let page = this.data.page;
       if (page.loading) {
         return;
       }
@@ -266,13 +265,13 @@ Component({
         list = page.list;
       }
 
-      this.toggleBeatPageLoading(true);
+      this.togglePageLoading(true);
       this.setData({
-        'beatPage.current_page': current_page
+        'page.current_page': current_page
       });
 
       let fn;
-      if (this.data.beatPage.showCollection) {
+      if (this.data.page.showCollection) {
         fn = api.getCollection;
 
         param.type = 'beat';
@@ -298,12 +297,12 @@ Component({
         });
 
         this.setData({
-          'beatPage.list': list,
-          'beatPage.total_pages': pagination.total_pages || 0,
-          'beatPage.current_page': pagination.current_page || 1
+          'page.list': list,
+          'page.total_pages': pagination.total_pages || 0,
+          'page.current_page': pagination.current_page || 1
         });
       }, () => {
-        this.toggleBeatPageLoading(false);
+        this.togglePageLoading(false);
       });
     }
   }

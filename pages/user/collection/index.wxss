@@ -33,7 +33,7 @@
 }
 
 .music-container {
-  padding: 120rpx 0 0;
+  padding: 150rpx 0 0;
 }
 
 .beat-container {

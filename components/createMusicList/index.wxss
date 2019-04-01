@@ -5,9 +5,12 @@
 .createMusicList_item {
   background: #fff;
   border-radius:14rpx;
-  margin-top: 30rpx;
   position: relative;
   transform: translate(0);
+}
+
+.createMusicList_list .createMusicList_item:not(:first-child) {
+  margin-top: 30rpx;
 }
 
 .hide {

@@ -1,10 +1,10 @@
  <view class="createMusicList_list">
   <view class="createMusicList_item" 
-    wx:for="{{createMusicPage.list}}" 
+    wx:for="{{page.list}}" 
     wx:for-index="index" 
     wx:for-item="item" 
     wx:key="{{item.id}}">
-    <view hidden="{{createMusicPage.showHead == false}}" 
+    <view hidden="{{page.showHead == false}}" 
       class="createMusicList_item_name">
       <view>
         <image src="{{item.user.data.avatar || '/assets/imgs/logo.png'}}"/>
@@ -14,11 +14,11 @@
     <view class="createMusicList_item_content">
       <view class="createMusicList_item_info"
         data-index="{{index}}
-        catchtap="toggleMusicItemStatus">
+        catchtap="toggleItemStatus">
         <view class="createMusicList_item_status">
           <image src="/assets/imgs/disk.png" />
-          <image hidden="{{createMusicPage.playingIndex == index && createMusicPage.playing}}" src="/assets/imgs/to-play.png" />
-          <image hidden="{{createMusicPage.playingIndex != index || !createMusicPage.playing}}" src="/assets/imgs/to-pause.png" />
+          <image hidden="{{page.playingIndex == index && page.playing}}" src="/assets/imgs/to-play.png" />
+          <image hidden="{{page.playingIndex != index || !page.playing}}" src="/assets/imgs/to-pause.png" />
         </view>
         <view class="createMusicList_item_detail">
           <view class="title">{{item.music_title}}</view>
@@ -36,9 +36,9 @@
       <view class="createMusicList_item_operate">
           <view class="btn collection" 
           data-index="{{index}}" 
-          catchtap="toggleMusicCollectItem">
-            <image hidden="{{item.isCollection ||  createMusicPage.showCollection}}" src="/assets/imgs/collection.png"/>
-            <image hidden="{{!item.isCollection && !createMusicPage.showCollection}}" src="/assets/imgs/collection-active.png"/>
+          catchtap="toggleCollectItem">
+            <image hidden="{{item.isCollection ||  page.showCollection}}" src="/assets/imgs/collection.png"/>
+            <image hidden="{{!item.isCollection && !page.showCollection}}" src="/assets/imgs/collection-active.png"/>
             <text>{{item.collection_num}}</text>
           </view>
           <view class="btn share">
@@ -51,16 +51,16 @@
             <text>海报分享</text>
           </view>
           <view class="btn remove"
-            hidden="{{createMusicPage.showHead != false}}" 
-            catchtap="removeMusicItem" data-index="{{index}}">
+            hidden="{{page.showHead != false}}" 
+            catchtap="removeItem" data-index="{{index}}">
             <image src="/assets/imgs/delete.png" 
-              hidden="{{createMusicPage.showHead != false}}" />
+              hidden="{{page.showHead != false}}" />
           </view>
       </view>
     </view>
   </view>
 </view>
 <empty 
-    loading="{{createMusicPage.loading}}"
-    hasData="{{!!createMusicPage.list.length}}"
-    hasMore="{{createMusicPage.current_page < createMusicPage.total_pages}}"/>
+    loading="{{page.loading}}"
+    hasData="{{!!page.list.length}}"
+    hasMore="{{page.current_page < page.total_pages}}"/>

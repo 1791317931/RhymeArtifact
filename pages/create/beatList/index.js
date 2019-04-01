@@ -49,11 +49,9 @@ Page({
       return;
     }
 
-    // 如果token过期，进入该页面，默认会先进入登录页面成功后切换到这个页面不会重新执行onLoad事件，造成假数据
+    // token过期后重新登陆或者删除收藏，都需要刷新页面，否则再次操作收藏会出异常
     let beatComponent = this.data.beatComponent;
-    if (!beatComponent.data.beatPage.list.length) {
-      beatComponent.init(this);
-    }
+    beatComponent.init(this);
   },
 
   /**
@@ -67,7 +65,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    this.data.beatComponent.unUnload();
   },
 
   /**
@@ -75,7 +73,7 @@ Page({
    */
   onPullDownRefresh: function () {
     wx.stopPullDownRefresh();
-    this.data.beatComponent.getBeatPage(1, this);
+    this.data.beatComponent.getPage(1, this);
   },
 
   /**
@@ -92,7 +90,7 @@ Page({
     if (e.from == 'menu') {
       return CommonUtil.shareApp(e);
     } else if (e.from == 'button') {
-      return this.data.beatComponent.shareBeatItem(e, this);
+      return this.data.beatComponent.shareItem(e, this);
     }
   },
   toCreateMusicList() {
