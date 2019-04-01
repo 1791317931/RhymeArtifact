@@ -3,4 +3,7 @@
     <button catchtap="toAddLyrics">开始创作</button>
   </view>
   <createLyricsList id="lyricComponent"/>
+  <view class="adver">
+    <ad unit-id="adunit-d91f66f72417e210"></ad>
+  </view>
 </view>
