@@ -73,10 +73,14 @@ Page({
     let data = this.data;
     switch (data.tabs[data.activeIndex].flag) {
       case 'video':
-        this.getPage(1);
+        if (!data.videoComponent.data.page.list.length) {
+          this.getPage(1);
+        }
         break;
       case 'article':
-        this.getPage(1);
+        if (!data.articleComponent.data.page.list.length) {
+          this.getPage(1);
+        }
         break;
       default:
         break;

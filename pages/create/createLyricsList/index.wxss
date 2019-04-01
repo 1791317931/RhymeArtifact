@@ -1,5 +1,5 @@
 .create-lyrics-container {
-  padding: 110rpx 0 270rpx;
+  padding: 110rpx 0 310rpx;
 }
 
 .top-btn-container {
@@ -37,6 +37,6 @@
 
 .adver ad {
   width: 100%;
-  height: 180rpx;
-  border-radius:23rpx;
+  height: 180rpx !important;
+  border-radius:23rpx !important;
 }
