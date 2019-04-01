@@ -1,6 +1,6 @@
 <view class="study-video-container">
-  <view wx:for="{{studyVideoPage.list}}" wx:for-item="item" wx:for-index="index" wx:key="{{item.id}}" data-index="{{index}}"
-    class="item" catchtap="clickStudyVideoItem">
+  <view wx:for="{{page.list}}" wx:for-item="item" wx:for-index="index" wx:key="{{item.id}}" data-index="{{index}}"
+    class="item" catchtap="clickItem">
     <view class="poster">
       <image src="{{item.course_cover}}"/>
       <view class="modal">
@@ -11,16 +11,16 @@
     <view class="operation-container clearfix">
       <view class="btn collection" 
         data-index="{{index}}" 
-        catchtap="toggleVideoCollectionItem">
-        <image hidden="{{item.is_collection == 1 ||  studyVideoPage.showCollection}}" src="/assets/imgs/collection.png"/>
-        <image hidden="{{item.is_collection != 1 && !studyVideoPage.showCollection}}" src="/assets/imgs/collection-active.png"/>
+        catchtap="toggleCollectionItem">
+        <image hidden="{{item.is_collection == 1 ||  page.showCollection}}" src="/assets/imgs/collection.png"/>
+        <image hidden="{{item.is_collection != 1 && !page.showCollection}}" src="/assets/imgs/collection-active.png"/>
         <text>{{item.collection_num}}</text>
       </view>
       <view class="moments-container" data-index="{{index}}" catchtap="generatePoster">
         <image src="/assets/imgs/moments.png"/>
         <text>海报分享</text>
       </view>
-      <view class="btn share" catchtap="clickShare">
+      <view class="btn share" catchtap="share">
         <image src="/assets/imgs/wechat-share.png"/>
         <text>分享好友</text>
         <button open-type="share" data-index="{{index}}"></button>
@@ -30,6 +30,6 @@
 </view>
 <empty 
   class="mt20"
-  loading="{{studyVideoPage.loading}}"
-  hasData="{{!!studyVideoPage.list.length}}"
-  hasMore="{{studyVideoPage.current_page < studyVideoPage.total_pages}}"/>
+  loading="{{page.loading}}"
+  hasData="{{!!page.list.length}}"
+  hasMore="{{page.current_page < page.total_pages}}"/>

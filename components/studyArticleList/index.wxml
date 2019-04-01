@@ -1,6 +1,6 @@
 <view class="study-article-container">
-  <view wx:for="{{studyArticlePage.list}}" wx:for-item="item" wx:for-index="index" wx:key="{{item.id}}" data-index="{{index}}"
-    class="item" catchtap="clickStudyArticleItem">
+  <view wx:for="{{page.list}}" wx:for-item="item" wx:for-index="index" wx:key="{{item.id}}" data-index="{{index}}"
+    class="item" catchtap="clickItem">
     <view class="head-info">
       <image src="{{item.author.data.avatar}}"/>
       <view>{{item.author.data.name}}</view>
@@ -15,12 +15,12 @@
       <view class="btn share">
         <image src="/assets/imgs/wechat-share.png"/>
         <text>分享好友</text>
-        <button open-type="share" data-index="{{index}}" catchtap="preventEvent"></button>
+        <button open-type="share" data-index="{{index}}" catchtap="share"></button>
       </view>
     </view>
   </view>
 </view>
 <empty 
-  loading="{{studyArticlePage.loading}}"
-  hasData="{{!!studyArticlePage.list.length}}"
-  hasMore="{{studyArticlePage.current_page < studyArticlePage.total_pages}}"/>
+  loading="{{page.loading}}"
+  hasData="{{!!page.list.length}}"
+  hasMore="{{page.current_page < page.total_pages}}"/>

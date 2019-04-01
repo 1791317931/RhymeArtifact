@@ -21,14 +21,12 @@ let PosterCanvasUtil = {
 
     if (type == 'video') {
       param = 'path=pages/study/studyList/index&t=video&id=' + data.groupId;
-      // param = 'path=pages/create/beatList/index&type=music';
 
       if (data.sectionId) {
         param += '&sId=' + data.sectionId;
       }
     } else if (type == 'article') {
       param = 'path=pages/study/studyList/index&t=article&id=' + id;
-      // param = 'path=pages/create/beatList/index&type=music';
     } else {
       param = paramMap[type];
     }

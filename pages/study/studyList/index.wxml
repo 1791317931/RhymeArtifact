@@ -12,19 +12,10 @@
   bind:closePoster="closePoster"
 />
 <view class="study-wrapper">
-  <view wx:if="{{tabs[activeIndex].flag == 'video'}}">
-    <studyVideoList
-      studyVideoPage="{{studyVideoPage}}"
-      bind:generatePoster="generateVideoPoster"
-      bind:toggleVideoCollectionItem="toggleVideoCollectionItem"
-      bind:clickStudyVideoItem="clickStudyVideoItem"
-    />
+  <view hidden="{{tabs[activeIndex].flag != 'video'}}">
+    <studyVideoList id="videoComponent"/>
   </view>
-  <view wx:if="{{tabs[activeIndex].flag == 'article'}}" class="article-container">
-    <studyArticleList 
-      studyArticlePage="{{studyArticlePage}}"
-      bind:generatePoster="generateArticlePoster"
-      bind:clickStudyArticleItem="clickStudyArticleItem"
-    />
+  <view hidden="{{tabs[activeIndex].flag != 'article'}}" class="article-container">
+    <studyArticleList id="articleComponent"/>
   </view>
 </view>

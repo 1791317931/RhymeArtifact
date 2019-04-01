@@ -1,5 +1,3 @@
-import StudyVideoListUtil from '../../../assets/js/components/StudyVideoListUtil';
-import StudyArticleListUtil from '../../../assets/js/components/StudyArticleListUtil';
 import CommonUtil from '../../../assets/js/CommonUtil';
 
 Page({
@@ -20,9 +18,8 @@ Page({
     ],
     activeIndex: 0,
     posterUrl: '',
-    downloadPoster: false,
-    studyVideoPage: CommonUtil.copyObject(StudyVideoListUtil.studyVideoPage),
-    studyArticlePage: CommonUtil.copyObject(StudyArticleListUtil.studyArticlePage)
+    videoComponent: null,
+    articleComponent: null
   },
 
   /**
@@ -49,6 +46,16 @@ Page({
       });
     }
 
+    let videoComponent = this.selectComponent('#videoComponent'),
+    articleComponent = this.selectComponent('#articleComponent');
+
+    videoComponent.init(this);
+    articleComponent.init(this);
+
+    this.setData({
+      videoComponent,
+      articleComponent
+    });
     this.getPage(1);
   },
 
@@ -66,14 +73,10 @@ Page({
     let data = this.data;
     switch (data.tabs[data.activeIndex].flag) {
       case 'video':
-        if (!data.studyVideoPage.list.length) {
-          this.getPage(1);
-        }
+        this.getPage(1);
         break;
       case 'article':
-        if (!data.studyArticlePage.list.length) {
-          this.getPage(1);
-        }
+        this.getPage(1);
         break;
       default:
         break;
@@ -110,10 +113,10 @@ Page({
     let data = this.data;
     switch (data.tabs[data.activeIndex].flag) {
       case 'video':
-        StudyVideoListUtil.onReachBottom(this);
+        this.data.videoComponent.onReachBottom();
         break;
       case 'article':
-        StudyArticleListUtil.onReachBottom(this);
+        this.data.articleComponent.onReachBottom();
         break;
       default:
         break;
@@ -141,9 +144,9 @@ Page({
     } else if (e.from == 'button') {
       let flag = this.data.tabs[this.data.activeIndex].flag;
       if (flag == 'video') {
-        return StudyVideoListUtil.shareStudyVideoItem(e, this);
+        return this.data.videoComponent.shareItem(e);
       } else if (flag == 'article') {
-        return StudyArticleListUtil.shareStudyArticleItem(e, this);
+        return this.data.articleComponent.shareItem(e);
       }
     }
   },
@@ -160,29 +163,14 @@ Page({
     let data = this.data;
     switch(data.tabs[data.activeIndex].flag) {
       case 'video':
-        StudyVideoListUtil.getStudyVideoPage(current_page, this);
+        this.data.videoComponent.getPage(current_page);
         break;
       case 'article':
-        StudyArticleListUtil.getStudyArticlePage(current_page, this);
+        this.data.articleComponent.getPage(current_page);
         break;
       default:
         break;
     }
-  },
-  toggleVideoCollectionItem(e) {
-    StudyVideoListUtil.toggleVideoCollectionItem(e.detail, this);
-  },
-  clickStudyVideoItem(e) {
-    StudyVideoListUtil.clickStudyVideoItem(e.detail, this);
-  },
-  clickStudyArticleItem(e) {
-    StudyArticleListUtil.clickStudyArticleItem(e.detail, this);
-  },
-  generateVideoPoster(e) {
-    StudyVideoListUtil.generatePoster(e.detail, this)
-  },
-  generateArticlePoster(e) {
-    StudyArticleListUtil.generatePoster(e.detail, this)
   },
   closePoster() {
     this.setData({
