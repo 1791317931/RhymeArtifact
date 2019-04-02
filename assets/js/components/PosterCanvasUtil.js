@@ -58,20 +58,28 @@ let PosterCanvasUtil = {
             success: (res) => {
               let path = res.tempFilePath;
 
-              // 获取到本地图片路径后，需要先上传服务器转换为网络图片才能download成功
-              PosterCanvasUtil.uploadToOss(path, (url) => {
-                // _this.setData({
-                //   posterUrl: url
-                // });
+              // _this.setData({
+              //   posterUrl: url
+              // });
 
-                // 下载海报
-                DownloadUtil.authorize(url, () => {
-                  // 下载海报到本地后，再显示
-                  _this.setData({
-                    posterUrl: url
-                  });
+              // 下载海报
+              DownloadUtil.authorize(path, () => {
+                // 下载海报到本地后，再显示
+                _this.setData({
+                  posterUrl: path
                 });
               });
+
+              // 获取到本地图片路径后，需要先上传服务器转换为网络图片才能download成功
+              // PosterCanvasUtil.uploadToOss(path, (url) => {
+              //   // 下载海报
+              //   DownloadUtil.authorize(url, () => {
+              //     // 下载海报到本地后，再显示
+              //     _this.setData({
+              //       posterUrl: url
+              //     });
+              //   });
+              // });
             },
             fail(res) {
               // console.log(res)

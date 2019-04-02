@@ -43,34 +43,41 @@ let DownloadUtil = {
       title: '图片保存中',
     });
 
-    wx.downloadFile({
-      url,
-      success: (res) => {
-        let filePath = res.tempFilePath;
-        // 保存到本地
-        wx.saveImageToPhotosAlbum({
-          filePath,
-          success(res) {
-            TipUtil.message('保存成功');
-            callback && callback();
-          },
-          fail(res) {
-            // if (['saveImageToPhotosAlbum:fail cancel', 'saveImageToPhotosAlbum:fail: auth denied'].indexOf(res.errMsg) == -1) {
-            //   TipUtil.message('图片保存失败');
-            // }
-            console.log(res);
-          },
-          complete(res) {
-            wx.hideLoading();
-          }
-        });
+    if (/^http/.test(url)) {
+      DownloadUtil.saveImageToPhotosAlbum(url, callback);
+    } else {
+      wx.downloadFile({
+        url,
+        success: (res) => {
+          let filePath = res.tempFilePath;
+          DownloadUtil.saveImageToPhotosAlbum(filePath, callback);
+        },
+        fail: () => {
+          TipUtil.message('图片下载失败');
+          wx.hideLoading();
+        },
+        complete: (res) => {
+          // console.log(res);
+        }
+      });
+    }
+  },
+  saveImageToPhotosAlbum(filePath, callback) {
+    // 保存到本地
+    wx.saveImageToPhotosAlbum({
+      filePath,
+      success(res) {
+        TipUtil.message('保存成功');
+        callback && callback();
       },
-      fail: () => {
-        TipUtil.message('图片下载失败');
+      fail(res) {
+        // if (['saveImageToPhotosAlbum:fail cancel', 'saveImageToPhotosAlbum:fail: auth denied'].indexOf(res.errMsg) == -1) {
+        //   TipUtil.message('图片保存失败');
+        // }
+        console.log(res);
+      },
+      complete(res) {
         wx.hideLoading();
-      },
-      complete: (res) => {
-        // console.log(res);
       }
     });
   }

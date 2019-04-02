@@ -4,8 +4,7 @@ let PathUtil = {
   prodApiPrefix: 'https://rapper-api.miyupp.com/wxapp/',
   devApiPrefix: 'https://rapper-test.miyupp.com/wxapp/',
   prodFilePrefix: 'https://file.ihammer.cn',
-  // devFilePrefix: 'http://miyupp.oss-cn-beijing.aliyuncs.com',
-  devFilePrefix: 'https://file.ihammer.cn',
+  devFilePrefix: 'https://oss.miyupp.com',
   getPath(url) {
     if (ConfigUtil.isProd()) {
       return PathUtil.prodApiPrefix + url;
