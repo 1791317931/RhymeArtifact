@@ -47,7 +47,7 @@ let StudyUtil = {
     context.setFontSize(fontSize);
     context.setTextAlign('left');
 
-    let maxWidth = 550,
+    let maxWidth = 540,
     width = 0,
     lastIndex = 0,
     line = 0,
@@ -58,8 +58,9 @@ let StudyUtil = {
     for (let i = 0; i < title.length; i++) {
       width += context.measureText(title[i]).width;
       if (width >= maxWidth) {
-        context.fillText(title.substring(0, i), marginLeft, marginTop + lineHeight * line + fontSize);
+        context.fillText(title.substring(lastIndex, i), marginLeft, marginTop + lineHeight * line + fontSize);
         lastIndex = i;
+        width = 0;
         // 行数
         line++;
 
