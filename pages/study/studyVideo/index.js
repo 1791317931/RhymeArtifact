@@ -26,7 +26,8 @@ Page({
     posterUrl: null,
     loadModal: null,
     // 是否需要分享（要求用户每天至少分享一次）
-    needShare: true
+    // needShare: true
+    needShare: false
   },
 
   /**
@@ -51,14 +52,14 @@ Page({
       });
     }
 
-    let shareObj = wx.getStorageSync(shareKey) || {},
-    shareTimeStamp = shareObj.shareTimeStamp;
-    // 间隔小于24小时，不需要强制分享
-    if (shareTimeStamp && Date.now() - shareTimeStamp < 24 * 60 * 60 * 1000) {
-      this.setData({
-        needShare: false
-      });
-    }
+    // let shareObj = wx.getStorageSync(shareKey) || {},
+    // shareTimeStamp = shareObj.shareTimeStamp;
+    // // 间隔小于24小时，不需要强制分享
+    // if (shareTimeStamp && Date.now() - shareTimeStamp < 24 * 60 * 60 * 1000) {
+    //   this.setData({
+    //     needShare: false
+    //   });
+    // }
 
     this.init();
   },
