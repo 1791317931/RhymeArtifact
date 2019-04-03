@@ -68,6 +68,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    // 保持不锁屏
+    wx.setKeepScreenOn({
+      keepScreenOn: true
+    });
+    
     let userInfo = wx.getStorageSync('userInfo'),
     beatItem = JSON.parse(options.beatItem);
     beatItem.beatTimeArr = TimeUtil.numberToArr(Math.ceil(beatItem.beat_duration / 1000));

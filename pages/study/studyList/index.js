@@ -26,12 +26,21 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    wx.showModal({
+      title: '',
+      content: JSON.stringify(options),
+    });
+    // 保持不锁屏
+    wx.setKeepScreenOn({
+      keepScreenOn: true
+    });
+    
     let type = options.t,
     url = '';
     if (type == 'video') {
       url = '/pages/study/studyVideo/index?id=' + options.id;
 
-      if (options.sectionId) {
+      if (options.sId) {
         url += '&sectionId=' + options.sId;
       }
       

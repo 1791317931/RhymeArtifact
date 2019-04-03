@@ -43,24 +43,25 @@ let DownloadUtil = {
       title: '图片保存中',
     });
 
-    if (/^http/.test(url)) {
-      DownloadUtil.saveImageToPhotosAlbum(url, callback);
-    } else {
-      wx.downloadFile({
-        url,
-        success: (res) => {
-          let filePath = res.tempFilePath;
-          DownloadUtil.saveImageToPhotosAlbum(filePath, callback);
-        },
-        fail: () => {
-          TipUtil.message('图片下载失败');
-          wx.hideLoading();
-        },
-        complete: (res) => {
-          // console.log(res);
-        }
-      });
-    }
+    DownloadUtil.saveImageToPhotosAlbum(url, callback);
+    // if (/^http/.test(url)) {
+    //   DownloadUtil.saveImageToPhotosAlbum(url, callback);
+    // } else {
+    //   wx.downloadFile({
+    //     url,
+    //     success: (res) => {
+    //       let filePath = res.tempFilePath;
+    //       DownloadUtil.saveImageToPhotosAlbum(filePath, callback);
+    //     },
+    //     fail: () => {
+    //       TipUtil.message('图片下载失败');
+    //       wx.hideLoading();
+    //     },
+    //     complete: (res) => {
+    //       // console.log(res);
+    //     }
+    //   });
+    // }
   },
   saveImageToPhotosAlbum(filePath, callback) {
     // 保存到本地

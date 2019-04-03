@@ -31,8 +31,14 @@ Page({
 
   /**
    * 生命周期函数--监听页面加载
+   * 
    */
   onLoad: function (options) {
+    // 保持不锁屏
+    wx.setKeepScreenOn({
+      keepScreenOn: true
+    });
+    
     this.setData({
       groupId: options.id,
       videoContext: wx.createVideoContext('studyVideo'),
