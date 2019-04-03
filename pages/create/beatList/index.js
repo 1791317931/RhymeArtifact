@@ -20,7 +20,18 @@ Page({
       keepScreenOn: true
     });
     
-    if (options.type == 'music') {
+    if (options.scene) {
+      decodeURIComponent(options.scene).split('&').forEach((item, index) => {
+        let arr = item.split('=');
+        if (arr[0] == 'type') {
+          if (arr[1] == 'music') {
+            wx.navigateTo({
+              url: '/pages/create/createMusicList/index'
+            });
+          }
+        }
+      });
+    } else if (options.type == 'music') {
       wx.navigateTo({
         url: '/pages/create/createMusicList/index'
       });

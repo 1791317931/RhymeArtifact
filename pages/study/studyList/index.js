@@ -30,21 +30,48 @@ Page({
     wx.setKeepScreenOn({
       keepScreenOn: true
     });
+
+    let type,
+    url = '',
+    id = '',
+    sId = '';
     
-    let type = options.t,
-    url = '';
-    if (type == 'video') {
-      url = '/pages/study/studyVideo/index?id=' + options.id;
+    if (options.scene) {
+      decodeURIComponent(options.scene).split('&').forEach((item, index) => {
+        let arr = item.split('='),
+        key = arr[0],
+        value = arr[1];
+        if (key == 't') {
+          type = value;
+        } else if (key == 'id') {
+          id = value;
+        } else if (key == 'sId') {
+          sId = value;
+        }
+      });
+    } else {
+      if (options.t) {
+        type = options.t;
+        id = options.id;
+      }
 
       if (options.sId) {
-        url += '&sectionId=' + options.sId;
+        sId = options.sId;
+      }
+    }
+    
+    if (type == 'video') {
+      url = '/pages/study/studyVideo/index?id=' + id;
+
+      if (sId) {
+        url += '&sectionId=' + sId;
       }
       
       wx.navigateTo({
         url
       });
     } else if (type == 'article') {
-      url = '/pages/study/studyArticle/index?id=' + options.id;
+      url = '/pages/study/studyArticle/index?id=' + id;
 
       wx.navigateTo({
         url
