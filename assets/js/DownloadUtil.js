@@ -44,8 +44,6 @@ let DownloadUtil = {
     });
 
     if (/^http/.test(url)) {
-      DownloadUtil.saveImageToPhotosAlbum(url, callback);
-    } else {
       wx.downloadFile({
         url,
         success: (res) => {
@@ -57,9 +55,11 @@ let DownloadUtil = {
           wx.hideLoading();
         },
         complete: (res) => {
-          // console.log(res);
+          console.log(res);
         }
       });
+    } else {
+      DownloadUtil.saveImageToPhotosAlbum(url, callback);
     }
   },
   saveImageToPhotosAlbum(filePath, callback) {
