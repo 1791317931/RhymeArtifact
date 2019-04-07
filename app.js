@@ -39,11 +39,6 @@ App({
     //   }
     // })
 
-    // 保持不锁屏
-    wx.setKeepScreenOn({
-      keepScreenOn: true
-    });
-
     const updateManager = wx.getUpdateManager()
     updateManager.onCheckForUpdate(function (res) {
       // 请求完新版本信息的回调

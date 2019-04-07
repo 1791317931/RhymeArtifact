@@ -15,7 +15,23 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    if (options.type == 'music') {
+    // 保持不锁屏
+    wx.setKeepScreenOn({
+      keepScreenOn: true
+    });
+    
+    if (options.scene) {
+      decodeURIComponent(options.scene).split('&').forEach((item, index) => {
+        let arr = item.split('=');
+        if (arr[0] == 'type') {
+          if (arr[1] == 'music') {
+            wx.navigateTo({
+              url: '/pages/create/createMusicList/index'
+            });
+          }
+        }
+      });
+    } else if (options.type == 'music') {
       wx.navigateTo({
         url: '/pages/create/createMusicList/index'
       });
@@ -58,7 +74,7 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+    this.data.beatComponent.pausePlay();
   },
 
   /**
