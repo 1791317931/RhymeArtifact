@@ -1,0 +1,22 @@
+.official-accounts .body-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.qr-code {
+  width: 482rpx;
+  height: 482rpx;
+  display: block;
+}
+
+.text {
+  margin-top: 34rpx;
+  font-size:32rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(0,0,0,1);
+  line-height:45rpx;
+  text-align: center;
+}

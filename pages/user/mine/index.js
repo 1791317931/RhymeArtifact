@@ -32,9 +32,8 @@ Page({
     ],
     extrals: [
       {
-        path: '',
-        text: '关注公众号',
-        show: false
+        path: '/pages/user/officialAccounts/index',
+        text: '关注公众号'
       },
       {
         path: '',
@@ -113,9 +112,17 @@ Page({
     }
   },
   clickExtralMenu(e) {
-    let index = e.target.dataset.index
-    wx.makePhoneCall({
-      phoneNumber: '17301257015' // 仅为示例，并非真实的电话号码
-    })
+    let index = e.target.dataset.index,
+    url = this.data.extrals[index].path;
+
+    if (url) {
+      wx.navigateTo({
+        url
+      });
+    } else {
+      wx.makePhoneCall({
+        phoneNumber: '17301257015' // 仅为示例，并非真实的电话号码
+      })
+    }
   }
 })
