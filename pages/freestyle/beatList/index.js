@@ -5,6 +5,17 @@ Page({
    * 页面的初始数据
    */
   data: {
+    tabs: [
+      {
+        flag: 'tarp',
+        text: 'Tarp'
+      },
+      {
+        flag: 'old school',
+        text: 'old school'
+      }
+    ],
+    activeIndex: 0,
     beatComponent: null,
     // 需要跳转的页面
     targetPath: null,
@@ -19,7 +30,7 @@ Page({
     wx.setKeepScreenOn({
       keepScreenOn: true
     });
-    
+
     if (options.scene) {
       decodeURIComponent(options.scene).split('&').forEach((item, index) => {
         let arr = item.split('=');
@@ -55,6 +66,22 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    let data = this.data;
+    switch (data.tabs[data.activeIndex].flag) {
+      case 'video':
+        if (!data.videoComponent.data.page.list.length) {
+          this.getPage(1);
+        }
+        break;
+      case 'article':
+        if (!data.articleComponent.data.page.list.length) {
+          this.getPage(1);
+        }
+        break;
+      default:
+        break;
+    }
+
     if (this.data.targetPath) {
       wx.navigateTo({
         url: this.data.targetPath
@@ -96,7 +123,17 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    this.data.beatComponent.onReachBottom(this);
+    let data = this.data;
+    switch (data.tabs[data.activeIndex].flag) {
+      case 'video':
+        this.data.videoComponent.onReachBottom();
+        break;
+      case 'article':
+        this.data.articleComponent.onReachBottom();
+        break;
+      default:
+        break;
+    }
   },
 
   /**
@@ -108,20 +145,6 @@ Page({
     } else if (e.from == 'button') {
       return this.data.beatComponent.shareItem(e, this);
     }
-  },
-  toCreateMusicList() {
-    this.data.beatComponent.pausePlay(null);
-
-    wx.navigateTo({
-      url: '/pages/create/createMusicList/index'
-    });
-  },
-  toCreateLyricsList() {
-    this.data.beatComponent.pausePlay(null);
-
-    wx.navigateTo({
-      url: '/pages/create/createLyricsList/index'
-    });
   },
   closePoster() {
     this.setData({

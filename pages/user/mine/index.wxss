@@ -67,3 +67,8 @@
   color:rgba(57,57,62,1);
   letter-spacing:1rpx;
 }
+
+contact-button {
+  width: 300rpx !important;
+  height: 100rpx !important;
+}

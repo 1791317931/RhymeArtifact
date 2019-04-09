@@ -1,0 +1,19 @@
+<view class="adver">
+  <ad unit-id="adunit-c8c2d9e4ba6bd4dc"></ad>
+</view>
+<view class="content-body">
+  <view class="user-info">
+    <image class="head-img" src="{{user.avatarUrl}}" />
+    <view class="name">{{user.nickName}}</view>
+    <view class="works-container clearfix">
+      <view>
+        粉丝:<text>0</text>
+      </view>
+      <view>
+        Freestyle作品:<text>0</text>
+      </view>
+    </view>
+  </view>
+  <image class="rank-list mt30" src="/assets/imgs/rank-list.png" />
+  <image class="freestyle-record mt40" src="/assets/imgs/freestyle-record.png" catchtap="toBeatList" />
+</view>

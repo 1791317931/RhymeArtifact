@@ -1,6 +1,8 @@
 {
   "pages": [
     "pages/main/index",
+    "pages/freestyle/record/index",
+    "pages/freestyle/index/index",
     "pages/study/studyVideo/index",
     "pages/study/studyList/index",
     "pages/create/beatList/index",
@@ -18,7 +20,8 @@
     "components/musicPoster/index",
     "components/studyArticleList/index",
     "components/studyVideoList/index",
-    "pages/study/studyArticle/index"
+    "pages/study/studyArticle/index",
+    "pages/freestyle/beatList/index"
   ],
   "window": {
     "backgroundColor": "#f7f7f7",
@@ -44,6 +47,12 @@
         "iconPath": "assets/imgs/study.png",
         "pagePath": "pages/study/studyList/index",
         "text": "学习"
+      },
+      {
+        "selectedIconPath": "assets/imgs/freestyle-active.png",
+        "iconPath": "assets/imgs/freestyle.png",
+        "pagePath": "pages/freestyle/index/index",
+        "text": "Freestyle"
       },
       {
         "selectedIconPath": "assets/imgs/create-active.png",

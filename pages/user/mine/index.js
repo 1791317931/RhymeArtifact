@@ -34,7 +34,7 @@ Page({
       {
         path: '',
         text: '关注公众号',
-        show: false
+        show: true
       },
       {
         path: '',

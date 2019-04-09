@@ -1,0 +1,19 @@
+<!-- 创作列表 -->
+<view class="tab-container">
+  <view class="clearfix">
+    <view wx:for="{{tabs}}" wx:for-item="item" wx:for-index="index" wx:key="{{item.flag}}"
+    class="item {{activeIndex == index ? 'active' : ''}} item-{{index}}" data-index="{{index}}" catchtap="toggleTab">
+      {{item.text}}
+    </view>
+  </view>
+</view>
+<view class="create-container">
+  <view class="list-container">
+    <canvas class="poster-canvas" canvas-id="poster-canvas"/>
+    <musicPoster 
+      posterUrl="{{posterUrl}}"
+      bind:closePoster="closePoster"
+    />
+    <beatList id="beatComponent"/>
+  </view>
+</view>

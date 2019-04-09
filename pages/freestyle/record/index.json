@@ -1,0 +1,7 @@
+{
+  "usingComponents": {},
+  "enablePullDownRefresh": false,
+  "navigationBarBackgroundColor": "#2E2E2E",
+  "navigationBarTextStyle": "#fff",
+  "navigationBarTitleText": "Freestyle录制"
+}
