@@ -35,12 +35,7 @@
   </view>
   <view class="combine-container">
     <view class="top-container">
-      <view class="switch-container">
-        <button data-value="M" catchtap="toggleFirstTrack">M</button>
-        <button data-value="S" catchtap="toggleFirstTrack">S</button>
-        <image class="{{firstTrackButton == 'M' ? 'active' : ''}}" src="/assets/imgs/M.png" data-value="M" catchtap="toggleFirstTrack"/>
-        <image class="{{firstTrackButton == 'S' ? 'active' : ''}}" src="/assets/imgs/S.png" data-value="S" catchtap="toggleFirstTrack"/>
-      </view>
+      <view class="beat-title">{{'Beat' || beatItem.beat_title}}</view>
       <view class="track-container" id="track-container">
         <view class="head-container">音频1 Beat</view>
         <view class="high-container"></view>
@@ -55,19 +50,13 @@
       </view>
     </view>
     <view class="bottom-container">
-      <view class="node">Beat</view>
       <view class="time-start">{{beatItem.tryBeatTimeArr[1]}}:{{beatItem.tryBeatTimeArr[2]}}</view>
       <view class="time-end">{{beatItem.beatTimeArr[1]}}:{{beatItem.beatTimeArr[2]}}</view>
     </view>
   </view>
   <view class="combine-container">
     <view class="top-container">
-      <view class="switch-container">
-        <button data-value="M" catchtap="toggleSecondTrack">M</button>
-        <button data-value="S" catchtap="toggleSecondTrack">S</button>
-        <image class="{{secondTrackButton == 'M' ? 'active' : ''}}" src="/assets/imgs/M.png" data-value="M" catchtap="toggleSecondTrack"/>
-        <image class="{{secondTrackButton == 'S' ? 'active' : ''}}" src="/assets/imgs/S.png" data-value="S" catchtap="toggleSecondTrack"/>
-      </view>
+      <view class="freestyle-title">Freestyle</view>
       <view class="track-container">
         <view class="head-container">{{mode == 'record' && recordState == 'recording' ? '录制中' : 'Vocal-1'}}</view>
         <view class="high-container"></view>
@@ -85,16 +74,24 @@
       </view>
     </view>
     <view class="bottom-container">
-      <view class="node">Vocal-1</view>
       <view class="time-start">{{beatItem.recordBeatTimeArr[1]}}:{{beatItem.recordBeatTimeArr[2]}}</view>
       <view class="time-end">{{beatItem.beatTimeArr[1]}}:{{beatItem.beatTimeArr[2]}}</view>
     </view>
   </view>
-  <view class="center-btn-container">
-    <image src="/assets/imgs/add-1.png"/>
-    <image catchtap="toEditLyrics" src="/assets/imgs/lyrics.png"/>
+  <view class="center-btn-container clearfix">
+    <view catchtap="chooseBeat">
+      <button>选择beat</button>
+      <image hidden="{{mode != 'beat'}}" src="/assets/imgs/sky-blue-rect.png"/>
+    </view>
+    <view catchtap="chooseAKBL">
+      <button>阿卡贝拉</button>
+      <image hidden="{{mode != 'akbl'}}" src="/assets/imgs/sky-blue-rect.png"/>
+    </view>
   </view>
-  <view class="lyrics-container">{{recordForm.lyrics}}</view>
+  <view class="freestyle-detail-container">
+    <!-- <view class="title">Freestyle主题：{{beatItem.beat_title}}</view> -->
+    <view class="tip">Freestyle录制建议最短60秒！</view>
+  </view>
   <view class="bottom-btn-container">
     <view class="replay-container {{tryPlaying == false ? '' : 'hide'}}" catchtap="tryPlayStart">
       <image src="/assets/imgs/replay.png"/>
@@ -104,11 +101,12 @@
       <image src="/assets/imgs/pause-play.png"/>
       <view>暂停</view>
     </view>
-    <image wx:if="{{recordState != 'recording'}}" class="record-state" src="/assets/imgs/record.png" catchtap="beginRecord"/>
-    <image wx:if="{{recordState == 'recording'}}" class="record-state" src="/assets/imgs/end-record.png" catchtap="endRecord"/>
+    <image hidden="{{recordState == 'recording'}}" class="record-state" src="/assets/imgs/ready-record.png" catchtap="beginRecord"/>
+    <image hidden="{{recordState != 'recording'}}" class="record-state" src="/assets/imgs/recording.png" catchtap="endRecord"/>
     <view class="complete-container" catchtap="saveRecord">
       <image src="/assets/imgs/complete.png"/>
       <view>完成</view>
     </view>
   </view>
+  <view class="record-tip">{{recordState == 'recording' ? '点击停止' : '开始录制'}}</view>
 </view>

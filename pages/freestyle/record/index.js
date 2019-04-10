@@ -61,7 +61,8 @@ Page({
     firstVideoMuted: false,
     secondVideoMuted: false,
     // 0 ~ 1
-    volume: 1
+    volume: 1,
+    mode: 'beat'
   },
 
   /**
@@ -74,7 +75,7 @@ Page({
     });
 
     let userInfo = wx.getStorageSync('userInfo'),
-      beatItem = JSON.parse(options.beatItem);
+    beatItem = JSON.parse(options.beatItem);
     beatItem.beatTimeArr = TimeUtil.numberToArr(Math.ceil(beatItem.beat_duration / 1000));
 
     this.setData({
@@ -431,6 +432,15 @@ Page({
   },
   // ---------------------拖动指针--------------------------
   beginRecord() {
+    // TODO
+
+
+
+
+
+
+    
+
     let record = () => {
       let RM = this.data.RM,
         BAC = this.data.BAC,
@@ -649,11 +659,6 @@ Page({
       });
     });
   },
-  toEditLyrics() {
-    wx.navigateTo({
-      url: '/pages/create/record/lyrics/index?content=' + this.data.recordForm.lyrics
-    });
-  },
   toggleFirstTrack(e) {
     if (this.data.mode != 'try') {
       return;
@@ -719,5 +724,15 @@ Page({
       RAC.volume = this.data.volume;
       BAC.volume = this.data.firstVideoMuted ? 0 : this.data.volume;
     }
+  },
+  chooseBeat() {
+    this.setData({
+      mode: 'beat'
+    });
+  },
+  chooseAKBL() {
+    this.setData({
+      mode: 'akbl'
+    });
   }
 })

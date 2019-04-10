@@ -19,7 +19,7 @@
           </view>
         </view>
       </view>
-      <view class="operation-container">
+      <view hidden="{{page.isFreeStyle}}" class="operation-container">
         <view class="collection-container" data-index="{{index}}" catchtap="toggleCollectionItem">
           <image hidden="{{item.isCollection ||  page.showCollection}}" src="/assets/imgs/collection.png"/>
           <image hidden="{{!item.isCollection && !page.showCollection}}" src="/assets/imgs/collection-active.png"/>
@@ -37,7 +37,7 @@
       </view>
     </view>
     <view hidden="{{page.playingIndex != index}}" class="start-record-container" data-index="{{index}}" catchtap="toRecord">
-      <button>开始录制</button>
+      <button>{{page.isFreeStyle ? '开始Freestyle' : '开始录制'}}</button>
     </view>
   </view>
 </view>

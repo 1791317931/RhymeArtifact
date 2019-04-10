@@ -12,12 +12,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-    // 保持不锁屏
-    wx.setKeepScreenOn({
-      keepScreenOn: true
-    });
-    
+  onLoad: function (options) {    
     let musicComponent = this.selectComponent('#musicComponent');
     this.setData({
       musicComponent

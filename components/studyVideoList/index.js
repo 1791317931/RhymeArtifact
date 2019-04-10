@@ -37,6 +37,11 @@ Component({
       });
     },
     init(scope) {
+      // 保持不锁屏
+      wx.setKeepScreenOn({
+        keepScreenOn: true
+      });
+      
       this.setScope(scope);
     },
     // 阻止跳转

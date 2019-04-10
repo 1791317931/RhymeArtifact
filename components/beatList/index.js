@@ -25,7 +25,9 @@ Component({
       current_page: 1,
       per_page: 10,
       total_pages: 0,
-      list: []
+      list: [],
+      // 是否是freestyle
+      isFreeStyle: false
     },
     BAC: null,
     scope: null
@@ -41,13 +43,22 @@ Component({
       });
     },
     init(scope) {
+      // 保持不锁屏
+      wx.setKeepScreenOn({
+        keepScreenOn: true
+      });
+      
       this.setScope(scope);
       let BAC = wx.createInnerAudioContext();
       this.setData({
         BAC
       });
       this.bindBACEvent();
-      this.getPage(1);
+    },
+    isFreeStyle(isFreeStyle = true) {
+      this.setData({
+        'page.isFreeStyle': isFreeStyle
+      });
     },
     onUnload() {
       this.data.BAC.destroy();
@@ -219,10 +230,21 @@ Component({
     toRecord(e) {
       this.pausePlay(e);
 
-      let item = this.getItem(e);
-      wx.navigateTo({
-        url: '/pages/create/record/index?beatItem=' + JSON.stringify(item)
-      });
+      let item = this.getItem(e),
+      page = this.data.page,
+      isFreeStyle = page.isFreeStyle;
+
+      // 录制freestyle
+      if (isFreeStyle) {
+        wx.navigateTo({
+          url: '/pages/freestyle/record/index?beatItem=' + JSON.stringify(item)
+        });
+      } else {
+        // 录制作品
+        wx.navigateTo({
+          url: '/pages/create/record/index?beatItem=' + JSON.stringify(item)
+        });
+      }
     },
     onReachBottom(scope) {
       let page = this.data.page;
@@ -277,6 +299,10 @@ Component({
         param.type = 'beat';
       } else {
         fn = api.getBeatPage;
+      }
+
+      if (page.isFreeStyle) {
+        delete param.hasCollection
       }
 
       fn(param, (res) => {

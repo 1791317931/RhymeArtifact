@@ -1,8 +1,9 @@
 {
   "pages": [
+    "pages/freestyle/beatList/index",
+    "pages/freestyle/index/index",
     "pages/main/index",
     "pages/freestyle/record/index",
-    "pages/freestyle/index/index",
     "pages/study/studyVideo/index",
     "pages/study/studyList/index",
     "pages/create/beatList/index",
@@ -20,8 +21,7 @@
     "components/musicPoster/index",
     "components/studyArticleList/index",
     "components/studyVideoList/index",
-    "pages/study/studyArticle/index",
-    "pages/freestyle/beatList/index"
+    "pages/study/studyArticle/index"
   ],
   "window": {
     "backgroundColor": "#f7f7f7",

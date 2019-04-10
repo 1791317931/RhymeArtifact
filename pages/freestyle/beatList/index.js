@@ -26,33 +26,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    // 保持不锁屏
-    wx.setKeepScreenOn({
-      keepScreenOn: true
-    });
-
-    if (options.scene) {
-      decodeURIComponent(options.scene).split('&').forEach((item, index) => {
-        let arr = item.split('=');
-        if (arr[0] == 'type') {
-          if (arr[1] == 'music') {
-            wx.navigateTo({
-              url: '/pages/create/createMusicList/index'
-            });
-          }
-        }
-      });
-    } else if (options.type == 'music') {
-      wx.navigateTo({
-        url: '/pages/create/createMusicList/index'
-      });
-    }
-
     let beatComponent = this.selectComponent('#beatComponent');
     this.setData({
       beatComponent
     });
+    beatComponent.isFreeStyle(true);
     beatComponent.init(this);
+    this.getPage(1);
   },
 
   /**
@@ -66,20 +46,8 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    let data = this.data;
-    switch (data.tabs[data.activeIndex].flag) {
-      case 'video':
-        if (!data.videoComponent.data.page.list.length) {
-          this.getPage(1);
-        }
-        break;
-      case 'article':
-        if (!data.articleComponent.data.page.list.length) {
-          this.getPage(1);
-        }
-        break;
-      default:
-        break;
+    if (!this.data.beatComponent.data.page.list.length) {
+      this.getPage(1);
     }
 
     if (this.data.targetPath) {
@@ -91,10 +59,6 @@ Page({
       });
       return;
     }
-
-    // token过期后重新登陆或者删除收藏，都需要刷新页面，否则再次操作收藏会出异常
-    let beatComponent = this.data.beatComponent;
-    beatComponent.init(this);
   },
 
   /**
@@ -123,27 +87,41 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    let data = this.data;
-    switch (data.tabs[data.activeIndex].flag) {
-      case 'video':
-        this.data.videoComponent.onReachBottom();
-        break;
-      case 'article':
-        this.data.articleComponent.onReachBottom();
-        break;
-      default:
-        break;
-    }
+    this.data.beatComponent.onReachBottom();
   },
 
   /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function (e) {
-    if (e.from == 'menu') {
-      return CommonUtil.shareApp(e);
-    } else if (e.from == 'button') {
-      return this.data.beatComponent.shareItem(e, this);
+    return CommonUtil.shareApp(e);
+  },
+  toggleTab(e) {
+    let index = e.target.dataset.index;
+    if (index != this.data.activeIndex) {
+      this.setData({
+        activeIndex: index
+      });
+      this.getPage(1);
+    }
+  },
+  getPage(pageNum = 1) {
+    let data = this.data,
+    flag = data.tabs[data.activeIndex].flag,
+    beatComponent = data.beatComponent;
+
+
+
+
+
+
+
+
+    // 需要设置参数
+    if (flag === 'tarp') {
+      beatComponent.getPage(1);
+    } else if (flag === 'old school') {
+      beatComponent.getPage(1);
     }
   },
   closePoster() {

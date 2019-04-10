@@ -14,12 +14,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-    // 保持不锁屏
-    wx.setKeepScreenOn({
-      keepScreenOn: true
-    });
-    
+  onLoad: function (options) {  
     if (options.scene) {
       decodeURIComponent(options.scene).split('&').forEach((item, index) => {
         let arr = item.split('=');
@@ -42,6 +37,7 @@ Page({
       beatComponent
     });
     beatComponent.init(this);
+    beatComponent.getPage();
   },
 
   /**
