@@ -4,7 +4,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    qrCode: '/assets/imgs/shuochang-qrcode.png'
   },
 
   /**
@@ -61,5 +61,10 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  previewImage() {
+    wx.previewImage({
+      urls: [this.data.qrCode]
+    });
   }
 })

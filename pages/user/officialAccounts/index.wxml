@@ -1,7 +1,7 @@
 <!-- 公众号 -->
 <view class="official-accounts">
-  <view class="body-container">
-    <image class="qr-code" src="/assets/imgs/shuochang-qrcode.png" />
+  <view class="body-container" catchtap="previewImage">
+    <image class="qr-code" src="{{qrCode}}" />
     <view class="text">识别二维码关注公众号</view>
   </view>
 </view>
