@@ -1,7 +1,11 @@
 <!-- 公众号 -->
 <view class="official-accounts">
-  <view class="body-container" catchtap="previewImage">
+  <view class="body-container">
     <image class="qr-code" src="{{qrCode}}" />
-    <view class="text">识别二维码关注公众号</view>
+    <view class="text">将二维码保存到相册识别关注</view>
+    <view class="tip">最新动态资讯、定期抽奖票务教程免费拿</view>
+    <view class="btn-container">
+      <button class="save-btn" catchtap="save">保存到相册</button>
+    </view>
   </view>
 </view>

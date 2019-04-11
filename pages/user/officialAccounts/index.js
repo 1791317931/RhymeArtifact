@@ -1,3 +1,5 @@
+import DownloadUtil from '../../../assets/js/DownloadUtil';
+
 Page({
 
   /**
@@ -62,9 +64,7 @@ Page({
   onShareAppMessage: function () {
 
   },
-  previewImage() {
-    wx.previewImage({
-      urls: [this.data.qrCode]
-    });
+  save() {
+    DownloadUtil.authorize(this.data.qrCode);
   }
 })

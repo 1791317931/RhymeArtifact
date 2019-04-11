@@ -91,7 +91,17 @@
   border-radius:16rpx;
 }
 
-.wechat_btn {
+.btn-container {
+  position: fixed;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+  padding: 110rpx;
+}
+
+.btn-container button {
+  float: left;
   width:250rpx;
   height:88rpx;
   background:rgba(255,255,255,1);
@@ -101,10 +111,10 @@
   color:rgba(29,29,29,1);
   line-height:88rpx;
   letter-spacing:1rpx;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin: 0 0 0 -125rpx;
+}
+
+.btn-container button:last-child {
+  float: right;
 }
 
 .modal {

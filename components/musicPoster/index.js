@@ -19,6 +19,11 @@ Component({
   methods: {
     closePoster() {
       this.triggerEvent('closePoster');
+    },
+    previewImage() {
+      wx.previewImage({
+        urls: [this.data.posterUrl]
+      });
     }
   }
 })

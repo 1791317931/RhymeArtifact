@@ -48,6 +48,11 @@ Component({
         showShareModal: !this.data.showShareModal
       })
     },
+    toOfficialAccounts() {
+      wx.navigateTo({
+        url: '/pages/user/officialAccounts/index'
+      });
+    },
     setClipboardData(e) {
       let value = e.currentTarget.dataset && e.currentTarget.dataset.value
       wx.setClipboardData({
