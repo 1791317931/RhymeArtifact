@@ -1,0 +1,5 @@
+<view hidden="{{!showModal}}" class="modal">
+  <view class="body-container">
+    <view class="count">{{count}}</view>
+  </view>
+</view>

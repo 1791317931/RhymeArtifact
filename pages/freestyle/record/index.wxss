@@ -158,6 +158,10 @@
   z-index: 100000;
 }
 
+.scale-container-wrapper .pointer-container image.single {
+  height: 180rpx;
+}
+
 .combine-container .top-container {
   height: 141rpx;
   position: relative;

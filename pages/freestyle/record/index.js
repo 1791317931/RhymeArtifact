@@ -62,7 +62,11 @@ Page({
     secondVideoMuted: false,
     // 0 ~ 1
     volume: 1,
-    mode: 'beat'
+    // 选中阿卡贝拉的情况下不用提示直接录制，没有选择阿卡贝拉的情况下提示选择伴奏。
+    // 这个就第一次进入软件的时候提示用户选择过一次以后就没有了
+    // beat akbl
+    freestyleMode: null,
+    readyModalComponent: null
   },
 
   /**
@@ -74,17 +78,11 @@ Page({
       keepScreenOn: true
     });
 
-    let userInfo = wx.getStorageSync('userInfo'),
-    beatItem = JSON.parse(options.beatItem);
-    beatItem.beatTimeArr = TimeUtil.numberToArr(Math.ceil(beatItem.beat_duration / 1000));
+    let userInfo = wx.getStorageSync('userInfo');
 
     this.setData({
-      'recordForm.author': userInfo.nickName,
-      'recordForm.beatId': beatItem.id,
-      beatItem
+      'recordForm.author': userInfo.nickName
     });
-    this.caculateTryBeatTime(0);
-    this.caculateRecordBeatTime(0);
 
     let scales = [];
     for (let i = 0; i <= 50; i += 2) {
@@ -110,11 +108,20 @@ Page({
       });
     });
 
+    let freestyleMode = wx.getStorageSync('freestyleMode') || null,
+    readyModalComponent = this.selectComponent('#readyModal');
+
     this.setData({
       RM,
       BAC,
-      RAC
+      RAC,
+      freestyleMode,
+      readyModalComponent
     });
+
+    // 用户使用过录制选择beat后退出在进来显示上次选择beat
+    let beatItem = wx.getStorageSync('beatItem');
+    this.setBeatItem(beatItem);
 
     this.init();
   },
@@ -200,6 +207,31 @@ Page({
 
     this.bindBACEvent(BAC);
     this.bindRACEvent(RAC);
+  },
+  setBeatItem(beatItem) {
+    if (beatItem) {
+      beatItem.beatTimeArr = TimeUtil.numberToArr(Math.ceil(beatItem.beat_duration / 1000));
+      this.setData({
+        'recordForm.beatId': beatItem.id
+      });
+      this.data.BAC.src = this.data.beatItem.beat_url;
+      wx.setStorageSync('beatItem', beatItem);
+    } else {
+      let totalTime = 4 * 60;
+      beatItem = {
+        beatTimeArr: TimeUtil.numberToArr(totalTime),
+        beat_duration: TimeUtil.numberToArr(totalTime),
+        totalTime
+      };
+      this.data.BAC.src = '';
+      wx.removeStorageSync('beatItem');
+    }
+
+    this.setData({
+      beatItem
+    });
+    this.caculateTryBeatTime(0);
+    this.caculateRecordBeatTime(0);
   },
   changeMode(mode) {
     this.setData({
@@ -309,8 +341,6 @@ Page({
     BAC.onEnded((res) => {
       this.beatAudioEnded();
     });
-
-    BAC.src = this.data.beatItem.beat_url;
   },
   // 伴奏音频事件
   beatAudioTimeUpdate(time) {
@@ -421,56 +451,46 @@ Page({
   tryBeatTouchEnd(e) {
     this.tryPlayStart();
   },
-  recordBeatTouchStart(e) {
-
-  },
-  moveRecordBeatPointer(e) {
-
-  },
-  recordBeatTouchEnd(e) {
-
-  },
   // ---------------------拖动指针--------------------------
   beginRecord() {
-    // TODO
-
-
-
-
-
-
-    
+    let freestyleMode = this.data.freestyleMode;
+    if (!freestyleMode) {
+      TipUtil.message('请选择伴奏');
+      return;
+    }
 
     let record = () => {
-      let RM = this.data.RM,
+      this.data.readyModalComponent.show(() => {
+        let RM = this.data.RM,
         BAC = this.data.BAC,
         RAC = this.data.RAC;
 
-      RM.start(this.data.recordOption);
-      RM.onStart(() => {
-        // 左侧状态按钮全部重置
-        this.setData({
-          firstVideoMuted: false,
-          secondVideoMuted: false,
-          firstTrackButton: null,
-          secondTrackButton: null
-        });
-        BAC.volume = this.data.volume;
-        RAC.volume = this.data.volume;
+        RM.start(this.data.recordOption);
+        RM.onStart(() => {
+          // 左侧状态按钮全部重置
+          this.setData({
+            firstVideoMuted: false,
+            secondVideoMuted: false,
+            firstTrackButton: null,
+            secondTrackButton: null
+          });
+          BAC.volume = this.data.volume;
+          RAC.volume = this.data.volume;
 
-        // 从头播放
-        BAC.seek(0);
-        BAC.play();
-        // 暂停录制的音频播放
-        RAC.pause();
+          // 从头播放
+          BAC.seek(0);
+          BAC.play();
+          // 暂停录制的音频播放
+          RAC.pause();
 
-        // 清空已经录制的音频
-        this.setData({
-          'recordForm.path': null
+          // 清空已经录制的音频
+          this.setData({
+            'recordForm.path': null
+          });
+          this.changeTryPlayState(false);
+          this.changeRecordState('recording');
+          this.changeMode('record');
         });
-        this.changeTryPlayState(false);
-        this.changeRecordState('recording');
-        this.changeMode('record');
       });
     };
 
@@ -726,13 +746,20 @@ Page({
     }
   },
   chooseBeat() {
+    let freestyleMode = 'beat';
     this.setData({
-      mode: 'beat'
+      freestyleMode
     });
+    this.setFreestyleMode(freestyleMode);
   },
   chooseAKBL() {
+    let freestyleMode = 'akbl';
     this.setData({
-      mode: 'akbl'
+      freestyleMode
     });
+    this.setFreestyleMode(freestyleMode);
+  },
+  setFreestyleMode(freestyleMode) {
+    wx.setStorageSync('freestyleMode', freestyleMode);
   }
 })

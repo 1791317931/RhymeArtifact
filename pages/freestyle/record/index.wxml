@@ -5,12 +5,13 @@
     <view>发布中…</view>
   </view>
 </view>
+<readyModal id="readyModal" />
 
 <view hidden="{{hideSaveModal}}" class="z-modal">
   <view class="z-modal-body save-modal-body">
-    <view class="modal-title">发布作品</view>
+    <view class="modal-title">发布Freestyle</view>
     <view class="row">
-      <view>歌名：</view>
+      <view>主题：</view>
       <input value="{{recordForm.title}}" bindchange="changeTitle" maxlength="{{recordRule.title.length}}" placeholder-class="input-placeholder"/>
     </view>
     <view class="row">
@@ -18,7 +19,7 @@
       <input value="{{recordForm.author}}" bindchange="changeAuthor" maxlength="{{recordRule.author.length}}" placeholder-class="input-placeholder"/>
     </view>
     <view class="btn-container clearfix">
-      <button class="pull-left" catchtap="closeSaveModal">返回编辑</button>
+      <button class="pull-left" catchtap="closeSaveModal">返回重录</button>
       <button class="pull-right" catchtap="uploadRecordAndSubmit">发布分享</button>
     </view>
   </view>
@@ -30,12 +31,16 @@
     </view>
     <view class="pointer-container">
       <image hidden="{{mode == 'record'}}" style="left: {{beatItem.tryBeatTimePercent}}%" src="/assets/imgs/pointer.png" catchtouchmove="moveTryBeatPointer" catchtouchstart="tryBeatTouchStart" catchtouchend="tryBeatTouchEnd"/>
-      <image hidden="{{mode == 'try'}}" style="left: {{beatItem.recordBeatTimePercent}}%" src="/assets/imgs/pointer.png" catchtouchmove="moveRecordBeatPointer" catchtouchstart="recordBeatTouchStart" catchtouchend="recordBeatTouchEnd"/>
+      <image 
+        hidden="{{mode == 'try'}}"
+        class="{{freestyleMode == 'akbl' ? 'single' : ''}}"
+        style="left: {{beatItem.recordBeatTimePercent}}%"
+        src="/assets/imgs/pointer.png"/>
     </view>
   </view>
-  <view class="combine-container">
+  <view hidden="{{freestyleMode == 'akbl'}}" class="combine-container">
     <view class="top-container">
-      <view class="beat-title">{{'Beat' || beatItem.beat_title}}</view>
+      <view class="beat-title">{{beatItem.beat_title || 'Beat'}}</view>
       <view class="track-container" id="track-container">
         <view class="head-container">音频1 Beat</view>
         <view class="high-container"></view>
@@ -81,14 +86,14 @@
   <view class="center-btn-container clearfix">
     <view catchtap="chooseBeat">
       <button>选择beat</button>
-      <image hidden="{{mode != 'beat'}}" src="/assets/imgs/sky-blue-rect.png"/>
     </view>
     <view catchtap="chooseAKBL">
       <button>阿卡贝拉</button>
-      <image hidden="{{mode != 'akbl'}}" src="/assets/imgs/sky-blue-rect.png"/>
+      <image hidden="{{freestyleMode != 'akbl'}}" src="/assets/imgs/sky-blue-rect.png"/>
     </view>
   </view>
   <view class="freestyle-detail-container">
+    <!-- 暂时不显示主题 -->
     <!-- <view class="title">Freestyle主题：{{beatItem.beat_title}}</view> -->
     <view class="tip">Freestyle录制建议最短60秒！</view>
   </view>

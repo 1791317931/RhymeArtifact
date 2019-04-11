@@ -1,0 +1,31 @@
+.modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.modal .body-container {
+  width: 444rpx;
+  height: 444rpx;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, .7);
+  border-radius: 50%;
+}
+
+.modal .body-container .count {
+  width: 100%;
+  font-size: 232rpx;
+  line-height: 232rpx;
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  color: #fff;
+}

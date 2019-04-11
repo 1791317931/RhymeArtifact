@@ -67,7 +67,7 @@ Page({
   },
   toBeatList() {
     wx.navigateTo({
-      url: '/pages/freestyle/beatList/index'
+      url: '/pages/freestyle/record/index'
     });
   }
 })
