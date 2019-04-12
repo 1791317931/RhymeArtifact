@@ -6,8 +6,27 @@
   </view>
 </view>
 <readyModal id="readyModal" />
-
-<view hidden="{{hideSaveModal}}" class="z-modal">
+<view hidden="{{!showUpdateBeatModal}}" class="z-modal">
+  <view class="z-modal-body update-beat-modal-body">
+    <view class="modal-title">提示</view>
+    <view class="modal-body">音频正在编辑尚未保存 是否放弃编辑</view>
+    <view class="btn-container clearfix">
+      <button class="pull-left" catchtap="toChooseBeat">修改beat</button>
+      <button class="pull-right" catchtap="closeUpdateBeatModal">返回创作</button>
+    </view>
+  </view>
+</view>
+<view hidden="{{!showAKBLModal}}" class="z-modal">
+  <view class="z-modal-body akbl-modal-body">
+    <view class="modal-title">提示</view>
+    <view class="modal-body">音频正在编辑尚未保存 是否放弃编辑</view>
+    <view class="btn-container clearfix">
+      <button class="pull-left" catchtap="toChooseAKBL">重新录制</button>
+      <button class="pull-right" catchtap="closeAKBLModal">返回创作</button>
+    </view>
+  </view>
+</view>
+<view hidden="{{!showSaveModal}}" class="z-modal">
   <view class="z-modal-body save-modal-body">
     <view class="modal-title">发布Freestyle</view>
     <view class="row">

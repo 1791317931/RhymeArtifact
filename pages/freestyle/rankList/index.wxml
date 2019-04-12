@@ -1,0 +1,16 @@
+<view class="tab-container">
+  <view class="clearfix">
+    <view wx:for="{{tabs}}" wx:for-item="item" wx:for-index="index" wx:key="{{item.flag}}"
+    class="item {{activeIndex == index ? 'active' : ''}} item-{{index}}" data-index="{{index}}" catchtap="toggleTab">
+      {{item.text}}
+    </view>
+  </view>
+</view>
+<view class="rank-wrapper">
+  <view hidden="{{tabs[activeIndex].flag != 'week'}}" class="week-container">
+    <rankList id="weekRankComponent"/>
+  </view>
+  <view hidden="{{tabs[activeIndex].flag != 'latest'}}" class="latest-container">
+    <rankList id="latestRankComponent"/>
+  </view>
+</view>

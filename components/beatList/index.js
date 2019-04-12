@@ -236,8 +236,11 @@ Component({
 
       // 录制freestyle
       if (isFreeStyle) {
-        wx.navigateTo({
-          url: '/pages/freestyle/record/index?beatItem=' + JSON.stringify(item)
+        let pages = getCurrentPages();
+        pages[pages.length - 2].setBeatItem(item);
+        
+        wx.navigateBack({
+          
         });
       } else {
         // 录制作品

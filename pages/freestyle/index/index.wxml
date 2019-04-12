@@ -14,6 +14,6 @@
       </view>
     </view>
   </view>
-  <image class="rank-list mt30" src="/assets/imgs/rank-list.png" />
+  <image class="rank-list mt30" src="/assets/imgs/rank-list.png" catchtap="toRankList" />
   <image class="freestyle-record mt40" src="/assets/imgs/freestyle-record.png" catchtap="toBeatList" />
 </view>

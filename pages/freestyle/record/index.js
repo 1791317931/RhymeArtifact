@@ -12,7 +12,9 @@ Page({
    */
   data: {
     scales: [],
-    hideSaveModal: true,
+    showSaveModal: false,
+    showUpdateBeatModal: false,
+    showAKBLModal: false,
     // 录制状态：ready（准备就绪） recording（录制中）
     recordState: 'ready',
     recordOption: {
@@ -55,18 +57,14 @@ Page({
     startRecordBeatPercent: null,
     trackContainerWidth: null,
     hideSubmittingModal: true,
-    // 两组M、S
-    firstTrackButton: null,
-    secondTrackButton: null,
-    firstVideoMuted: false,
-    secondVideoMuted: false,
     // 0 ~ 1
     volume: 1,
     // 选中阿卡贝拉的情况下不用提示直接录制，没有选择阿卡贝拉的情况下提示选择伴奏。
     // 这个就第一次进入软件的时候提示用户选择过一次以后就没有了
     // beat akbl
     freestyleMode: null,
-    readyModalComponent: null
+    readyModalComponent: null,
+    defaultTotalTime: 4 * 60
   },
 
   /**
@@ -108,14 +106,11 @@ Page({
       });
     });
 
-    let freestyleMode = wx.getStorageSync('freestyleMode') || null,
-    readyModalComponent = this.selectComponent('#readyModal');
-
+    let readyModalComponent = this.selectComponent('#readyModal');
     this.setData({
       RM,
       BAC,
       RAC,
-      freestyleMode,
       readyModalComponent
     });
 
@@ -194,12 +189,12 @@ Page({
   },
   init() {
     let data = this.data,
-      BAC = data.BAC,
-      RAC = data.RAC,
-      option = {
-        // 仅在ios生效（IOS默认）  是否遵循静音开关，设置为 false 之后，即使是在静音模式下，也能播放声音
-        obeyMuteSwitch: false
-      };
+    BAC = data.BAC,
+    RAC = data.RAC,
+    option = {
+      // 仅在ios生效（IOS默认）  是否遵循静音开关，设置为 false 之后，即使是在静音模式下，也能播放声音
+      obeyMuteSwitch: false
+    };
 
     wx.setInnerAudioOption({
       option
@@ -214,17 +209,20 @@ Page({
       this.setData({
         'recordForm.beatId': beatItem.id
       });
-      this.data.BAC.src = this.data.beatItem.beat_url;
+      this.data.BAC.src = beatItem.beat_url;
+
       wx.setStorageSync('beatItem', beatItem);
+      this.setFreestyleMode('beat');
     } else {
-      let totalTime = 4 * 60;
+      let totalTime = this.data.defaultTotalTime,
+      timeArr = TimeUtil.numberToArr(totalTime);
       beatItem = {
-        beatTimeArr: TimeUtil.numberToArr(totalTime),
-        beat_duration: TimeUtil.numberToArr(totalTime),
+        beatTimeArr: timeArr,
+        beat_duration: timeArr,
         totalTime
       };
-      this.data.BAC.src = '';
-      wx.removeStorageSync('beatItem');
+
+      this.setFreestyleMode(null);
     }
 
     this.setData({
@@ -277,7 +275,7 @@ Page({
   tryPlayStart() {
     let tryPlay = () => {
       let BAC = this.data.BAC,
-        RAC = this.data.RAC;
+      RAC = this.data.RAC;
 
       if (this.data.tryPlayEnded || this.data.mode == 'record') {
         // 这里不用修改palyedTime，会自动在tryAudioTimeUpdate方法中更新
@@ -319,7 +317,7 @@ Page({
   },
   tryPlayPause() {
     let BAC = this.data.BAC,
-      RAC = this.data.RAC;
+    RAC = this.data.RAC;
 
     BAC.pause();
     this.changeTryPlayState(false);
@@ -379,7 +377,7 @@ Page({
 
     RAC.onError((res) => {
       if (ConfigUtil.isDev()) {
-        console.log('RAC.onError');
+        console.log('RAC.onError', res);
       }
       this.recordAudioError(res);
     });
@@ -454,42 +452,19 @@ Page({
   // ---------------------拖动指针--------------------------
   beginRecord() {
     let freestyleMode = this.data.freestyleMode;
-    if (!freestyleMode) {
-      TipUtil.message('请选择伴奏');
+    if (freestyleMode == null) {
+      TipUtil.message('请选择beat');
       return;
     }
 
     let record = () => {
       this.data.readyModalComponent.show(() => {
-        let RM = this.data.RM,
-        BAC = this.data.BAC,
-        RAC = this.data.RAC;
+        let RM = this.data.RM;
 
         RM.start(this.data.recordOption);
         RM.onStart(() => {
-          // 左侧状态按钮全部重置
-          this.setData({
-            firstVideoMuted: false,
-            secondVideoMuted: false,
-            firstTrackButton: null,
-            secondTrackButton: null
-          });
-          BAC.volume = this.data.volume;
-          RAC.volume = this.data.volume;
-
-          // 从头播放
-          BAC.seek(0);
-          BAC.play();
-          // 暂停录制的音频播放
-          RAC.pause();
-
-          // 清空已经录制的音频
-          this.setData({
-            'recordForm.path': null
-          });
-          this.changeTryPlayState(false);
           this.changeRecordState('recording');
-          this.changeMode('record');
+          this.clearForRecord();
         });
       });
     };
@@ -512,10 +487,55 @@ Page({
       record();
     }
   },
+  clearForRecord() {
+    let BAC = this.data.BAC,
+    RAC = this.data.RAC;
+
+    BAC.volume = this.data.volume;
+    RAC.volume = this.data.volume;
+
+    // 暂停录制的音频播放
+    RAC.pause();
+
+    // 清空已经录制的音频
+    this.setData({
+      'recordForm.path': null
+    });
+    this.changeTryPlayState(false);
+    this.changeMode('record');
+
+    // 伴奏录制
+    if (this.data.beatItem.beat_url) {
+      // 从头播放
+      BAC.seek(0);
+      BAC.play();
+    } else {
+      // 清唱
+      this.recordWithoutBeat();
+    }
+  },
+  recordWithoutBeat(time = 0) {
+    this.caculateRecordBeatTime(time);
+
+    let record = () => {
+      setTimeout(() => {
+        if (this.data.recordState == 'recording') {
+          // 不能超过最大时间
+          if (time >= this.data.defaultTotalTime) {
+            this.endRecord();
+          } else {
+            this.recordWithoutBeat(++time);
+          }
+        }
+      }, 1000);
+    };
+
+    record();
+  },
   endRecord(callback) {
     let RM = this.data.RM,
-      BAC = this.data.BAC,
-      RAC = this.data.RAC;
+    BAC = this.data.BAC,
+    RAC = this.data.RAC;
 
     // 结束录制
     RM.stop();
@@ -548,10 +568,10 @@ Page({
 
       if (this.data.recordState == 'recording') {
         this.endRecord(() => {
-          this.toggleSaveModal(false);
+          this.toggleSaveModal(true);
         });
       } else {
-        this.toggleSaveModal(false);
+        this.toggleSaveModal(true);
       }
     };
 
@@ -583,9 +603,9 @@ Page({
       TipUtil.message('请录制后再发布');
     }
   },
-  toggleSaveModal(hideSaveModal) {
+  toggleSaveModal(showSaveModal) {
     this.setData({
-      hideSaveModal
+      showSaveModal
     });
   },
   changeTitle(e) {
@@ -599,7 +619,7 @@ Page({
     });
   },
   closeSaveModal() {
-    this.toggleSaveModal(true);
+    this.toggleSaveModal(false);
   },
   toggleSubmitting(hideSubmittingModal) {
     this.setData({
@@ -610,7 +630,7 @@ Page({
     this.closeSaveModal();
     let form = this.data.recordForm;
     if (!form.title) {
-      TipUtil.message('请填写歌名');
+      TipUtil.message('请填写主题');
       return;
     }
 
@@ -679,87 +699,87 @@ Page({
       });
     });
   },
-  toggleFirstTrack(e) {
-    if (this.data.mode != 'try') {
-      return;
-    }
-
-    let value = e.target.dataset.value,
-      BAC = this.data.BAC,
-      RAC = this.data.RAC;
-
-    if (value == 'M') {
-      // 静音
-      this.setData({
-        firstVideoMuted: !this.data.firstVideoMuted,
-        firstTrackButton: this.data.firstTrackButton == value ? null : value,
-        // 如果录音是独奏，需要取消独奏
-        secondTrackButton: this.data.secondTrackButton == 'S' ? null : this.data.secondTrackButton
-      });
-
-      BAC.volume = this.data.firstVideoMuted ? 0 : this.data.volume;
-      RAC.volume = this.data.secondTrackButton == 'M' ? 0 : this.data.volume;
-    } else if (value == 'S') {
-      // 独奏
-      this.setData({
-        firstVideoMuted: false,
-        secondVideoMuted: this.data.firstTrackButton == value ? false : true,
-        firstTrackButton: this.data.firstTrackButton == value ? null : value,
-        secondTrackButton: this.data.firstTrackButton == value ? null : 'M'
-      });
-
-      BAC.volume = this.data.volume;
-      RAC.volume = this.data.secondVideoMuted ? 0 : this.data.volume;
-    }
-  },
-  toggleSecondTrack(e) {
-    if (this.data.mode != 'try') {
-      return;
-    }
-
-    let value = e.target.dataset.value,
-      BAC = this.data.BAC,
-      RAC = this.data.RAC;
-
-    if (value == 'M') {
-      // 静音
-      this.setData({
-        secondVideoMuted: !this.data.secondVideoMuted,
-        secondTrackButton: this.data.secondTrackButton == value ? null : value,
-        // 如果伴奏是独奏，需要取消独奏
-        firstTrackButton: this.data.firstTrackButton == 'S' ? null : this.data.firstTrackButton
-      });
-
-      BAC.volume = this.data.firstTrackButton == 'M' ? 0 : this.data.volume;
-      RAC.volume = this.data.secondVideoMuted ? 0 : this.data.volume;
-    } else if (value == 'S') {
-      // 独奏
-      this.setData({
-        secondVideoMuted: false,
-        firstVideoMuted: this.data.secondTrackButton == value ? false : true,
-        secondTrackButton: this.data.secondTrackButton == value ? null : value,
-        firstTrackButton: this.data.secondTrackButton == value ? null : 'M'
-      });
-
-      RAC.volume = this.data.volume;
-      BAC.volume = this.data.firstVideoMuted ? 0 : this.data.volume;
-    }
-  },
   chooseBeat() {
-    let freestyleMode = 'beat';
-    this.setData({
-      freestyleMode
-    });
-    this.setFreestyleMode(freestyleMode);
+    let data = this.data;
+    // 正在录制，不允许点击
+    if (data.recordState == 'recording') {
+      return;
+    }
+
+    if (data.recordForm.path) {
+      this.toggleUpdateBeatModal(true);
+    } else if (data.tryPlaying) {
+      // 正在试听
+      this.tryPlayPause();
+      this.toChooseBeat();
+    } else {
+      this.toChooseBeat();
+    }
   },
-  chooseAKBL() {
-    let freestyleMode = 'akbl';
-    this.setData({
-      freestyleMode
+  toChooseBeat() {
+    this.toggleUpdateBeatModal(false);
+    this.setBeatItem();
+    wx.navigateTo({
+      url: '/pages/freestyle/beatList/index'
     });
-    this.setFreestyleMode(freestyleMode);
+  },
+  chooseAKBL() {    
+    let data = this.data;
+    // 不能重复选择akbl
+    if (data.freestyleMode == 'akbl') {
+      return;
+    }
+
+    // 正在录制，不允许点击
+    if (data.recordState == 'recording') {
+      return;
+    }
+
+    if (data.recordForm.path) {
+      this.toggleAKBLModal(true);
+    } else if (data.tryPlaying) {
+      // 正在试听
+      this.tryPlayPause();
+      this.toChooseAKBL();
+    } else {
+      this.toChooseAKBL();
+    }
   },
   setFreestyleMode(freestyleMode) {
     wx.setStorageSync('freestyleMode', freestyleMode);
+    this.setData({
+      freestyleMode
+    });
+  },
+  toggleUpdateBeatModal(showUpdateBeatModal) {
+    this.setData({
+      showUpdateBeatModal
+    });
+  },
+  closeUpdateBeatModal() {
+    this.toggleUpdateBeatModal(false);
+  },
+  toggleUpdateBeatModal(showUpdateBeatModal) {
+    this.setData({
+      showUpdateBeatModal
+    });
+  },
+  toChooseAKBL() {
+    this.setBeatItem();
+    this.setFreestyleMode('akbl');
+    this.setData({
+      'recordForm.path': null
+    });
+
+    this.beginRecord();
+    this.closeAKBLModal();
+  },
+  closeAKBLModal() {
+    this.toggleAKBLModal(false);
+  },
+  toggleAKBLModal(showAKBLModal) {
+    this.setData({
+      showAKBLModal
+    });
   }
 })

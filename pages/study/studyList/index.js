@@ -192,8 +192,9 @@ Page({
     }
   },
   getPage(current_page = 1) {
-    let data = this.data;
-    switch(data.tabs[data.activeIndex].flag) {
+    let data = this.data,
+    tabs = data.tabs;
+    switch(tabs[data.activeIndex].flag) {
       case tabs[0].flag:
         this.data.videoComponent.getPage(current_page);
         break;

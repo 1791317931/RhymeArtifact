@@ -1,0 +1,17 @@
+<view class="rank-list-container">
+  <view class="rank-item" wx:for="{{page.list}}" wx:for-index="index" 
+    wx:for-item="item" wx:key="{{item.beat_id}}" data-index="{{index}}" catchtap="clickRankItem">
+    <view class="head-container">
+      <image class="head" src="/assets/imgs/logo.png" />
+      <image class="champion" src="/assets/imgs/champion.png" />
+    </view>
+    <view class="user-name">张三</view>
+    <view class="created-time">5-21 18:33</view>
+    <view class="count">94</view>
+    <image class="pick" src="/assets/imgs/pick.png" data-index="{{index}}" catchtap="pick" />
+  </view>
+</view>
+<empty 
+  loading="{{page.loading}}"
+  hasData="{{!!page.list.length}}"
+  hasMore="{{page.current_page < page.total_pages}}"/>

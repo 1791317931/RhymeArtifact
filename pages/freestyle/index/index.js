@@ -65,6 +65,11 @@ Page({
   onShareAppMessage: function () {
 
   },
+  toRankList() {
+    wx.navigateTo({
+      url: '/pages/freestyle/rankList/index'
+    });
+  },
   toBeatList() {
     wx.navigateTo({
       url: '/pages/freestyle/record/index'

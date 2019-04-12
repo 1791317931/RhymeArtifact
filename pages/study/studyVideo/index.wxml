@@ -9,6 +9,7 @@
     class="video"
     id="studyVideo"
     src="{{list[playIndex].section_url}}"
+    custom-cache="{{false}}"
     controls
     autoplay="{{!needShare}}"
     bindtimeupdate="bindTimeUpdate"

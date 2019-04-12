@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/freestyle/rankList/index",
     "pages/freestyle/index/index",
     "pages/freestyle/beatList/index",
     "pages/main/index",

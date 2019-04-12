@@ -63,7 +63,7 @@ Page({
 
     // token过期后重新登陆或者删除收藏，都需要刷新页面，否则再次操作收藏会出异常
     let beatComponent = this.data.beatComponent;
-    beatComponent.init(this);
+    beatComponent.getPage();
   },
 
   /**
