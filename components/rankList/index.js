@@ -22,7 +22,8 @@ Component({
       current_page: 1,
       per_page: 10,
       total_pages: 0,
-      list: []
+      list: [],
+      type: 'week'
     },
     scope: null
   },
@@ -38,6 +39,11 @@ Component({
     },
     init(scope) {
       this.setScope(scope);
+    },
+    setType(type) {
+      this.setData({
+        'page.type': type
+      });
     },
     onReachBottom(scope) {
       let page = this.data.page;
@@ -76,7 +82,8 @@ Component({
 
       let param = {
         page: current_page,
-        per_page: page.per_page
+        per_page: page.per_page,
+        type: page.type
       },
       list = [];
 

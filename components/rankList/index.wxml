@@ -11,7 +11,9 @@
     <image class="pick" src="/assets/imgs/pick.png" data-index="{{index}}" catchtap="pick" />
   </view>
 </view>
-<empty 
-  loading="{{page.loading}}"
-  hasData="{{!!page.list.length}}"
-  hasMore="{{page.current_page < page.total_pages}}"/>
+<view class="empty-container">
+  <empty 
+    loading="{{page.loading}}"
+    hasData="{{!!page.list.length}}"
+    hasMore="{{page.current_page < page.total_pages}}"/>
+</view>

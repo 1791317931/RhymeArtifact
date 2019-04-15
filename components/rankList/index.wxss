@@ -12,10 +12,6 @@
   border-radius:16rpx 16rpx 0 0;
 }
 
-.rank-list-container .rank-item:last-child {
-  border-bottom: 0;
-}
-
 .rank-list-container .rank-item .head-container {
   width:80rpx;
   height:80rpx;
@@ -78,4 +74,8 @@
   top: 50%;
   right: 26rpx;
   transform: translateY(-50%);
+}
+
+.empty-container {
+  background: #fff;
 }

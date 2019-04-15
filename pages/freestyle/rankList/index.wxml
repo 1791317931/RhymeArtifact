@@ -13,4 +13,7 @@
   <view hidden="{{tabs[activeIndex].flag != 'latest'}}" class="latest-container">
     <rankList id="latestRankComponent"/>
   </view>
+  <view hidden="{{tabs[activeIndex].flag != 'hot'}}" class="hot-container">
+    <rankList id="hotRankComponent"/>
+  </view>
 </view>

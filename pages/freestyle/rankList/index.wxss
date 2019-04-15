@@ -41,3 +41,19 @@
 .rank-wrapper {
   padding: 90rpx 0 0;
 }
+
+.week-container {
+  
+}
+
+.latest-container {
+  padding: 30rpx 16rpx;
+  min-height: 100%;
+  background:linear-gradient(225deg,rgba(32,10,43,1) 0%,rgba(70,19,130,1) 100%);
+}
+
+.hot-container {
+  padding: 30rpx 32rpx;
+  min-height: 100%;
+  background:linear-gradient(225deg,rgba(32,10,43,1) 0%,rgba(70,19,130,1) 100%);
+}

@@ -20,7 +20,8 @@ Page({
     ],
     activeIndex: 0,
     weekRankComponent: null,
-    latestRankComponent: null
+    latestRankComponent: null,
+    hotRankComponent: null
   },
 
   /**
@@ -28,15 +29,18 @@ Page({
    */
   onLoad: function (options) {
     let weekRankComponent = this.selectComponent('#weekRankComponent'),
-    latestRankComponent = this.selectComponent('#latestRankComponent');
+    latestRankComponent = this.selectComponent('#latestRankComponent'),
+    hotRankComponent = this.selectComponent('#hotRankComponent');
 
     this.setData({
       weekRankComponent,
-      latestRankComponent
+      latestRankComponent,
+      hotRankComponent
     });
 
     weekRankComponent.init(this);
     latestRankComponent.init(this);
+    hotRankComponent.init(this);
     this.getPage(1);
   },
 
@@ -88,8 +92,11 @@ Page({
       case 'week':
         this.data.weekRankComponent.onReachBottom();
         break;
-      case 'week':
+      case 'latest':
         this.data.latestRankComponent.onReachBottom();
+        break;
+      case 'hot':
+        this.data.hotRankComponent.onReachBottom();
         break;
     }
   },
@@ -115,9 +122,11 @@ Page({
 
     // 需要设置参数
     if (flag === 'week') {
-      this.data.weekRankComponent.getPage(1);
+      data.weekRankComponent.getPage(1);
     } else if (flag === 'latest') {
-      this.data.latestRankComponent.getPage(1);
+      data.latestRankComponent.getPage(1);
+    } else if (flag === 'hot') {
+      data.hotRankComponent.getPage(1);
     }
   },
 })
