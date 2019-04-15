@@ -14,7 +14,7 @@ Component({
    * 组件的初始数据
    */
   data: {
-    wechat: '17301257015',
+    wechat: 'yayunrap',
     showShareModal: false,
     rhymePage: {
       loading: false,
