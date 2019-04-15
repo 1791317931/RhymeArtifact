@@ -124,8 +124,10 @@ Page({
     if (flag === 'week') {
       data.weekRankComponent.getPage(1);
     } else if (flag === 'latest') {
+      data.latestRankComponent.setType(flag);
       data.latestRankComponent.getPage(1);
     } else if (flag === 'hot') {
+      data.hotRankComponent.setType(flag);
       data.hotRankComponent.getPage(1);
     }
   },
