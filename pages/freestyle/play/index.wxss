@@ -1,0 +1,20 @@
+.fs-play-bg {
+  position: fixed;
+  width: 750rpx;
+  height: 1228rpx;
+  left: 0;
+  z-index: 0;
+}
+
+.play-container {
+  position: relative;
+}
+
+.play-container .play-status {
+  width:120rpx;
+  height:120rpx;
+  position:absolute;
+  top:276rpx;
+  left:380rpx;
+  transform:translateX(-50%);
+}

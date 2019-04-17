@@ -16,6 +16,10 @@ Page({
         text: '我的歌词创作'
       },
       {
+        path: '/pages/user/freestyle/index',
+        text: '我的Freestyle'
+      },
+      {
         path: '',
         text: '收货地址',
         show: false
@@ -49,8 +53,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let userInfo = wx.getStorageSync('userInfo');
+    userInfo.avatarUrl = userInfo.avatarUrl || CommonUtil.getDefaultImg();
     this.setData({
-      userInfo: wx.getStorageSync('userInfo')
+      userInfo 
     });
   },
 

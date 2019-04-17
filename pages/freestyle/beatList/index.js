@@ -11,7 +11,7 @@ Page({
         text: 'Tarp'
       },
       {
-        flag: 'old school',
+        flag: 'old-school',
         text: 'old school'
       }
     ],
@@ -120,7 +120,7 @@ Page({
     // 需要设置参数
     if (flag === 'tarp') {
       beatComponent.getPage(1);
-    } else if (flag === 'old school') {
+    } else if (flag === 'old-school') {
       beatComponent.getPage(1);
     }
   },

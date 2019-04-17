@@ -8,18 +8,16 @@
   clear: both;
 }
 
-.rank-list-container {
-  background:rgba(255,255,255,1);
-}
-
 .rank-list-container .rank-item {
   padding: 30rpx 300rpx 30rpx 132rpx;
   position: relative;
   border-bottom: 2rpx solid #EFEFEF;
+  background:rgba(255,255,255,1);
 }
 
 .rank-list-container .rank-item:first-child {
   border-radius:16rpx 16rpx 0 0;
+  
 }
 
 .rank-list-container .rank-item .head-container {
@@ -152,6 +150,26 @@
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 2;
+}
+
+.hot-rank-list-container .rank-item .theme-name {
+  margin-top: 20rpx;
+  font-size:30rpx;
+  font-family:PingFangSC-Semibold;
+  font-weight:600;
+  color:rgba(38,38,40,1);
+  line-height:42rpx;
+  text-align: center;
+}
+
+.hot-rank-list-container .rank-item .user-name {
+  margin-top: 10rpx;
+  font-size:24rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(152,152,152,1);
+  line-height:33rpx;
+  text-align: center;
 }
 
 .empty-container {

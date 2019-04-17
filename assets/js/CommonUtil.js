@@ -20,6 +20,9 @@ let CommonUtil = {
   copyObject(obj) {
     return JSON.parse(JSON.stringify(obj));
   },
+  getDefaultUserImg() {
+    return '/assets/imgs/logo.png';
+  },
   getShareRandom() {
     return parseInt(Math.random() * 5);
   },

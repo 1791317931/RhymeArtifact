@@ -43,7 +43,142 @@
 }
 
 .week-container {
-  
+  background:linear-gradient(181deg,rgba(9,0,29,1) 0%,rgba(70,19,130,1) 100%);
+}
+
+.week-container .rank-list-bg-container {
+  width: 100%;
+  height: 483rpx;
+  position: relative;
+}
+
+.week-container .rank-list-bg-container .rank-list-bg {
+  width: 100%;
+  height: 483rpx;
+}
+
+.week-container .rank-list-bg-container > view {
+  font-size:40rpx;
+  font-family:DIN-Medium;
+  font-weight:500;
+  color:rgba(255,255,255,1);
+  line-height:48rpx;
+  position: absolute;
+  bottom: 45rpx;
+}
+
+.week-container .rank-list-bg-container .day {
+  left: 162rpx;
+}
+
+.week-container .rank-list-bg-container .hour {
+  left: 268rpx;
+}
+
+.week-container .rank-list-bg-container .minute {
+  left: 389rpx;
+}
+
+.week-container .rank-list-bg-container .second {
+  left: 521rpx;
+}
+
+.week-container .top-user-container {
+  padding: 28rpx 0 0;
+  height: 502rpx;
+  position: relative;
+}
+
+.week-container .top-user-container .item {
+  width: 124rpx;
+  position: absolute;
+  bottom: 43rpx;
+  text-align: center;
+}
+
+.week-container .top-user-container .item.rank-second-container {
+  left: 70rpx;
+}
+
+.week-container .top-user-container .item.rank-third-container {
+  right: 70rpx;
+}
+
+.week-container .top-user-container .rank-first-container {
+  width: 206rpx;
+  left: 50%;
+  bottom: 43rpx;
+  transform: translateX(-50%);
+}
+
+.week-container .top-user-container .item .circle-container {
+  position: relative;
+  width: 124rpx;
+  height: 166rpx;
+}
+
+.week-container .top-user-container .item.rank-first-container .circle-container {
+  width: 206rpx;
+  height: 262rpx;
+}
+
+.week-container .top-user-container .item .circle-container image:first-child {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  position: absolute;
+  left: 2rpx;
+  bottom: 2rpx;
+}
+
+.week-container .top-user-container .rank-first-container .circle-container image:first-child {
+  width: 200rpx;
+  height: 200rpx;
+  left: 3rpx;
+  bottom: 3rpx;
+}
+
+.week-container .top-user-container .item .circle-container image:nth-child(2) {
+  width: 124rpx;
+  height: 166rpx;
+}
+
+.week-container .top-user-container .rank-first-container .circle-container image:nth-child(2) {
+  width: 206rpx;
+  height: 262rpx;
+}
+
+.week-container .top-user-container .item .theme-name {
+  margin-top: 20rpx;
+  font-size:34rpx;
+  font-family:PingFangSC-Semibold;
+  font-weight:600;
+  color:rgba(255,255,255,1);
+  line-height:48rpx;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.week-container .top-user-container .item .count {
+  margin-top: 10rpx;
+  font-size:28rpx;
+  font-family:Helvetica;
+  color:rgba(255,255,255,1);
+  line-height:34rpx;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.week-container .top-user-container .item .pick {
+  width: 93rpx;
+  height: 43rpx;
+  margin-top: 16rpx;
+}
+
+.week-container .week-container-wrapper {
+  padding: 0 16rpx 30rpx;
 }
 
 .latest-container {

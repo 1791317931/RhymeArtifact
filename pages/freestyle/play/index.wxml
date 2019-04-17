@@ -1,0 +1,4 @@
+<image class="fs-play-bg" src="/assets/imgs/fs-play-bg.png" />
+<view class="play-container">
+  <image class="play-status" src="/assets/imgs/to-play.png" />
+</view>

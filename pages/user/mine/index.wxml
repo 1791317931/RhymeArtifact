@@ -1,6 +1,6 @@
 <view class="mine-container">
   <view class="user-container">
-    <image src="{{userInfo.avatarUrl || '/assets/imgs/logo.png'}}"/>
+    <image src="{{userInfo.avatarUrl}}"/>
     <view>{{userInfo.nickName}}</view>
   </view>
   <view class="menu-container">

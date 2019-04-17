@@ -257,9 +257,10 @@ Component({
         let pagination = res.meta.pagination;
 
         res.data.forEach((item, index) => {
-          item.origin_url = PathUtil.getFilePath(item.origin_url) || '/assets/imgs/logo.png';
+          item.origin_url = PathUtil.getFilePath(item.origin_url) || CommonUtil.getDefaultUserImg();
           item.collection_num = parseInt(item.collection_num);
           item.share_num = parseInt(item.share_num);
+          item.user.data.avatar = item.user.data.avatar || CommonUtil.getDefaultUserImg();
 
           // 总时长
           let totalTime = Math.ceil(parseInt(item.music_duration) / 1000);

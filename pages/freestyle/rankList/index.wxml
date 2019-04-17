@@ -8,7 +8,45 @@
 </view>
 <view class="rank-wrapper">
   <view hidden="{{tabs[activeIndex].flag != 'week'}}" class="week-container">
-    <rankList id="weekRankComponent"/>
+    <view class="rank-list-bg-container">
+      <image class="rank-list-bg" src="/assets/imgs/rank-list-bg.png" />
+      <view class="day">02</view>
+      <view class="hour">02</view>
+      <view class="minute">02</view>
+      <view class="second">02</view>
+    </view>
+    <view class="top-user-container">
+      <view class="item rank-first-container">
+        <view class="circle-container">
+          <image src="/assets/imgs/logo.png" />
+          <image src="/assets/imgs/rank-first.png" />
+        </view>
+        <view class="theme-name">第一个主题</view>
+        <view class="count">123456465464654</view>
+        <image class="pick" src="/assets/imgs/pick.png" />
+      </view>
+      <view class="item rank-second-container">
+        <view class="circle-container">
+          <image src="/assets/imgs/logo.png" />
+          <image src="/assets/imgs/rank-second.png" />
+        </view>
+        <view class="theme-name">第二个主题</view>
+        <view class="count">123456465464654</view>
+        <image class="pick" src="/assets/imgs/pick.png" />
+      </view>
+      <view class="item rank-third-container">
+        <view class="circle-container">
+          <image src="/assets/imgs/logo.png" />
+          <image src="/assets/imgs/rank-third.png" />
+        </view>
+        <view class="theme-name">第三个主题</view>
+        <view class="count">123456465464654</view>
+        <image class="pick" src="/assets/imgs/pick.png" />
+      </view>
+    </view>
+    <view class="week-container-wrapper">
+      <rankList id="weekRankComponent"/>
+    </view>
   </view>
   <view hidden="{{tabs[activeIndex].flag != 'latest'}}" class="latest-container">
     <rankList id="latestRankComponent"/>
