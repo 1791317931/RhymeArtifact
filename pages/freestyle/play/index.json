@@ -1,3 +1,6 @@
 {
-  "usingComponents": {}
+  "usingComponents": {
+    "freestyleList": "/components/freestyleList/index"
+  },
+  "navigationBarTitleText": "播放freestyle"
 }

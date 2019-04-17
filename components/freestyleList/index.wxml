@@ -1,0 +1,14 @@
+<view class="fs-list-container">
+  <view class="fs-item" wx:for="{{page.list}}" wx:for-index="index" 
+    wx:for-item="item" wx:key="{{item.beat_id}}" data-index="{{index}}" catchtap="clickFsItem">
+    <view class="theme">主题</view>
+    <view class="created-time">5-21 18:33</view>
+    <image class="play" src="/assets/imgs/play-btn.png" data-index="{{index}}"/>
+  </view>
+</view>
+<view class="empty-container">
+  <empty 
+    loading="{{page.loading}}"
+    hasData="{{!!page.list.length}}"
+    hasMore="{{page.current_page < page.total_pages}}"/>
+</view>

@@ -76,7 +76,6 @@
 .rank-list-container .rank-item .pick {
   width:94rpx;
   height:43rpx;
-  background:rgba(255,255,255,1);
   border:2rpx solid rgba(0,241,255,1);
   position: absolute;
   top: 50%;

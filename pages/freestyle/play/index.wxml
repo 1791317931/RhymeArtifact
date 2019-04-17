@@ -1,4 +1,56 @@
+<canvas class="poster-canvas" canvas-id="poster-canvas"/>
+<musicPoster 
+  posterUrl="{{posterUrl}}"
+  bind:closePoster="closePoster"
+/>
+
 <image class="fs-play-bg" src="/assets/imgs/fs-play-bg.png" />
+<image class="play-status" src="/assets/imgs/to-play.png" />
 <view class="play-container">
-  <image class="play-status" src="/assets/imgs/to-play.png" />
+  <view class="theme">Freestyle主题：冠军</view>
+  <view class="progress-container">
+    <view class="play-time time">0:28</view>
+    <view class="bar">
+      <view class="inner-bar"></view>
+    </view>
+    <view class="total-time time">1:00</view>
+  </view>
+  <view class="top">
+    <image class="head" src="/assets/imgs/logo.png" />
+    <view class="name">Johnny Rios</view>
+    <view class="fans-production">
+      <view class="fans">
+        粉丝:<text>25</text>
+      </view>
+      <view class="production">
+        作品:<text>758</text>
+      </view>
+    </view>
+    <image class="follow" src="/assets/imgs/follow-btn.png" catchtap="follow" />
+  </view>
+</view>
+<view class="detail-container">
+  <view class="operation-container clearfix">
+    <view class="pull-left relative clearfix">
+      <image class="pick btn pull-left" src="/assets/imgs/pick-btn.png" catchtap="pick" />
+      <view class="for pull-left">X</view>
+      <view class="pick-count pull-left">28</view>
+    </view>
+    <view class="pull-right btn-group">
+      <image class="poster btn" src="/assets/imgs/poster-btn.png" catchtap="generatePoster" />
+      <view class="share btn">
+        <image src="/assets/imgs/share-btn.png"/>
+        <button open-type="share"></button>
+      </view>
+    </view>
+  </view>
+  <view class="history clearfix">
+    <view class="look-up pull-left">
+      <view class="count">345人听过</view>
+    </view>
+  </view>
+  <view class="more-production">
+    <view class="head">更多作品</view>
+    <freestyleList id="freestyleListComponent"/>
+  </view>
 </view>

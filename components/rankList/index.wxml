@@ -8,7 +8,7 @@
     <view class="user-name">张三</view>
     <view class="created-time">5-21 18:33</view>
     <view class="count">94</view>
-    <image class="pick" src="/assets/imgs/pick.png" data-index="{{index}}" catchtap="pick" />
+    <image class="pick" src="/assets/imgs/pick-btn.png" data-index="{{index}}" catchtap="pick" />
   </view>
 </view>
 <view wx:if="{{page.type == 'hot'}}" class="hot-rank-list-container clearfix">

@@ -1,0 +1,39 @@
+.fs-list-container {
+  padding: 0 16rpx;
+  background:rgba(19,27,37,1);
+}
+
+.fs-item {
+  height: 142rpx;
+  padding: 30rpx 130rpx 0 0;
+  border-bottom: 2rpx solid #212D3C;
+  position: relative;
+}
+
+.theme {
+  font-size:30rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(255,255,255,1);
+  line-height:42rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.created-time {
+  margin-top: 10rpx;
+  font-size:24rpx;
+  font-family:Helvetica;
+  color:rgba(152,152,152,1);
+  line-height:30px;
+}
+
+.play {
+  width: 94rpx;
+  height: 45rpx;
+  position: absolute;
+  top: 50%;
+  right: 40rpx;
+  transform: translateY(-50%);
+}
