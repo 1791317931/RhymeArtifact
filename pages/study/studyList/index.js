@@ -142,8 +142,9 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    let data = this.data;
-    switch (data.tabs[data.activeIndex].flag) {
+    let data = this.data,
+    tabs = data.tabs;
+    switch (tabs[data.activeIndex].flag) {
       case tabs[0].flag:
         this.data.videoComponent.onReachBottom();
         break;

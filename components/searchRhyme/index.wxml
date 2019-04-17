@@ -26,10 +26,9 @@
       catchtap="setClipboardData"
       wx:for-item="item" wx:key="index">{{item}}</button>
   </view>
-  <view>
-    <button catchtap="handleOpenModal"
-      hidden="{{placement != 'bottom' || rhymePage.list.length}}"
-      class="wechat_btn">添加微信群</button>
+  <view class="btn-container clearfix" hidden="{{placement != 'bottom' || rhymePage.list.length}}">
+    <button catchtap="handleOpenModal">添加微信群</button>
+    <button catchtap="toOfficialAccounts">关注公众号</button>
   </view>
   <loading hidden="{{!rhymePage.loading}}">
     搜索中...
@@ -38,7 +37,7 @@
     <view class="mask"></view>
     <view class="content">
       <text class="tips">提示</text>
-      <text class="article">请添加管理员微信
+      <text class="article">请添加赞助商微信
       <text class="special">"{{wechat}}"</text>拉你进群
       和rapper一起交流学习</text>
       <button class="ok" catchtap="setClipboardData">点击复制去添加</button>

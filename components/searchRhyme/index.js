@@ -14,7 +14,7 @@ Component({
    * 组件的初始数据
    */
   data: {
-    wechat: '17301257015',
+    wechat: '15517942602',
     showShareModal: false,
     rhymePage: {
       loading: false,
@@ -47,6 +47,11 @@ Component({
       this.setData({
         showShareModal: !this.data.showShareModal
       })
+    },
+    toOfficialAccounts() {
+      wx.navigateTo({
+        url: '/pages/user/officialAccounts/index'
+      });
     },
     setClipboardData(e) {
       let value = e.currentTarget.dataset && e.currentTarget.dataset.value

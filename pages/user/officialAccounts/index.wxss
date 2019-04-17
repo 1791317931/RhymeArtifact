@@ -1,0 +1,53 @@
+.official-accounts .body-container {
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  text-align: center;
+}
+
+.qr-code {
+  width: 482rpx;
+  height: 482rpx;
+  display: block;
+  margin: 0 auto;
+}
+
+.text {
+  margin-top: 34rpx;
+  font-size:32rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(0,0,0,1);
+  line-height:45rpx;
+  text-align: center;
+}
+
+.tip {
+  margin-top: 30rpx;
+  font-size:32rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(0,0,0,1);
+  line-height:45rpx;
+  text-align: center;
+}
+
+.btn-container {
+  margin-top: 127rpx;
+  text-align: center;
+}
+
+.btn-container .save-btn {
+  width:634rpx;
+  height:88rpx;
+  line-height:88rpx;
+  background:rgba(255,51,40,1);
+  border-radius:14rpx;
+  font-size:32rpx;
+  font-family:PingFangSC-Light;
+  font-weight:400;
+  color:rgba(255,255,255,1);
+  letter-spacing:1rpx;
+}
