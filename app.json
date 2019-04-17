@@ -19,7 +19,8 @@
     "components/studyArticleList/index",
     "components/studyVideoList/index",
     "pages/study/studyArticle/index",
-    "pages/user/officialAccounts/index"
+    "pages/user/officialAccounts/index",
+    "pages/webview/index"
   ],
   "window": {
     "backgroundColor": "#f7f7f7",

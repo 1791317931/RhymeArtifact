@@ -37,7 +37,7 @@
     <view class="mask"></view>
     <view class="content">
       <text class="tips">提示</text>
-      <text class="article">请添加管理员微信
+      <text class="article">请添加赞助商微信
       <text class="special">"{{wechat}}"</text>拉你进群
       和rapper一起交流学习</text>
       <button class="ok" catchtap="setClipboardData">点击复制去添加</button>
