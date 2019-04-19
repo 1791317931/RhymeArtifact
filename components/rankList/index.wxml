@@ -1,4 +1,4 @@
-<view wx:if="{{page.type != 'hot'}}" class="rank-list-container clearfix">
+<!-- <view wx:if="{{page.type != 'hot'}}" class="rank-list-container clearfix">
   <view class="rank-item" wx:for="{{page.list}}" wx:for-index="index" 
     wx:for-item="item" wx:key="{{item.beat_id}}" data-index="{{index}}" catchtap="clickRankItem">
     <view class="head-container">
@@ -20,6 +20,19 @@
     </view>
     <view class="theme-name">我是主题名字</view>
     <view class="user-name">我是微信名</view>
+  </view>
+</view> -->
+<view class="rank-list-container clearfix">
+  <view class="rank-item active" wx:for="{{page.list}}" wx:for-index="index" 
+    wx:for-item="item" wx:key="{{item.id}}" data-index="{{index}}" catchtap="clickRankItem">
+    <view class="head-container">
+      <image class="head" src="{{item.avatarUrl}}" />
+      <!-- <image class="champion" src="/assets/imgs/champion.png" /> -->
+    </view>
+    <view class="theme-name">{{item.title}}</view>
+    <view class="created-time">{{item.created_at}}</view>
+    <view class="count">{{item.pick_num}}</view>
+    <image class="pick" src="/assets/imgs/pick-btn.png" data-index="{{index}}" catchtap="pick" />
   </view>
 </view>
 <view class="empty-container">

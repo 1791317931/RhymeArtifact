@@ -112,12 +112,13 @@
     </view>
   </view>
   <view class="center-btn-container clearfix">
-    <view catchtap="chooseBeat">
+    <view class="hide" catchtap="chooseBeat">
       <button>选择beat</button>
     </view>
     <view catchtap="chooseAKBL">
       <button>阿卡贝拉</button>
-      <image hidden="{{freestyleMode != 'akbl'}}" src="/assets/imgs/sky-blue-rect.png"/>
+      <!-- <image hidden="{{freestyleMode != 'akbl'}}" src="/assets/imgs/sky-blue-rect.png"/> -->
+      <image src="/assets/imgs/sky-blue-rect.png"/>
     </view>
   </view>
   <view class="freestyle-detail-container">

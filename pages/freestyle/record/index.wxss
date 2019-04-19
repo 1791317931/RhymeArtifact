@@ -325,11 +325,17 @@
 .center-btn-container {
   margin-top: 35rpx;
   padding: 0 60rpx;
+
 }
 
 .center-btn-container > view {
-  float: left;
+  /* float: left; */
   position: relative;
+
+
+  width:294rpx;
+  height:98rpx;
+  margin: 0 auto;
 }
 
 .center-btn-container > view button {
@@ -357,7 +363,7 @@
 }
 
 .center-btn-container > view:last-child {
-  float: right;
+  /* float: right; */
 }
 
 .freestyle-detail-container {

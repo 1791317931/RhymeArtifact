@@ -68,7 +68,7 @@
 }
 
 .week-container .rank-list-bg-container .day {
-  left: 162rpx;
+  left: 164rpx;
 }
 
 .week-container .rank-list-bg-container .hour {
@@ -150,7 +150,7 @@
 
 .week-container .top-user-container .item .theme-name {
   margin-top: 20rpx;
-  font-size:34rpx;
+  font-size:30rpx;
   font-family:PingFangSC-Semibold;
   font-weight:600;
   color:rgba(255,255,255,1);

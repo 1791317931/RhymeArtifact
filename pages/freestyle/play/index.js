@@ -144,7 +144,7 @@ Page({
       id: this.data.fs.id
     }, (res) => {
       this.setData({
-        'fs.is_follow': ++this.data.fs.pick_num
+        'fs.pick_num': ++this.data.fs.pick_num
       });
     });
   },

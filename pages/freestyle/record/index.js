@@ -118,6 +118,14 @@ Page({
     let beatItem = wx.getStorageSync('beatItem');
     this.setBeatItem(beatItem);
 
+
+
+
+    this.setFreestyleMode('akbl');
+
+
+
+
     this.init();
   },
 
@@ -207,7 +215,8 @@ Page({
     if (beatItem) {
       beatItem.beatTimeArr = TimeUtil.numberToArr(Math.ceil(beatItem.beat_duration / 1000));
       this.setData({
-        'recordForm.beatId': beatItem.id
+        'recordForm.beatId': beatItem.id,
+        'recordForm.path': null
       });
       this.data.BAC.src = beatItem.beat_url;
 
@@ -260,7 +269,7 @@ Page({
       beatItem
     });
 
-    if (beatItem.tryBeatTimePercent >= 1) {
+    if (beatItem.tryBeatTimePercent >= 100) {
       this.beatAudioEnded();
     }
   },
@@ -272,18 +281,16 @@ Page({
     // 已播放时长
     beatItem.recordBeatTime = time;
     beatItem.recordBeatTimeArr = TimeUtil.numberToArr(time);
-
-    if (this.data.tryPlaying) {
-      beatItem.recordBeatTimePercent = (time / this.data.recordForm.duration * 100);
-    } else {
-      beatItem.recordBeatTimePercent = (time / beatItem.totalTime * 100);
-    }
+    beatItem.recordBeatTimePercent = (time / beatItem.totalTime * 100);
 
     this.setData({
       beatItem
     });
 
-    if (beatItem.recordBeatTimePercent >= 1) {
+    let recordForm = this.data.recordForm;
+    if (recordForm.path && time >= recordForm.duration / 1000) {
+      this.recordAudioEnded();
+    } else if (beatItem.recordBeatTimePercent >= 100) {
       this.recordAudioEnded();
     }
   },
@@ -297,9 +304,6 @@ Page({
         BAC.seek(0);
         RAC.seek(0);
         this.caculateTryBeatTime(0);
-      } else {
-        BAC.seek(this.data.beatItem.tryBeatTime);
-        RAC.seek(this.data.beatItem.tryBeatTime);
       }
       
       this.changeTryPlayState(true);
@@ -451,24 +455,23 @@ Page({
     let touches = e.touches,
     prePageX = this.data.startTryBeatPageX,
     pageX = e.touches[0].pageX,
+    beatItem = this.data.beatItem,
     recordForm = this.data.recordForm;
 
     if (this.data.freestyleMode == 'akbl') {
       prePageX = this.data.startRecordBeatPageX;
     }
 
-    let width = pageX - prePageX,
-    beatItem = this.data.beatItem,
-    percent = width / this.data.trackContainerWidth;
-
     if (this.data.freestyleMode == 'akbl') {
+      let width = pageX - prePageX,
+      percent = width / this.data.trackContainerWidth;
       let startRecordBeatPercent = this.data.startRecordBeatPercent + percent;
 
       startRecordBeatPercent = Math.min(1, startRecordBeatPercent);
       startRecordBeatPercent = Math.max(0, startRecordBeatPercent);
 
-      let time = startRecordBeatPercent * recordForm.duration;
-
+      // 这里X总时间
+      let time = startRecordBeatPercent * beatItem.totalTime;
 
       // 如果已经有被录制的音频，并且拖动的时间已经超出了被录制的音频总时长（录制的音频时长肯定<=伴奏音频），那么只能拖动到这个时长
       if (time >= recordForm.duration / 1000) {
@@ -478,6 +481,8 @@ Page({
 
       this.caculateRecordBeatTime(time);
     } else {
+      let width = pageX - prePageX,
+      percent = width / this.data.trackContainerWidth;
       let tryBeatTimePercent = this.data.startTryBeatPercent + percent;
 
       tryBeatTimePercent = Math.min(1, tryBeatTimePercent);
@@ -496,7 +501,25 @@ Page({
     }
   },
   tryBeatTouchEnd(e) {
-    this.tryPlayStart();
+    let RAC = this.data.RAC,
+    BAC = this.data.BAC;
+    if (this.data.freestyleMode == 'akbl') {
+      // 清唱
+      RAC.seek(this.data.beatItem.recordBeatTime);
+      RAC.play();
+    } else if (this.data.recordForm.path) {
+      // 同时播放
+      BAC.seek(this.data.beatItem.tryBeatTime);
+      RAC.seek(this.data.beatItem.recordBeatTime);
+      BAC.play();
+      RAC.play();
+    } else {
+      // 伴奏
+      BAC.seek(this.data.beatItem.tryBeatTime);
+      BAC.play();
+    }
+    this.changeTryPlayState(true);
+    this.changeTryPlayEndedState(false);
   },
   // ---------------------拖动指针--------------------------
   beginRecord() {
@@ -732,12 +755,12 @@ Page({
           }
 
           api.addFreestyle(param, (res) => {
-            TipUtil.message('服务器正在合成音频');
+            // TipUtil.message('服务器正在合成音频');
             setTimeout(() => {
               wx.redirectTo({
                 url: '/pages/freestyle/play/index?showMine=Y&id=' + res.data.id
               });
-            }, 3000);
+            }, 1000);
           }, () => {
             this.toggleSubmitting(true);
           });

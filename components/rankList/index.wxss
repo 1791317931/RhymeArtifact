@@ -44,7 +44,7 @@
   right: 0;
 }
 
-.rank-list-container .rank-item .user-name {
+.rank-list-container .rank-item .theme-name {
   font-size:30rpx;
   font-family:Helvetica;
   color:rgba(38,38,40,1);

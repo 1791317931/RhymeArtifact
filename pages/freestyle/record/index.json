@@ -4,6 +4,6 @@
   },
   "enablePullDownRefresh": false,
   "navigationBarBackgroundColor": "#2E2E2E",
-  "navigationBarTextStyle": "#fff",
+  "navigationBarTextStyle": "white",
   "navigationBarTitleText": "Freestyle录制"
 }

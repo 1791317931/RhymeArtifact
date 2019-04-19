@@ -106,7 +106,7 @@ export function getArticleById(data, fn, completeFn) {
 
 // ---------------------freestyle------------------------
 export function addFreestylePick(data, fn, completeFn) {
-  UrlUtil.post(`freestyles/${data.id}/pick`, data, fn, completeFn);
+  UrlUtil.put(`freestyles/${data.id}/pick`, data, fn, completeFn);
 }
 
 export function addFreestyle(data, fn, completeFn) {
@@ -117,8 +117,13 @@ export function getFreestyleById(data, fn, completeFn) {
   UrlUtil.get(`freestyles/${data.id}`, data, fn, completeFn);
 }
 
+// 获取某人的fs
 export function getFreestylePage(data, fn, completeFn) {
   UrlUtil.get(`freestyles`, data, fn, completeFn);
+}
+
+export function getFreestyleTopRank(data, fn, completeFn) {
+  UrlUtil.get(`freestyle-activity/rank`, data, fn, completeFn);
 }
 
 export function getMyFreestylePage(data, fn, completeFn) {
