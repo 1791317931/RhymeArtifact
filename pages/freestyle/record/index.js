@@ -222,7 +222,8 @@ Page({
         totalTime
       };
 
-      this.setFreestyleMode(null);
+      let prevFreestyleMode = wx.getStorageSync('freestyleMode');
+      this.setFreestyleMode(prevFreestyleMode);
     }
 
     this.setData({
@@ -258,6 +259,10 @@ Page({
     this.setData({
       beatItem
     });
+
+    if (beatItem.tryBeatTimePercent >= 1) {
+      this.beatAudioEnded();
+    }
   },
   // 计算录制-伴奏播放时长
   caculateRecordBeatTime(time) {
@@ -267,10 +272,20 @@ Page({
     // 已播放时长
     beatItem.recordBeatTime = time;
     beatItem.recordBeatTimeArr = TimeUtil.numberToArr(time);
-    beatItem.recordBeatTimePercent = (time / beatItem.totalTime * 100);
+
+    if (this.data.tryPlaying) {
+      beatItem.recordBeatTimePercent = (time / this.data.recordForm.duration * 100);
+    } else {
+      beatItem.recordBeatTimePercent = (time / beatItem.totalTime * 100);
+    }
+
     this.setData({
       beatItem
     });
+
+    if (beatItem.recordBeatTimePercent >= 1) {
+      this.recordAudioEnded();
+    }
   },
   tryPlayStart() {
     let tryPlay = () => {
@@ -286,11 +301,14 @@ Page({
         BAC.seek(this.data.beatItem.tryBeatTime);
         RAC.seek(this.data.beatItem.tryBeatTime);
       }
-
-      BAC.play();
+      
       this.changeTryPlayState(true);
       this.changeTryPlayEndedState(false);
       this.changeMode('try');
+
+      if (this.data.freestyleMode == 'beat') {
+        BAC.play();
+      }
 
       // 如果有已经录制完成的音频
       if (this.data.recordForm.path) {
@@ -391,6 +409,10 @@ Page({
     });
   },
   recordAudioTimeUpdate(time) {
+    if (this.data.freestyleMode == 'akbl') {
+      this.caculateRecordBeatTime(time);
+    }
+
     if (time > this.data.recordForm.duration) {
       this.recordAudioEnded(time);
     }
@@ -416,7 +438,9 @@ Page({
   tryBeatTouchStart(e) {
     this.setData({
       startTryBeatPageX: e.touches[0].pageX,
-      startTryBeatPercent: this.data.beatItem.tryBeatTimePercent / 100
+      startTryBeatPercent: this.data.beatItem.tryBeatTimePercent / 100,
+      startRecordBeatPageX: e.touches[0].pageX,
+      startRecordBeatPercent: this.data.beatItem.recordBeatTimePercent / 100
     });
 
     if (this.data.tryPlaying) {
@@ -425,26 +449,51 @@ Page({
   },
   moveTryBeatPointer(e) {
     let touches = e.touches,
-      prePageX = this.data.startTryBeatPageX,
-      pageX = e.touches[0].pageX,
-      recordForm = this.data.recordForm;
+    prePageX = this.data.startTryBeatPageX,
+    pageX = e.touches[0].pageX,
+    recordForm = this.data.recordForm;
 
-    let width = pageX - prePageX,
-      beatItem = this.data.beatItem,
-      percent = width / this.data.trackContainerWidth,
-      tryBeatTimePercent = this.data.startTryBeatPercent + percent;
-
-    tryBeatTimePercent = Math.min(1, tryBeatTimePercent);
-    tryBeatTimePercent = Math.max(0, tryBeatTimePercent);
-
-    let time = tryBeatTimePercent * beatItem.totalTime;
-
-    // 如果已经有被录制的音频，并且拖动的时间已经超出了被录制的音频总时长（录制的音频时长肯定<=伴奏音频），那么只能拖动到这个时长
-    if (recordForm.path && time >= recordForm.duration / 1000) {
-      time = recordForm.duration / 1000;
+    if (this.data.freestyleMode == 'akbl') {
+      prePageX = this.data.startRecordBeatPageX;
     }
 
-    this.caculateTryBeatTime(time);
+    let width = pageX - prePageX,
+    beatItem = this.data.beatItem,
+    percent = width / this.data.trackContainerWidth;
+
+    if (this.data.freestyleMode == 'akbl') {
+      let startRecordBeatPercent = this.data.startRecordBeatPercent + percent;
+
+      startRecordBeatPercent = Math.min(1, startRecordBeatPercent);
+      startRecordBeatPercent = Math.max(0, startRecordBeatPercent);
+
+      let time = startRecordBeatPercent * recordForm.duration;
+
+
+      // 如果已经有被录制的音频，并且拖动的时间已经超出了被录制的音频总时长（录制的音频时长肯定<=伴奏音频），那么只能拖动到这个时长
+      if (time >= recordForm.duration / 1000) {
+        time = recordForm.duration / 1000;
+        this.recordAudioEnded();
+      }
+
+      this.caculateRecordBeatTime(time);
+    } else {
+      let tryBeatTimePercent = this.data.startTryBeatPercent + percent;
+
+      tryBeatTimePercent = Math.min(1, tryBeatTimePercent);
+      tryBeatTimePercent = Math.max(0, tryBeatTimePercent);
+
+      let time = tryBeatTimePercent * beatItem.totalTime;
+
+      // 如果已经有被录制的音频，并且拖动的时间已经超出了被录制的音频总时长（录制的音频时长肯定<=伴奏音频），那么只能拖动到这个时长
+      if (recordForm.path && time >= recordForm.duration / 1000) {
+        time = recordForm.duration / 1000;
+        this.beatAudioEnded();
+        this.recordAudioEnded();
+      }
+
+      this.caculateTryBeatTime(time);
+    }
   },
   tryBeatTouchEnd(e) {
     this.tryPlayStart();
@@ -452,7 +501,7 @@ Page({
   // ---------------------拖动指针--------------------------
   beginRecord() {
     let freestyleMode = this.data.freestyleMode;
-    if (freestyleMode == null) {
+    if (!freestyleMode) {
       TipUtil.message('请选择beat');
       return;
     }
@@ -541,7 +590,7 @@ Page({
     RM.stop();
 
     wx.showLoading({
-      title: '音频保存中，请稍后'
+      title: '音频保存中'
     });
 
     RM.onStop((res) => {
@@ -671,7 +720,6 @@ Page({
         },
         success: (res) => {
           let param = {
-            beat_id: form.beatId,
             origin_url: '/' + key,
             title: form.title,
             author: form.author,
@@ -679,11 +727,15 @@ Page({
             size: form.fileSize
           };
 
+          if (form.beatId) {
+            param.beat_id = form.beatId;
+          }
+
           api.addFreestyle(param, (res) => {
-            TipUtil.message('服务器合成音频后会第一时间通知您！');
+            TipUtil.message('服务器正在合成音频');
             setTimeout(() => {
               wx.redirectTo({
-                url: '/pages/freestyle/play/index?id=' + res.data.id
+                url: '/pages/freestyle/play/index?showMine=Y&id=' + res.data.id
               });
             }, 3000);
           }, () => {

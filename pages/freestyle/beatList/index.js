@@ -1,20 +1,12 @@
 import CommonUtil from '../../../assets/js/CommonUtil';
+import * as api from '../../../assets/js/api';
 
 Page({
   /**
    * 页面的初始数据
    */
   data: {
-    tabs: [
-      {
-        flag: 'tarp',
-        text: 'Tarp'
-      },
-      {
-        flag: 'old-school',
-        text: 'old school'
-      }
-    ],
+    tabs: [],
     activeIndex: 0,
     beatComponent: null,
     // 需要跳转的页面
@@ -32,6 +24,8 @@ Page({
     });
     beatComponent.isFreeStyle(true);
     beatComponent.init(this);
+
+    // this.getBeatCategory();
     this.getPage(1);
   },
 
@@ -46,19 +40,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    if (!this.data.beatComponent.data.page.list.length) {
-      this.getPage(1);
-    }
 
-    if (this.data.targetPath) {
-      wx.navigateTo({
-        url: this.data.targetPath
-      });
-      this.setData({
-        targetPath: null
-      });
-      return;
-    }
   },
 
   /**
@@ -80,7 +62,7 @@ Page({
    */
   onPullDownRefresh: function () {
     wx.stopPullDownRefresh();
-    this.data.beatComponent.getPage(1);
+    this.getPage(1);
   },
 
   /**
@@ -102,31 +84,33 @@ Page({
       this.setData({
         activeIndex: index
       });
+
+      // 设置分类 id
+      this.data.beatComponent.setData({
+        categoryId: this.data.tabs[this.data.activeIndex].id
+      });
       this.getPage(1);
     }
   },
-  getPage(pageNum = 1) {
-    let data = this.data,
-    flag = data.tabs[data.activeIndex].flag,
-    beatComponent = data.beatComponent;
+  getBeatCategory() {
+    api.getBeatCategoryList(null, (res) => {
+      this.setData({
+        tabs: res.data
+      });
 
-
-
-
-
-
-
-
-    // 需要设置参数
-    if (flag === 'tarp') {
-      beatComponent.getPage(1);
-    } else if (flag === 'old-school') {
-      beatComponent.getPage(1);
-    }
-  },
-  closePoster() {
-    this.setData({
-      posterUrl: null
+      // 设置分类
+      this.data.beatComponent.setData({
+        categoryId: this.data.tabs[this.data.activeIndex].id
+      });
+      this.getPage(1);
     });
+  },
+  getPage(pageNum = 1) {
+    // 必须有分类
+    // if (!this.data.tabs.length) {
+    //   return;
+    // }
+
+    this.data.beatComponent.getPage(pageNum);
   }
 })

@@ -36,7 +36,12 @@ let UrlUtil = {
         if (statusCode == ConfigUtil.statusCode.NOT_AUTHORITION) {
           UrlUtil.toLogin();
         } else if (statusCode >= 400) {
-          TipUtil.errorCode(res.data.code);
+          let data = res.data;
+          if (data.message) {
+            TipUtil.error(data.message);
+          } else {
+            TipUtil.errorCode(res.data.status_code || res.data.code);
+          }
           failFn && failFn();
         } else {
           fn && fn(res.data);

@@ -30,7 +30,8 @@ Component({
       isFreeStyle: false
     },
     BAC: null,
-    scope: null
+    scope: null,
+    categoryId: null
   },
 
   /**
@@ -284,7 +285,7 @@ Component({
         per_page: page.per_page,
         hasCollection: 1
       },
-        list = [];
+      list = [];
 
       if (current_page > 1) {
         list = page.list;
@@ -306,6 +307,10 @@ Component({
 
       if (page.isFreeStyle) {
         delete param.hasCollection
+      }
+
+      if (this.data.categoryId) {
+        param.category_id = this.data.categoryId;
       }
 
       fn(param, (res) => {

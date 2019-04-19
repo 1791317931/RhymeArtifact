@@ -63,6 +63,10 @@ export function getLyricPage(data, fn, completeFn) {
 // ---------------------歌词------------------------
 
 // ---------------------伴奏------------------------
+export function getBeatCategoryList(data, fn, completeFn) {
+  UrlUtil.get('categories', data, fn, completeFn);
+}
+
 export function getBeatPage(data, fn, completeFn) {
   UrlUtil.get('beats', data, fn, completeFn);
 }

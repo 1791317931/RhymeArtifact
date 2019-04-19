@@ -85,7 +85,7 @@ Component({
     clickFsItem(e) {
       let item = this.getItem(e);
       wx.navigateTo({
-        url: `/pages/freestyle/play/index?id=${item.id}`
+        url: `/pages/freestyle/play/index?id=${item.id}&userId=${item.user_id}`
       });
     },
     startPlay(e) {

@@ -21,7 +21,8 @@ Page({
     // 播放进度
     playPercent: 0,
     showMoreInfo: false,
-    loadingUserInfo: true
+    loadingUserInfo: true,
+    showMine: null
   },
 
   /**
@@ -50,15 +51,17 @@ Page({
     });
 
     this.initAudio();
+    this.getById(options.id);
 
-
-
-
-    this.getById(options.id || 7);
-    this.getUserById(options.userId || 12);
-
-
-
+    if (options.showMine == 'Y') {
+      this.setData({
+        showMine: options.showMine
+      });
+      this.getMyInfo();
+    } else if (options.userId) {
+      this.getUserById(options.userId);
+    }
+    
     freestyleListComponent.getPage(1);
   },
 
@@ -80,14 +83,14 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+    this.data.audio.puase();
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    this.data.audio.destroy();
   },
 
   /**
@@ -136,16 +139,13 @@ Page({
       });
     }
   },
-  cancelFollow() {
-
-  },
   pick() {
     api.addFreestylePick({
       id: this.data.fs.id
     }, (res) => {
-
-    }, () => {
-
+      this.setData({
+        'fs.is_follow': ++this.data.fs.pick_num
+      });
     });
   },
   generatePoster() {
@@ -169,6 +169,22 @@ Page({
   toggleLoadingUserInfo(loadingUserInfo) {
     this.setData({
       loadingUserInfo
+    });
+  },
+  getMyInfo() {
+    this.toggleLoadingUserInfo(true);
+
+    api.getMyInfo({
+      have: 'freestyle_count'
+    }, (res) => {
+      let user = res.data;
+      user.avatarUrl = PathUtil.getFilePath(user.avatar);
+
+      this.setData({
+        user
+      });
+    }, () => {
+      this.toggleLoadingUserInfo(false);
     });
   },
   getUserById(id) {

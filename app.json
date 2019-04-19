@@ -1,9 +1,9 @@
 {
   "pages": [
     "pages/main/index",
+    "pages/freestyle/rankList/index",
     "pages/freestyle/play/index",
     "pages/freestyle/index/index",
-    "pages/freestyle/rankList/index",
     "pages/freestyle/beatList/index",
     "pages/freestyle/record/index",
     "pages/study/studyVideo/index",
