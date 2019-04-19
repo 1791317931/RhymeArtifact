@@ -539,7 +539,13 @@ Page({
 
     // 结束录制
     RM.stop();
+
+    wx.showLoading({
+      title: '音频保存中，请稍后'
+    });
+
     RM.onStop((res) => {
+      wx.hideLoading();
       BAC.pause();
 
       let recordForm = this.data.recordForm;
@@ -646,9 +652,9 @@ Page({
 
     CommonUtil.getPolicyParam((data) => {
       let form = this.data.recordForm,
-        path = form.path,
-        key = data.getKey('music', path),
-        host = data.host;
+      path = form.path,
+      key = data.getKey('freestyle', path),
+      host = data.host;
 
       // 上传
       wx.uploadFile({
@@ -667,25 +673,19 @@ Page({
           let param = {
             beat_id: form.beatId,
             origin_url: '/' + key,
-            music_lyric: form.lyrics,
-            music_title: form.title,
-            music_author: form.author,
-            music_duration: form.duration,
-            music_size: form.fileSize
+            title: form.title,
+            author: form.author,
+            duration: form.duration,
+            size: form.fileSize
           };
 
-          api.createMusic(param, (res) => {
-            TipUtil.message('发布成功');
+          api.addFreestyle(param, (res) => {
+            TipUtil.message('服务器合成音频后会第一时间通知您！');
             setTimeout(() => {
-              let pages = getCurrentPages();
-              pages[pages.length - 2].setData({
-                targetPath: '/pages/create/createMusicList/index'
+              wx.redirectTo({
+                url: '/pages/freestyle/play/index?id=' + res.data.id
               });
-
-              wx.navigateBack({
-                delta: 1
-              });
-            }, 1000);
+            }, 3000);
           }, () => {
             this.toggleSubmitting(true);
           });

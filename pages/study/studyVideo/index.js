@@ -164,8 +164,7 @@ Page({
   getVideoList() {
     this.toggleLoading(true);
 
-    let groupId = this.data.groupId,
-    defaultImage = getApp().globalData.defaultImage;
+    let groupId = this.data.groupId;
     
     api.getVideoById({
       id: groupId,
@@ -174,7 +173,7 @@ Page({
       let list = res.data.sections.data;
       list.forEach((item, index) => {
         let section_cover = PathUtil.getFilePath(item.section_cover);
-        item.section_cover = section_cover || defaultImage;
+        item.section_cover = section_cover;
         this.getPosterInfo(index, section_cover);
         // 为了海报分享使用分辨参数
         item.groupId = groupId;

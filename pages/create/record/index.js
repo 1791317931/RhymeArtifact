@@ -489,7 +489,13 @@ Page({
 
     // 结束录制
     RM.stop();
+
+    wx.showLoading({
+      title: '音频保存中，请稍后'
+    });
+
     RM.onStop((res) => {
+      wx.hideLoading();
       BAC.pause();
 
       let recordForm = this.data.recordForm;

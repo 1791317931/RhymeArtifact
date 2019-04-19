@@ -179,12 +179,11 @@ Component({
 
       this.togglePageLoading(true);
       api.getStudyPage(param, (res) => {
-        let pagination = res.meta.pagination,
-          defaultImage = getApp().globalData.defaultImage;
+        let pagination = res.meta.pagination;
 
         res.data.forEach((item, index) => {
           let course_cover = PathUtil.getFilePath(item.course_cover);
-          item.course_cover = course_cover || defaultImage;
+          item.course_cover = course_cover;
           this.getPosterInfo(list.length, course_cover);
           item.groupId = item.id;
           list.push(item);

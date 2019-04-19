@@ -209,7 +209,7 @@ Component({
       if (e.detail.errMsg == 'MEDIA_ERR_SRC_NOT_SUPPORTED') {
         TipUtil.message('播放失败');
       }
-      this.playEnd(e);
+      this.beatAudioEnded(e);
     },
     audioTimeUpdate(totalTime, time) {
       this.caculateSurplusTime(totalTime, time);

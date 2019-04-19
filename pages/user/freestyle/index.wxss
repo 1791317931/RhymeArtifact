@@ -1,1 +1,3 @@
-/* pages/user/freestyle/index.wxss */
+.freestyle-container {
+  padding: 30rpx 20rpx 0;
+}

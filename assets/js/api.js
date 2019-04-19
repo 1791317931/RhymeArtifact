@@ -99,3 +99,43 @@ export function getArticleById(data, fn, completeFn) {
   UrlUtil.get(`posts/${data.id}`, data, fn, completeFn);
 }
 // ---------------------学习------------------------
+
+// ---------------------freestyle------------------------
+export function addFreestylePick(data, fn, completeFn) {
+  UrlUtil.post(`freestyles/${data.id}/pick`, data, fn, completeFn);
+}
+
+export function addFreestyle(data, fn, completeFn) {
+  UrlUtil.post('freestyles', data, fn, completeFn);
+}
+
+export function getFreestyleById(data, fn, completeFn) {
+  UrlUtil.get(`freestyles/${data.id}`, data, fn, completeFn);
+}
+
+export function getFreestylePage(data, fn, completeFn) {
+  UrlUtil.get(`freestyles`, data, fn, completeFn);
+}
+
+export function getMyFreestylePage(data, fn, completeFn) {
+  UrlUtil.get(`user/freestyles`, data, fn, completeFn);
+}
+// ---------------------freestyle------------------------
+
+// ---------------------用户------------------------
+export function getMyInfo(data, fn, completeFn) {
+  UrlUtil.get(`users`, data, fn, completeFn);
+}
+
+export function getUserById(data, fn, completeFn) {
+  UrlUtil.get(`users/${data.id}`, data, fn, completeFn);
+}
+
+export function follow(data, fn, completeFn) {
+  UrlUtil.post(`fans`, data, fn, completeFn);
+}
+
+export function cancelFollow(data, fn, completeFn) {
+  UrlUtil.delete(`fans/user-id/${data.user_id}`, data, fn, completeFn);
+}
+// ---------------------用户------------------------

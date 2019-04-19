@@ -1,0 +1,9 @@
+<view hidden="{{!posterUrl}}" class="z-modal">
+  <view  class="poster-container">
+    <view class="poster-body">
+      <image catchtap="previewImage" wx:if="{{posterUrl}}" src="{{posterUrl}}"/>
+    </view>
+    <view class="save-tip">已保存到相册，快去分享吧 </view>
+    <image class="delete" src="/assets/imgs/circle-delete.png" catchtap="closePoster"/>
+  </view>
+</view>

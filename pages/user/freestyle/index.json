@@ -1,3 +1,7 @@
 {
-  "usingComponents": {}
+  "usingComponents": {
+    "myFreestyleList": "/components/myFreestyleList/index"
+  },
+  "navigationBarTitleText": "我的Freestyle",
+  "enablePullDownRefresh": true
 }

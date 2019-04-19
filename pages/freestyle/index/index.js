@@ -1,9 +1,13 @@
+import PathUtil from '../../../assets/js/PathUtil';
+import * as api from '../../../assets/js/api';
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    loadModalComponent: null,
     user: null
   },
 
@@ -11,10 +15,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let user = wx.getStorageSync('userInfo');
+    let loadModalComponent = this.selectComponent('#loadModalComponent');
+
     this.setData({
-      user
+      loadModalComponent
     });
+
+    this.getUserInfo();
   },
 
   /**
@@ -64,6 +71,27 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  toggleLoadingUserInfo(loading) {
+    this.data.loadModalComponent.setData({
+      loading
+    });
+  },
+  getUserInfo() {
+    this.toggleLoadingUserInfo(true);
+
+    api.getMyInfo({
+      have: 'freestyle_count, music_count'
+    }, (res) => {
+      let user = res.data;
+      user.avatarUrl = PathUtil.getFilePath(user.avatar);
+
+      this.setData({
+        user
+      });
+    }, () => {
+      this.toggleLoadingUserInfo(false);
+    });
   },
   toRankList() {
     wx.navigateTo({

@@ -32,6 +32,9 @@
   color:rgba(255,255,255,1);
   line-height:60rpx;
   text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .progress-container {
@@ -75,7 +78,7 @@
   position: absolute;
   top: 0;
   /* 不用动态width，使用translate可以节省cpu */
-  transform: translateX(-520rpx);
+  transform: translateX(-544rpx);
 }
 
 .play-container .top {
@@ -83,6 +86,13 @@
   height: 80rpx;
   position: relative;
   padding: 0 170rpx 0 142rpx;
+}
+
+.play-container .top.loading-user-info {
+  line-height: 80rpx;
+  color: #fff;
+  text-align: center;
+  font-size: 20rpx;
 }
 
 .play-container .top .head {
@@ -218,7 +228,7 @@
 }
 
 .detail-container .operation-container .share button {
-  position: absoulte;
+  position: absolute;
   top: 0;
   right: 0;
   bottom: 0;

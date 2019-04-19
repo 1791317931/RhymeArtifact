@@ -94,3 +94,10 @@ button:after {
   width: 610px;
   height: 660px;
 }
+.freestyle-poster-canvas {
+  position: fixed;
+  left: 120%;
+  top: 120%;
+  width: 750px;
+  height: 1334px;
+}

@@ -5,6 +5,7 @@ import PathUtil from '../../assets/js/PathUtil';
 import TimeUtil from '../../assets/js/TimeUtil';
 import * as api from '../../assets/js/api';
 
+// 获取某人的freestyle
 Component({
   /**
    * 组件的属性列表
@@ -24,7 +25,9 @@ Component({
       total_pages: 0,
       list: []
     },
-    scope: null
+    scope: null,
+    userId: null,
+    clickItem: null
   },
 
   /**
@@ -58,7 +61,10 @@ Component({
       return this.data.page.list[index];
     },
     clickFsItem(e) {
-
+      let item = this.getItem(e);
+      if (this.data.clickItem) {
+        this.data.clickItem(item);
+      }
     },
     togglePageLoading(loading) {
       this.setData({
@@ -74,9 +80,9 @@ Component({
       let param = {
         page: current_page,
         per_page: page.per_page,
-        type: page.type
+        userId: this.data.userId
       },
-        list = [];
+      list = [];
 
       if (current_page > 1) {
         list = page.list;
@@ -87,20 +93,10 @@ Component({
         'page.current_page': current_page
       });
 
-      api.getBeatPage(param, (res) => {
+      api.getFreestylePage(param, (res) => {
         let pagination = res.meta.pagination;
 
         res.data.forEach((item, index) => {
-          item.beat_url = PathUtil.getFilePath(item.beat_url);
-          item.collection_num = parseInt(item.collection_num);
-
-          // 总时长
-          let totalTime = Math.ceil(item.beat_duration / 1000);
-          item.totalTime = totalTime;
-          // 剩余时长
-          item.surplusTime = totalTime;
-          item.surplusTimeArr = TimeUtil.numberToArr(totalTime);
-
           list.push(item);
         });
 
@@ -109,6 +105,8 @@ Component({
           'page.total_pages': pagination.total_pages || 0,
           'page.current_page': pagination.current_page || 1
         });
+
+        this.triggerEvent('getFsPageCallback', this.data.page);
       }, () => {
         this.togglePageLoading(false);
       });

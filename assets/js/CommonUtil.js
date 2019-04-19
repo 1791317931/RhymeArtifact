@@ -1,4 +1,5 @@
 import * as api from './api'
+import PathUtil from './PathUtil';
 
 function S4() {
   return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
@@ -19,9 +20,6 @@ let CommonUtil = {
   // 禁止出现正则、function
   copyObject(obj) {
     return JSON.parse(JSON.stringify(obj));
-  },
-  getDefaultUserImg() {
-    return '/assets/imgs/logo.png';
   },
   getShareRandom() {
     return parseInt(Math.random() * 5);

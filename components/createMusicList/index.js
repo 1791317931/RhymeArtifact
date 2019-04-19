@@ -257,10 +257,10 @@ Component({
         let pagination = res.meta.pagination;
 
         res.data.forEach((item, index) => {
-          item.origin_url = PathUtil.getFilePath(item.origin_url) || CommonUtil.getDefaultUserImg();
+          item.origin_url = PathUtil.getFilePath(item.origin_url);
           item.collection_num = parseInt(item.collection_num);
           item.share_num = parseInt(item.share_num);
-          item.user.data.avatar = item.user.data.avatar || CommonUtil.getDefaultUserImg();
+          item.user.data.avatar = PathUtil.getFilePath(item.user.data.avatar);
 
           // 总时长
           let totalTime = Math.ceil(parseInt(item.music_duration) / 1000);

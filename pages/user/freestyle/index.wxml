@@ -1,1 +1,3 @@
-my freestyle
+<view class="freestyle-container">
+  <myFreestyleList id="fsComponent"/>
+</view>

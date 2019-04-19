@@ -1,10 +1,3 @@
-// {
-//   "selectedIconPath": "assets/imgs/freestyle-active.png",
-//     "iconPath": "assets/imgs/freestyle.png",
-//       "pagePath": "pages/freestyle/index/index",
-//         "text": "Freestyle"
-// },
-
 App({
   onLaunch: function () {
     const updateManager = wx.getUpdateManager()
@@ -27,7 +20,6 @@ App({
   },
   globalData: {
     userInfo: null,
-    appName: '押韵Rap',
-    defaultImage: '/assets/imgs/default.png'
+    appName: '押韵Rap'
   }
 })

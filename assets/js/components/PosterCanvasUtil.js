@@ -5,12 +5,18 @@ import DownloadUtil from '../DownloadUtil';
 import CommonUtil from '../CommonUtil';
 import CreateUtil from './poster/CreateUtil';
 import StudyUtil from './poster/StudyUtil';
+import FreestyleUtil from './poster/FreestyleUtil';
 
 let PosterCanvasUtil = {
-  // type：beat music video article
+  // type：beat music video article freestyle
   draw(_this, data, type = 'beat') {
-    let posterId = 'poster-canvas',
-    context = wx.createCanvasContext(posterId),
+    let posterId = 'poster-canvas';
+
+    if (type == 'freestyle') {
+      posterId = 'freestyle-poster-canvas';
+    }
+
+    let context = wx.createCanvasContext(posterId),
     id = data.id,
     paramMap = {
       // nothing=1为了构建场景值
@@ -27,6 +33,8 @@ let PosterCanvasUtil = {
       }
     } else if (type == 'article') {
       param = 'path=pages/study/studyList/index&t=article&id=' + id;
+    } else if (type == 'freestyle') {
+      param = 'path=pages/freestyle/play/index&id=' + id;
     } else {
       param = paramMap[type];
     }
@@ -41,13 +49,19 @@ let PosterCanvasUtil = {
       success: (res) => {
         let qrCodePath = res.tempFilePath;
 
-        context.setFillStyle('#fff');
-        context.fillRect(0, 0, 610, 661);
-
-        if (['beat', 'music'].indexOf(type) != -1) {
-          CreateUtil.draw(context, data, type, '/assets/imgs/logo.png', qrCodePath);
+        if (['freestyle'].indexOf(type) != -1) {
+          context.setFillStyle('#fff');
+          context.fillRect(0, 0, 750, 1334);
+          FreestyleUtil.draw(context, data, qrCodePath);
         } else {
-          StudyUtil.draw(context, data, type, qrCodePath);
+          context.setFillStyle('#fff');
+          context.fillRect(0, 0, 610, 661);
+
+          if (['beat', 'music'].indexOf(type) != -1) {
+            CreateUtil.draw(context, data, type, '/assets/imgs/logo.png', qrCodePath);
+          } else if (['article', 'video'].indexOf(type) != -1) {
+            StudyUtil.draw(context, data, type, qrCodePath);
+          }
         }
 
         context.draw(false, (res) => {

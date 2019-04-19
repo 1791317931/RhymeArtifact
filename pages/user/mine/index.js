@@ -1,4 +1,5 @@
 import CommonUtil from '../../../assets/js/CommonUtil';
+import PathUtil from '../../../assets/js/PathUtil';
 
 Page({
 
@@ -53,7 +54,7 @@ Page({
    */
   onLoad: function (options) {
     let userInfo = wx.getStorageSync('userInfo');
-    userInfo.avatarUrl = userInfo.avatarUrl || CommonUtil.getDefaultImg();
+    userInfo.avatarUrl = PathUtil.getFilePath(userInfo.avatarUrl);
     this.setData({
       userInfo 
     });

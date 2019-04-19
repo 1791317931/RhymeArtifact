@@ -1,16 +1,17 @@
+<loadModal id="loadModalComponent"/>
 <view class="adver">
   <ad unit-id="adunit-c8c2d9e4ba6bd4dc"></ad>
 </view>
 <view class="content-body">
   <view class="user-info">
     <image class="head-img" src="{{user.avatarUrl}}" />
-    <view class="name">{{user.nickName}}</view>
+    <view class="name">{{user.nickname}}</view>
     <view class="works-container clearfix">
       <view>
-        粉丝:<text>0</text>
+        粉丝:<text>{{user.fans_count}}</text>
       </view>
       <view>
-        Freestyle作品:<text>0</text>
+        Freestyle作品:<text>{{user.freestyle_count}}</text>
       </view>
     </view>
   </view>

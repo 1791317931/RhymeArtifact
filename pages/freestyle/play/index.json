@@ -1,6 +1,8 @@
 {
   "usingComponents": {
-    "freestyleList": "/components/freestyleList/index"
+    "loadModal": "/components/common/loadModal/index",
+    "freestyleList": "/components/freestyleList/index",
+    "freestylePoster": "/components/freestylePoster/index"
   },
   "navigationBarTitleText": "播放freestyle"
 }

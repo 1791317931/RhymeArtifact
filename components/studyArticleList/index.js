@@ -128,13 +128,12 @@ Component({
       }
 
       this.togglePageLoading(true);
-      let defaultImage = getApp().globalData.defaultImage;
 
       api.getStudyPage(param, (res) => {
         let pagination = res.meta.pagination;
         res.data.forEach((item, index) => {
           let cover = PathUtil.getFilePath(item.cover);
-          item.cover = cover || defaultImage;
+          item.cover = cover;
           this.getPosterInfo(list.length, cover);
           list.push(item);
         });
