@@ -111,14 +111,13 @@
       <view class="time-end">{{beatItem.beatTimeArr[1]}}:{{beatItem.beatTimeArr[2]}}</view>
     </view>
   </view>
-  <view class="center-btn-container clearfix">
-    <view class="hide" catchtap="chooseBeat">
+  <view class="center-btn-container clearfix hide">
+    <view catchtap="chooseBeat">
       <button>选择beat</button>
     </view>
     <view catchtap="chooseAKBL">
       <button>阿卡贝拉</button>
-      <!-- <image hidden="{{freestyleMode != 'akbl'}}" src="/assets/imgs/sky-blue-rect.png"/> -->
-      <image src="/assets/imgs/sky-blue-rect.png"/>
+      <image hidden="{{freestyleMode != 'akbl'}}" src="/assets/imgs/sky-blue-rect.png"/>
     </view>
   </view>
   <view class="freestyle-detail-container">
