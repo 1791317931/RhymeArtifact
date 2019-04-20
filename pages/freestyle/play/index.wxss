@@ -66,19 +66,17 @@
   background:rgba(255,255,255, .2);
   border-radius:9rpx;
   overflow: hidden;
-  /* 强行隐藏.inner-bar */
-  transform: translate(0);
+  position: relative;
 }
 
 .progress-container .inner-bar {
-  width: 544rpx;
+  width: 0;
   height: 10rpx;
   background:rgba(255,255,255,1);
   border-radius:9rpx;
   position: absolute;
   top: 0;
-  /* 不用动态width，使用translate可以节省cpu */
-  transform: translateX(-544rpx);
+  left: 0;
 }
 
 .play-container .top {

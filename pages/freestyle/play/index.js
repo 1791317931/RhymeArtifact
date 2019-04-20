@@ -325,7 +325,7 @@ Page({
     fs.playTime = currentTime;
     fs.playTimeArr = TimeUtil.numberToArr(currentTime);
 
-    let playPercent = currentTime / fs.duration;
+    let playPercent = currentTime / fs.duration * 100;
 
     this.setData({
       fs,

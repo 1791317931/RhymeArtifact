@@ -10,7 +10,7 @@
   <view class="progress-container">
     <view class="play-time time">{{fs.playTimeArr[1]}}:{{fs.playTimeArr[2]}}</view>
     <view class="bar">
-      <view class="inner-bar" style="transform: translateX({{(playPercent - 1) * 544}}rpx);"></view>
+      <view class="inner-bar" style="width: {{playPercent}}%;"></view>
     </view>
     <view class="total-time time">{{fs.totalTimeArr[1]}}:{{fs.totalTimeArr[2]}}</view>
   </view>
