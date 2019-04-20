@@ -9,24 +9,19 @@ Page({
   data: {
     tabs: [
       {
-        flag: '',
+        flag: 'week',
         text: '声量榜'
+      },
+      {
+        flag: 'latest',
+        text: '最新'
       }
+      // ,
+      // {
+      //   flag: 'hot',
+      //   text: '热度'
+      // }
     ],
-    // tabs: [
-    //   {
-    //     flag: 'week',
-    //     text: '周榜'
-    //   },
-    //   {
-    //     flag: 'latest',
-    //     text: '最新'
-    //   },
-    //   {
-    //     flag: 'hot',
-    //     text: '热度'
-    //   }
-    // ],
     activeIndex: 0,
     voiceRankComponent: null,
     weekRankComponent: null,
@@ -40,24 +35,24 @@ Page({
    */
   onLoad: function (options) {
     // let weekRankComponent = this.selectComponent('#weekRankComponent'),
-    // latestRankComponent = this.selectComponent('#latestRankComponent'),
-    // hotRankComponent = this.selectComponent('#hotRankComponent');
+    let latestRankComponent = this.selectComponent('#latestRankComponent');
+    // let hotRankComponent = this.selectComponent('#hotRankComponent');
 
     let voiceRankComponent = this.selectComponent('#voiceRankComponent');
 
     this.setData({
       // weekRankComponent,
-      // latestRankComponent,
+      latestRankComponent,
       // hotRankComponent
       voiceRankComponent
     });
 
     voiceRankComponent.init(this);
     // weekRankComponent.init(this);
-    // latestRankComponent.init(this);
+    latestRankComponent.init(this);
     // hotRankComponent.init(this);
-    // this.getPage(1);
-    voiceRankComponent.getTopRankList(1);
+    this.getPage(1);
+    // voiceRankComponent.getTopRankList(1);
   },
 
   /**
@@ -93,31 +88,30 @@ Page({
    */
   onPullDownRefresh: function () {
     wx.stopPullDownRefresh();
-    this.data.voiceRankComponent.getTopRankList(1);
-    // this.getPage(1);
+    // this.data.voiceRankComponent.getTopRankList(1);
+    this.getPage(1);
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    // let data = this.data,
-    // activeIndex = data.activeIndex,
-    // tabs = data.tabs;
+    let data = this.data,
+    activeIndex = data.activeIndex,
+    tabs = data.tabs;
 
-    // switch (tabs[activeIndex].flag) {
-    //   case 'week':
-    //     this.data.weekRankComponent.onReachBottom();
-    //     break;
-    //   case 'latest':
-    //     this.data.latestRankComponent.onReachBottom();
-    //     break;
-    //   case 'hot':
-    //     this.data.hotRankComponent.onReachBottom();
-    //     break;
-    // }
-
-    this.data.voiceRankComponent.onReachBottom();
+    switch (tabs[activeIndex].flag) {
+      case 'week':
+        // this.data.weekRankComponent.onReachBottom();
+        this.data.voiceRankComponent.onReachBottom();
+        break;
+      case 'latest':
+        this.data.latestRankComponent.onReachBottom();
+        break;
+      case 'hot':
+        this.data.hotRankComponent.onReachBottom();
+        break;
+    }
   },
 
   /**
@@ -135,21 +129,22 @@ Page({
       this.getPage(1);
     }
   },
-  // getPage(pageNum = 1) {
-  //   let data = this.data,
-  //   flag = data.tabs[data.activeIndex].flag;
+  getPage(pageNum = 1) {
+    let data = this.data,
+    flag = data.tabs[data.activeIndex].flag;
 
-  //   // 需要设置参数
-  //   if (flag === 'week') {
-  //     data.weekRankComponent.getPage(1);
-  //   } else if (flag === 'latest') {
-  //     data.latestRankComponent.setType(flag);
-  //     data.latestRankComponent.getPage(1);
-  //   } else if (flag === 'hot') {
-  //     data.hotRankComponent.setType(flag);
-  //     data.hotRankComponent.getPage(1);
-  //   }
-  // },
+    // 需要设置参数
+    if (flag === 'week') {
+      // data.weekRankComponent.getPage(1);
+      this.data.voiceRankComponent.getTopRankList(pageNum);
+    } else if (flag === 'latest') {
+      data.latestRankComponent.setType(flag);
+      data.latestRankComponent.getPage(1);
+    } else if (flag === 'hot') {
+      data.hotRankComponent.setType(flag);
+      data.hotRankComponent.getPage(1);
+    }
+  },
   setTopRank(e) {
     let topRankList = e.detail;
     this.setData({

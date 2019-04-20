@@ -22,8 +22,7 @@ Component({
       current_page: 1,
       per_page: 10,
       total_pages: 0,
-      list: [],
-      type: 'week'
+      list: []
     },
     scope: null
   },
@@ -40,15 +39,10 @@ Component({
     init(scope) {
       this.setScope(scope);
     },
-    setType(type) {
-      this.setData({
-        'page.type': type
-      });
-    },
     onReachBottom(scope) {
       let page = this.data.page;
       if (page.current_page < page.total_pages) {
-        this.getPage(page.current_page + 1);
+        this.getTopRankList(page.current_page + 1);
       }
     },
     clickRankItem(e) {
@@ -85,7 +79,7 @@ Component({
         'page.loading': loading
       });
     },
-    getPage(current_page = 1) {
+    getTopRankList(current_page = 1) {
       let page = this.data.page;
       if (page.loading) {
         return;
@@ -93,10 +87,9 @@ Component({
 
       let param = {
         page: current_page,
-        per_page: page.per_page,
-        type: page.type
+        per_page: page.per_page
       },
-      list = [];
+        list = [];
 
       if (current_page > 1) {
         list = page.list;
@@ -107,14 +100,23 @@ Component({
         'page.current_page': current_page
       });
 
-      api.getBeatPage(param, (res) => {
+      api.getFreestyleTopRank(param, (res) => {
+        let topList = [];
         let pagination = res.meta.pagination;
 
         res.data.forEach((item, index) => {
           item.avatarUrl = PathUtil.getFilePath(item.avatar);
 
-          list.push(item);
+          if (current_page == 1 && index < 3) {
+            topList.push(item);
+          } else {
+            list.push(item);
+          }
         });
+
+        if (current_page == 1) {
+          this.triggerEvent('setTopRank', topList);
+        }
 
         this.setData({
           'page.list': list,

@@ -7,8 +7,7 @@
   </view>
 </view>
 <view class="rank-wrapper">
-  <!-- <view hidden="{{tabs[activeIndex].flag != 'week'}}" class="week-container"> -->
-  <view class="week-container">
+  <view hidden="{{tabs[activeIndex].flag != 'week'}}" class="week-container">
     <view class="rank-list-bg-container">
       <image class="rank-list-bg" src="/assets/imgs/rank-list-bg.png" />
       <view class="day">00</view>
@@ -49,7 +48,7 @@
       </view>
     </view>
     <view class="week-container-wrapper">
-      <rankList id="voiceRankComponent" bind:setTopRank="setTopRank"/>
+      <voiceRankList id="voiceRankComponent" bind:setTopRank="setTopRank"/>
     </view>
   </view>
   <view hidden="{{tabs[activeIndex].flag != 'latest'}}" class="latest-container">
