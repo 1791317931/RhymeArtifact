@@ -53,6 +53,13 @@ Component({
       });
     },
     pick(e) {
+      let scope = this.data.scope;
+      if (scope.data.picking) {
+        TipUtil.message('正在投票中，请稍后');
+        return;
+      }
+
+      scope.togglePicking(true);
       let item = this.getItem(e);
       api.addFreestylePick({
         id: item.freestyle_id
@@ -61,7 +68,9 @@ Component({
         this.setData({
           [`page.list[${this.getIndex(e)}].pick_num`]: ++item.pick_num
         });
-      });
+        }, () => {
+          scope.togglePicking(false);
+        });
     },
     getIndex(e) {
       let index = e.target.dataset.index;

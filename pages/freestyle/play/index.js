@@ -21,7 +21,8 @@ Page({
     // 播放进度
     playPercent: 0,
     showMoreInfo: false,
-    loadingUserInfo: true
+    loadingUserInfo: true,
+    picking: false
   },
 
   /**
@@ -154,13 +155,26 @@ Page({
       });
     }
   },
+  togglePicking(picking) {
+    this.setData({
+      picking
+    });
+  },
   pick() {
+    if (this.data.picking) {
+      TipUtil.message('正在投票中，请稍后');
+      return;
+    }
+
+    this.togglePicking(true);
     api.addFreestylePick({
       id: this.data.fs.id
     }, (res) => {
       this.setData({
         'fs.pick_num': ++this.data.fs.pick_num
       });
+    }, () => {
+      this.togglePicking(false);
     });
   },
   generatePoster() {

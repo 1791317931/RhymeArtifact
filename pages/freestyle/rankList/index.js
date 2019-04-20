@@ -32,7 +32,10 @@ Page({
     hotRankComponent: null,
     topRankList: [],
     endTimeArr: [],
-    cycleAble: true
+    // setTimeout是否可以循环
+    cycleAble: true,
+    // 由于声量榜前三名不在组建中，需要全局控制
+    picking: false
   },
 
   /**
@@ -219,7 +222,18 @@ Page({
       url: `/pages/freestyle/play/index?id=${item.freestyle_id}&userId=${item.user_id}`
     });
   },
+  togglePicking(picking) {
+    this.setData({
+      picking
+    });
+  },
   pick(e) {
+    if (this.data.picking) {
+      TipUtil.message('正在投票中，请稍后');
+      return;
+    }
+
+    this.togglePicking(true);
     let item = this.getItem(e);
     api.addFreestylePick({
       id: item.freestyle_id
@@ -228,6 +242,8 @@ Page({
       this.setData({
         [`topRankList[${this.getIndex(e)}].pick_num`]: ++item.pick_num
       });
+    }, () => {
+      this.togglePicking(false);
     });
   }
 })
