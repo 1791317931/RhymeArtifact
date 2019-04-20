@@ -4,7 +4,7 @@
 //   "pagePath": "pages/study/studyList/index",
 //   "text": "学习"
 // },
-
+const ald = require('./utils/ald-stat.js')
 App({
   onLaunch: function () {
     // 展示本地存储能力

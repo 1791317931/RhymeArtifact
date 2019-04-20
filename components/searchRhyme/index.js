@@ -1,7 +1,7 @@
 import * as api from '../../assets/js/api';
 import TipUtil from '../../assets/js/TipUtil';
 import ConfigUtil from '../../assets/js/ConfigUtil';
-
+const app = getApp();
 Component({
   /**
    * 组件的属性列表
@@ -44,11 +44,13 @@ Component({
    */
   methods: {
     handleOpenModal() {
+      app.aldstat.sendEvent('添加微信群', '添加微信群')
       this.setData({
         showShareModal: !this.data.showShareModal
       })
     },
     toOfficialAccounts() {
+      app.aldstat.sendEvent('关注公众号', '关注公众号')
       wx.navigateTo({
         url: '/pages/user/officialAccounts/index'
       });
