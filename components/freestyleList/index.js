@@ -80,9 +80,13 @@ Component({
       let param = {
         page: current_page,
         per_page: page.per_page,
-        userId: this.data.userId
+        order: '-created_at'
       },
       list = [];
+
+      if (this.data.userId) {
+        param.userId = this.data.userId;
+      }
 
       if (current_page > 1) {
         list = page.list;

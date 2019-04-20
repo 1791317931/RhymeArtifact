@@ -66,7 +66,7 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function (e) {
-    return CommonUtil.shareApp(e);
+    return CommonUtil.share();
   },
   bindGetUserInfo(e) {
     // 1、先在微信服务器登录

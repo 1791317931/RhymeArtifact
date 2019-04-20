@@ -1,4 +1,7 @@
+import CommonUtil from '../../../assets/js/CommonUtil';
 import TipUtil from '../../../assets/js/TipUtil';
+import TimeUtil from '../../../assets/js/TimeUtil';
+import DateUtil from '../../../assets/js/DateUtil';
 import * as api from '../../../assets/js/api';
 
 Page({
@@ -28,6 +31,8 @@ Page({
     latestRankComponent: null,
     hotRankComponent: null,
     topRankList: [],
+    endTimeArr: [],
+    cycleAble: true
   },
 
   /**
@@ -47,6 +52,7 @@ Page({
       voiceRankComponent
     });
 
+    this.getActivitySetting();
     voiceRankComponent.init(this);
     // weekRankComponent.init(this);
     latestRankComponent.init(this);
@@ -80,7 +86,9 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    this.setData({
+      cycleAble: false
+    });
   },
 
   /**
@@ -118,7 +126,11 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      title: CommonUtil.getShareTitle(),
+      imageUrl: CommonUtil.getShareImage(),
+      path: '/pages/freestyle/rankList/index'
+    };
   },
   toggleTab(e) {
     let index = e.target.dataset.index;
@@ -128,6 +140,44 @@ Page({
       });
       this.getPage(1);
     }
+  },
+  getActivitySetting() {
+    api.getActivitySetting(null, (res) => {
+      let data = res.data,
+      currentTime = data.current_time,
+      endTime = data.end_time;
+
+      let caculateTime = () => {
+        let diffTime = Math.max(0, endTime - currentTime);
+
+        let arr = TimeUtil.numberToArr(diffTime),
+        days = parseInt(arr[0] / 24),
+        hours = arr[0] % 24;
+
+        let endTimeArr = [days, hours, arr[1], arr[2]].map((item) => {
+          item = parseInt(item);
+
+          if (item < 10) {
+            return '0' + item;
+          } else {
+            return item;
+          }
+        });
+        this.setData({
+          endTimeArr
+        });
+
+        if (diffTime < 0 || !this.data.cycleAble) {
+          return;
+        }
+
+        setTimeout(() => {
+          currentTime++;
+          caculateTime();
+        }, 1000);
+      };
+      caculateTime();
+    });
   },
   getPage(pageNum = 1) {
     let data = this.data,
@@ -150,10 +200,6 @@ Page({
     this.setData({
       topRankList
     });
-
-    if (!topRankList.length) {
-      TipUtil.message('当前还没有任何作品');
-    }
   },
   getIndex(e) {
     let index = e.target.dataset.index;
@@ -180,7 +226,7 @@ Page({
     }, () => {
       TipUtil.success('投票成功');
       this.setData({
-        [`page.topRankList[${this.getIndex(e)}].pick_num`]: ++item.pick_num
+        [`topRankList[${this.getIndex(e)}].pick_num`]: ++item.pick_num
       });
     });
   }

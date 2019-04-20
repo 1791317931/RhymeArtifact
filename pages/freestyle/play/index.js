@@ -21,8 +21,7 @@ Page({
     // 播放进度
     playPercent: 0,
     showMoreInfo: false,
-    loadingUserInfo: true,
-    showMine: null
+    loadingUserInfo: true
   },
 
   /**
@@ -51,16 +50,30 @@ Page({
     });
 
     this.initAudio();
-    this.getById(options.id);
+    let id, userId;
 
-    if (options.showMine == 'Y') {
-      this.setData({
-        showMine: options.showMine
+    if (options.scene) {
+      decodeURIComponent(options.scene).split('&').forEach((item, index) => {
+        let arr = item.split('=');
+        if (arr[0] == 'id') {
+          id = arr[1];
+        }
+
+        if (arr[0] == 'userId') {
+          userId = arr[1];
+        }
       });
-      this.getMyInfo();
-    } else if (options.userId) {
-      this.getUserById(options.userId);
+    } else {
+      id = options.id;
+      userId = options.userId;
     }
+
+    this.getById(id);
+    this.getUserById(userId);
+
+    this.data.freestyleListComponent.setData({
+      userId
+    });
     
     freestyleListComponent.getPage(1);
   },
@@ -76,14 +89,14 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-    this.data.audio.puase();
+    this.pausePlay();
   },
 
   /**
@@ -114,7 +127,7 @@ Page({
     let data = this.data.fs;
     return {
       title: data.title,
-      path: `/pages/freestyle/play/index?id=${data.id}`
+      path: `/pages/freestyle/play/index?id=${data.id}&userId=${data.user.id}`
     };
   },
   toggleFollow() {
@@ -125,7 +138,8 @@ Page({
       }, (res) => {
         TipUtil.success('已取消关注');
         this.setData({
-          'user.is_follow': 0
+          'user.is_follow': 0,
+          'user.fans_count': --user.fans_count
         });
       });
     } else {
@@ -134,7 +148,8 @@ Page({
       }, (res) => {
         TipUtil.success('已关注');
         this.setData({
-          'user.is_follow': 1
+          'user.is_follow': 1,
+          'user.fans_count': ++user.fans_count
         });
       });
     }
@@ -171,22 +186,6 @@ Page({
       loadingUserInfo
     });
   },
-  getMyInfo() {
-    this.toggleLoadingUserInfo(true);
-
-    api.getMyInfo({
-      have: 'freestyle_count'
-    }, (res) => {
-      let user = res.data;
-      user.avatarUrl = PathUtil.getFilePath(user.avatar);
-
-      this.setData({
-        user
-      });
-    }, () => {
-      this.toggleLoadingUserInfo(false);
-    });
-  },
   getUserById(id) {
     this.toggleLoadingUserInfo(true);
 
@@ -195,10 +194,15 @@ Page({
       have: 'freestyle_count,is_follow'
     }, (res) => {
       let user = res.data;
-      user.avatarUrl = PathUtil.getFilePath(user.avatar);
 
-      this.setData({
-        user
+      wx.getImageInfo({
+        src: PathUtil.getFilePath(user.avatar),
+        success: (res) => {
+          user.avatarUrl = res.path;
+          this.setData({
+            user
+          });
+        }
       });
     }, () => {
       this.toggleLoadingUserInfo(false);

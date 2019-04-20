@@ -23,7 +23,7 @@ Component({
       per_page: 10,
       total_pages: 0,
       list: [],
-      type: 'week'
+      type: 'latest'
     },
     scope: null
   },
@@ -54,13 +54,13 @@ Component({
     clickRankItem(e) {
       let item = this.getItem(e);
       wx.navigateTo({
-        url: `/pages/freestyle/play/index?id=${item.freestyle_id}&userId=${item.user_id}`
+        url: `/pages/freestyle/play/index?id=${item.id}&userId=${item.user_id}`
       });
     },
     pick(e) {
       let item = this.getItem(e);
       api.addFreestylePick({
-        id: item.freestyle_id
+        id: item.id
       }, () => {
         TipUtil.success('投票成功');
         this.setData({
@@ -94,7 +94,7 @@ Component({
       let param = {
         page: current_page,
         per_page: page.per_page,
-        type: page.type
+        include: 'user'
       },
       list = [];
 
@@ -102,16 +102,20 @@ Component({
         list = page.list;
       }
 
+      if (page.type == 'latest') {
+        param.order = '-created_at';
+      }
+
       this.togglePageLoading(true);
       this.setData({
         'page.current_page': current_page
       });
 
-      api.getBeatPage(param, (res) => {
+      api.getFreestylePage(param, (res) => {
         let pagination = res.meta.pagination;
 
         res.data.forEach((item, index) => {
-          item.avatarUrl = PathUtil.getFilePath(item.avatar);
+          item.user.data.avatarUrl = PathUtil.getFilePath(item.user.data.avatar);
 
           list.push(item);
         });

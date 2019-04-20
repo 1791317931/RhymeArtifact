@@ -1,3 +1,4 @@
+import CommonUtil from '../../../assets/js/CommonUtil';
 import PathUtil from '../../../assets/js/PathUtil';
 import * as api from '../../../assets/js/api';
 
@@ -20,8 +21,6 @@ Page({
     this.setData({
       loadModalComponent
     });
-
-    this.getUserInfo();
   },
 
   /**
@@ -35,7 +34,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.getUserInfo();
   },
 
   /**
@@ -69,8 +68,8 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
-
+  onShareAppMessage: function (e) {
+    return CommonUtil.share(e);
   },
   toggleLoadingUserInfo(loading) {
     this.data.loadModalComponent.setData({
@@ -101,6 +100,11 @@ Page({
   toBeatList() {
     wx.navigateTo({
       url: '/pages/freestyle/record/index'
+    });
+  },
+  toH5() {
+    wx.navigateTo({
+      url: '/pages/webview/index?path=https://admin.miyupp.com/activity/2019-04-17/voice-rank.html'
     });
   }
 })

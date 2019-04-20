@@ -96,7 +96,7 @@ Page({
    */
   onShareAppMessage: function (e) {
     if (e.from == 'menu') {
-      return CommonUtil.shareApp(e);
+      return CommonUtil.share(e);
     } else {
       let type = this.data.type;
       if (type == 'music') {

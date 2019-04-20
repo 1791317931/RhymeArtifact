@@ -329,7 +329,7 @@ Component({
     shareItem(e) {
       if (e.from == 'button') {
         let item = this.getItem(e),
-          index = this.getIndex(e);
+        index = this.getIndex(e);
 
         api.share({
           id: item.id,
@@ -341,20 +341,10 @@ Component({
           });
         });
 
-        let random = CommonUtil.getShareRandom();
         return {
-          title: CommonUtil.shareRandomMsgs[random],
-          imageUrl: CommonUtil.getShareImage(random),
-          path: '/pages/create/beatList/index?type=music',
-          success: (res) => {
-
-          },
-          fail(res) {
-
-          },
-          complete(res) {
-
-          }
+          title: CommonUtil.getShareTitle(),
+          imageUrl: CommonUtil.getShareImage(),
+          path: '/pages/create/beatList/index?type=music'
         };
       }
     }

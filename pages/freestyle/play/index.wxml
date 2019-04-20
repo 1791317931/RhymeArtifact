@@ -26,8 +26,8 @@
         作品:<text>{{user.freestyle_count}}</text>
       </view>
     </view>
-    <image hidden="{{user.is_follow == 1 || showMine == 'Y'}}" class="follow" src="/assets/imgs/follow-btn.png" catchtap="toggleFollow" />
-    <image hidden="{{user.is_follow == 0 || showMine == 'Y'}}" class="follow" src="/assets/imgs/cancel-btn.png" catchtap="toggleFollow" />
+    <image hidden="{{user.is_follow == 1}}" class="follow" src="/assets/imgs/follow-btn.png" catchtap="toggleFollow" />
+    <image hidden="{{user.is_follow == 0}}" class="follow" src="/assets/imgs/cancel-btn.png" catchtap="toggleFollow" />
   </view>
 </view>
 <scroll-view 

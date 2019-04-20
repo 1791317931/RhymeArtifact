@@ -8,6 +8,12 @@ export function getPolicyParam(fn, completeFn, failFn) {
   UrlUtil.get('utils/oss-policy', null, fn, completeFn, failFn);
 }
 
+// ---------------------活动------------------------
+export function getActivitySetting(data, fn, completeFn, failFn) {
+  UrlUtil.get('activity/settings', data, fn, completeFn, failFn);
+}
+// ---------------------活动------------------------
+
 // ---------------------收藏------------------------
 export function getCollection(data, fn, completeFn) {
   UrlUtil.get('user/collections/' + data.type, data, fn, completeFn);
@@ -105,6 +111,10 @@ export function getArticleById(data, fn, completeFn) {
 // ---------------------学习------------------------
 
 // ---------------------freestyle------------------------
+export function getFreestyleTheme(data, fn, completeFn) {
+  UrlUtil.get('freestyle/theme/rand', data, fn, completeFn);
+}
+
 export function addFreestylePick(data, fn, completeFn) {
   UrlUtil.put(`freestyles/${data.id}/pick`, data, fn, completeFn);
 }

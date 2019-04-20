@@ -76,7 +76,7 @@ Page({
    */
   onShareAppMessage: function (e) {
     if (e.from == 'menu') {
-      return CommonUtil.shareApp(e);
+      return CommonUtil.share(e);
     } else {
       return this.data.musicComponent.shareItem(e);
     }

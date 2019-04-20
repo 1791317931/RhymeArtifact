@@ -82,16 +82,7 @@ Component({
 
         return {
           title: item.course_title,
-          path: '/pages/study/studyVideo/index?type=video&id=' + item.id,
-          success: (res) => {
-
-          },
-          fail(res) {
-
-          },
-          complete(res) {
-
-          }
+          path: '/pages/study/studyVideo/index?type=video&id=' + item.id
         };
       }
     },

@@ -42,10 +42,11 @@
 			"current": 0,
 			"list": [
 				{
-					"id": -1,
+					"id": 0,
 					"name": "扫码进入",
-					"pathName": "pages/study/studyList/index",
-					"query": "type=video&id=3&sectionId=29"
+					"pathName": "pages/freestyle/play/index",
+					"query": "scene=id%3D3%26userId%3D12",
+					"scene": null
 				}
 			]
 		}

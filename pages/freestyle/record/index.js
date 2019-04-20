@@ -37,9 +37,6 @@ Page({
     },
     beatItem: null,
     recordRule: {
-      title: {
-        length: 30
-      },
       // 作词
       author: {
         length: 30
@@ -64,7 +61,8 @@ Page({
     // beat akbl
     freestyleMode: null,
     readyModalComponent: null,
-    defaultTotalTime: 4 * 60
+    defaultTotalTime: 4 * 60,
+    user: null
   },
 
   /**
@@ -125,8 +123,9 @@ Page({
 
 
 
-
     this.init();
+    this.getFreestyleTheme();
+    this.getMyInfo();
   },
 
   /**
@@ -191,9 +190,7 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function (e) {
-    if (e.from == 'menu') {
-      return CommonUtil.shareApp(e);
-    }
+    return CommonUtil.share(e);
   },
   init() {
     let data = this.data,
@@ -210,6 +207,22 @@ Page({
 
     this.bindBACEvent(BAC);
     this.bindRACEvent(RAC);
+  },
+  getFreestyleTheme() {
+    api.getFreestyleTheme(null, (res) => {
+      this.setData({
+        'recordForm.title': res.data.name
+      });
+    });
+  },
+  getMyInfo() {
+    api.getMyInfo(null, (res) => {
+      let user = res.data;
+
+      this.setData({
+        user
+      });
+    });
   },
   setBeatItem(beatItem) {
     if (beatItem) {
@@ -686,16 +699,6 @@ Page({
       showSaveModal
     });
   },
-  changeTitle(e) {
-    this.setData({
-      'recordForm.title': e.detail.value.trim()
-    });
-  },
-  changeContent(e) {
-    this.setData({
-      'recordForm.content': e.detail.value.trim()
-    });
-  },
   closeSaveModal() {
     this.toggleSaveModal(false);
   },
@@ -708,7 +711,7 @@ Page({
     this.closeSaveModal();
     let form = this.data.recordForm;
     if (!form.title) {
-      TipUtil.message('请填写主题');
+      TipUtil.message('主题不能为空');
       return;
     }
 
@@ -758,7 +761,7 @@ Page({
             // TipUtil.message('服务器正在合成音频');
             setTimeout(() => {
               wx.redirectTo({
-                url: '/pages/freestyle/play/index?showMine=Y&id=' + res.data.id
+                url: '/pages/freestyle/play/index?id=' + res.data.id + '&userId=' + this.data.user.id
               });
             }, 1000);
           }, () => {

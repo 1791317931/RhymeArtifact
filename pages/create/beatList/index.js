@@ -100,7 +100,7 @@ Page({
    */
   onShareAppMessage: function (e) {
     if (e.from == 'menu') {
-      return CommonUtil.shareApp(e);
+      return CommonUtil.share();
     } else if (e.from == 'button') {
       return this.data.beatComponent.shareItem(e, this);
     }

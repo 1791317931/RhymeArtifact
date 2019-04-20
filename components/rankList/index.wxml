@@ -2,12 +2,12 @@
   <view class="rank-item active" wx:for="{{page.list}}" wx:for-index="index" 
     wx:for-item="item" wx:key="{{item.id}}" data-index="{{index}}" catchtap="clickRankItem">
     <view class="head-container">
-      <image class="head" src="{{item.avatarUrl}}" />
+      <image class="head" src="{{item.user.data.avatarUrl}}" />
       <!-- <image class="champion" src="/assets/imgs/champion.png" /> -->
     </view>
-    <view class="theme-name">{{item.title || 'AAA'}}</view>
+    <view class="theme-name">{{item.title}}</view>
     <view class="created-time">{{item.created_at}}</view>
-    <view class="count">{{item.pick_num || 100}}</view>
+    <view class="count">{{item.pick_num}}</view>
     <image class="pick" src="/assets/imgs/pick-btn.png" data-index="{{index}}" catchtap="pick" />
   </view>
 </view>

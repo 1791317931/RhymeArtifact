@@ -101,3 +101,9 @@ button:after {
   width: 750px;
   height: 1334px;
 }
+
+.ad {
+  width: 100% !important;
+  height: 180rpx !important;
+  border-radius: 20rpx !important;
+}

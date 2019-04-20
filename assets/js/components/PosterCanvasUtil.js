@@ -34,7 +34,7 @@ let PosterCanvasUtil = {
     } else if (type == 'article') {
       param = 'path=pages/study/studyList/index&t=article&id=' + id;
     } else if (type == 'freestyle') {
-      param = 'path=pages/freestyle/play/index&id=' + id;
+      param = 'path=pages/freestyle/play/index&id=' + id + '&userId=' + data.user.id;
     } else {
       param = paramMap[type];
     }

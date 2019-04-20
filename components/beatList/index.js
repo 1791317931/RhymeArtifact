@@ -142,21 +142,10 @@ Component({
       }
     },
     shareItem(e) {
-      let random = CommonUtil.getShareRandom();
-
       return {
-        title: CommonUtil.shareRandomMsgs[random],
-        imageUrl: CommonUtil.getShareImage(random),
-        path: '/pages/create/beatList/index',
-        success: (res) => {
-
-        },
-        fail(res) {
-
-        },
-        complete(res) {
-
-        }
+        title: CommonUtil.getShareTitle(),
+        imageUrl: CommonUtil.getShareImage(),
+        path: '/pages/create/beatList/index'
       };
     },
     // 下载海报

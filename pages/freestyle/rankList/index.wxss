@@ -40,6 +40,7 @@
 
 .rank-wrapper {
   padding: 90rpx 0 0;
+  height: 100%;
 }
 
 .week-container {

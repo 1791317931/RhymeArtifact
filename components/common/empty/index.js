@@ -4,6 +4,7 @@ Component({
    * 组件的属性列表
    */
   properties: {
+    customNoData: String,
     loading: Boolean,
     hasData: Boolean,
     hasMore: Boolean

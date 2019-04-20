@@ -22,7 +22,8 @@ Component({
       current_page: 1,
       per_page: 10,
       total_pages: 0,
-      list: []
+      list: [],
+      allList: []
     },
     scope: null
   },
@@ -89,10 +90,12 @@ Component({
         page: current_page,
         per_page: page.per_page
       },
-        list = [];
+      list = [],
+      allList = [];
 
       if (current_page > 1) {
         list = page.list;
+        allList = page.list;
       }
 
       this.togglePageLoading(true);
@@ -112,6 +115,7 @@ Component({
           } else {
             list.push(item);
           }
+          allList.push(item);
         });
 
         if (current_page == 1) {
@@ -120,6 +124,7 @@ Component({
 
         this.setData({
           'page.list': list,
+          'page.allList': allList,
           'page.total_pages': pagination.total_pages || 0,
           'page.current_page': pagination.current_page || 1
         });

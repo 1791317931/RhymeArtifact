@@ -10,10 +10,10 @@
   <view hidden="{{tabs[activeIndex].flag != 'week'}}" class="week-container">
     <view class="rank-list-bg-container">
       <image class="rank-list-bg" src="/assets/imgs/rank-list-bg.png" />
-      <view class="day">00</view>
-      <view class="hour">00</view>
-      <view class="minute">00</view>
-      <view class="second">00</view>
+      <view class="day">{{endTimeArr[0]}}</view>
+      <view class="hour">{{endTimeArr[1]}}</view>
+      <view class="minute">{{endTimeArr[2]}}</view>
+      <view class="second">{{endTimeArr[3]}}</view>
     </view>
     <view class="top-user-container">
       <view wx:if="{{topRankList.length}}" class="item rank-first-container"

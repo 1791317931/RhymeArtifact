@@ -82,11 +82,7 @@ let FreestyleUtil = {
 
     // 画头像
     context.save();
-    context.beginPath();
     context.arc(marginLeft + width / 2, marginTop + height / 2, width / 2, 0, 2 * Math.PI);
-    context.setFillStyle('transparent');
-    context.setStrokeStyle('transparent');
-    context.stroke();
     context.clip();
     context.drawImage(user.avatarUrl, marginLeft, marginTop, width, height);
     context.restore();
@@ -106,18 +102,19 @@ let FreestyleUtil = {
     context.fillText(data.created_at, 142, 811 + fontSize + 4);
   },
   drawQrCodeInfo(context, url) {
-    let w = 300,
-    h = 300,
-    r = 58;
+    // let w = 300,
+    // h = 300,
+    // r = 58;
 
     // 设置纯色填充
-    context.save();
-    context.beginPath();
-    context.setFillStyle('transparent');
-    context.fillRect(225, 914, w, h);
-    FreestyleUtil.roundRectColor(context, 'transparent', '#fff', 225, 914, w, h, r);
+    // context.save();
+    // context.beginPath();
+    // context.setFillStyle('transparent');
+    // context.fillRect(225, 914, w, h);
+    // FreestyleUtil.roundRectColor(context, 'transparent', '#fff', 225, 914, w, h, r);
+    // context.drawImage(url, 258, 948, 234, 234);
+    // context.restore();
     context.drawImage(url, 258, 948, 234, 234);
-    context.restore();
   }
 };
 

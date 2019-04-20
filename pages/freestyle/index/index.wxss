@@ -3,8 +3,8 @@
   background: #fff;
 }
 
-.adver ad {
-  border-radius: 10rpx;
+.adver .ad {
+  border-radius: 10rpx !important;
   height: 200rpx !important;
 }
 
