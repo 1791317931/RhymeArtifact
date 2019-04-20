@@ -88,6 +88,23 @@ Component({
         url: `/pages/freestyle/play/index?id=${item.id}&userId=${item.user_id}`
       });
     },
+    deleteItem(e) {
+      wx.showModal({
+        title: '系统提示',
+        content: '是否删除当前freestyle？',
+        success: (res) => {
+          if (res.confirm) {
+            let item = this.getItem(e);
+            api.deleteFreestyleById({
+              id: item.id
+            }, () => {
+              TipUtil.message('操作成功');
+              this.getPage(1);
+            });
+          }
+        }
+      });
+    },
     startPlay(e) {
       let index = this.getIndex(e),
       item = this.getItem(e),

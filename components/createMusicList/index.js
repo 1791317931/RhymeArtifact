@@ -260,7 +260,10 @@ Component({
           item.origin_url = PathUtil.getFilePath(item.origin_url);
           item.collection_num = parseInt(item.collection_num);
           item.share_num = parseInt(item.share_num);
-          item.user.data.avatar = PathUtil.getFilePath(item.user.data.avatar);
+
+          if (!this.data.page.showMine) {
+            item.user.data.avatar = PathUtil.getFilePath(item.user.data.avatar);
+          }
 
           // 总时长
           let totalTime = Math.ceil(parseInt(item.music_duration) / 1000);

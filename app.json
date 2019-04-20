@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/main/index",
+    "pages/user/freestyle/index",
     "pages/freestyle/index/index",
     "pages/freestyle/rankList/index",
     "pages/freestyle/record/index",
@@ -20,11 +21,12 @@
     "pages/user/mine/index",
     "templates/submitting/index",
     "pages/user/collection/index",
+    "components/createLyricsList/index",
+    "components/createMusicList/index",
     "components/musicPoster/index",
     "components/studyArticleList/index",
     "components/studyVideoList/index",
     "pages/study/studyArticle/index",
-    "pages/user/freestyle/index",
     "pages/user/officialAccounts/index",
     "pages/webview/index"
   ],

@@ -19,6 +19,9 @@
       </view>
     </view>
     <image class="arrow" src="/assets/imgs/arrow-left.png"/>
+    <view class="delete" data-index="{{index}}" catchtap="deleteItem">
+      <image src="/assets/imgs/delete.png"/>
+    </view>
   </view>
 </view>
 <empty 

@@ -123,6 +123,10 @@ export function addFreestyle(data, fn, completeFn) {
   UrlUtil.post('freestyles', data, fn, completeFn);
 }
 
+export function deleteFreestyleById(data, fn, completeFn) {
+  UrlUtil.delete(`freestyles/${data.id}`, data, fn, completeFn);
+}
+
 export function getFreestyleById(data, fn, completeFn) {
   UrlUtil.get(`freestyles/${data.id}`, data, fn, completeFn);
 }
