@@ -223,7 +223,8 @@ Component({
       let param = {
         page: current_page,
         per_page: page.per_page,
-        hasCollection: 1
+        hasCollection: 1,
+        include: 'user,beat'
       },
         list = [];
 
@@ -241,14 +242,11 @@ Component({
         fn = api.getCollection;
 
         param.type = 'music';
-        param.include = 'beat,user';
       } else {
         if (this.data.page.showMine) {
           fn = api.getMyMusicPage;
-          param.include = 'beat';
         } else {
           fn = api.getMusicPage;
-          param.include = 'beat,user';
         }
       }
 

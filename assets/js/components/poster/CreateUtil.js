@@ -32,7 +32,7 @@ let CreateUtil = {
     if (type == 'music') {
       title = data.music_title;
       author = data.music_author;
-      composer = data.beat_author || (data.beat && data.beat.beat_author) || '';
+      composer = data.user.data.nickname;
     } else if (type == 'beat') {
       title = data.beat_title;
       composer = data.beat_author;
@@ -56,10 +56,12 @@ let CreateUtil = {
     for (let i = 0; i < text.length; i++) {
       width += context.measureText(text[i]).width;
       if (width >= totalWidth) {
+        // 画超出宽度前一个字
         CreateUtil.fillAuthor(context, text.substring(0, i));
         break;
       } else if (i == text.length - 1) {
-        CreateUtil.fillAuthor(context, text.substring(0, i));
+        // 全部画下来
+        CreateUtil.fillAuthor(context, text.substring(0, text.length));
       }
     }
   },
