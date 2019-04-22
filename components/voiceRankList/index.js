@@ -104,7 +104,7 @@ Component({
 
       if (current_page > 1) {
         list = page.list;
-        allList = page.list;
+        allList = page.allList;
       }
 
       this.togglePageLoading(true);

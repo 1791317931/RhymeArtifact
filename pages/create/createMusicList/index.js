@@ -6,16 +6,18 @@ Page({
    */
   data: {
     musicComponent: null,
-    posterUrl: null
+    musicPosterComponent: null
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {    
-    let musicComponent = this.selectComponent('#musicComponent');
+    let musicComponent = this.selectComponent('#musicComponent'),
+    musicPosterComponent = this.selectComponent('#musicPosterComponent');
     this.setData({
-      musicComponent
+      musicComponent,
+      musicPosterComponent
     });
 
     musicComponent.init(this);
@@ -78,10 +80,5 @@ Page({
   },
   init() {
     this.data.musicComponent.getPage(1);
-  },
-  closePoster() {
-    this.setData({
-      posterUrl: null
-    });
   }
 })

@@ -6,7 +6,7 @@
       <image class="head" src="{{item.avatarUrl}}" />
       <!-- <image class="champion" src="/assets/imgs/champion.png" /> -->
     </view>
-    <view class="theme-name">{{item.title}}</view>
+    <view class="theme-name">{{item.nickname}}</view>
     <view class="created-time">{{item.created_at}}</view>
     <view class="count">{{item.pick_num}}</view>
     <image class="pick" src="/assets/imgs/pick-btn.png" data-index="{{index}}" catchtap="pick" />

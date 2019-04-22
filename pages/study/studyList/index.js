@@ -17,9 +17,9 @@ Page({
       }
     ],
     activeIndex: 0,
-    posterUrl: '',
     videoComponent: null,
-    articleComponent: null
+    articleComponent: null,
+    musicPosterComponent: null
   },
 
   /**
@@ -74,14 +74,16 @@ Page({
     }
 
     let videoComponent = this.selectComponent('#videoComponent'),
-    articleComponent = this.selectComponent('#articleComponent');
+    articleComponent = this.selectComponent('#articleComponent'),
+    musicPosterComponent = this.selectComponent('#musicPosterComponent');
 
     videoComponent.init(this);
     articleComponent.init(this);
 
     this.setData({
       videoComponent,
-      articleComponent
+      articleComponent,
+      musicPosterComponent
     });
     this.getPage(1);
   },
@@ -205,10 +207,5 @@ Page({
       default:
         break;
     }
-  },
-  closePoster() {
-    this.setData({
-      posterUrl: null
-    });
   }
 })

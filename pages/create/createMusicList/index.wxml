@@ -1,8 +1,5 @@
 <view class="list-container">
   <canvas class="poster-canvas" canvas-id="poster-canvas"/>
-  <musicPoster 
-    posterUrl="{{posterUrl}}"
-    bind:closePoster="closePoster"
-  />
+  <musicPoster id="musicPosterComponent"/>
   <createMusicList id="musicComponent"/>
 </view>

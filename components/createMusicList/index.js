@@ -3,7 +3,6 @@ import CommonUtil from '../../assets/js/CommonUtil';
 import ConfigUtil from '../../assets/js/ConfigUtil';
 import PathUtil from '../../assets/js/PathUtil';
 import TimeUtil from '../../assets/js/TimeUtil';
-import PosterCanvasUtil from '../../assets/js/components/PosterCanvasUtil';
 import * as api from '../../assets/js/api';
 
 Component({
@@ -114,7 +113,7 @@ Component({
     // 下载海报
     generatePoster(e) {
       let item = this.getItem(e);
-      PosterCanvasUtil.draw(this.data.scope, item, 'music');
+      this.data.scope.data.musicPosterComponent.generatePoster(item, 'music');
     },
     startPlay(e) {
       let index = this.getIndex(e),

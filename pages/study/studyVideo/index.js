@@ -2,7 +2,6 @@ import * as api from '../../../assets/js/api';
 import CommonUtil from '../../../assets/js/CommonUtil';
 import PathUtil from '../../../assets/js/PathUtil';
 import TipUtil from '../../../assets/js/TipUtil';
-import PosterCanvasUtil from '../../../assets/js/components/PosterCanvasUtil';
 
 let shareKey = 'shareObj';
 Page({
@@ -23,11 +22,11 @@ Page({
     // 播放记录时间
     seekTime: null,
     videoContext: null,
-    posterUrl: null,
     loadModal: null,
     // 是否需要分享（要求用户每天至少分享一次）
     // needShare: true
-    needShare: false
+    needShare: false,
+    musicPosterComponent: null
   },
 
   /**
@@ -55,6 +54,11 @@ Page({
     //     needShare: false
     //   });
     // }
+
+    let musicPosterComponent = this.selectComponent('#musicPosterComponent');
+    this.setData({
+      musicPosterComponent
+    });
 
     this.init();
   },
@@ -276,12 +280,7 @@ Page({
   },
   generatePoster(e) {
     let item = this.data.list[this.data.playIndex];
-    PosterCanvasUtil.draw(this, item, 'video');
-  },
-  closePoster() {
-    this.setData({
-      posterUrl: null
-    });
+    this.data.musicPosterComponent.generatePoster(item, 'video');
   },
   getPosterInfo(index, url) {
     if (!url) {

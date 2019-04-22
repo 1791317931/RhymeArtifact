@@ -2,7 +2,6 @@ import TipUtil from '../../assets/js/TipUtil';
 import ConfigUtil from '../../assets/js/ConfigUtil';
 import PathUtil from '../../assets/js/PathUtil';
 import * as api from '../../assets/js/api';
-import PosterCanvasUtil from '../../assets/js/components/PosterCanvasUtil';
 
 Component({
   /**
@@ -63,7 +62,7 @@ Component({
     // 下载海报
     generatePoster(e) {
       let item = this.getItem(e);
-      PosterCanvasUtil.draw(this.data.scope, item, 'video');
+      this.data.scope.data.musicPosterComponent.generatePoster(item, 'video');
     },
     shareItem(e) {
       if (e.from == 'button') {

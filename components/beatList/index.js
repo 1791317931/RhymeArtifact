@@ -151,11 +151,11 @@ Component({
     // 下载海报
     generatePoster(e) {
       let item = this.getItem(e);
-      PosterCanvasUtil.draw(this.data.scope, item, 'beat');
+      this.data.scope.data.musicPosterComponent.generatePoster(item, 'beat');
     },
     startPlay(e) {
       let index = this.getIndex(e),
-        BAC = this.data.BAC;
+      BAC = this.data.BAC;
 
       BAC.src = this.getItem(e).beat_url;
       this.setData({

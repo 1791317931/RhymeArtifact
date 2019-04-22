@@ -6,9 +6,9 @@ Page({
    */
   data: {
     beatComponent: null,
+    musicPosterComponent: null,
     // 需要跳转的页面
-    targetPath: null,
-    posterUrl: null
+    targetPath: null
   },
 
   /**
@@ -32,9 +32,11 @@ Page({
       });
     }
 
-    let beatComponent = this.selectComponent('#beatComponent');
+    let beatComponent = this.selectComponent('#beatComponent'),
+    musicPosterComponent = this.selectComponent('#musicPosterComponent');
     this.setData({
-      beatComponent
+      beatComponent,
+      musicPosterComponent
     });
     beatComponent.init(this);
     beatComponent.getPage();
@@ -117,11 +119,6 @@ Page({
 
     wx.navigateTo({
       url: '/pages/create/createLyricsList/index'
-    });
-  },
-  closePoster() {
-    this.setData({
-      posterUrl: null
     });
   }
 })
