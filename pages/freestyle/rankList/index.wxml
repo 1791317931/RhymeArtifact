@@ -1,3 +1,5 @@
+<popImage id="popImageComponent" />
+
 <view class="tab-container">
   <view class="clearfix">
     <view wx:for="{{tabs}}" wx:for-item="item" wx:for-index="index" wx:key="{{item.flag}}"

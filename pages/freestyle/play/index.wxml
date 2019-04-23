@@ -1,5 +1,6 @@
 <canvas class="freestyle-poster-canvas" canvas-id="freestyle-poster-canvas"/>
 <freestylePoster id="freestylePosterComponent" />
+<popImage id="popImageComponent" />
 
 <loadModal id="loadModalComponent"/>
 <image class="fs-play-bg" src="/assets/imgs/fs-play-bg.png" />

@@ -68,7 +68,12 @@ Component({
       let item = this.getItem(e);
       api.addFreestylePick({
         id: item.id
-      }, () => {
+      }, (res) => {
+        let img = res.data && res.data.cover;
+        if (img) {
+          this.data.scope.data.popImageComponent.showImg(img);
+        }
+        
         TipUtil.success('投票成功');
         this.setData({
           [`page.list[${this.getIndex(e)}].pick_num`]: ++item.pick_num

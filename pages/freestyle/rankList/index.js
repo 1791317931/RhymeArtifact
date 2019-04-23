@@ -26,6 +26,7 @@ Page({
       // }
     ],
     activeIndex: 0,
+    popImageComponent: null,
     voiceRankComponent: null,
     weekRankComponent: null,
     latestRankComponent: null,
@@ -44,11 +45,13 @@ Page({
   onLoad: function (options) {
     // let weekRankComponent = this.selectComponent('#weekRankComponent'),
     let latestRankComponent = this.selectComponent('#latestRankComponent');
+    let popImageComponent = this.selectComponent('#popImageComponent');
     // let hotRankComponent = this.selectComponent('#hotRankComponent');
 
     let voiceRankComponent = this.selectComponent('#voiceRankComponent');
 
     this.setData({
+      popImageComponent,
       // weekRankComponent,
       latestRankComponent,
       // hotRankComponent
@@ -237,7 +240,12 @@ Page({
     let item = this.getItem(e);
     api.addFreestylePick({
       id: item.freestyle_id
-    }, () => {
+    }, (res) => {
+      let img = res.data && res.data.cover;
+      if (img) {
+        this.data.popImageComponent.showImg(img);
+      }
+      
       TipUtil.success('投票成功');
       this.setData({
         [`topRankList[${this.getIndex(e)}].pick_num`]: ++item.pick_num

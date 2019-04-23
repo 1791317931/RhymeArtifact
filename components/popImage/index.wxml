@@ -1,0 +1,6 @@
+<view hidden="{{!img}}" class="pop-img-container">
+  <view class="award-img-container">
+    <image wx:if="{{img}}" src="{{img}}" />
+    <button class="btn" catchtap="copy">点击复制微信去添加兑换</button>
+  </view>
+</view>

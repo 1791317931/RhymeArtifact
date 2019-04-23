@@ -1,6 +1,7 @@
 {
   "usingComponents": {
     "loadModal": "/components/common/loadModal/index",
+    "popImage": "/components/popImage/index",
     "freestyleList": "/components/freestyleList/index",
     "freestylePoster": "/components/freestylePoster/index"
   },

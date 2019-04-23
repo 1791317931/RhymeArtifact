@@ -12,6 +12,7 @@ Page({
    */
   data: {
     loadModalComponent: null,
+    popImageComponent: null,
     freestyleListComponent: null,
     freestylePosterComponent: null,
     audio: null,
@@ -35,11 +36,13 @@ Page({
     });
 
     let loadModalComponent = this.selectComponent('#loadModalComponent'),
+    popImageComponent = this.selectComponent('#popImageComponent'),
     freestyleListComponent = this.selectComponent('#freestyleListComponent'),
     freestylePosterComponent = this.selectComponent('#freestylePosterComponent');
 
     this.setData({
       loadModalComponent,
+      popImageComponent,
       freestyleListComponent,
       freestylePosterComponent
     });
@@ -170,6 +173,12 @@ Page({
     api.addFreestylePick({
       id: this.data.fs.id
     }, (res) => {
+      let img = res.data && res.data.cover;
+      if (img) {
+        this.data.popImageComponent.showImg(img);
+      }
+      
+      TipUtil.success('投票成功');
       this.setData({
         'fs.pick_num': ++this.data.fs.pick_num
       });
