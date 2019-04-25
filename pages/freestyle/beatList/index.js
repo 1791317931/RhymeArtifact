@@ -1,4 +1,5 @@
 import CommonUtil from '../../../assets/js/CommonUtil';
+import TipUtil from '../../../assets/js/TipUtil';
 import * as api from '../../../assets/js/api';
 
 Page({
@@ -25,8 +26,7 @@ Page({
     beatComponent.isFreeStyle(true);
     beatComponent.init(this);
 
-    // this.getBeatCategory();
-    this.getPage(1);
+    this.getBeatCategory();
   },
 
   /**
@@ -98,19 +98,19 @@ Page({
         tabs: res.data
       });
 
-      // 设置分类
-      this.data.beatComponent.setData({
-        categoryId: this.data.tabs[this.data.activeIndex].id
-      });
+      // if (!res.data.length) {
+      //   TipUtil.message('暂无分类');
+      //   return;
+      // }
+
+      // // 设置分类
+      // this.data.beatComponent.setData({
+      //   categoryId: this.data.tabs[this.data.activeIndex].id
+      // });
       this.getPage(1);
     });
   },
   getPage(pageNum = 1) {
-    // 必须有分类
-    // if (!this.data.tabs.length) {
-    //   return;
-    // }
-
     this.data.beatComponent.getPage(pageNum);
   }
 })

@@ -113,13 +113,13 @@ Page({
     });
 
     // 用户使用过录制选择beat后退出在进来显示上次选择beat
-    // let beatItem = wx.getStorageSync('beatItem');
-    // this.setBeatItem(beatItem);
+    let beatItem = wx.getStorageSync('beatItem');
+    this.setBeatItem(beatItem);
 
 
 
-    this.setBeatItem();
-    this.setFreestyleMode('akbl');
+    // this.setBeatItem();
+    // this.setFreestyleMode('akbl');
 
 
 
@@ -226,6 +226,10 @@ Page({
   },
   setBeatItem(beatItem) {
     if (beatItem) {
+      this.changeTryPlayState(false);
+      this.data.BAC.seek(0);
+      this.data.RAC.seek(0);
+
       beatItem.beatTimeArr = TimeUtil.numberToArr(Math.ceil(beatItem.beat_duration / 1000));
       this.setData({
         'recordForm.beatId': beatItem.id,
@@ -281,6 +285,10 @@ Page({
     this.setData({
       beatItem
     });
+
+    if (this.data.recordForm.path) {
+      this.caculateRecordBeatTime(time);
+    }
 
     if (beatItem.tryBeatTimePercent >= 100) {
       this.beatAudioEnded();
@@ -430,7 +438,7 @@ Page({
       this.caculateRecordBeatTime(time);
     }
 
-    if (time > this.data.recordForm.duration) {
+    if (time > this.data.recordForm.duration / 1000) {
       this.recordAudioEnded(time);
     }
   },
@@ -440,7 +448,7 @@ Page({
   recordAudioEnded(e) {
     let BAC = this.data.BAC;
 
-    BAC.pause();
+    BAC.stop();
     this.changeTryPlayState(false);
     this.changeTryPlayEndedState(true);
   },
@@ -469,7 +477,8 @@ Page({
     prePageX = this.data.startTryBeatPageX,
     pageX = e.touches[0].pageX,
     beatItem = this.data.beatItem,
-    recordForm = this.data.recordForm;
+    recordForm = this.data.recordForm,
+    duration = recordForm.duration / 1000;
 
     if (this.data.freestyleMode == 'akbl') {
       prePageX = this.data.startRecordBeatPageX;
@@ -487,8 +496,8 @@ Page({
       let time = startRecordBeatPercent * beatItem.totalTime;
 
       // 如果已经有被录制的音频，并且拖动的时间已经超出了被录制的音频总时长（录制的音频时长肯定<=伴奏音频），那么只能拖动到这个时长
-      if (time >= recordForm.duration / 1000) {
-        time = recordForm.duration / 1000;
+      if (time >= duration) {
+        time = duration;
         this.recordAudioEnded();
       }
 
@@ -502,10 +511,10 @@ Page({
       tryBeatTimePercent = Math.max(0, tryBeatTimePercent);
 
       let time = tryBeatTimePercent * beatItem.totalTime;
-
+      
       // 如果已经有被录制的音频，并且拖动的时间已经超出了被录制的音频总时长（录制的音频时长肯定<=伴奏音频），那么只能拖动到这个时长
-      if (recordForm.path && time >= recordForm.duration / 1000) {
-        time = recordForm.duration / 1000;
+      if (recordForm.path && time >= duration) {
+        time = duration;
         this.beatAudioEnded();
         this.recordAudioEnded();
       }
@@ -635,6 +644,7 @@ Page({
 
       let recordForm = this.data.recordForm;
       recordForm.duration = res.duration;
+      // recordForm.duration = (2 * 60 + 56) * 1000;
       recordForm.fileSize = res.fileSize;
       recordForm.path = res.tempFilePath;
       this.setData({
@@ -642,6 +652,7 @@ Page({
       });
 
       RAC.src = res.tempFilePath;
+      // RAC.src = 'http://file.ihammer.cn/voice/20190309221216_8839.wav';
 
       this.changeRecordState('ready');
 

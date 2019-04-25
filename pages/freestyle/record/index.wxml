@@ -111,7 +111,7 @@
       <view class="time-end">{{beatItem.beatTimeArr[1]}}:{{beatItem.beatTimeArr[2]}}</view>
     </view>
   </view>
-  <view class="center-btn-container clearfix hide">
+  <view class="center-btn-container clearfix">
     <view catchtap="chooseBeat">
       <button>选择beat</button>
     </view>
