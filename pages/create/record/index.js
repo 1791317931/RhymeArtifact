@@ -372,7 +372,7 @@ Page({
   recordAudioEnded(e) {
     let BAC = this.data.BAC;
 
-    BAC.pause();
+    BAC.stop();
     this.changeTryPlayState(false);
     this.changeTryPlayEndedState(true);
   },

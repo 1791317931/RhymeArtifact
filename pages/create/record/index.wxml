@@ -104,8 +104,8 @@
       <image src="/assets/imgs/pause-play.png"/>
       <view>暂停</view>
     </view>
-    <image wx:if="{{recordState != 'recording'}}" class="record-state" src="/assets/imgs/record.png" catchtap="beginRecord"/>
-    <image wx:if="{{recordState == 'recording'}}" class="record-state" src="/assets/imgs/end-record.png" catchtap="endRecord"/>
+    <image hidden="{{recordState == 'recording'}}" class="record-state" src="/assets/imgs/ready-record.png" catchtap="beginRecord"/>
+    <image hidden="{{recordState != 'recording'}}" class="record-state" src="/assets/imgs/recording.png" catchtap="endRecord"/>
     <view class="complete-container" catchtap="saveRecord">
       <image src="/assets/imgs/complete.png"/>
       <view>完成</view>

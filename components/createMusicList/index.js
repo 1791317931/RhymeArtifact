@@ -25,7 +25,6 @@ Component({
       current_page: 1,
       list: []
     },
-    BAC: null,
     MAC: null
   },
 
@@ -50,7 +49,6 @@ Component({
         MAC
       });
 
-      // this.bindBACEvent();
       this.bindMACEvent();
     },
     onUnload() {
@@ -72,22 +70,6 @@ Component({
         this.musicAudioEnded();
       });
     },
-    // bindBACEvent() {
-    //   let BAC = this.data.BAC;
-
-    //   BAC.autoplay = true;
-    //   BAC.onTimeUpdate(() => {
-    //     this.audioTimeUpdate(BAC.duration, BAC.currentTime);
-    //   });
-
-    //   BAC.onError((res) => {
-    //     this.audioError();
-    //   });
-
-    //   BAC.onEnded((res) => {
-    //     this.audioEnded();
-    //   });
-    // },
     toggleItemStatus(e) {
       let index = this.getIndex(e),
         page = this.data.page,
@@ -117,9 +99,10 @@ Component({
     },
     startPlay(e) {
       let index = this.getIndex(e),
+      item = this.getItem(e),
       MAC = this.data.MAC;
 
-      MAC.src = this.getItem(e).origin_url;
+      MAC.src = item.mixture_url || item.origin_url;
       this.setData({
         'page.playingIndex': index,
         'page.playing': true
@@ -255,6 +238,7 @@ Component({
 
         res.data.forEach((item, index) => {
           item.origin_url = PathUtil.getFilePath(item.origin_url);
+          item.mixture_url = PathUtil.getFilePath(item.mixture_url);
           item.collection_num = parseInt(item.collection_num);
           item.share_num = parseInt(item.share_num);
 
