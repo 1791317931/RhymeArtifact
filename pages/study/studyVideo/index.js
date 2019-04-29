@@ -29,7 +29,7 @@ Page({
     // 切换视频次数，如果达到一定的次数，就需要弹出广告提示
     toggleVideoCount: 0,
     TOGGLE_VIDEO_COUNT: 3,
-    shouldShowAd: false,
+    shouldShowAd: true,
     // 第一次进入页面
     firstComeIn: true
   },
