@@ -29,7 +29,7 @@ Page({
     // 切换视频次数，如果达到一定的次数，就需要弹出广告提示
     toggleVideoCount: 0,
     TOGGLE_VIDEO_COUNT: 3,
-    shouldShowAd: true,
+    shouldShowAd: false,
     // 第一次进入页面
     firstComeIn: true
   },
@@ -302,7 +302,7 @@ Page({
       });
     } else {
       // 切换次数+1
-      let count = this.data.toggleVideoCount++;
+      let count = ++this.data.toggleVideoCount;
       if (count >= this.data.TOGGLE_VIDEO_COUNT) {
         this.setData({
           shouldShowAd: true
