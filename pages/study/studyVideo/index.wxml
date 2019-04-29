@@ -10,13 +10,13 @@
     custom-cache="{{false}}"
     controls
     autoplay="{{!needShare}}"
+    bindplay="bindPlay"
     bindtimeupdate="bindTimeUpdate"
     bindended="bindEnded"
     binderror="bindError"/>
-  <!-- <view hidden="{{!needShare}}" class="share-container">
-    <view class="tip">点击分享群后可进行观看</view>
-    <button open-type="share" catchtap="share"></button>
-  </view> -->
+  <view hidden="{{!shouldShowAd}}" class="show-ad-container">
+    <view class="tip" catchtap="loadRewardAd">点击观看完整广告播放视频</view>
+  </view>
   <view class="title-container">{{list[playIndex].section_title}}</view>
 </view>
 <view class="bottom-container">

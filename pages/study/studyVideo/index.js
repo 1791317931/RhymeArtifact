@@ -24,9 +24,14 @@ Page({
     videoContext: null,
     loadModal: null,
     // 是否需要分享（要求用户每天至少分享一次）
-    // needShare: true
-    needShare: false,
-    musicPosterComponent: null
+    musicPosterComponent: null,
+    ad: null,
+    // 切换视频次数，如果达到一定的次数，就需要弹出广告提示
+    toggleVideoCount: 0,
+    TOGGLE_VIDEO_COUNT: 3,
+    shouldShowAd: true,
+    // 第一次进入页面
+    firstComeIn: true
   },
 
   /**
@@ -45,15 +50,6 @@ Page({
         shareSectionId: options.sectionId
       });
     }
-
-    // let shareObj = wx.getStorageSync(shareKey) || {},
-    // shareTimeStamp = shareObj.shareTimeStamp;
-    // // 间隔小于24小时，不需要强制分享
-    // if (shareTimeStamp && Date.now() - shareTimeStamp < 24 * 60 * 60 * 1000) {
-    //   this.setData({
-    //     needShare: false
-    //   });
-    // }
 
     let musicPosterComponent = this.selectComponent('#musicPosterComponent');
     this.setData({
@@ -113,16 +109,7 @@ Page({
     item = data.list[data.playIndex];
     return {
       title: item.section_title,
-      path: '/pages/study/studyList/index?t=video&id=' + data.groupId + '&sId=' + item.id,
-      success: (res) => {
-
-      },
-      fail(res) {
-
-      },
-      complete(res) {
-
-      }
+      path: '/pages/study/studyList/index?t=video&id=' + data.groupId + '&sId=' + item.id
     };
   },
   init() {
@@ -150,13 +137,57 @@ Page({
 
     this.getVideoList();
   },
-  share() {
-    this.setData({
-      needShare: false
-    });
-    wx.setStorageSync(shareKey, {
-      shareTimeStamp: Date.now()
-    });
+  loadRewardAd() {
+    // 在页面中定义激励视频广告
+    let ad = this.data.ad;
+    let videoContext = this.data.videoContext;
+
+    // 在页面onLoad回调事件中创建激励视频广告实例
+    if (!ad && wx.createRewardedVideoAd) {
+      ad = wx.createRewardedVideoAd({
+        adUnitId: 'adunit-b887b31034ada752'
+      })
+    }
+
+    // 用户触发广告后，显示激励视频广告
+    if (ad) {
+      ad.onLoad((res) => {
+        // 不能在这里pause，会在onClose后再次执行
+      });
+
+      ad.onError((res) => {
+        this.rewardAdError();
+      });
+
+      ad.onClose((res) => {
+        // 用户点击了【关闭广告】按钮
+        if (res && res.isEnded) {
+          // 正常播放结束，可以下发游戏奖励
+          this.setData({
+            shouldShowAd: false,
+            toggleVideoCount: 0
+          });
+          videoContext.play();
+        } else {
+          // 播放中途退出，不下发游戏奖励
+          TipUtil.message('请观看激励广告完毕后播放视频');
+        }
+      });
+
+      ad.show().catch(() => {
+        // 失败重试
+        ad.load().then(() => {
+          ad.show();
+        }).catch(err => {
+          this.rewardAdError();
+        });
+      });
+    }
+  },
+  rewardAdError() {
+    TipUtil.message('广告播放失败');
+    // 继续播放视频
+    videoContext.play();
   },
   toggleLoading(loading) {
     let loadModal = this.data.loadModal;
@@ -229,6 +260,11 @@ Page({
     this.setHistory();
     this.playVideo(videoRecordId, seekTime);
   },
+  bindPlay() {
+    if (this.data.shouldShowAd) {
+      this.data.videoContext.pause();
+    }
+  },
   bindTimeUpdate(e) {
     this.setData({
       seekTime: e.detail.currentTime
@@ -259,8 +295,23 @@ Page({
     // 如果seekTime超出了视频总时长，会自动重新播放
     videoContext.seek(seekTime);
 
-    if (!this.data.needShare) {
-      videoContext.play();
+    // 第一次进入页面，展示广告播放提示
+    if (this.data.firstComeIn) {
+      this.setData({
+        firstComeIn: false
+      });
+    } else {
+      // 切换次数+1
+      let count = this.data.toggleVideoCount++;
+      if (count >= this.data.TOGGLE_VIDEO_COUNT) {
+        this.setData({
+          shouldShowAd: true
+        });
+      }
+
+      this.setData({
+        toggleVideoCount: count
+      });
     }
 
     api.addClickNum({
