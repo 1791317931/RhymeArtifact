@@ -4,6 +4,7 @@
   top: 0;
   left: 0;
   z-index: 1;
+  padding: 422rpx 0 0;
 }
 
 .adver {
@@ -18,6 +19,9 @@
   display: block;
   width: 750rpx;
   height: 422rpx;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .video-container .show-ad-container {

@@ -718,7 +718,7 @@ Page({
       hideSubmittingModal
     });
   },
-  uploadRecordAndSubmit() {
+  uploadRecordAndSubmit(e) {
     this.closeSaveModal();
     let form = this.data.recordForm;
     if (!form.title) {
@@ -731,9 +731,9 @@ Page({
       return;
     }
 
-    this.uploadToOss();
+    this.uploadToOss(e);
   },
-  uploadToOss() {
+  uploadToOss(e) {
     this.toggleSubmitting(false);
 
     CommonUtil.getPolicyParam((data) => {
@@ -761,7 +761,8 @@ Page({
             title: form.title,
             author: form.author,
             duration: form.duration,
-            size: form.fileSize
+            size: form.fileSize,
+            formId: e.detail.formId
           };
 
           if (form.beatId) {

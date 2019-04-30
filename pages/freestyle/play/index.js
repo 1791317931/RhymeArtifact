@@ -23,7 +23,9 @@ Page({
     playPercent: 0,
     showMoreInfo: false,
     loadingUserInfo: true,
-    picking: false
+    picking: false,
+    // 投票间隔时间
+    pickInterval: 1000
   },
 
   /**
@@ -159,9 +161,17 @@ Page({
     }
   },
   togglePicking(picking) {
-    this.setData({
-      picking
-    });
+    if (!picking) {
+      setTimeout(() => {
+        this.setData({
+          picking
+        });
+      }, this.data.pickInterval);
+    } else {
+      this.setData({
+        picking
+      });
+    }
   },
   pick() {
     if (this.data.picking) {

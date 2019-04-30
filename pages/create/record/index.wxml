@@ -19,7 +19,9 @@
     </view>
     <view class="btn-container clearfix">
       <button class="pull-left" catchtap="closeSaveModal">返回编辑</button>
-      <button class="pull-right" catchtap="uploadRecordAndSubmit">发布分享</button>
+      <form report-submit="true" bindsubmit="uploadRecordAndSubmit" >
+        <button class="pull-right" form-type="submit">发布分享</button>
+      </form>
     </view>
   </view>
 </view>

@@ -4,6 +4,7 @@
 <loadModal id="loadModal" />
 <view class="video-container">
   <video 
+    hidden="{{shouldShowAd}}"
     class="video"
     id="studyVideo"
     src="{{list[playIndex].section_url}}"
@@ -13,11 +14,12 @@
     bindplay="bindPlay"
     bindtimeupdate="bindTimeUpdate"
     bindended="bindEnded"
-    binderror="bindError"/>
+    binderror="bindError"
+  />
+  <view class="title-container">{{list[playIndex].section_title}}</view>
   <view hidden="{{!shouldShowAd}}" class="show-ad-container">
     <view class="tip" catchtap="loadRewardAd">点击观看完整广告播放视频</view>
   </view>
-  <view class="title-container">{{list[playIndex].section_title}}</view>
 </view>
 <view class="bottom-container">
   <view class="operation-container clearfix">
