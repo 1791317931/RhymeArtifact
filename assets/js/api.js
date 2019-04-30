@@ -8,6 +8,10 @@ export function getPolicyParam(fn, completeFn, failFn) {
   UrlUtil.get('utils/oss-policy', null, fn, completeFn, failFn);
 }
 
+export function saveFormId(data, fn, completeFn) {
+  UrlUtil.post('utils/save-formid', data, fn, completeFn);
+}
+
 // ---------------------活动------------------------
 export function getActivitySetting(data, fn, completeFn, failFn) {
   UrlUtil.get('activity/settings', data, fn, completeFn, failFn);

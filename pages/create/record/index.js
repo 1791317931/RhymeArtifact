@@ -583,6 +583,10 @@ Page({
     });
   },
   uploadRecordAndSubmit(e) {
+    api.saveFormId({
+      formid: e.detail.formId
+    });
+    
     this.closeSaveModal();
     let form = this.data.recordForm;
     if (!form.title) {
@@ -595,9 +599,9 @@ Page({
       return;
     }
 
-    this.uploadToOss(e);
+    this.uploadToOss();
   },
-  uploadToOss(e) {
+  uploadToOss() {
     this.toggleSubmitting(false);
 
     CommonUtil.getPolicyParam((data) => {
@@ -627,8 +631,7 @@ Page({
             music_title: form.title,
             music_author: form.author,
             music_duration: form.duration,
-            music_size: form.fileSize,
-            formId: e.detail.formId
+            music_size: form.fileSize
           };
 
           api.createMusic(param, (res) => {
