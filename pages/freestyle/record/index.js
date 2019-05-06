@@ -113,13 +113,13 @@ Page({
     });
 
     // 用户使用过录制选择beat后退出在进来显示上次选择beat
-    let beatItem = wx.getStorageSync('beatItem');
-    this.setBeatItem(beatItem);
+    // let beatItem = wx.getStorageSync('beatItem');
+    // this.setBeatItem(beatItem);
 
 
 
-    // this.setBeatItem();
-    // this.setFreestyleMode('akbl');
+    this.setBeatItem();
+    this.setFreestyleMode('akbl');
 
 
 
