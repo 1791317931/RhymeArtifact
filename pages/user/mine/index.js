@@ -1,4 +1,5 @@
 import CommonUtil from '../../../assets/js/CommonUtil';
+import PathUtil from '../../../assets/js/PathUtil';
 
 Page({
 
@@ -14,6 +15,10 @@ Page({
       {
         path: '/pages/create/createLyricsList/index',
         text: '我的歌词创作'
+      },
+      {
+        path: '/pages/user/freestyle/index',
+        text: '我的Freestyle'
       },
       {
         path: '',
@@ -48,8 +53,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let userInfo = wx.getStorageSync('userInfo');
+    userInfo.avatarUrl = PathUtil.getFilePath(userInfo.avatarUrl);
     this.setData({
-      userInfo: wx.getStorageSync('userInfo')
+      userInfo 
     });
   },
 
@@ -99,7 +106,7 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function (e) {
-    return CommonUtil.shareApp(e);
+    return CommonUtil.share(e);
   },
   clickMenu(e) {
     let index = e.target.dataset.index,

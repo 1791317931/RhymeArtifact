@@ -1,0 +1,146 @@
+<!-- 录制freestyle -->
+<view hidden="{{hideSubmittingModal}}" class="z-modal">
+  <view class="z-modal-body submitting-body">
+    <image src="/assets/imgs/circle-loading.png"/>
+    <view>发布中…</view>
+  </view>
+</view>
+<readyModal id="readyModal" />
+<view hidden="{{!showUpdateBeatModal}}" class="z-modal">
+  <view class="z-modal-body update-beat-modal-body">
+    <view class="modal-title">提示</view>
+    <view class="modal-body">音频正在编辑尚未保存 是否放弃编辑</view>
+    <view class="btn-container clearfix">
+      <button class="pull-left" catchtap="toChooseBeat">修改beat</button>
+      <button class="pull-right" catchtap="closeUpdateBeatModal">返回创作</button>
+    </view>
+  </view>
+</view>
+<view hidden="{{!showAKBLModal}}" class="z-modal">
+  <view class="z-modal-body akbl-modal-body">
+    <view class="modal-title">提示</view>
+    <view class="modal-body">音频正在编辑尚未保存 是否放弃编辑</view>
+    <view class="btn-container clearfix">
+      <button class="pull-left" catchtap="toChooseAKBL">重新录制</button>
+      <button class="pull-right" catchtap="closeAKBLModal">返回创作</button>
+    </view>
+  </view>
+</view>
+<view hidden="{{!showSaveModal}}" class="z-modal">
+  <view class="z-modal-body save-modal-body">
+    <view class="modal-title">发布Freestyle</view>
+    <view class="row">
+      <view>主题：</view>
+      <input value="{{recordForm.title}}" disabled="{{true}}"/>
+    </view>
+    <view class="row">
+      <view>作词：</view>
+      <input value="{{recordForm.author}}" bindchange="changeAuthor" maxlength="{{recordRule.author.length}}" placeholder-class="input-placeholder"/>
+    </view>
+    <view class="btn-container clearfix">
+      <button class="pull-left" catchtap="closeSaveModal">返回重录</button>
+      <form report-submit="true" bindsubmit="uploadRecordAndSubmit" >
+        <button class="pull-right" form-type="submit">发布分享</button>
+      </form>
+    </view>
+  </view>
+</view>
+<view class="create-music-container">
+  <view class="scale-container-wrapper">
+    <view class="scale-container">
+      <view wx:for="{{scales}}" wx:for-index="index" wx:for-item="item" wx:key="{{index}}">{{item}}</view>
+    </view>
+    <view class="pointer-container">
+      <image
+        hidden="{{mode == 'record'}}"
+        class="{{freestyleMode == 'akbl' ? 'single' : ''}}"
+        style="left: {{freestyleMode == 'akbl' ? beatItem.recordBeatTimePercent : beatItem.tryBeatTimePercent}}%"
+        src="/assets/imgs/pointer.png"
+        catchtouchmove="moveTryBeatPointer"
+        catchtouchstart="tryBeatTouchStart"
+        catchtouchend="tryBeatTouchEnd"
+      />
+      <image 
+        hidden="{{mode == 'try'}}"
+        class="{{freestyleMode == 'akbl' ? 'single' : ''}}"
+        style="left: {{beatItem.recordBeatTimePercent}}%"
+        src="/assets/imgs/pointer.png"
+      />
+    </view>
+  </view>
+  <view hidden="{{freestyleMode == 'akbl'}}" class="combine-container">
+    <view class="top-container">
+      <view class="beat-title">{{beatItem.beat_title || 'Beat'}}</view>
+      <view class="track-container" id="track-container">
+        <view class="head-container">音频1 Beat</view>
+        <view class="high-container"></view>
+        <view class="low-container"></view>
+        <view class="voice-container">
+          <image src="/assets/imgs/voice.png"/>
+          <image src="/assets/imgs/voice.png"/>
+          <image src="/assets/imgs/voice.png"/>
+          <image src="/assets/imgs/voice.png"/>
+          <image src="/assets/imgs/voice.png"/>
+        </view>
+      </view>
+    </view>
+    <view class="bottom-container">
+      <view class="time-start">{{beatItem.tryBeatTimeArr[1]}}:{{beatItem.tryBeatTimeArr[2]}}</view>
+      <view class="time-end">{{beatItem.beatTimeArr[1]}}:{{beatItem.beatTimeArr[2]}}</view>
+    </view>
+  </view>
+  <view class="combine-container">
+    <view class="top-container">
+      <view class="freestyle-title">Freestyle</view>
+      <view class="track-container">
+        <view class="head-container">{{mode == 'record' && recordState == 'recording' ? '录制中' : 'Vocal-1'}}</view>
+        <view class="high-container"></view>
+        <view class="low-container"></view>
+        <view hidden="{{mode == 'try' && !recordForm.path}}" class="voice-container">
+          <image src="/assets/imgs/{{mode == 'record' ? 'voicing' : 'voice'}}.png"/>
+          <image src="/assets/imgs/{{mode == 'record' ? 'voicing' : 'voice'}}.png"/>
+          <image src="/assets/imgs/{{mode == 'record' ? 'voicing' : 'voice'}}.png"/>
+          <image src="/assets/imgs/{{mode == 'record' ? 'voicing' : 'voice'}}.png"/>
+          <image src="/assets/imgs/{{mode == 'record' ? 'voicing' : 'voice'}}.png"/>
+        </view>
+        <view hidden="{{mode == 'record'}}" class="voice-mask-container" style="left: {{recordForm.duration / 10 / beatItem.totalTime}}%"></view>
+        <view hidden="{{mode == 'try'}}" class="voice-mask-container" style="left: {{beatItem.recordBeatTimePercent}}%"></view>
+        <view hidden="{{mode != 'record' || recordState != 'recording'}}" class="recoding-container"></view>
+      </view>
+    </view>
+    <view class="bottom-container">
+      <view class="time-start">{{beatItem.recordBeatTimeArr[1]}}:{{beatItem.recordBeatTimeArr[2]}}</view>
+      <view class="time-end">{{beatItem.beatTimeArr[1]}}:{{beatItem.beatTimeArr[2]}}</view>
+    </view>
+  </view>
+  <view class="center-btn-container clearfix hide">
+    <view class="pull-left" catchtap="chooseBeat">
+      <button>选择beat</button>
+    </view>
+    <view class="pull-right" catchtap="chooseAKBL">
+      <button>阿卡贝拉</button>
+      <image hidden="{{freestyleMode != 'akbl'}}" src="/assets/imgs/sky-blue-rect.png"/>
+    </view>
+  </view>
+  <view class="freestyle-detail-container">
+    <view class="title">Freestyle主题：{{recordForm.title}}</view>
+    <view class="tip">Freestyle录制建议最短60秒！</view>
+  </view>
+  <view class="bottom-btn-container">
+    <view class="replay-container {{tryPlaying == false ? '' : 'hide'}}" catchtap="tryPlayStart">
+      <image src="/assets/imgs/replay.png"/>
+      <view>试听</view>
+    </view>
+    <view class="replay-container {{tryPlaying == false ? 'hide' : ''}}" catchtap="tryPlayPause">
+      <image src="/assets/imgs/pause-play.png"/>
+      <view>暂停</view>
+    </view>
+    <image hidden="{{recordState == 'recording'}}" class="record-state" src="/assets/imgs/ready-record.png" catchtap="beginRecord"/>
+    <image hidden="{{recordState != 'recording'}}" class="record-state" src="/assets/imgs/recording.png" catchtap="endRecord"/>
+    <view class="complete-container" catchtap="saveRecord">
+      <image src="/assets/imgs/complete.png"/>
+      <view>完成</view>
+    </view>
+  </view>
+  <view class="record-tip">{{recordState == 'recording' ? '点击停止' : '开始录制'}}</view>
+</view>

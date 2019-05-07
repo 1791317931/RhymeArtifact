@@ -32,7 +32,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
+
   },
 
   /**
@@ -70,7 +70,7 @@ Page({
    */
   onShareAppMessage: function (e) {
     if (e.from == 'menu') {
-      return CommonUtil.shareApp(e);
+      return CommonUtil.share(e);
     } else {
       return this.data.lyricComponent.shareLyric(e);
     }

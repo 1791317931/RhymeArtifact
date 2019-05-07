@@ -1,0 +1,62 @@
+<canvas class="freestyle-poster-canvas" canvas-id="freestyle-poster-canvas"/>
+<freestylePoster id="freestylePosterComponent" />
+<popImage id="popImageComponent" />
+
+<loadModal id="loadModalComponent"/>
+<image class="fs-play-bg" src="/assets/imgs/fs-play-bg.png" />
+<image hidden="{{playing}}" class="play-status" src="/assets/imgs/to-play.png" catchtap="continuePlay" />
+<image hidden="{{!playing}}" class="play-status" src="/assets/imgs/to-pause.png" catchtap="pausePlay"/>
+<view class="play-container">
+  <view class="theme">Freestyle主题：{{fs.title}}</view>
+  <view class="progress-container">
+    <view class="play-time time">{{fs.playTimeArr[1]}}:{{fs.playTimeArr[2]}}</view>
+    <view class="bar">
+      <view class="inner-bar" style="width: {{playPercent}}%;"></view>
+    </view>
+    <view class="total-time time">{{fs.totalTimeArr[1]}}:{{fs.totalTimeArr[2]}}</view>
+  </view>
+  <view hidden="{{!loadingUserInfo}}" class="top loading-user-info">数据加载中...</view>
+  <view hidden="{{loadingUserInfo}}" class="top">
+    <image class="head" src="{{user.avatarUrl}}" />
+    <view class="name">{{user.nickname}}</view>
+    <view class="fans-production">
+      <view class="fans">
+        粉丝:<text>{{user.fans_count}}</text>
+      </view>
+      <view class="production">
+        作品:<text>{{user.freestyle_count}}</text>
+      </view>
+    </view>
+    <image hidden="{{user.is_follow == 1}}" class="follow" src="/assets/imgs/follow-btn.png" catchtap="toggleFollow" />
+    <image hidden="{{user.is_follow == 0}}" class="follow" src="/assets/imgs/cancel-btn.png" catchtap="toggleFollow" />
+  </view>
+</view>
+<scroll-view 
+  class="detail-container"
+  scroll-y
+  bindscrolltolower="getMoreFs"
+>
+  <view class="operation-container clearfix">
+    <view class="pull-left relative clearfix">
+      <image class="pick btn pull-left" src="/assets/imgs/pick-btn.png" catchtap="pick" />
+      <view class="for pull-left">X</view>
+      <view class="pick-count pull-left">{{fs.pick_num}}</view>
+    </view>
+    <view class="pull-right btn-group">
+      <image class="poster btn" src="/assets/imgs/poster-btn.png" catchtap="generatePoster" />
+      <view class="share btn">
+        <image src="/assets/imgs/share-btn.png"/>
+        <button open-type="share"></button>
+      </view>
+    </view>
+  </view>
+  <view class="history clearfix">
+    <view class="look-up pull-left">
+      <view class="count">{{fs.click_num}}人听过</view>
+    </view>
+  </view>
+  <view hidden="{{!showMoreInfo}}" class="more-production">
+    <view class="head">更多作品</view>
+    <freestyleList id="freestyleListComponent" bind:getFsPageCallback="getFsPageCallback"/>
+  </view>
+</scroll-view>

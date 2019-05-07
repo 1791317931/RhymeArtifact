@@ -6,20 +6,15 @@ Page({
    */
   data: {
     beatComponent: null,
+    musicPosterComponent: null,
     // 需要跳转的页面
-    targetPath: null,
-    posterUrl: null
+    targetPath: null
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-    // 保持不锁屏
-    wx.setKeepScreenOn({
-      keepScreenOn: true
-    });
-    
+  onLoad: function (options) {  
     if (options.scene) {
       decodeURIComponent(options.scene).split('&').forEach((item, index) => {
         let arr = item.split('=');
@@ -37,11 +32,14 @@ Page({
       });
     }
 
-    let beatComponent = this.selectComponent('#beatComponent');
+    let beatComponent = this.selectComponent('#beatComponent'),
+    musicPosterComponent = this.selectComponent('#musicPosterComponent');
     this.setData({
-      beatComponent
+      beatComponent,
+      musicPosterComponent
     });
     beatComponent.init(this);
+    beatComponent.getPage();
   },
 
   /**
@@ -67,7 +65,7 @@ Page({
 
     // token过期后重新登陆或者删除收藏，都需要刷新页面，否则再次操作收藏会出异常
     let beatComponent = this.data.beatComponent;
-    beatComponent.init(this);
+    beatComponent.getPage();
   },
 
   /**
@@ -81,7 +79,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    this.data.beatComponent.unUnload();
+    this.data.beatComponent.onUnload();
   },
 
   /**
@@ -89,7 +87,7 @@ Page({
    */
   onPullDownRefresh: function () {
     wx.stopPullDownRefresh();
-    this.data.beatComponent.getPage(1, this);
+    this.data.beatComponent.getPage(1);
   },
 
   /**
@@ -104,7 +102,7 @@ Page({
    */
   onShareAppMessage: function (e) {
     if (e.from == 'menu') {
-      return CommonUtil.shareApp(e);
+      return CommonUtil.share();
     } else if (e.from == 'button') {
       return this.data.beatComponent.shareItem(e, this);
     }
@@ -121,11 +119,6 @@ Page({
 
     wx.navigateTo({
       url: '/pages/create/createLyricsList/index'
-    });
-  },
-  closePoster() {
-    this.setData({
-      posterUrl: null
     });
   }
 })

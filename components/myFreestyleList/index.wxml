@@ -1,0 +1,30 @@
+<view class="fs-list-container">
+  <view class="fs-item" wx:for="{{page.list}}" wx:for-index="index" wx:for-item="item" wx:key="{{item.id}}"
+    data-index="{{index}}" catchtap="clickFsItem">
+    <view class="table top-container">
+      <view class="table-row">
+        <view class="table-cell status-container" data-index="{{index}}" catchtap="toggleItemStatus">
+          <view>
+            <image class="disk" src="/assets/imgs/disk.png" />
+            <image hidden="{{page.playingIndex == index && page.playing}}" src="/assets/imgs/to-play.png" />
+            <image hidden="{{page.playingIndex != index || !page.playing}}" src="/assets/imgs/to-pause.png" />
+          </view>
+        </view>
+        <view class="table-cell center-container">
+          <view class="title">{{item.title}}</view>
+          <view class="detail-container">
+            <text>作曲：{{item.author}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <image class="arrow" src="/assets/imgs/arrow-left.png"/>
+    <view class="delete" data-index="{{index}}" catchtap="deleteItem">
+      <image src="/assets/imgs/delete.png"/>
+    </view>
+  </view>
+</view>
+<empty 
+  loading="{{page.loading}}"
+  hasData="{{!!page.list.length}}"
+  hasMore="{{page.current_page < page.total_pages}}"/>

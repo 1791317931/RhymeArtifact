@@ -181,7 +181,7 @@ Page({
    */
   onShareAppMessage: function (e) {
     if (e.from == 'menu') {
-      return CommonUtil.shareApp(e);
+      return CommonUtil.share(e);
     }
   },
   init() {
@@ -372,7 +372,7 @@ Page({
   recordAudioEnded(e) {
     let BAC = this.data.BAC;
 
-    BAC.pause();
+    BAC.stop();
     this.changeTryPlayState(false);
     this.changeTryPlayEndedState(true);
   },
@@ -489,7 +489,13 @@ Page({
 
     // 结束录制
     RM.stop();
+
+    wx.showLoading({
+      title: '音频保存中，请稍后'
+    });
+
     RM.onStop((res) => {
+      wx.hideLoading();
       BAC.pause();
 
       let recordForm = this.data.recordForm;
@@ -576,7 +582,11 @@ Page({
       hideSubmittingModal
     });
   },
-  uploadRecordAndSubmit() {
+  uploadRecordAndSubmit(e) {
+    api.saveFormId({
+      formid: e.detail.formId
+    });
+    
     this.closeSaveModal();
     let form = this.data.recordForm;
     if (!form.title) {

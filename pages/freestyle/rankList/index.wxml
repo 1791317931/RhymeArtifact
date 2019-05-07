@@ -1,0 +1,62 @@
+<popImage id="popImageComponent" />
+
+<view class="tab-container">
+  <view class="clearfix">
+    <view wx:for="{{tabs}}" wx:for-item="item" wx:for-index="index" wx:key="{{item.flag}}"
+    class="item {{activeIndex == index ? 'active' : ''}} item-{{index}}" data-index="{{index}}" catchtap="toggleTab">
+      {{item.text}}
+    </view>
+  </view>
+</view>
+<view class="rank-wrapper">
+  <view hidden="{{tabs[activeIndex].flag != 'week'}}" class="week-container">
+    <view class="rank-list-bg-container">
+      <image class="rank-list-bg" src="/assets/imgs/rank-list-bg.png" />
+      <view class="day">{{endTimeArr[0]}}</view>
+      <view class="hour">{{endTimeArr[1]}}</view>
+      <view class="minute">{{endTimeArr[2]}}</view>
+      <view class="second">{{endTimeArr[3]}}</view>
+    </view>
+    <view class="top-user-container">
+      <view wx:if="{{topRankList.length}}" class="item rank-first-container"
+        data-index="{{0}}" catchtap="clickRankItem">
+        <view class="circle-container">
+          <image src="{{topRankList[0].avatarUrl}}" />
+          <image src="/assets/imgs/rank-first.png" />
+        </view>
+        <view class="theme-name">{{topRankList[0].nickname}}</view>
+        <view class="count">{{topRankList[0].pick_num}}</view>
+        <image class="pick" src="/assets/imgs/pick-btn.png" data-index="{{0}}" catchtap="pick" />
+      </view>
+      <view wx:if="{{topRankList.length >= 2}}" class="item rank-second-container"
+        data-index="{{1}}" catchtap="clickRankItem">
+        <view class="circle-container">
+          <image src="{{topRankList[1].avatarUrl}}" />
+          <image src="/assets/imgs/rank-second.png" />
+        </view>
+        <view class="theme-name">{{topRankList[1].nickname}}</view>
+        <view class="count">{{topRankList[1].pick_num}}</view>
+        <image class="pick" src="/assets/imgs/pick-btn.png" data-index="{{1}}" catchtap="pick" />
+      </view>
+      <view wx:if="{{topRankList.length == 3}}" class="item rank-third-container"
+        data-index="{{2}}" catchtap="clickRankItem">
+        <view class="circle-container">
+          <image src="{{topRankList[2].avatarUrl}}" />
+          <image src="/assets/imgs/rank-third.png" />
+        </view>
+        <view class="theme-name">{{topRankList[2].nickname}}</view>
+        <view class="count">{{topRankList[2].pick_num}}</view>
+        <image class="pick" src="/assets/imgs/pick-btn.png" data-index="{{2}}" catchtap="pick" />
+      </view>
+    </view>
+    <view class="week-container-wrapper">
+      <voiceRankList id="voiceRankComponent" bind:setTopRank="setTopRank"/>
+    </view>
+  </view>
+  <view hidden="{{tabs[activeIndex].flag != 'latest'}}" class="latest-container">
+    <rankList id="latestRankComponent"/>
+  </view>
+  <view hidden="{{tabs[activeIndex].flag != 'hot'}}" class="hot-container">
+    <rankList id="hotRankComponent"/>
+  </view>
+</view>

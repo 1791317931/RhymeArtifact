@@ -1,5 +1,4 @@
 <!-- 创作歌曲 -->
-<!-- 伴奏默认需要一个audio -->
 <view hidden="{{hideSubmittingModal}}" class="z-modal">
   <view class="z-modal-body submitting-body">
     <image src="/assets/imgs/circle-loading.png"/>
@@ -20,7 +19,9 @@
     </view>
     <view class="btn-container clearfix">
       <button class="pull-left" catchtap="closeSaveModal">返回编辑</button>
-      <button class="pull-right" catchtap="uploadRecordAndSubmit">发布分享</button>
+      <form report-submit="true" bindsubmit="uploadRecordAndSubmit" >
+        <button class="pull-right" form-type="submit">发布分享</button>
+      </form>
     </view>
   </view>
 </view>
@@ -105,8 +106,8 @@
       <image src="/assets/imgs/pause-play.png"/>
       <view>暂停</view>
     </view>
-    <image wx:if="{{recordState != 'recording'}}" class="record-state" src="/assets/imgs/record.png" catchtap="beginRecord"/>
-    <image wx:if="{{recordState == 'recording'}}" class="record-state" src="/assets/imgs/end-record.png" catchtap="endRecord"/>
+    <image hidden="{{recordState == 'recording'}}" class="record-state" src="/assets/imgs/ready-record.png" catchtap="beginRecord"/>
+    <image hidden="{{recordState != 'recording'}}" class="record-state" src="/assets/imgs/recording.png" catchtap="endRecord"/>
     <view class="complete-container" catchtap="saveRecord">
       <image src="/assets/imgs/complete.png"/>
       <view>完成</view>

@@ -25,10 +25,13 @@ Component({
       current_page: 1,
       per_page: 10,
       total_pages: 0,
-      list: []
+      list: [],
+      // 是否是freestyle
+      isFreeStyle: false
     },
     BAC: null,
-    scope: null
+    scope: null,
+    categoryId: null
   },
 
   /**
@@ -41,13 +44,22 @@ Component({
       });
     },
     init(scope) {
+      // 保持不锁屏
+      wx.setKeepScreenOn({
+        keepScreenOn: true
+      });
+      
       this.setScope(scope);
       let BAC = wx.createInnerAudioContext();
       this.setData({
         BAC
       });
       this.bindBACEvent();
-      this.getPage(1);
+    },
+    isFreeStyle(isFreeStyle = true) {
+      this.setData({
+        'page.isFreeStyle': isFreeStyle
+      });
     },
     onUnload() {
       this.data.BAC.destroy();
@@ -130,31 +142,20 @@ Component({
       }
     },
     shareItem(e) {
-      let random = CommonUtil.getShareRandom();
-
       return {
-        title: CommonUtil.shareRandomMsgs[random],
-        imageUrl: CommonUtil.getShareImage(random),
-        path: '/pages/create/beatList/index',
-        success: (res) => {
-
-        },
-        fail(res) {
-
-        },
-        complete(res) {
-
-        }
+        title: CommonUtil.getShareTitle(),
+        imageUrl: CommonUtil.getShareImage(),
+        path: '/pages/create/beatList/index'
       };
     },
     // 下载海报
     generatePoster(e) {
       let item = this.getItem(e);
-      PosterCanvasUtil.draw(this.data.scope, item, 'beat');
+      this.data.scope.data.musicPosterComponent.generatePoster(item, 'beat');
     },
     startPlay(e) {
       let index = this.getIndex(e),
-        BAC = this.data.BAC;
+      BAC = this.data.BAC;
 
       BAC.src = this.getItem(e).beat_url;
       this.setData({
@@ -198,7 +199,7 @@ Component({
       if (e.detail.errMsg == 'MEDIA_ERR_SRC_NOT_SUPPORTED') {
         TipUtil.message('播放失败');
       }
-      this.playEnd(e);
+      this.beatAudioEnded(e);
     },
     audioTimeUpdate(totalTime, time) {
       this.caculateSurplusTime(totalTime, time);
@@ -219,10 +220,24 @@ Component({
     toRecord(e) {
       this.pausePlay(e);
 
-      let item = this.getItem(e);
-      wx.navigateTo({
-        url: '/pages/create/record/index?beatItem=' + JSON.stringify(item)
-      });
+      let item = this.getItem(e),
+      page = this.data.page,
+      isFreeStyle = page.isFreeStyle;
+
+      // 录制freestyle
+      if (isFreeStyle) {
+        let pages = getCurrentPages();
+        pages[pages.length - 2].setBeatItem(item);
+        
+        wx.navigateBack({
+          
+        });
+      } else {
+        // 录制作品
+        wx.navigateTo({
+          url: '/pages/create/record/index?beatItem=' + JSON.stringify(item)
+        });
+      }
     },
     onReachBottom(scope) {
       let page = this.data.page;
@@ -259,7 +274,7 @@ Component({
         per_page: page.per_page,
         hasCollection: 1
       },
-        list = [];
+      list = [];
 
       if (current_page > 1) {
         list = page.list;
@@ -277,6 +292,14 @@ Component({
         param.type = 'beat';
       } else {
         fn = api.getBeatPage;
+      }
+
+      if (page.isFreeStyle) {
+        delete param.hasCollection
+      }
+
+      if (this.data.categoryId) {
+        param.category_id = this.data.categoryId;
       }
 
       fn(param, (res) => {

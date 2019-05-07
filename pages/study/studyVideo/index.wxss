@@ -4,6 +4,7 @@
   top: 0;
   left: 0;
   z-index: 1;
+  padding: 422rpx 0 0;
 }
 
 .adver {
@@ -18,9 +19,12 @@
   display: block;
   width: 750rpx;
   height: 422rpx;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
-.video-container .share-container {
+.video-container .show-ad-container {
   position: absolute;
   width: 750rpx;
   height: 422rpx;
@@ -30,7 +34,8 @@
   z-index: 1;
 }
 
-.video-container .share-container .tip {
+.video-container .show-ad-container .tip {
+  width: 400rpx;
   height:78rpx;
   line-height:78rpx;
   background:rgba(255,255,255,1);
@@ -40,24 +45,15 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  padding: 0 53rpx;
   font-size:26rpx;
   font-family:PingFang-SC-Regular;
   font-weight:400;
   color:rgba(51,51,51,1);
-}
-
-.video-container .share-container button {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  opacity: 0;
-  z-index: 1;
+  text-align: center;
 }
 
 .title-container {
+  width: 750rpx;
   line-height: 100rpx;
   padding: 0 30rpx;
   font-size:32rpx;

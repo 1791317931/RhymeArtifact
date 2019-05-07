@@ -8,6 +8,16 @@ export function getPolicyParam(fn, completeFn, failFn) {
   UrlUtil.get('utils/oss-policy', null, fn, completeFn, failFn);
 }
 
+export function saveFormId(data, fn, completeFn) {
+  UrlUtil.post('utils/save-formid', data, fn, completeFn);
+}
+
+// ---------------------活动------------------------
+export function getActivitySetting(data, fn, completeFn, failFn) {
+  UrlUtil.get('activity/settings', data, fn, completeFn, failFn);
+}
+// ---------------------活动------------------------
+
 // ---------------------收藏------------------------
 export function getCollection(data, fn, completeFn) {
   UrlUtil.get('user/collections/' + data.type, data, fn, completeFn);
@@ -63,6 +73,10 @@ export function getLyricPage(data, fn, completeFn) {
 // ---------------------歌词------------------------
 
 // ---------------------伴奏------------------------
+export function getBeatCategoryList(data, fn, completeFn) {
+  UrlUtil.get('categories', data, fn, completeFn);
+}
+
 export function getBeatPage(data, fn, completeFn) {
   UrlUtil.get('beats', data, fn, completeFn);
 }
@@ -99,3 +113,56 @@ export function getArticleById(data, fn, completeFn) {
   UrlUtil.get(`posts/${data.id}`, data, fn, completeFn);
 }
 // ---------------------学习------------------------
+
+// ---------------------freestyle------------------------
+export function getFreestyleTheme(data, fn, completeFn) {
+  UrlUtil.get('freestyle/theme/rand', data, fn, completeFn);
+}
+
+export function addFreestylePick(data, fn, completeFn) {
+  UrlUtil.put(`freestyles/${data.id}/pick`, data, fn, completeFn);
+}
+
+export function addFreestyle(data, fn, completeFn) {
+  UrlUtil.post('freestyles', data, fn, completeFn);
+}
+
+export function deleteFreestyleById(data, fn, completeFn) {
+  UrlUtil.delete(`freestyles/${data.id}`, data, fn, completeFn);
+}
+
+export function getFreestyleById(data, fn, completeFn) {
+  UrlUtil.get(`freestyles/${data.id}`, data, fn, completeFn);
+}
+
+// 获取某人的fs
+export function getFreestylePage(data, fn, completeFn) {
+  UrlUtil.get(`freestyles`, data, fn, completeFn);
+}
+
+export function getFreestyleTopRank(data, fn, completeFn) {
+  UrlUtil.get(`freestyle-activity/rank`, data, fn, completeFn);
+}
+
+export function getMyFreestylePage(data, fn, completeFn) {
+  UrlUtil.get(`user/freestyles`, data, fn, completeFn);
+}
+// ---------------------freestyle------------------------
+
+// ---------------------用户------------------------
+export function getMyInfo(data, fn, completeFn) {
+  UrlUtil.get(`users`, data, fn, completeFn);
+}
+
+export function getUserById(data, fn, completeFn) {
+  UrlUtil.get(`users/${data.id}`, data, fn, completeFn);
+}
+
+export function follow(data, fn, completeFn) {
+  UrlUtil.post(`fans`, data, fn, completeFn);
+}
+
+export function cancelFollow(data, fn, completeFn) {
+  UrlUtil.delete(`fans/user-id/${data.user_id}`, data, fn, completeFn);
+}
+// ---------------------用户------------------------

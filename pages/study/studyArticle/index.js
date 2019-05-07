@@ -11,17 +11,20 @@ Page({
   data: {
     id: null,
     article: null,
-    posterUrl: null,
-    loadModal: null
+    loadModal: null,
+    musicPosterComponent: null
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let musicPosterComponent = this.selectComponent('#musicPosterComponent');
+
     this.setData({
       id: options.id,
-      loadModal: this.selectComponent('#loadModal')
+      loadModal: this.selectComponent('#loadModal'),
+      musicPosterComponent
     });
   },
 
@@ -74,16 +77,7 @@ Page({
     let article = this.data.article;
     return {
       title: article.title,
-      path: '/pages/study/studyList/index?t=article&id=' + article.id,
-      success: (res) => {
-
-      },
-      fail(res) {
-
-      },
-      complete(res) {
-
-      }
+      path: '/pages/study/studyList/index?t=article&id=' + article.id
     };
   },
   init() {
@@ -107,11 +101,6 @@ Page({
     });
   },
   generatePoster(e) {
-    PosterCanvasUtil.draw(this, this.data.article, 'article');
-  },
-  closePoster() {
-    this.setData({
-      posterUrl: null
-    });
+    this.data.musicPosterComponent.generatePoster(this.data.article, 'article');
   }
 })

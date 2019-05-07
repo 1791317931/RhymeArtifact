@@ -16,6 +16,10 @@
   color: #525252;
 }
 
+.no-pick:empty:before {
+  content: '暂时没人打榜，快来参与吧';
+}
+
 .empty.loading:empty:before {
   content: '数据加载中...';
 }

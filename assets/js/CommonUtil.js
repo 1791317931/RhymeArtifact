@@ -1,4 +1,5 @@
 import * as api from './api'
+import PathUtil from './PathUtil';
 
 function S4() {
   return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
@@ -9,8 +10,6 @@ function uuid() {
 }
 
 let CommonUtil = {
-  shareRandomImgs: ['random-2.png', 'random-3.png', 'random-4.png', 'random-5.png', 'random-6.png'],
-  shareRandomMsgs: ['rapper们都喜欢玩的原来…', '押韵神器rapper都在玩的小…', '[新说唱]2019年度导师竟然…', '[所有rap]2019年度都喜欢…', '[红花会]2019年全新最火小…'],
   toLogin() {
     wx.navigateTo({
       url: '/pages/authorition/index'
@@ -20,36 +19,18 @@ let CommonUtil = {
   copyObject(obj) {
     return JSON.parse(JSON.stringify(obj));
   },
-  getShareRandom() {
-    return parseInt(Math.random() * 5);
+  getShareTitle() {
+    return 'freestyle打榜赢百元现金';
   },
-  getShareImage(random) {
-    if (isNaN(random)) {
-      random = CommonUtil.getShareRandom();
-    }
-
-    return '/assets/imgs/share/' + CommonUtil.shareRandomImgs[random];
+  getShareImage() {
+    return '/assets/imgs/share-logo.png';
   },
-  shareApp(e) {
-    // 点击右上角按钮分享
-    if (e.from == 'menu') {
-      let random = CommonUtil.getShareRandom();
-
-      return {
-        title: CommonUtil.shareRandomMsgs[random],
-        imageUrl: CommonUtil.getShareImage(random),
-        path: '/pages/main/index',
-        success: (res) => {
-
-        },
-        fail(res) {
-
-        },
-        complete(res) {
-
-        }
-      };
-    }
+  share() {
+    return {
+      title: CommonUtil.getShareTitle(),
+      imageUrl: CommonUtil.getShareImage(),
+      path: '/pages/main/index'
+    };
   },
   uuid() {
     return uuid();

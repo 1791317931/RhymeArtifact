@@ -1,18 +1,25 @@
-// pages/activity/match.js
+import CommonUtil from '../../../assets/js/CommonUtil';
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    fsComponent: null
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let fsComponent = this.selectComponent('#fsComponent');
 
+    this.setData({
+      fsComponent
+    });
+    fsComponent.init(this);
+    fsComponent.getPage(1);
   },
 
   /**
@@ -33,37 +40,35 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+    this.data.fsComponent.pausePlay();
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    this.data.fsComponent.onUnload();
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    wx.stopPullDownRefresh();
+    this.data.fsComponent.getPage(1);
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    this.data.fsComponent.onReachBottom();
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
-
-  },
-  statechange(e) {
-    // console.log(e.detail.code);
+  onShareAppMessage: function (e) {
+    return CommonUtil.share(e);
   }
 })

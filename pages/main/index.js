@@ -82,7 +82,7 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function (e) {
-    return CommonUtil.shareApp(e);
+    return CommonUtil.share(e);
   },
   toH5() {
     wx.navigateTo({

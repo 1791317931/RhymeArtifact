@@ -14,6 +14,10 @@ let PathUtil = {
   },
   // 获取资源路径
   getFilePath(url) {
+    if (!url) {
+      return '/assets/imgs/logo.png';
+    }
+
     if (!/^http/.test(url)) {
       if (ConfigUtil.isProd()) {
         return PathUtil.prodFilePrefix + url;

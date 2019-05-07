@@ -6,14 +6,15 @@ Page({
    */
   data: {
     musicComponent: null,
-    posterUrl: null
+    musicPosterComponent: null
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let musicComponent = this.selectComponent('#musicComponent');
+    let musicComponent = this.selectComponent('#musicComponent'),
+    musicPosterComponent = this.selectComponent('#musicPosterComponent');
 
     musicComponent.init(this);
     musicComponent.setData({
@@ -21,7 +22,8 @@ Page({
       'page.showMine': true
     });
     this.setData({
-      musicComponent
+      musicComponent,
+      musicPosterComponent
     });
 
     this.init();
@@ -76,17 +78,12 @@ Page({
    */
   onShareAppMessage: function (e) {
     if (e.from == 'menu') {
-      return CommonUtil.shareApp(e);
+      return CommonUtil.share(e);
     } else {
       return this.data.musicComponent.shareItem(e);
     }
   },
   init() {
     this.data.musicComponent.getPage(1);
-  },
-  closePoster() {
-    this.setData({
-      posterUrl: null
-    });
   }
 })

@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "popImage": "/components/popImage/index",
+    "voiceRankList": "/components/voiceRankList/index",
+    "rankList": "/components/rankList/index"
+  },
+  "navigationBarTitleText": "排行榜",
+  "enablePullDownRefresh": true
+}

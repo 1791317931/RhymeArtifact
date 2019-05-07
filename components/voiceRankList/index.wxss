@@ -1,0 +1,93 @@
+.rank-list-container .rank-item {
+  padding: 30rpx 300rpx 30rpx 176rpx;
+  position: relative;
+  border-bottom: 2rpx solid #EFEFEF;
+  background:rgba(255,255,255,1);
+}
+
+.rank-list-container .rank-item:first-child {
+  border-radius:16rpx 16rpx 0 0;
+}
+
+.rank-list-container .rank-item .rank-index {
+  width: 74rpx;
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  font-size:30rpx;
+  font-family:Helvetica;
+  color:rgba(38,38,40,1);
+  line-height:36rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rank-list-container .rank-item .head-container {
+  width:80rpx;
+  height:80rpx;
+  position: absolute;
+  top: 30rpx;
+  left: 74rpx;
+}
+
+.rank-list-container .rank-item .head-container .head {
+  width:80rpx;
+  height:80rpx;
+  border-radius: 50%;
+}
+
+.rank-list-container .rank-item .head-container .champion {
+  width:28rpx;
+  height:28rpx;
+  background: #fff;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.rank-list-container .rank-item .theme-name {
+  font-size:30rpx;
+  font-family:Helvetica;
+  color:rgba(38,38,40,1);
+  line-height:36rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rank-list-container .rank-item .created-time {
+  margin-top: 15rpx;
+  font-size:24rpx;
+  font-family:Helvetica;
+  color:rgba(152,152,152,1);
+  line-height:29rpx;
+}
+
+.rank-list-container .rank-item .count {
+  position: absolute;
+  top: 50%;
+  right: 140rpx;
+  transform: translateY(-50%);
+  font-size:30rpx;
+  font-family:Helvetica;
+  color:rgba(237,74,71,1);
+  line-height:36rpx;
+}
+
+.rank-list-container .rank-item .pick {
+  width:94rpx;
+  height:43rpx;
+  border:2rpx solid rgba(0,241,255,1);
+  position: absolute;
+  top: 50%;
+  right: 26rpx;
+  transform: translateY(-50%);
+}
+
+.empty-container {
+  background: #fff;
+}

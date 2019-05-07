@@ -2,7 +2,6 @@ import TipUtil from '../../assets/js/TipUtil';
 import ConfigUtil from '../../assets/js/ConfigUtil';
 import PathUtil from '../../assets/js/PathUtil';
 import * as api from '../../assets/js/api';
-import PosterCanvasUtil from '../../assets/js/components/PosterCanvasUtil';
 
 Component({
   /**
@@ -37,6 +36,11 @@ Component({
       });
     },
     init(scope) {
+      // 保持不锁屏
+      wx.setKeepScreenOn({
+        keepScreenOn: true
+      });
+      
       this.setScope(scope);
     },
     // 阻止跳转
@@ -58,7 +62,7 @@ Component({
     // 下载海报
     generatePoster(e) {
       let item = this.getItem(e);
-      PosterCanvasUtil.draw(this.data.scope, item, 'video');
+      this.data.scope.data.musicPosterComponent.generatePoster(item, 'video');
     },
     shareItem(e) {
       if (e.from == 'button') {
@@ -77,16 +81,7 @@ Component({
 
         return {
           title: item.course_title,
-          path: '/pages/study/studyVideo/index?type=video&id=' + item.id,
-          success: (res) => {
-
-          },
-          fail(res) {
-
-          },
-          complete(res) {
-
-          }
+          path: '/pages/study/studyVideo/index?type=video&id=' + item.id
         };
       }
     },
@@ -174,12 +169,11 @@ Component({
 
       this.togglePageLoading(true);
       api.getStudyPage(param, (res) => {
-        let pagination = res.meta.pagination,
-          defaultImage = getApp().globalData.defaultImage;
+        let pagination = res.meta.pagination;
 
         res.data.forEach((item, index) => {
           let course_cover = PathUtil.getFilePath(item.course_cover);
-          item.course_cover = course_cover || defaultImage;
+          item.course_cover = course_cover;
           this.getPosterInfo(list.length, course_cover);
           item.groupId = item.id;
           list.push(item);

@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "readyModal": "/components/common/readyModal/index"
+  },
+  "enablePullDownRefresh": false,
+  "navigationBarBackgroundColor": "#2E2E2E",
+  "navigationBarTextStyle": "white",
+  "navigationBarTitleText": "Freestyle录制"
+}

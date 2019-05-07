@@ -7,10 +7,7 @@
   </view>
 </view>
 <canvas class="poster-canvas" canvas-id="poster-canvas"/>
-<musicPoster 
-  posterUrl="{{posterUrl}}"
-  bind:closePoster="closePoster"
-/>
+<musicPoster id="musicPosterComponent"/>
 <view class="study-wrapper">
   <view hidden="{{tabs[activeIndex].flag != 'video'}}">
     <studyVideoList id="videoComponent"/>

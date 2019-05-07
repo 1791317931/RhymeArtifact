@@ -1,9 +1,6 @@
 <import src="../../wxParse/wxParse.wxml"/>
 <canvas class="poster-canvas" canvas-id="poster-canvas"/>
-<musicPoster 
-  posterUrl="{{posterUrl}}"
-  bind:closePoster="closePoster"
-/>
+<musicPoster id="musicPosterComponent"/>
 <loadModal id="loadModal" />
 <view class="article">
   <text class="title">{{article.title}}</text>

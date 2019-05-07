@@ -1,0 +1,40 @@
+.pop-img-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, .5);
+}
+
+.award-img-container {
+  width: 750rpx;
+  height: 836rpx;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
+.award-img-container image {
+  width: 750rpx;
+  height: 836rpx;
+}
+
+.btn {
+  position: absolute;
+  width: 370rpx;
+  height: 88rpx;
+  left: 50%;
+  bottom: 20rpx;
+  transform: translateX(-50%);
+  line-height: 88rpx;
+  background:linear-gradient(180deg,rgba(255,88,56,1) 0%,rgba(255,62,42,1) 100%);
+  border-radius:88rpx;
+  text-align: center;
+  font-size:24rpx;
+  font-family:PingFangSC-Semibold;
+  font-weight:600;
+  color:rgba(255,255,255,1);
+}

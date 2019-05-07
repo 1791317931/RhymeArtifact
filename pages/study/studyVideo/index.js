@@ -2,9 +2,9 @@ import * as api from '../../../assets/js/api';
 import CommonUtil from '../../../assets/js/CommonUtil';
 import PathUtil from '../../../assets/js/PathUtil';
 import TipUtil from '../../../assets/js/TipUtil';
-import PosterCanvasUtil from '../../../assets/js/components/PosterCanvasUtil';
 
-let shareKey = 'shareObj';
+let shareKey = 'shareObj',
+app = getApp();
 Page({
 
   /**
@@ -23,11 +23,12 @@ Page({
     // 播放记录时间
     seekTime: null,
     videoContext: null,
-    posterUrl: null,
     loadModal: null,
     // 是否需要分享（要求用户每天至少分享一次）
-    // needShare: true
-    needShare: false
+    musicPosterComponent: null,
+    ad: null,
+    TOGGLE_VIDEO_COUNT: 3,
+    shouldShowAd: true
   },
 
   /**
@@ -35,11 +36,6 @@ Page({
    * 
    */
   onLoad: function (options) {
-    // 保持不锁屏
-    wx.setKeepScreenOn({
-      keepScreenOn: true
-    });
-    
     this.setData({
       groupId: options.id,
       videoContext: wx.createVideoContext('studyVideo'),
@@ -52,14 +48,10 @@ Page({
       });
     }
 
-    // let shareObj = wx.getStorageSync(shareKey) || {},
-    // shareTimeStamp = shareObj.shareTimeStamp;
-    // // 间隔小于24小时，不需要强制分享
-    // if (shareTimeStamp && Date.now() - shareTimeStamp < 24 * 60 * 60 * 1000) {
-    //   this.setData({
-    //     needShare: false
-    //   });
-    // }
+    let musicPosterComponent = this.selectComponent('#musicPosterComponent');
+    this.setData({
+      musicPosterComponent
+    });
 
     this.init();
   },
@@ -114,16 +106,7 @@ Page({
     item = data.list[data.playIndex];
     return {
       title: item.section_title,
-      path: '/pages/study/studyList/index?t=video&id=' + data.groupId + '&sId=' + item.id,
-      success: (res) => {
-
-      },
-      fail(res) {
-
-      },
-      complete(res) {
-
-      }
+      path: '/pages/study/studyList/index?t=video&id=' + data.groupId + '&sId=' + item.id
     };
   },
   init() {
@@ -151,13 +134,61 @@ Page({
 
     this.getVideoList();
   },
-  share() {
+  loadRewardAd() {
+    // 在页面中定义激励视频广告
+    let ad = this.data.ad;
+    let videoContext = this.data.videoContext;
+
+    // 在页面onLoad回调事件中创建激励视频广告实例
+    if (!ad && wx.createRewardedVideoAd) {
+      ad = wx.createRewardedVideoAd({
+        adUnitId: 'adunit-b887b31034ada752'
+      })
+    }
+
+    // 用户触发广告后，显示激励视频广告
+    if (ad) {
+      ad.onLoad((res) => {
+        // 不能在这里pause，会在onClose后再次执行
+      });
+
+      ad.onError((res) => {
+        this.rewardAdError();
+      });
+
+      ad.onClose((res) => {
+        // 用户点击了【关闭广告】按钮
+        if (res && res.isEnded) {
+          this.toPlay();
+        } else {
+          // 播放中途退出，不下发游戏奖励
+          TipUtil.message('请观看激励广告完毕后播放视频');
+        }
+      });
+
+      ad.show().catch(() => {
+        // 失败重试
+        ad.load().then(() => {
+          ad.show();
+        }).catch(err => {
+          this.rewardAdError();
+        });
+      });
+    }
+  },
+  rewardAdError() {
+    this.toPlay();
+  },
+  toPlay() {
+    // 正常播放结束，可以下发游戏奖励
     this.setData({
-      needShare: false
+      shouldShowAd: false
     });
-    wx.setStorageSync(shareKey, {
-      shareTimeStamp: Date.now()
-    });
+    app.globalData.studyVideo = {
+      toggleVideoCount: 0
+    };
+    app.globalData.studyVideo.isFirstComeIn = false;
+    videoContext.play();
   },
   toggleLoading(loading) {
     let loadModal = this.data.loadModal;
@@ -169,8 +200,7 @@ Page({
   getVideoList() {
     this.toggleLoading(true);
 
-    let groupId = this.data.groupId,
-    defaultImage = getApp().globalData.defaultImage;
+    let groupId = this.data.groupId;
     
     api.getVideoById({
       id: groupId,
@@ -179,7 +209,7 @@ Page({
       let list = res.data.sections.data;
       list.forEach((item, index) => {
         let section_cover = PathUtil.getFilePath(item.section_cover);
-        item.section_cover = section_cover || defaultImage;
+        item.section_cover = section_cover;
         this.getPosterInfo(index, section_cover);
         // 为了海报分享使用分辨参数
         item.groupId = groupId;
@@ -231,6 +261,11 @@ Page({
     this.setHistory();
     this.playVideo(videoRecordId, seekTime);
   },
+  bindPlay() {
+    if (this.data.shouldShowAd) {
+      this.data.videoContext.pause();
+    }
+  },
   bindTimeUpdate(e) {
     this.setData({
       seekTime: e.detail.currentTime
@@ -257,12 +292,17 @@ Page({
   },
   playVideo(videoId, seekTime) {
     let data = this.data,
-    videoContext = data.videoContext;
+    videoContext = data.videoContext,
+    globalData = app.globalData;
     // 如果seekTime超出了视频总时长，会自动重新播放
     videoContext.seek(seekTime);
 
-    if (!this.data.needShare) {
-      videoContext.play();
+    if (!globalData.studyVideo.isFirstComeIn) {
+      // 切换次数+1
+      let count = ++globalData.studyVideo.toggleVideoCount;
+      this.setData({
+        shouldShowAd: count >= this.data.TOGGLE_VIDEO_COUNT
+      });
     }
 
     api.addClickNum({
@@ -282,12 +322,7 @@ Page({
   },
   generatePoster(e) {
     let item = this.data.list[this.data.playIndex];
-    PosterCanvasUtil.draw(this, item, 'video');
-  },
-  closePoster() {
-    this.setData({
-      posterUrl: null
-    });
+    this.data.musicPosterComponent.generatePoster(item, 'video');
   },
   getPosterInfo(index, url) {
     if (!url) {

@@ -1,10 +1,14 @@
 {
   "pages": [
     "pages/main/index",
-    "pages/study/studyVideo/index",
     "pages/study/studyList/index",
+    "pages/user/freestyle/index",
+    "pages/freestyle/index/index",
+    "pages/freestyle/rankList/index",
+    "pages/freestyle/record/index",
+    "pages/freestyle/play/index",
+    "pages/freestyle/beatList/index",    
     "pages/create/beatList/index",
-    "pages/activity/match",
     "pages/create/createMusicList/index",
     "pages/create/record/index",
     "pages/create/createLyricsList/index",
@@ -15,9 +19,12 @@
     "pages/user/mine/index",
     "templates/submitting/index",
     "pages/user/collection/index",
+    "components/createLyricsList/index",
+    "components/createMusicList/index",
     "components/musicPoster/index",
     "components/studyArticleList/index",
     "components/studyVideoList/index",
+    "pages/study/studyVideo/index",
     "pages/study/studyArticle/index",
     "pages/user/officialAccounts/index",
     "pages/webview/index"
@@ -48,6 +55,12 @@
         "text": "学习"
       },
       {
+        "selectedIconPath": "assets/imgs/freestyle-active.png",
+        "iconPath": "assets/imgs/freestyle.png",
+        "pagePath": "pages/freestyle/index/index",
+        "text": "Freestyle"
+      },
+      {
         "selectedIconPath": "assets/imgs/create-active.png",
         "iconPath": "assets/imgs/create.png",
         "pagePath": "pages/create/beatList/index",
@@ -63,5 +76,6 @@
   },
   "networkTimeout": {
     "request": 10000
-  }
+  },
+  "sitemapLocation": "sitemap.json"
 }

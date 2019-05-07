@@ -1,0 +1,100 @@
+.table {display: table !important; table-layout: fixed; width: 100%;}
+.table-row {display: table-row !important;}
+.table-cell, .cell {display: table-cell !important; vertical-align: middle;}
+
+.fs-list-container .fs-item {
+  border-radius: 14rpx;
+  overflow: hidden;
+  background: #fff;
+  margin-top: 30rpx;
+  position: relative;
+}
+
+.fs-list-container .fs-item:first-child {
+  margin-top: 0;
+}
+
+.fs-list-container .fs-item {
+  padding: 40rpx 20rpx;
+}
+
+.fs-list-container .fs-item .top-container .status-container {
+  width: 133rpx;
+}
+
+.fs-list-container .fs-item .top-container .status-container view {
+  display: inline-block;
+  position: relative;
+}
+
+.fs-list-container .fs-item .top-container .status-container view image:first-child {
+  width: 133rpx;
+  height: 130rpx;
+  border-radius: 50%;
+}
+
+.fs-list-container .fs-item .top-container .status-container view image:not(:first-child) {
+  width: 60rpx;
+  height: 60rpx;
+  position: absolute;
+  top: 30rpx;
+}
+
+.fs-list-container .fs-item .top-container .status-container view image:nth-child(2) {
+  left: 42rpx;
+}
+
+.fs-list-container .fs-item .top-container .status-container view image:nth-child(3) {
+  left: 38rpx;
+}
+
+.fs-list-container .fs-item .top-container .center-container {
+  padding: 16rpx 20rpx;
+  min-height: 130rpx;
+}
+
+.fs-list-container .fs-item .top-container .center-container .title {
+  font-size:32rpx;
+  font-family:PingFangSC-Medium;
+  font-weight:500;
+  color:rgba(29,29,29,1);
+  line-height: 46rpx;
+  letter-spacing:1rpx;
+}
+
+.fs-list-container .fs-item .top-container .center-container .detail-container {
+  margin-top: 20rpx;
+  font-size:24rpx;
+  font-family:PingFangSC-Medium;
+  font-weight:500;
+  color:rgba(29,29,29,1);
+  line-height:34rpx;
+  letter-spacing:1rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fs-list-container .fs-item .delete {
+  width:70rpx;
+  height:70rpx;
+  padding:10rpx;
+  position: absolute;
+  top: 50%;
+  right: 60rpx;
+  transform: translateY(-50%);
+}
+
+.fs-list-container .fs-item .delete image {
+  width: 100%;
+  height: 100%;
+}
+
+.fs-list-container .fs-item .arrow {
+  width: 30rpx;
+  height: 30rpx;
+  position: absolute;
+  top: 50%;
+  right: 20rpx;
+  transform: translateY(-50%) rotateZ(180deg);
+}

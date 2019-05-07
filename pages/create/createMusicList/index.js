@@ -6,21 +6,18 @@ Page({
    */
   data: {
     musicComponent: null,
-    posterUrl: null
+    musicPosterComponent: null
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-    // 保持不锁屏
-    wx.setKeepScreenOn({
-      keepScreenOn: true
-    });
-    
-    let musicComponent = this.selectComponent('#musicComponent');
+  onLoad: function (options) {    
+    let musicComponent = this.selectComponent('#musicComponent'),
+    musicPosterComponent = this.selectComponent('#musicPosterComponent');
     this.setData({
-      musicComponent
+      musicComponent,
+      musicPosterComponent
     });
 
     musicComponent.init(this);
@@ -76,17 +73,12 @@ Page({
    */
   onShareAppMessage: function (e) {
     if (e.from == 'menu') {
-      return CommonUtil.shareApp(e);
+      return CommonUtil.share(e);
     } else {
       return this.data.musicComponent.shareItem(e);
     }
   },
   init() {
     this.data.musicComponent.getPage(1);
-  },
-  closePoster() {
-    this.setData({
-      posterUrl: null
-    });
   }
 })

@@ -1,0 +1,176 @@
+.clearfix:before {
+  content: ' ';
+  display: table;
+}
+.clearfix:after {
+  content: ' ';
+  display: table;
+  clear: both;
+}
+
+.rank-list-container .rank-item {
+  padding: 30rpx 300rpx 30rpx 132rpx;
+  position: relative;
+  border-bottom: 2rpx solid #EFEFEF;
+  background:rgba(255,255,255,1);
+}
+
+.rank-list-container .rank-item:first-child {
+  border-radius:16rpx 16rpx 0 0;
+  
+}
+
+.rank-list-container .rank-item .head-container {
+  width:80rpx;
+  height:80rpx;
+  position: absolute;
+  top: 30rpx;
+  left: 30rpx;
+}
+
+.rank-list-container .rank-item .head-container .head {
+  width:80rpx;
+  height:80rpx;
+  border-radius: 50%;
+}
+
+.rank-list-container .rank-item .head-container .champion {
+  width:28rpx;
+  height:28rpx;
+  background: #fff;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.rank-list-container .rank-item .theme-name {
+  font-size:30rpx;
+  font-family:Helvetica;
+  color:rgba(38,38,40,1);
+  line-height:36rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rank-list-container .rank-item .created-time {
+  margin-top: 15rpx;
+  font-size:24rpx;
+  font-family:Helvetica;
+  color:rgba(152,152,152,1);
+  line-height:29rpx;
+}
+
+.rank-list-container .rank-item .count {
+  position: absolute;
+  top: 50%;
+  right: 140rpx;
+  transform: translateY(-50%);
+  font-size:30rpx;
+  font-family:Helvetica;
+  color:rgba(237,74,71,1);
+  line-height:36rpx;
+}
+
+.rank-list-container .rank-item .pick {
+  width:94rpx;
+  height:43rpx;
+  border:2rpx solid rgba(0,241,255,1);
+  position: absolute;
+  top: 50%;
+  right: 26rpx;
+  transform: translateY(-50%);
+}
+
+.hot-rank-list-container .rank-item {
+  float: left;
+  width:328rpx;
+  height:335rpx;
+  margin-bottom: 30rpx;
+  background:rgba(255,255,255,1);
+  border-radius:16rpx;
+  padding: 40rpx 0 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.hot-rank-list-container .rank-item:nth-child(2n) {
+  margin-left: 30rpx;
+}
+
+.hot-rank-list-container .rank-item.active:before {
+  content: '热门';
+  width: 190rpx;
+  padding: 40rpx 0 20rpx;
+  background: #FF3A1E;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 3;
+  transform: translate(-50%, -50%) rotateZ(45deg) translateY(-188rpx);
+  transform-origin: center;
+  text-align: center;
+  font-size:30rpx;
+  font-family:PingFangSC-Regular;
+  font-weight:400;
+  color:rgba(255,255,255,1);
+  letter-spacing:1rpx;
+}
+
+.hot-rank-list-container .rank-item .head-container {
+  position: relative;
+  width:160rpx;
+  height:160rpx;
+  margin: 0 auto;
+}
+
+.hot-rank-list-container .rank-item .head-container:before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  background: linear-gradient(to bottom,  rgba(0, 0, 0, .5), transparent);
+}
+
+.hot-rank-list-container .rank-item .head-container .head {
+  width:160rpx;
+  height:160rpx;
+  border-radius: 50%;
+}
+
+.hot-rank-list-container .rank-item .head-container .cover {
+  width:50rpx;
+  height:50rpx;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+
+.hot-rank-list-container .rank-item .theme-name {
+  margin-top: 20rpx;
+  font-size:30rpx;
+  font-family:PingFangSC-Semibold;
+  font-weight:600;
+  color:rgba(38,38,40,1);
+  line-height:42rpx;
+  text-align: center;
+}
+
+.hot-rank-list-container .rank-item .user-name {
+  margin-top: 10rpx;
+  font-size:24rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(152,152,152,1);
+  line-height:33rpx;
+  text-align: center;
+}
+
+.empty-container {
+  background: #fff;
+}

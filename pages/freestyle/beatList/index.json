@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "beatList": "/components/beatList/index"
+  },
+  "navigationBarTitleText": "beat列表",
+  "enablePullDownRefresh": true
+}

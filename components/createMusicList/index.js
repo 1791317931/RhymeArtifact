@@ -3,7 +3,6 @@ import CommonUtil from '../../assets/js/CommonUtil';
 import ConfigUtil from '../../assets/js/ConfigUtil';
 import PathUtil from '../../assets/js/PathUtil';
 import TimeUtil from '../../assets/js/TimeUtil';
-import PosterCanvasUtil from '../../assets/js/components/PosterCanvasUtil';
 import * as api from '../../assets/js/api';
 
 Component({
@@ -26,7 +25,6 @@ Component({
       current_page: 1,
       list: []
     },
-    BAC: null,
     MAC: null
   },
 
@@ -40,13 +38,17 @@ Component({
       });
     },
     init(scope) {
+      // 保持不锁屏
+      wx.setKeepScreenOn({
+        keepScreenOn: true
+      });
+      
       this.setScope(scope);
       let MAC = wx.createInnerAudioContext();
       this.setData({
         MAC
       });
 
-      // this.bindBACEvent();
       this.bindMACEvent();
     },
     onUnload() {
@@ -68,22 +70,6 @@ Component({
         this.musicAudioEnded();
       });
     },
-    // bindBACEvent() {
-    //   let BAC = this.data.BAC;
-
-    //   BAC.autoplay = true;
-    //   BAC.onTimeUpdate(() => {
-    //     this.audioTimeUpdate(BAC.duration, BAC.currentTime);
-    //   });
-
-    //   BAC.onError((res) => {
-    //     this.audioError();
-    //   });
-
-    //   BAC.onEnded((res) => {
-    //     this.audioEnded();
-    //   });
-    // },
     toggleItemStatus(e) {
       let index = this.getIndex(e),
         page = this.data.page,
@@ -109,13 +95,14 @@ Component({
     // 下载海报
     generatePoster(e) {
       let item = this.getItem(e);
-      PosterCanvasUtil.draw(this.data.scope, item, 'music');
+      this.data.scope.data.musicPosterComponent.generatePoster(item, 'music');
     },
     startPlay(e) {
       let index = this.getIndex(e),
+      item = this.getItem(e),
       MAC = this.data.MAC;
 
-      MAC.src = this.getItem(e).origin_url;
+      MAC.src = item.mixture_url || item.origin_url;
       this.setData({
         'page.playingIndex': index,
         'page.playing': true
@@ -219,7 +206,8 @@ Component({
       let param = {
         page: current_page,
         per_page: page.per_page,
-        hasCollection: 1
+        hasCollection: 1,
+        include: 'user,beat'
       },
         list = [];
 
@@ -237,14 +225,11 @@ Component({
         fn = api.getCollection;
 
         param.type = 'music';
-        param.include = 'beat,user';
       } else {
         if (this.data.page.showMine) {
           fn = api.getMyMusicPage;
-          param.include = 'beat';
         } else {
           fn = api.getMusicPage;
-          param.include = 'beat,user';
         }
       }
 
@@ -252,9 +237,14 @@ Component({
         let pagination = res.meta.pagination;
 
         res.data.forEach((item, index) => {
-          item.origin_url = PathUtil.getFilePath(item.origin_url) || '/assets/imgs/logo.png';
+          item.origin_url = PathUtil.getFilePath(item.origin_url);
+          item.mixture_url = PathUtil.getFilePath(item.mixture_url);
           item.collection_num = parseInt(item.collection_num);
           item.share_num = parseInt(item.share_num);
+
+          if (!this.data.page.showMine) {
+            item.user.data.avatar = PathUtil.getFilePath(item.user.data.avatar);
+          }
 
           // 总时长
           let totalTime = Math.ceil(parseInt(item.music_duration) / 1000);
@@ -323,7 +313,7 @@ Component({
     shareItem(e) {
       if (e.from == 'button') {
         let item = this.getItem(e),
-          index = this.getIndex(e);
+        index = this.getIndex(e);
 
         api.share({
           id: item.id,
@@ -335,20 +325,10 @@ Component({
           });
         });
 
-        let random = CommonUtil.getShareRandom();
         return {
-          title: CommonUtil.shareRandomMsgs[random],
-          imageUrl: CommonUtil.getShareImage(random),
-          path: '/pages/create/beatList/index?type=music',
-          success: (res) => {
-
-          },
-          fail(res) {
-
-          },
-          complete(res) {
-
-          }
+          title: CommonUtil.getShareTitle(),
+          imageUrl: CommonUtil.getShareImage(),
+          path: '/pages/create/beatList/index?type=music'
         };
       }
     }

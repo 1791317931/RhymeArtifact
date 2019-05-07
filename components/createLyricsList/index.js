@@ -56,20 +56,10 @@ Component({
       if (e.from == 'button') {
         let item = this.getItem(e);
 
-        let random = CommonUtil.getShareRandom();
         return {
-          title: CommonUtil.shareRandomMsgs[random],
-          imageUrl: CommonUtil.getShareImage(random),
-          path: '/pages/main/index?lyricId=' + item.id,
-          success: (res) => {
-
-          },
-          fail(res) {
-
-          },
-          complete(res) {
-
-          }
+          title: CommonUtil.getShareTitle(),
+          imageUrl: CommonUtil.getShareImage(),
+          path: '/pages/main/index?lyricId=' + item.id
         };
       }
     },

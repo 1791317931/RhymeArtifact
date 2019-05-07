@@ -2,7 +2,6 @@ import TipUtil from '../../assets/js/TipUtil';
 import ConfigUtil from '../../assets/js/ConfigUtil';
 import PathUtil from '../../assets/js/PathUtil';
 import * as api from '../../assets/js/api';
-import PosterCanvasUtil from '../../assets/js/components/PosterCanvasUtil';
 
 Component({
   /**
@@ -57,7 +56,7 @@ Component({
     // 下载海报
     generatePoster(e) {
       let item = this.getItem(e);
-      PosterCanvasUtil.draw(this.data.scope, item, 'article');
+      this.data.scope.data.musicPosterComponent.generatePoster(item, 'article');
     },
     shareItem(e) {
       if (e.from == 'button') {
@@ -128,13 +127,12 @@ Component({
       }
 
       this.togglePageLoading(true);
-      let defaultImage = getApp().globalData.defaultImage;
 
       api.getStudyPage(param, (res) => {
         let pagination = res.meta.pagination;
         res.data.forEach((item, index) => {
           let cover = PathUtil.getFilePath(item.cover);
-          item.cover = cover || defaultImage;
+          item.cover = cover;
           this.getPosterInfo(list.length, cover);
           list.push(item);
         });

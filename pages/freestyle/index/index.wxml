@@ -1,0 +1,22 @@
+<loadModal id="loadModalComponent"/>
+<view class="adver">
+  <!-- <ad class="ad" unit-id="adunit-c8c2d9e4ba6bd4dc"></ad> -->
+  <ad class="ad" unit-id="adunit-b59bbe130064bdef"></ad>
+  <!-- <image class="ad" src="/assets/imgs/banner.png" catchtap="toH5" /> -->
+</view>
+<view class="content-body">
+  <view class="user-info">
+    <image class="head-img" src="{{user.avatarUrl}}" />
+    <view class="name">{{user.nickname}}</view>
+    <view class="works-container clearfix">
+      <view>
+        粉丝:<text>{{user.fans_count}}</text>
+      </view>
+      <view>
+        Freestyle作品:<text>{{user.freestyle_count}}</text>
+      </view>
+    </view>
+  </view>
+  <image class="rank-list mt30" src="/assets/imgs/rank-list.png" catchtap="toRankList" />
+  <image class="freestyle-record mt40" src="/assets/imgs/freestyle-record.png" catchtap="toBeatList" />
+</view>

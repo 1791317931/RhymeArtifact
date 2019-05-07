@@ -17,20 +17,15 @@ Page({
       }
     ],
     activeIndex: 0,
-    posterUrl: '',
     videoComponent: null,
-    articleComponent: null
+    articleComponent: null,
+    musicPosterComponent: null
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    // 保持不锁屏
-    wx.setKeepScreenOn({
-      keepScreenOn: true
-    });
-
     let type,
     url = '',
     id = '',
@@ -79,14 +74,16 @@ Page({
     }
 
     let videoComponent = this.selectComponent('#videoComponent'),
-    articleComponent = this.selectComponent('#articleComponent');
+    articleComponent = this.selectComponent('#articleComponent'),
+    musicPosterComponent = this.selectComponent('#musicPosterComponent');
 
     videoComponent.init(this);
     articleComponent.init(this);
 
     this.setData({
       videoComponent,
-      articleComponent
+      articleComponent,
+      musicPosterComponent
     });
     this.getPage(1);
   },
@@ -102,14 +99,15 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    let data = this.data;
+    let data = this.data,
+    tabs = data.tabs;
     switch (data.tabs[data.activeIndex].flag) {
-      case 'video':
+      case tabs[0].flag:
         if (!data.videoComponent.data.page.list.length) {
           this.getPage(1);
         }
         break;
-      case 'article':
+      case tabs[1].flag:
         if (!data.articleComponent.data.page.list.length) {
           this.getPage(1);
         }
@@ -146,12 +144,13 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    let data = this.data;
-    switch (data.tabs[data.activeIndex].flag) {
-      case 'video':
+    let data = this.data,
+    tabs = data.tabs;
+    switch (tabs[data.activeIndex].flag) {
+      case tabs[0].flag:
         this.data.videoComponent.onReachBottom();
         break;
-      case 'article':
+      case tabs[1].flag:
         this.data.articleComponent.onReachBottom();
         break;
       default:
@@ -179,9 +178,9 @@ Page({
       };
     } else if (e.from == 'button') {
       let flag = this.data.tabs[this.data.activeIndex].flag;
-      if (flag == 'video') {
+      if (flag == tabs[0].flag) {
         return this.data.videoComponent.shareItem(e);
-      } else if (flag == 'article') {
+      } else if (flag == tabs[1].flag) {
         return this.data.articleComponent.shareItem(e);
       }
     }
@@ -196,21 +195,17 @@ Page({
     }
   },
   getPage(current_page = 1) {
-    let data = this.data;
-    switch(data.tabs[data.activeIndex].flag) {
-      case 'video':
+    let data = this.data,
+    tabs = data.tabs;
+    switch(tabs[data.activeIndex].flag) {
+      case tabs[0].flag:
         this.data.videoComponent.getPage(current_page);
         break;
-      case 'article':
+      case tabs[1].flag:
         this.data.articleComponent.getPage(current_page);
         break;
       default:
         break;
     }
-  },
-  closePoster() {
-    this.setData({
-      posterUrl: null
-    });
   }
 })
