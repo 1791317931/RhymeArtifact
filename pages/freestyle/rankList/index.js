@@ -36,8 +36,7 @@ Page({
     // setTimeout是否可以循环
     cycleAble: true,
     // 由于声量榜前三名不在组建中，需要全局控制
-    picking: false,
-    pickInterval: 1000
+    picking: false
   },
 
   /**
@@ -227,17 +226,9 @@ Page({
     });
   },
   togglePicking(picking) {
-    if (!picking) {
-      setTimeout(() => {
-        this.setData({
-          picking
-        });
-      }, this.data.pickInterval);
-    } else {
-      this.setData({
-        picking
-      });
-    }
+    this.setData({
+      picking
+    });
   },
   pick(e) {
     if (this.data.picking) {

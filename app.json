@@ -9,7 +9,6 @@
     "pages/freestyle/play/index",
     "pages/freestyle/beatList/index",    
     "pages/create/beatList/index",
-    "pages/activity/match",
     "pages/create/createMusicList/index",
     "pages/create/record/index",
     "pages/create/createLyricsList/index",

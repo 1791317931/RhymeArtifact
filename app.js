@@ -20,6 +20,11 @@ App({
   },
   globalData: {
     userInfo: null,
-    appName: '押韵Rap'
+    appName: '押韵Rap',
+    studyVideo: {
+      // 切换视频次数，如果达到一定的次数，就需要弹出广告提示
+      toggleVideoCount: 0,
+      isFirstComeIn: true
+    }
   }
 })

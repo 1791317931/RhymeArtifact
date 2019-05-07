@@ -3,7 +3,8 @@ import CommonUtil from '../../../assets/js/CommonUtil';
 import PathUtil from '../../../assets/js/PathUtil';
 import TipUtil from '../../../assets/js/TipUtil';
 
-let shareKey = 'shareObj';
+let shareKey = 'shareObj',
+app = getApp();
 Page({
 
   /**
@@ -26,19 +27,15 @@ Page({
     // 是否需要分享（要求用户每天至少分享一次）
     musicPosterComponent: null,
     ad: null,
-    // 切换视频次数，如果达到一定的次数，就需要弹出广告提示
-    toggleVideoCount: 0,
     TOGGLE_VIDEO_COUNT: 3,
-    shouldShowAd: true,
-    // 第一次进入页面
-    firstComeIn: true
+    shouldShowAd: true
   },
 
   /**
    * 生命周期函数--监听页面加载
    * 
    */
-  onLoad: function (options) {   
+  onLoad: function (options) {
     this.setData({
       groupId: options.id,
       videoContext: wx.createVideoContext('studyVideo'),
@@ -162,12 +159,7 @@ Page({
       ad.onClose((res) => {
         // 用户点击了【关闭广告】按钮
         if (res && res.isEnded) {
-          // 正常播放结束，可以下发游戏奖励
-          this.setData({
-            shouldShowAd: false,
-            toggleVideoCount: 0
-          });
-          videoContext.play();
+          this.toPlay();
         } else {
           // 播放中途退出，不下发游戏奖励
           TipUtil.message('请观看激励广告完毕后播放视频');
@@ -185,8 +177,17 @@ Page({
     }
   },
   rewardAdError() {
-    TipUtil.message('广告播放失败');
-    // 继续播放视频
+    this.toPlay();
+  },
+  toPlay() {
+    // 正常播放结束，可以下发游戏奖励
+    this.setData({
+      shouldShowAd: false
+    });
+    app.globalData.studyVideo = {
+      toggleVideoCount: 0
+    };
+    app.globalData.studyVideo.isFirstComeIn = false;
     videoContext.play();
   },
   toggleLoading(loading) {
@@ -291,26 +292,16 @@ Page({
   },
   playVideo(videoId, seekTime) {
     let data = this.data,
-    videoContext = data.videoContext;
+    videoContext = data.videoContext,
+    globalData = app.globalData;
     // 如果seekTime超出了视频总时长，会自动重新播放
     videoContext.seek(seekTime);
 
-    // 第一次进入页面，展示广告播放提示
-    if (this.data.firstComeIn) {
-      this.setData({
-        firstComeIn: false
-      });
-    } else {
+    if (!globalData.studyVideo.isFirstComeIn) {
       // 切换次数+1
-      let count = ++this.data.toggleVideoCount;
-      if (count >= this.data.TOGGLE_VIDEO_COUNT) {
-        this.setData({
-          shouldShowAd: true
-        });
-      }
-
+      let count = ++globalData.studyVideo.toggleVideoCount;
       this.setData({
-        toggleVideoCount: count
+        shouldShowAd: count >= this.data.TOGGLE_VIDEO_COUNT
       });
     }
 
