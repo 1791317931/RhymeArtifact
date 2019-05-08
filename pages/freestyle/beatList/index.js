@@ -94,19 +94,20 @@ Page({
   },
   getBeatCategory() {
     api.getBeatCategoryList(null, (res) => {
+      let tabs = res.data;
+      if (!tabs.length) {
+        TipUtil.message('暂无分类');
+        return;
+      }
+
       this.setData({
-        tabs: res.data
+        tabs
       });
 
-      // if (!res.data.length) {
-      //   TipUtil.message('暂无分类');
-      //   return;
-      // }
-
-      // // 设置分类
-      // this.data.beatComponent.setData({
-      //   categoryId: this.data.tabs[this.data.activeIndex].id
-      // });
+      // 设置分类
+      this.data.beatComponent.setData({
+        categoryId: tabs[this.data.activeIndex].id
+      });
       this.getPage(1);
     });
   },
