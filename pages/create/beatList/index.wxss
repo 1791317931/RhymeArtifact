@@ -1,6 +1,6 @@
 .create-container {
   position: relative;
-  padding-top: 125rpx;
+  padding-top: 110rpx;
 }
 
 .top-btn-container {
@@ -31,8 +31,4 @@
 
 .top-btn-container button:last-child {
   float: right;
-}
-
-.list-container {
-  padding: 0 20rpx;
 }

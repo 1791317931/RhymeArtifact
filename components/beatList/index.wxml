@@ -1,43 +1,53 @@
-<view class="beat-list-container">
-  <view class="beat-item" wx:for="{{page.list}}" wx:for-index="index" wx:for-item="item" wx:key="{{item.beat_id}}">
-    <view>
-      <view class="table top-container" data-index="{{index}}" catchtap="toggleItemStatus">
-        <view class="table-row">
-          <view class="table-cell status-container">
-            <view>
-              <image class="disk" src="/assets/imgs/disk.png" />
-              <image hidden="{{page.playingIndex == index && page.playing}}" src="/assets/imgs/to-play.png" />
-              <image hidden="{{page.playingIndex != index || !page.playing}}" src="/assets/imgs/to-pause.png" />
-            </view>
-          </view>
-          <view class="table-cell center-container">
-            <view class="title">{{item.beat_title}}</view>
-            <view class="detail-container">
-              <text>{{item.surplusTimeArr[0]}}:{{item.surplusTimeArr[1]}}:{{item.surplusTimeArr[2]}}</text>
-              <text>作词：{{item.beat_author}}</text>
-            </view>
-          </view>
-        </view>
-      </view>
-      <view hidden="{{page.isFreeStyle}}" class="operation-container">
-        <view class="collection-container" data-index="{{index}}" catchtap="toggleCollectionItem">
-          <image hidden="{{item.isCollection ||  page.showCollection}}" src="/assets/imgs/collection.png"/>
-          <image hidden="{{!item.isCollection && !page.showCollection}}" src="/assets/imgs/collection-active.png"/>
-          <text>{{item.collection_num}}</text>
-        </view>
-        <view class="share-container">
-          <image src="/assets/imgs/wechat-share.png"/>
-          <text>Beat分享</text>
-          <button open-type="share" data-index="{{index}}" class="hide"></button>
-        </view>
-        <view class="moments-container" data-index="{{index}}" catchtap="generatePoster">
-          <image src="/assets/imgs/moments.png"/>
-          <text>海报分享</text>
-        </view>
+<view class="beat-list-wrapper {{showTab && tabs.length ? 'show-tab' : ''}}">
+  <view hidden="{{!tabs.length}}" class="tab-container {{showTab ? '' : 'hide'}}">
+    <view class="clearfix">
+      <view wx:for="{{tabs}}" wx:for-item="item" wx:for-index="index" wx:key="{{item.flag}}"
+      class="tab-item {{activeIndex == index ? 'active' : ''}} item-{{index}}" data-index="{{index}}" catchtap="toggleTab">
+        {{item.name}}
       </view>
     </view>
-    <view hidden="{{page.playingIndex != index}}" class="start-record-container" data-index="{{index}}" catchtap="toRecord">
-      <button>{{page.isFreeStyle ? '开始Freestyle' : '开始录制'}}</button>
+  </view>
+  <view class="beat-list-container">
+    <view class="beat-item" wx:for="{{page.list}}" wx:for-index="index" wx:for-item="item" wx:key="{{item.beat_id}}">
+      <view>
+        <view class="table top-container" data-index="{{index}}" catchtap="toggleItemStatus">
+          <view class="table-row">
+            <view class="table-cell status-container">
+              <view>
+                <image class="disk" src="/assets/imgs/disk.png" />
+                <image hidden="{{page.playingIndex == index && page.playing}}" src="/assets/imgs/to-play.png" />
+                <image hidden="{{page.playingIndex != index || !page.playing}}" src="/assets/imgs/to-pause.png" />
+              </view>
+            </view>
+            <view class="table-cell center-container">
+              <view class="title">{{item.beat_title}}</view>
+              <view class="detail-container">
+                <text>{{item.surplusTimeArr[0]}}:{{item.surplusTimeArr[1]}}:{{item.surplusTimeArr[2]}}</text>
+                <text>作词：{{item.beat_author}}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+        <view hidden="{{page.isFreeStyle}}" class="operation-container">
+          <view class="collection-container" data-index="{{index}}" catchtap="toggleCollectionItem">
+            <image hidden="{{item.isCollection ||  page.showCollection}}" src="/assets/imgs/collection.png"/>
+            <image hidden="{{!item.isCollection && !page.showCollection}}" src="/assets/imgs/collection-active.png"/>
+            <text>{{item.collection_num}}</text>
+          </view>
+          <view class="share-container">
+            <image src="/assets/imgs/wechat-share.png"/>
+            <text>Beat分享</text>
+            <button open-type="share" data-index="{{index}}" class="hide"></button>
+          </view>
+          <view class="moments-container" data-index="{{index}}" catchtap="generatePoster">
+            <image src="/assets/imgs/moments.png"/>
+            <text>海报分享</text>
+          </view>
+        </view>
+      </view>
+      <view hidden="{{page.playingIndex != index}}" class="start-record-container" data-index="{{index}}" catchtap="toRecord">
+        <button>{{page.isFreeStyle ? '开始Freestyle' : '开始录制'}}</button>
+      </view>
     </view>
   </view>
 </view>

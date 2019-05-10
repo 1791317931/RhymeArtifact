@@ -37,5 +37,5 @@
 }
 
 .beat-container {
-  padding: 150rpx 20rpx 0;
+  padding: 130rpx 0 0;
 }

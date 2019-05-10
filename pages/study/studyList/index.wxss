@@ -9,9 +9,9 @@
   z-index: 1000;
 }
 
-.tab-container .item {
+.tab-container .tab-item {
   float: left;
-  padding: 0 50rpx;
+  padding: 0 30rpx;
   height: 90rpx;
   line-height: 90rpx;
   font-size:30rpx;
@@ -22,11 +22,11 @@
   position: relative;
 }
 
-.tab-container .item.active {
+.tab-container .tab-item.active {
   color:rgba(29,29,29,1);
 }
 
-.tab-container .item.active:after {
+.tab-container .tab-item.active:after {
   content: '';
   width:56rpx;
   height:7rpx;
@@ -39,9 +39,5 @@
 }
 
 .study-wrapper {
-  padding-top: 90rpx;
-}
-
-.article-container {
-  padding: 20rpx 0 0;
+  padding-top: 110rpx;
 }

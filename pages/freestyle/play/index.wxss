@@ -19,7 +19,7 @@
   position: fixed;
   width: 100%;
   padding: 110rpx 0 118rpx 0;
-  background:rgba(0,0,0,0.8);
+  background:rgb(0,0,0);
   top: 344rpx;
   left: 0;
   bottom: 0;

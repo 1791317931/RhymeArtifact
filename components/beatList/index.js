@@ -31,7 +31,10 @@ Component({
     },
     BAC: null,
     scope: null,
-    categoryId: null
+    tabs: [],
+    activeIndex: 0,
+    tabWidth: 0,
+    showTab: true
   },
 
   /**
@@ -43,7 +46,7 @@ Component({
         scope
       });
     },
-    init(scope) {
+    init(scope, renderCallback) {
       // 保持不锁屏
       wx.setKeepScreenOn({
         keepScreenOn: true
@@ -55,6 +58,40 @@ Component({
         BAC
       });
       this.bindBACEvent();
+
+      if (this.data.showTab) {
+        this.getCategoryList(renderCallback);
+      }
+    },
+    getCategoryList(renderCallback) {
+      api.getCategoryList({
+        type: 2
+      }, (res) => {
+        let tabs = res.data;
+        if (!tabs.length) {
+          return;
+        }
+
+        this.setData({
+          tabs
+        });
+
+        renderCallback && renderCallback();
+        // setTimeout(() => {
+        //   this.setTabWidth();
+        //   renderCallback && renderCallback();
+        // }, 20);
+      });
+    },
+    toggleTab(e) {
+      let index = e.target.dataset.index;
+      if (index != this.data.activeIndex) {
+        this.setData({
+          activeIndex: index
+        });
+
+        this.getPage(1);
+      }
     },
     isFreeStyle(isFreeStyle = true) {
       this.setData({
@@ -262,6 +299,19 @@ Component({
         'page.loading': loading
       });
     },
+    setTabWidth() {
+      let query = wx.createSelectorQuery().in(this),
+      that = this;
+      query.selectAll('.tab-item').boundingClientRect(function (rectList) {
+        let tabWidth = 0;
+        for (let i = 0; i < rectList.length; i++) {
+          tabWidth += Math.ceil(rectList[i].width);
+        }
+        that.setData({
+          tabWidth
+        });
+      }).exec();
+    },
     getPage(current_page = 1) {
       let page = this.data.page;
       if (page.loading) {
@@ -275,6 +325,10 @@ Component({
         hasCollection: 1
       },
       list = [];
+
+      if (this.data.showTab) {
+        param.category_id = this.data.tabs[this.data.activeIndex].id;
+      }
 
       if (current_page > 1) {
         list = page.list;
@@ -296,10 +350,6 @@ Component({
 
       if (page.isFreeStyle) {
         delete param.hasCollection
-      }
-
-      if (this.data.categoryId) {
-        param.category_id = this.data.categoryId;
       }
 
       fn(param, (res) => {

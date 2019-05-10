@@ -12,6 +12,10 @@ export function saveFormId(data, fn, completeFn) {
   UrlUtil.post('utils/save-formid', data, fn, completeFn);
 }
 
+export function getCategoryList(data, fn, completeFn) {
+  UrlUtil.get('categories', data, fn, completeFn);
+}
+
 // 获取微信群信息
 export function getWechatInfo(data, fn, completeFn) {
   UrlUtil.get(`utils/config/${data.key}`, data, fn, completeFn);
@@ -78,10 +82,6 @@ export function getLyricPage(data, fn, completeFn) {
 // ---------------------歌词------------------------
 
 // ---------------------伴奏------------------------
-export function getBeatCategoryList(data, fn, completeFn) {
-  UrlUtil.get('categories', data, fn, completeFn);
-}
-
 export function getBeatPage(data, fn, completeFn) {
   UrlUtil.get('beats', data, fn, completeFn);
 }
@@ -158,7 +158,7 @@ export function addFreestyleComment(data, fn, completeFn) {
 }
 
 export function deleteFreestyleComment(data, fn, completeFn) {
-  UrlUtil.delete(`freestyles/${data.freestyleId}/comments`, data, fn, completeFn);
+  UrlUtil.delete(`freestyles/comments/${data.commentId}`, data, fn, completeFn);
 }
 
 export function getFreestyleCommentPage(data, fn, completeFn) {

@@ -1,4 +1,5 @@
 import CommonUtil from '../../../assets/js/CommonUtil';
+import * as api from '../../../assets/js/api';
 
 Page({
 
@@ -6,20 +7,12 @@ Page({
    * 页面的初始数据
    */
   data: {
-    tabs: [
-      {
-        flag: 'video',
-        text: '视频'
-      },
-      {
-        flag: 'article',
-        text: '文章'
-      }
-    ],
+    tabs: [],
     activeIndex: 0,
     videoComponent: null,
     articleComponent: null,
-    musicPosterComponent: null
+    musicPosterComponent: null,
+    onLoaded: false
   },
 
   /**
@@ -85,7 +78,8 @@ Page({
       articleComponent,
       musicPosterComponent
     });
-    this.getPage(1);
+
+    this.getCategoryList();
   },
 
   /**
@@ -99,21 +93,31 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    if (!this.data.onLoaded) {
+      this.setData({
+        onLoaded: true
+      });
+      return;
+    }
+
     let data = this.data,
-    tabs = data.tabs;
-    switch (data.tabs[data.activeIndex].flag) {
-      case tabs[0].flag:
-        if (!data.videoComponent.data.page.list.length) {
-          this.getPage(1);
+    tabs = data.tabs,
+    item = data.tabs[data.activeIndex],
+    id = item.id || item.flag;
+
+    if (id == tabs[tabs.length - 1].flag) {
+      if (!data.articleComponent.data.page.list.length) {
+        this.getPage(1);
+      }
+    } else {
+      for (let i = 0; i < tabs.length - 1; i++) {
+        if (tabs[i].id == id) {
+          if (!data.articleComponent.data.page.list.length) {
+            this.getPage(1);
+          }
+          break;
         }
-        break;
-      case tabs[1].flag:
-        if (!data.articleComponent.data.page.list.length) {
-          this.getPage(1);
-        }
-        break;
-      default:
-        break;
+      }
     }
   },
 
@@ -145,16 +149,19 @@ Page({
    */
   onReachBottom: function () {
     let data = this.data,
-    tabs = data.tabs;
-    switch (tabs[data.activeIndex].flag) {
-      case tabs[0].flag:
-        this.data.videoComponent.onReachBottom();
-        break;
-      case tabs[1].flag:
-        this.data.articleComponent.onReachBottom();
-        break;
-      default:
-        break;
+    tabs = data.tabs,
+    item = data.tabs[data.activeIndex],
+    id = item.id || item.flag;
+
+    if (id == tabs[tabs.length - 1].flag) {
+      this.data.articleComponent.onReachBottom();
+    } else {
+      for (let i = 0; i < tabs.length - 1; i++) {
+        if (tabs[i].id == id) {
+          this.data.videoComponent.onReachBottom();
+          break;
+        }
+      }
     }
   },
 
@@ -165,25 +172,36 @@ Page({
     if (e.from == 'menu') {
       return {
         title: getApp().globalData.appName,
-        path: '/pages/study/studyList/index',
-        success: (res) => {
-
-        },
-        fail(res) {
-
-        },
-        complete(res) {
-
-        }
+        path: '/pages/study/studyList/index'
       };
     } else if (e.from == 'button') {
-      let flag = this.data.tabs[this.data.activeIndex].flag;
-      if (flag == tabs[0].flag) {
-        return this.data.videoComponent.shareItem(e);
-      } else if (flag == tabs[1].flag) {
+      let item = this.data.tabs[this.data.activeIndex],
+      id = item.id || item.flag;
+
+      if (id == tabs[tabs.length - 1].flag) {
         return this.data.articleComponent.shareItem(e);
+      } else {
+        return this.data.videoComponent.shareItem(e);
       }
     }
+  },
+  getCategoryList() {
+    api.getCategoryList({
+      type: 1
+    }, (res) => {
+      let tabs = res.data;
+
+      tabs.push({
+        flag: 'article',
+        name: '文章'
+      });
+
+      this.setData({
+        tabs
+      });
+
+      this.getPage(1);
+    });
   },
   toggleTab(e) {
     let index = e.target.dataset.index;
@@ -191,21 +209,30 @@ Page({
       this.setData({
         activeIndex: index
       });
+
       this.getPage(1);
     }
   },
   getPage(current_page = 1) {
     let data = this.data,
-    tabs = data.tabs;
-    switch(tabs[data.activeIndex].flag) {
-      case tabs[0].flag:
-        this.data.videoComponent.getPage(current_page);
-        break;
-      case tabs[1].flag:
-        this.data.articleComponent.getPage(current_page);
-        break;
-      default:
-        break;
+    tabs = data.tabs,
+    item = data.tabs[data.activeIndex],
+    id = item.id || item.flag;
+
+    if (id == tabs[tabs.length - 1].flag) {
+      this.data.articleComponent.getPage(current_page);
+    } else {
+      for (let i = 0; i < tabs.length - 1; i++) {
+        if (tabs[i].id == id) {
+          let videoComponent = this.data.videoComponent;
+          videoComponent.setData({
+            category_id: id
+          });
+
+          videoComponent.getPage(current_page);
+          break;
+        }
+      }
     }
   }
 })

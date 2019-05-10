@@ -23,7 +23,8 @@ Component({
       total_pages: 0,
       current_page: 1
     },
-    scope: null
+    scope: null,
+    category_id: null
   },
 
   /**
@@ -159,7 +160,8 @@ Component({
         per_page: page.per_page,
         type: 'courses',
         include: 'author',
-        hasCollection: 1
+        hasCollection: 1,
+        category_id: this.data.category_id
       },
         list = [];
 

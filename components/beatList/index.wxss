@@ -2,6 +2,58 @@
 .table-row {display: table-row !important;}
 .table-cell, .cell {display: table-cell !important; vertical-align: middle;}
 
+.hide {
+  display: none;
+}
+
+.beat-list-wrapper {
+  position: relative;
+  padding: 20rpx 20rpx 0 20rpx;
+}
+
+.beat-list-wrapper.show-tab {
+  padding-top: 110rpx;
+}
+
+.tab-container {
+  width: 100%;
+  height: 90rpx;
+  overflow: auto;
+  background: #fff;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.tab-container .tab-item {
+  float: left;
+  padding: 0 30rpx;
+  height: 90rpx;
+  line-height: 90rpx;
+  font-size:30rpx;
+  font-family:PingFangSC-Semibold;
+  font-weight:600;
+  color:rgba(114,114,114,1);
+  letter-spacing:1rpx;
+  position: relative;
+}
+
+.tab-container .tab-item.active {
+  color:rgba(29,29,29,1);
+}
+
+.tab-container .tab-item.active:after {
+  content: '';
+  width:56rpx;
+  height:7rpx;
+  background:rgba(29,29,29,1);
+  border-radius:4rpx;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 10rpx;
+}
+
 .beat-list-container .beat-item {
   border-radius: 14rpx;
   overflow: hidden;

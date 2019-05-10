@@ -8,7 +8,8 @@ Page({
     beatComponent: null,
     musicPosterComponent: null,
     // 需要跳转的页面
-    targetPath: null
+    targetPath: null,
+    onLoaded: false
   },
 
   /**
@@ -38,8 +39,9 @@ Page({
       beatComponent,
       musicPosterComponent
     });
-    beatComponent.init(this);
-    beatComponent.getPage();
+    beatComponent.init(this, () => {
+      beatComponent.getPage(1);
+    });
   },
 
   /**
@@ -63,9 +65,19 @@ Page({
       return;
     }
 
+    // 保证一下代码不会和onLoad同时执行
+    if (!this.data.onLoaded) {
+      this.setData({
+        onLoaded: true
+      });
+      return;
+    }
+
     // token过期后重新登陆或者删除收藏，都需要刷新页面，否则再次操作收藏会出异常
     let beatComponent = this.data.beatComponent;
-    beatComponent.getPage();
+    beatComponent.getCategoryList(() => {
+      beatComponent.getPage();
+    });
   },
 
   /**

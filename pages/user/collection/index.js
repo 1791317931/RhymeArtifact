@@ -1,4 +1,5 @@
 import CommonUtil from '../../../assets/js/CommonUtil';
+import * as api from '../../../assets/js/api';
 
 Page({
   /**
@@ -31,6 +32,10 @@ Page({
     });
 
     musicComponent.init(this);
+    // 不显示分类
+    beatComponent.setData({
+      showTab: false
+    });
     beatComponent.init(this);
     this.init();
   },
@@ -111,6 +116,7 @@ Page({
     if (type == 'music') {
       this.data.musicComponent.getPage(1);
     } else if (type == 'beat') {
+      this.data.beatComponent.setTabWidth();
       this.data.beatComponent.getPage(1);
     }
   },

@@ -7,8 +7,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-    tabs: [],
-    activeIndex: 0,
     beatComponent: null,
     // 需要跳转的页面
     targetPath: null,
@@ -24,9 +22,9 @@ Page({
       beatComponent
     });
     beatComponent.isFreeStyle(true);
-    beatComponent.init(this);
-
-    this.getBeatCategory();
+    beatComponent.init(this, () => {
+      this.getPage(1);
+    });
   },
 
   /**
@@ -77,39 +75,6 @@ Page({
    */
   onShareAppMessage: function (e) {
     return CommonUtil.share(e);
-  },
-  toggleTab(e) {
-    let index = e.target.dataset.index;
-    if (index != this.data.activeIndex) {
-      this.setData({
-        activeIndex: index
-      });
-
-      // 设置分类 id
-      this.data.beatComponent.setData({
-        categoryId: this.data.tabs[this.data.activeIndex].id
-      });
-      this.getPage(1);
-    }
-  },
-  getBeatCategory() {
-    api.getBeatCategoryList(null, (res) => {
-      let tabs = res.data;
-      if (!tabs.length) {
-        TipUtil.message('暂无分类');
-        return;
-      }
-
-      this.setData({
-        tabs
-      });
-
-      // 设置分类
-      this.data.beatComponent.setData({
-        categoryId: tabs[this.data.activeIndex].id
-      });
-      this.getPage(1);
-    });
   },
   getPage(pageNum = 1) {
     this.data.beatComponent.getPage(pageNum);
