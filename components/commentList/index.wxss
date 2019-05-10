@@ -1,0 +1,91 @@
+.hide {
+  display: none;
+}
+
+.comment-list-container .item {
+  padding: 0 140rpx 0 130rpx;
+  position: relative;
+}
+
+.comment-list-container .item:not(:first-child) {
+  margin-top: 40rpx;
+}
+
+.comment-list-container .item:not(:last-child):after {
+  content: '';
+  position: absolute;
+  left: 130rpx;
+  right:0;
+  bottom: 0;
+  border-bottom: 1rpx solid rgb(64, 64, 64);
+}
+
+.item .user-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  position: absolute;
+  left: 30rpx;
+  top: 0;
+  border-radius: 50%;
+}
+
+.praise-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 106rpx;
+}
+
+.praise-container image {
+  width: 40rpx;
+  height:36rpx;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.praise-container .count {
+  margin-top: 6rpx;
+  font-size:22rpx;
+  font-family:DIN-Regular;
+  font-weight:400;
+  color:rgba(255,255,255,1);
+  line-height:27rpx;
+  text-align: center;
+}
+
+.item .user-name {
+  font-size:30rpx;
+  font-family:PingFangSC-Regular;
+  font-weight:400;
+  color:rgba(169,175,184,1);
+  line-height:37rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.item .content {
+  margin-top: 12rpx;
+  font-size:32rpx;
+  font-family:PingFangSC-Regular;
+  font-weight:400;
+  color:rgba(255,255,255,1);
+  line-height:45rpx;
+  word-break: break-all;
+}
+
+.item .create-time {
+  margin-top: 10rpx;
+  padding-bottom: 20rpx;
+  font-size:22rpx;
+  font-family:PingFangSC-Regular;
+  font-weight:400;
+  color:rgba(169,175,184,1);
+  line-height:30rpx;
+  position: relative;
+}
+
+.item .create-time .delete-item {
+  padding: 0 30rpx;
+}

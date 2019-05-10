@@ -6,6 +6,32 @@
 <image class="fs-play-bg" src="/assets/imgs/fs-play-bg.png" />
 <image hidden="{{playing}}" class="play-status" src="/assets/imgs/to-play.png" catchtap="continuePlay" />
 <image hidden="{{!playing}}" class="play-status" src="/assets/imgs/to-pause.png" catchtap="pausePlay"/>
+<view hidden="{{!showComment}}" class="comment-container-wrapper">
+  <view class="comment-count">{{totalComment}}条评论</view>
+  <view class="close-comment" catchtap="closeComment"></view>
+  <scroll-view
+    class="comment-container"
+    scroll-y
+    bindscrolltolower="getMoreFsComment"
+  >
+    <commentList id="commentListComponent"/>
+  </scroll-view>
+  <view class="comment-area {{commentFocus ? 'active' : ''}}">
+    <form bindsubmit="sendComment">
+      <textarea
+        value="{{commentContent}}"
+        name="commentContent"
+        class="comment-input"
+        placeholder="我来说两句（最多输入{{commentMaxLength}}字）"
+        maxlength="{{commentMaxLength}}"
+        cursor-spacing="40"
+        fixed="{{true}}"
+        bindfocus="commentContentFocus"
+        bindblur="changeCommentContent"/>
+      <button formType="submit">发布</button>
+    </form>
+  </view>
+</view>
 <view class="play-container">
   <view class="theme">Freestyle主题：{{fs.title}}</view>
   <view class="progress-container">
@@ -53,6 +79,10 @@
   <view class="history clearfix">
     <view class="look-up pull-left">
       <view class="count">{{fs.click_num}}人听过</view>
+    </view>
+    <view class="comment pull-right" catchtap="toShowComment">
+      <image src="/assets/imgs/comment.png"/>
+      <text class="count">{{totalComment}}</text>
     </view>
   </view>
   <view hidden="{{!showMoreInfo}}" class="more-production">

@@ -3,7 +3,8 @@
     "loadModal": "/components/common/loadModal/index",
     "popImage": "/components/popImage/index",
     "freestyleList": "/components/freestyleList/index",
-    "freestylePoster": "/components/freestylePoster/index"
+    "freestylePoster": "/components/freestylePoster/index",
+    "commentList": "/components/commentList/index"
   },
   "navigationBarTitleText": "播放freestyle"
 }

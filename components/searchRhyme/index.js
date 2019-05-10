@@ -14,7 +14,8 @@ Component({
    * 组件的初始数据
    */
   data: {
-    wechat: '15517942602',
+    wechat: '',
+    descArr: [],
     showShareModal: false,
     rhymePage: {
       loading: false,
@@ -38,11 +39,23 @@ Component({
       mortgage: 'double'
     }
   },
+  attached() {
+    this.getWechatInfo();
+  },
 
   /**
    * 组件的方法列表
    */
   methods: {
+    getWechatInfo() {
+      api.getWechatInfo({
+        key: 'wechat'
+      }, (res) => {
+        this.setData({
+          wechat: res.data.config_value
+        });
+      });
+    },
     handleOpenModal() {
       app.aldstat.sendEvent('添加微信群', '添加微信群')
       this.setData({

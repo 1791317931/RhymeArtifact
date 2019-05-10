@@ -12,6 +12,11 @@ export function saveFormId(data, fn, completeFn) {
   UrlUtil.post('utils/save-formid', data, fn, completeFn);
 }
 
+// 获取微信群信息
+export function getWechatInfo(data, fn, completeFn) {
+  UrlUtil.get(`utils/config/${data.key}`, data, fn, completeFn);
+}
+
 // ---------------------活动------------------------
 export function getActivitySetting(data, fn, completeFn, failFn) {
   UrlUtil.get('activity/settings', data, fn, completeFn, failFn);
@@ -146,6 +151,26 @@ export function getFreestyleTopRank(data, fn, completeFn) {
 
 export function getMyFreestylePage(data, fn, completeFn) {
   UrlUtil.get(`user/freestyles`, data, fn, completeFn);
+}
+
+export function addFreestyleComment(data, fn, completeFn) {
+  UrlUtil.post(`freestyles/${data.freestyleId}/comments`, data, fn, completeFn);
+}
+
+export function deleteFreestyleComment(data, fn, completeFn) {
+  UrlUtil.delete(`freestyles/${data.freestyleId}/comments`, data, fn, completeFn);
+}
+
+export function getFreestyleCommentPage(data, fn, completeFn) {
+  UrlUtil.get(`freestyles/${data.objectId}/comments`, data, fn, completeFn);
+}
+
+export function addFreestyleCommentPraise(data, fn, completeFn) {
+  UrlUtil.put(`freestyles/comments/${data.commentId}/like`, data, fn, completeFn);
+}
+
+export function deleteFreestyleCommentPraise(data, fn, completeFn) {
+  UrlUtil.put(`freestyles/comments/${data.commentId}/cancelLike`, data, fn, completeFn);
 }
 // ---------------------freestyle------------------------
 

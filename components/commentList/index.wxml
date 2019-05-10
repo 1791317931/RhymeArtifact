@@ -1,0 +1,20 @@
+<view class="comment-list-container">
+  <view class="item" wx:for="{{page.list}}" wx:for-index="index" wx:for-item="item" wx:key="{{item.id}}">
+    <image class="user-avatar" src="{{item.user.avatar}}"/>
+    <view class="praise-container" data-index="{{index}}" catchtap="togglePraise">
+      <image hidden="{{item.is_like == 1}}" src="/assets/imgs/praise.png"/>
+      <image hidden="{{item.is_like != 1}}" src="/assets/imgs/praise-active.png"/>
+      <view class="count">{{item.like_count}}</view>
+    </view>
+    <view class="user-name">{{item.user.data.nickname}}</view>
+    <view class="content">{{item.content}}</view>
+    <view class="create-time">
+      <text>{{item.created_at}}</text>
+      <text class="delete-item {{user.id == item.user_id ? '' : 'hide'}}" data-index="{{index}}" catchtap="deleteItem">删除</text>
+    </view>
+  </view>
+</view>
+<empty 
+  loading="{{page.loading}}"
+  hasData="{{!!page.list.length}}"
+  hasMore="{{page.current_page < page.total_pages}}"/>

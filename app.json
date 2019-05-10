@@ -1,13 +1,13 @@
 {
   "pages": [
     "pages/main/index",
+    "pages/freestyle/play/index",
+    "pages/freestyle/beatList/index",
     "pages/study/studyList/index",
     "pages/user/freestyle/index",
     "pages/freestyle/index/index",
     "pages/freestyle/rankList/index",
     "pages/freestyle/record/index",
-    "pages/freestyle/play/index",
-    "pages/freestyle/beatList/index",
     "pages/create/beatList/index",
     "pages/create/createMusicList/index",
     "pages/create/record/index",

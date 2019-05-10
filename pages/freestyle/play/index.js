@@ -15,6 +15,7 @@ Page({
     popImageComponent: null,
     freestyleListComponent: null,
     freestylePosterComponent: null,
+    commentListComponent: null,
     audio: null,
     fs: null,
     user: null,
@@ -23,7 +24,12 @@ Page({
     playPercent: 0,
     showMoreInfo: false,
     loadingUserInfo: true,
-    picking: false
+    picking: false,
+    showComment: false,
+    commentMaxLength: 150,
+    commentContent: '',
+    commentFocus: false,
+    totalComment: 0
   },
 
   /**
@@ -38,13 +44,15 @@ Page({
     let loadModalComponent = this.selectComponent('#loadModalComponent'),
     popImageComponent = this.selectComponent('#popImageComponent'),
     freestyleListComponent = this.selectComponent('#freestyleListComponent'),
-    freestylePosterComponent = this.selectComponent('#freestylePosterComponent');
+    freestylePosterComponent = this.selectComponent('#freestylePosterComponent'),
+    commentListComponent = this.selectComponent('#commentListComponent');
 
     this.setData({
       loadModalComponent,
       popImageComponent,
       freestyleListComponent,
-      freestylePosterComponent
+      freestylePosterComponent,
+      commentListComponent
     });
     freestyleListComponent.init(this);
     freestyleListComponent.setData({
@@ -78,7 +86,14 @@ Page({
     this.data.freestyleListComponent.setData({
       userId
     });
-    
+
+    commentListComponent.init(this);
+    commentListComponent.setData({
+      type: 'freestyle',
+      objectId: id
+    });
+
+    commentListComponent.getPage(1);
     freestyleListComponent.getPage(1);
   },
 
@@ -246,6 +261,8 @@ Page({
       data.playTimeArr = TimeUtil.numberToArr(playTime);
       data.backgroundImage = '/assets/imgs/fs-poster-bg.png';
 
+      data.comment_num = 344;
+
       this.setData({
         fs: data
       });
@@ -366,5 +383,49 @@ Page({
   },
   getMoreFs() {
     this.data.freestyleListComponent.onReachBottom();
+  },
+  toggleComment(showComment) {
+    this.setData({
+      showComment
+    });
+  },
+  toShowComment() {
+    this.toggleComment(true);
+  },
+  closeComment() {
+    this.toggleComment(false);
+  },
+  commentContentFocus() {
+    this.setData({
+      commentFocus: true
+    });
+  },
+  changeCommentContent(e) {
+    this.setData({
+      commentFocus: false
+    });
+  },
+  sendComment(e) {
+    let data = this.data,
+    content = e.detail.value.commentContent.trim();
+
+    if (!content) {
+      TipUtil.message('评论内容不能为空');
+      return;
+    }
+
+    api.addFreestyleComment({
+      freestyleId: data.fs.id,
+      content
+    }, (res) => {
+      TipUtil.success('评论成功');
+      this.setData({
+        commentContent: ''
+      })
+      this.data.commentListComponent.getPage(1);
+    });
+  },
+  getMoreFsComment() {
+    this.data.commentListComponent.onReachBottom();
   }
 })

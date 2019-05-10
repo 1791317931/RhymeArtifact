@@ -15,6 +15,126 @@
   transform:translateX(-50%);
 }
 
+.comment-container-wrapper {
+  position: fixed;
+  width: 100%;
+  padding: 110rpx 0 118rpx 0;
+  background:rgba(0,0,0,0.8);
+  top: 344rpx;
+  left: 0;
+  bottom: 0;
+  overflow: auto;
+  border-radius:30rpx 30rpx 0 0;
+  z-index: 10000;
+}
+
+.comment-container-wrapper .comment-count {
+  position: absolute;
+  top: 40rpx;
+  left: 30rpx;
+  font-size:32rpx;
+  font-family:PingFangSC-Semibold;
+  font-weight:600;
+  color:rgba(255,255,255,1);
+  line-height:40rpx;
+}
+
+.comment-container-wrapper .close-comment {
+  position: absolute;
+  width: 40rpx;
+  height: 40rpx;
+  top: 35rpx;
+  right: 30rpx;
+}
+
+.comment-container-wrapper .close-comment:before {
+  content: '';
+  position: absolute;
+  width: 28rpx;
+  height: 2rpx;
+  background: #fff;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotateZ(45deg);
+  transform-origin: center;
+}
+
+.comment-container-wrapper .close-comment:after {
+  content: '';
+  position: absolute;
+  width: 28rpx;
+  height: 2rpx;
+  background: #fff;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotateZ(-45deg);
+  transform-origin: center;
+}
+
+.comment-container-wrapper .comment-area {
+  position: absolute;
+  width: 100%;
+  height: 118rpx;
+  left: 0;
+  bottom: 0;
+  padding: 16rpx 20rpx;
+  background:rgba(50,37,37,1);
+}
+
+.comment-area .comment-input {
+  width: 100%;
+  height: 100%;
+  background:rgba(0,0,0,1);
+  border-radius:49rpx;
+  padding: 23rpx 38rpx;
+  font-size:28rpx;
+  font-family:PingFangSC-Regular;
+  font-weight:400;
+  color:rgba(169,175,184,1);
+  line-height:40rpx;
+}
+
+.comment-container-wrapper .comment-area.active {
+  height: 188rpx;
+  background:rgba(255,255,255,1);
+  padding: 34rpx 120rpx 34rpx 29rpx;
+}
+
+.comment-container-wrapper .comment-area.active .comment-input {
+  background:rgba(245,245,245,1);
+  border-radius:30rpx;
+  padding: 18rpx 20rpx;
+  font-size:30rpx;
+  font-family:PingFangSC-Regular;
+  font-weight:400;
+  color:rgba(51,51,51,1);
+  line-height:42rpx;
+}
+
+.comment-container-wrapper .comment-area button {
+  display: none;
+  height: 188rpx;
+  width: 120rpx;
+  line-height: 188rpx;
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-size:30rpx;
+  font-family:PingFangSC-Medium;
+  font-weight:500;
+  color:rgba(51,51,51,1);
+  background: #fff;
+  text-align: center;
+}
+
+.comment-container-wrapper .comment-area.active button {
+  display: block;
+}
+
+.comment-container {
+  height: 100%;
+}
+
 .play-container {
   width: 100%;
   position: relative;
@@ -245,6 +365,23 @@
   font-family:PingFangSC-Regular;
   font-weight:400;
   color:rgba(86,91,98,1);
+  line-height:50rpx;
+}
+
+.detail-container .history .comment image {
+  float: left;
+  margin-top: 6rpx;
+  width: 38rpx;
+  height: 38rpx;
+}
+
+.detail-container .history .comment .count {
+  float: left;
+  margin-left: 10rpx;
+  font-size:33rpx;
+  font-family:Avenir-Book;
+  font-weight:normal;
+  color:rgba(255,255,255,1);
   line-height:50rpx;
 }
 
