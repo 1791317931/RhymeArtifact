@@ -1,17 +1,21 @@
+<canvas class="poster-canvas" canvas-id="poster-canvas"/>
+<musicPoster 
+  posterUrl="{{posterUrl}}"
+  bind:closePoster="closePoster"
+/>
 <view class="collection-container">
-  <view class="toggle-btn-container clearfix">
-    <button data-value="music" class="music-btn {{type == 'music' ? 'active' : ''}}" catchtap="togglePage">创作</button>
-    <button data-value="beat" class="music-btn {{type == 'beat' ? 'active' : ''}}" catchtap="togglePage">伴奏</button>
+  <view hidden="{{!tabs.length}}" class="tab-container">
+    <view class="clearfix">
+      <view wx:for="{{tabs}}" wx:for-item="item" wx:for-index="index" wx:key="{{item.flag}}"
+      class="tab-item {{activeIndex == index ? 'active' : ''}} item-{{index}}" data-index="{{index}}" catchtap="toggleTab">
+        {{item.name}}
+      </view>
+    </view>
   </view>
-  <canvas class="poster-canvas" canvas-id="poster-canvas"/>
-  <musicPoster 
-    posterUrl="{{posterUrl}}"
-    bind:closePoster="closePoster"
-  />
-  <view class="music-container" hidden="{{type == 'beat'}}">
+  <view class="mt20" hidden="{{tabs[activeIndex].flag != 'music'}}">
     <createMusicList id="musicComponent"/>
   </view>
-  <view class="beat-container" hidden="{{type == 'music'}}">
+  <view hidden="{{tabs[activeIndex].flag != 'beat'}}">
     <beatList id="beatComponent"/>
   </view>
 </view>

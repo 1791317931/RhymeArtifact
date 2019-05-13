@@ -27,7 +27,8 @@
     "pages/study/studyVideo/index",
     "pages/study/studyArticle/index",
     "pages/user/officialAccounts/index",
-    "pages/webview/index"
+    "pages/webview/index",
+    "pages/user/fans/index"
   ],
   "window": {
     "backgroundColor": "#f7f7f7",

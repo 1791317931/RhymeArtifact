@@ -190,4 +190,8 @@ export function follow(data, fn, completeFn) {
 export function cancelFollow(data, fn, completeFn) {
   UrlUtil.delete(`fans/user-id/${data.user_id}`, data, fn, completeFn);
 }
+
+export function getFansPage(data, fn, completeFn) {
+  UrlUtil.get(`fans`, data, fn, completeFn);
+}
 // ---------------------用户------------------------

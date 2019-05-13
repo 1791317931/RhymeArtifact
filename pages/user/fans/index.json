@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "fansList": "/components/fansList/index"
+  },
+  "navigationBarTitleText": "我的粉丝",
+  "enablePullDownRefresh": true
+}

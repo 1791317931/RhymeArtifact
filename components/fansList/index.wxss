@@ -1,0 +1,75 @@
+.tab-container {
+  width: 100%;
+  height: 90rpx;
+  background: #fff;
+}
+
+.tab-container .tab-item {
+  float: left;
+  padding: 0 30rpx;
+  height: 90rpx;
+  line-height: 90rpx;
+  font-size:30rpx;
+  font-family:PingFangSC-Semibold;
+  font-weight:600;
+  color:rgba(114,114,114,1);
+  letter-spacing:1rpx;
+  position: relative;
+}
+
+.tab-container .tab-item.active {
+  color:rgba(29,29,29,1);
+}
+
+.tab-container .tab-item.active:after {
+  content: '';
+  width:56rpx;
+  height:7rpx;
+  background:rgba(29,29,29,1);
+  border-radius:4rpx;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 10rpx;
+}
+
+.list-container {
+  padding: 0 16rpx;
+}
+
+.list-container .item {
+  position: relative;
+  height: 140rpx;
+  padding: 0 210rpx 0 106rpx;
+  border-bottom: 2px solid #EFEFEF;
+}
+
+.item .user-avatar {
+  position: absolute;
+  top: 30rpx;
+  left: 4rpx;
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+}
+
+.item .user-name {
+  line-height: 140rpx;
+  font-size:30rpx;
+  font-family:PingFangSC-Regular;
+  font-weight:400;
+  color:rgba(38,38,40,1);
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.item .follow-status {
+  position: absolute;
+  top: 50%;
+  right: 35rpx;
+  transform: translateY(-50%);
+  width:113rpx;
+  height:52rpx;
+  background:rgba(255,255,255,1);
+}

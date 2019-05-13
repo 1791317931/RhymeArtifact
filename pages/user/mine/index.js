@@ -26,9 +26,8 @@ Page({
         show: false
       },
       {
-        path: '',
-        text: '混音编曲',
-        show: false
+        path: '/pages/user/fans/index',
+        text: '粉丝与关注'
       },
       {
         path: '/pages/user/collection/index',

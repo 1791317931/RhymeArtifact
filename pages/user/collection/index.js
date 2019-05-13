@@ -6,11 +6,20 @@ Page({
    * 页面的初始数据
    */
   data: {
-    // music beat
-    type: 'music',
     posterUrl: null,
     beatComponent: null,
-    musicComponent: null
+    musicComponent: null,
+    tabs: [
+      {
+        flag: 'music',
+        name: '作品'
+      },
+      {
+        flag: 'beat',
+        name: 'beat'
+      }
+    ],
+    activeIndex: 0
   },
 
   /**
@@ -76,10 +85,10 @@ Page({
   onPullDownRefresh: function () {
     wx.stopPullDownRefresh();
 
-    let type = this.data.type;
-    if (type == 'music') {
+    let flag = this.getFlag();
+    if (flag == 'music') {
       this.data.musicComponent.getPage(1);
-    } else if (type == 'beat') {
+    } else if (flag == 'beat') {
       this.data.beatComponent.getPage(1);
     }
   },
@@ -88,10 +97,10 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    let type = this.data.type;
-    if (type == 'music') {
+    let flag = this.getFlag();
+    if (flag == 'music') {
       this.data.musicComponent.onReachBottom();
-    } else if (type == 'beat') {
+    } else if (flag == 'beat') {
       this.data.beatComponent.onReachBottom();
     }
   },
@@ -103,40 +112,36 @@ Page({
     if (e.from == 'menu') {
       return CommonUtil.share(e);
     } else {
-      let type = this.data.type;
-      if (type == 'music') {
+      let flag = this.getFlag();
+      if (flag == 'music') {
         return this.data.musicComponent.shareItem(e);
-      } else if (type == 'beat') {
+      } else if (flag == 'beat') {
         return this.data.beatComponent.shareItem(e);
       }
     }
   },
   init() {
-    let type = this.data.type;
-    if (type == 'music') {
+    let flag = this.getFlag();
+    if (flag == 'music') {
       this.data.musicComponent.getPage(1);
-    } else if (type == 'beat') {
-      this.data.beatComponent.setTabWidth();
+    } else if (flag == 'beat') {
       this.data.beatComponent.getPage(1);
     }
   },
-  togglePage(e) {
-    let type = this.data.type;
-    if (type != e.target.dataset.value) {
-      if (type == 'music') {
-        type = 'beat';
-      } else if (type == 'beat') {
-        type = 'music';
-      }
-
+  getFlag() {
+    return this.data.tabs[this.data.activeIndex].flag;
+  },
+  toggleTab(e) {
+    let activeIndex = e.target.dataset.index
+    if (this.data.activeIndex != activeIndex) {
       this.setData({
-        type
+        activeIndex
       });
-    }
 
-    this.data.musicComponent.pausePlay(e);
-    this.data.beatComponent.pausePlay(e);
-    this.init();
+      this.data.musicComponent.pausePlay(e);
+      this.data.beatComponent.pausePlay(e);
+      this.init();
+    }
   },
   closePoster() {
     this.setData({

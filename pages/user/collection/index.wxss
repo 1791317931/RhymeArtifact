@@ -1,41 +1,34 @@
-.collection-container .toggle-btn-container {
+.tab-container {
   width: 100%;
-  padding: 30rpx;
-  position: fixed;
-  top: 0;
-  left: 0;
+  height: 90rpx;
   background: #fff;
-  z-index: 1;
 }
 
-.collection-container .toggle-btn-container button {
+.tab-container .tab-item {
   float: left;
-  width:280rpx;
-  height:70rpx;
-  line-height:70rpx;
-  background:rgba(255,255,255,1);
-  border-radius:14rpx;
-  border:2rpx solid rgba(0,0,0,1);
+  padding: 0 30rpx;
+  height: 90rpx;
+  line-height: 90rpx;
   font-size:30rpx;
-  font-family:PingFangSC-Medium;
-  font-weight:500;
-  color:rgba(29,29,29,1);
+  font-family:PingFangSC-Semibold;
+  font-weight:600;
+  color:rgba(114,114,114,1);
   letter-spacing:1rpx;
+  position: relative;
 }
 
-.collection-container .toggle-btn-container button:last-child {
-  float: right;
+.tab-container .tab-item.active {
+  color:rgba(29,29,29,1);
 }
 
-.collection-container .toggle-btn-container button.active {
-  background: #000;
-  color: #fff;
-}
-
-.music-container {
-  padding: 150rpx 0 0;
-}
-
-.beat-container {
-  padding: 130rpx 0 0;
+.tab-container .tab-item.active:after {
+  content: '';
+  width:56rpx;
+  height:7rpx;
+  background:rgba(29,29,29,1);
+  border-radius:4rpx;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 10rpx;
 }
