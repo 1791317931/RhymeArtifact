@@ -98,7 +98,7 @@ Component({
         page = this.data.page,
         type = 'course';
 
-      if (item.is_collection == 1 || page.showCollection) {
+      if (item.isCollection || page.showCollection) {
         api.deleteCollection({
           id: item.id,
           type
@@ -115,7 +115,7 @@ Component({
             });
           } else {
             item.collection_num--;
-            item.is_collection = '0';
+            item.isCollection = false;
 
             this.setData({
               [`page.list[${index}]`]: item
@@ -129,7 +129,7 @@ Component({
         }, (res) => {
           TipUtil.message('收藏成功');
           item.collection_num++;
-          item.is_collection = '1';
+          item.isCollection = true;
 
           this.setData({
             [`page.list[${index}]`]: item

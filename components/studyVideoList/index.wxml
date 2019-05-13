@@ -12,8 +12,8 @@
       <view class="btn collection" 
         data-index="{{index}}" 
         catchtap="toggleCollectionItem">
-        <image hidden="{{item.is_collection == 1 ||  page.showCollection}}" src="/assets/imgs/collection.png"/>
-        <image hidden="{{item.is_collection != 1 && !page.showCollection}}" src="/assets/imgs/collection-active.png"/>
+        <image hidden="{{item.isCollection ||  page.showCollection}}" src="/assets/imgs/collection.png"/>
+        <image hidden="{{!item.isCollection && !page.showCollection}}" src="/assets/imgs/collection-active.png"/>
         <text>{{item.collection_num}}</text>
       </view>
       <view class="moments-container" data-index="{{index}}" catchtap="generatePoster">
