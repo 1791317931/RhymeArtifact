@@ -21,6 +21,34 @@ Page({
     this.setData({
       loadModalComponent
     });
+
+    if (options.scene) {
+      let id = null,
+      userId = null;
+      decodeURIComponent(options.scene).split('&').forEach((item, index) => {
+        let arr = item.split('=');
+        if (arr[0] == 'id') {
+          id = arr[1];
+        }
+
+        if (arr[0] == 'userId') {
+          userId = arr[1];
+        }
+      });
+
+      wx.navigateTo({
+        url: `/pages/freestyle/play/index?id=${id}&userId=${userId}`,
+      });
+    } else {
+      let id = options.id;
+      let userId = options.userId;
+
+      if (id && userId) {
+        wx.navigateTo({
+          url: `/pages/freestyle/play/index?id=${id}&userId=${userId}`,
+        });
+      }
+    }
   },
 
   /**

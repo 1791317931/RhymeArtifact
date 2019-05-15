@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/main/index",
+    "pages/user/collection/index",
     "pages/freestyle/play/index",
     "pages/freestyle/beatList/index",
     "pages/study/studyList/index",
@@ -17,7 +18,6 @@
     "pages/create/record/lyrics/index",
     "pages/user/music/index",
     "pages/user/mine/index",
-    "pages/user/collection/index",
     "components/createLyricsList/index",
     "components/createMusicList/index",
     "components/musicPoster/index",

@@ -37,7 +37,7 @@
           <view class="share-container">
             <image src="/assets/imgs/wechat-share.png"/>
             <text>Beat分享</text>
-            <button open-type="share" data-index="{{index}}" class="hide"></button>
+            <button open-type="share" data-index="{{index}}"></button>
           </view>
           <view class="moments-container" data-index="{{index}}" catchtap="generatePoster">
             <image src="/assets/imgs/moments.png"/>

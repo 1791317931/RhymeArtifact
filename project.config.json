@@ -45,7 +45,7 @@
 				{
 					"id": 0,
 					"name": "扫码进入",
-					"pathName": "pages/freestyle/play/index",
+					"pathName": "pages/freestyle/index/index",
 					"query": "scene=id%3D3%26userId%3D12",
 					"scene": null
 				}

@@ -21,7 +21,8 @@ Component({
       page: 1,
       per_page: 10,
       total_pages: 0,
-      current_page: 1
+      current_page: 1,
+      showCollection: false
     },
     scope: null,
     category_id: null
@@ -163,14 +164,25 @@ Component({
         hasCollection: 1,
         category_id: this.data.category_id
       },
-        list = [];
+      list = [];
 
       if (current_page > 1) {
         list = page.list;
       }
 
+      let fn;
+      if (this.data.page.showCollection) {
+        fn = api.getCollection;
+
+        param.type = 'course';
+        delete param.include;
+        delete param.category_id
+      } else {
+        fn = api.getStudyPage;
+      }
+
       this.togglePageLoading(true);
-      api.getStudyPage(param, (res) => {
+      fn(param, (res) => {
         let pagination = res.meta.pagination;
 
         res.data.forEach((item, index) => {

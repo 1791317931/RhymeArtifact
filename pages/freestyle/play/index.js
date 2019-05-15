@@ -143,10 +143,12 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-    let data = this.data.fs;
+    let data = this.data,
+    fs = data.fs,
+    user = data.user;
     return {
-      title: data.title,
-      path: `/pages/freestyle/play/index?id=${data.id}&userId=${data.user.id}`
+      title: fs.title,
+      path: `/pages/freestyle/index/index?id=${fs.id}&userId=${user.id}`
     };
   },
   toggleFollow() {

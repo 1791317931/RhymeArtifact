@@ -7,12 +7,23 @@ Page({
    */
   data: {
     posterUrl: null,
+    musicPosterComponent: null,
     beatComponent: null,
     musicComponent: null,
+    videoComponent: null,
+    articleComponent: null,
     tabs: [
       {
         flag: 'music',
         name: '作品'
+      },
+      {
+        flag: 'video',
+        name: '视频教程'
+      },
+      {
+        flag: 'article',
+        name: '文章'
       },
       {
         flag: 'beat',
@@ -27,7 +38,10 @@ Page({
    */
   onLoad: function (options) {
     let beatComponent = this.selectComponent('#beatComponent'),
-    musicComponent = this.selectComponent('#musicComponent');
+    musicComponent = this.selectComponent('#musicComponent'),
+    videoComponent = this.selectComponent('#videoComponent'),
+    articleComponent = this.selectComponent('#articleComponent'),
+    musicPosterComponent = this.selectComponent('#musicPosterComponent');
 
     beatComponent.setData({
       'page.showCollection': true
@@ -35,17 +49,29 @@ Page({
     musicComponent.setData({
       'page.showCollection': true
     });
-    this.setData({
-      beatComponent,
-      musicComponent
+    videoComponent.setData({
+      'page.showCollection': true
     });
-
+    articleComponent.setData({
+      'page.showCollection': true
+    });
     musicComponent.init(this);
+    videoComponent.init(this);
+    articleComponent.init(this);
     // 不显示分类
     beatComponent.setData({
       showTab: false
     });
     beatComponent.init(this);
+
+    this.setData({
+      beatComponent,
+      musicComponent,
+      videoComponent,
+      articleComponent,
+      musicPosterComponent
+    });
+
     this.init();
   },
 
@@ -88,6 +114,10 @@ Page({
     let flag = this.getFlag();
     if (flag == 'music') {
       this.data.musicComponent.getPage(1);
+    } else if (flag == 'video') {
+      this.data.videoComponent.getPage(1);
+    } else if (flag == 'article') {
+      this.data.articleComponent.getPage(1);
     } else if (flag == 'beat') {
       this.data.beatComponent.getPage(1);
     }
@@ -100,6 +130,10 @@ Page({
     let flag = this.getFlag();
     if (flag == 'music') {
       this.data.musicComponent.onReachBottom();
+    } else if (flag == 'video') {
+      this.data.videoComponent.onReachBottom();
+    } else if (flag == 'article') {
+      this.data.articleComponent.onReachBottom();
     } else if (flag == 'beat') {
       this.data.beatComponent.onReachBottom();
     }
@@ -115,6 +149,10 @@ Page({
       let flag = this.getFlag();
       if (flag == 'music') {
         return this.data.musicComponent.shareItem(e);
+      } else if (flag == 'video') {
+        return this.data.videoComponent.shareItem(e);
+      } else if (flag == 'article') {
+        return this.data.articleComponent.shareItem(e);
       } else if (flag == 'beat') {
         return this.data.beatComponent.shareItem(e);
       }
@@ -124,6 +162,10 @@ Page({
     let flag = this.getFlag();
     if (flag == 'music') {
       this.data.musicComponent.getPage(1);
+    } else if (flag == 'video') {
+      this.data.videoComponent.getPage(1);
+    } else if (flag == 'article') {
+      this.data.articleComponent.getPage(1);
     } else if (flag == 'beat') {
       this.data.beatComponent.getPage(1);
     }

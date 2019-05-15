@@ -1,21 +1,25 @@
 <canvas class="poster-canvas" canvas-id="poster-canvas"/>
-<musicPoster 
-  posterUrl="{{posterUrl}}"
-  bind:closePoster="closePoster"
-/>
-<view class="collection-container">
-  <view hidden="{{!tabs.length}}" class="tab-container">
-    <view class="clearfix">
-      <view wx:for="{{tabs}}" wx:for-item="item" wx:for-index="index" wx:key="{{item.flag}}"
-      class="tab-item {{activeIndex == index ? 'active' : ''}} item-{{index}}" data-index="{{index}}" catchtap="toggleTab">
-        {{item.name}}
-      </view>
+<musicPoster id="musicPosterComponent"/>
+
+<view hidden="{{!tabs.length}}" class="tab-container">
+  <view class="clearfix">
+    <view wx:for="{{tabs}}" wx:for-item="item" wx:for-index="index" wx:key="{{item.flag}}"
+    class="tab-item {{activeIndex == index ? 'active' : ''}} item-{{index}}" data-index="{{index}}" catchtap="toggleTab">
+      {{item.name}}
     </view>
   </view>
-  <view class="mt20" hidden="{{tabs[activeIndex].flag != 'music'}}">
+</view>
+<view class="collection-container">
+  <view class="mt30" hidden="{{tabs[activeIndex].flag != 'music'}}">
     <createMusicList id="musicComponent"/>
   </view>
-  <view hidden="{{tabs[activeIndex].flag != 'beat'}}">
+  <view class="mt30" hidden="{{tabs[activeIndex].flag != 'video'}}">
+    <videoList id="videoComponent"/>
+  </view>
+  <view class="mt30" hidden="{{tabs[activeIndex].flag != 'article'}}">
+    <articleList id="articleComponent"/>
+  </view>
+  <view class="mt10" hidden="{{tabs[activeIndex].flag != 'beat'}}">
     <beatList id="beatComponent"/>
   </view>
 </view>

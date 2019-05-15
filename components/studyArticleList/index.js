@@ -166,15 +166,24 @@ Component({
         include: 'author',
         hasCollection: 1
       },
-        list = [];
+      list = [];
 
       if (current_page > 1) {
         list = page.list;
       }
 
-      this.togglePageLoading(true);
+      let fn;
+      if (this.data.page.showCollection) {
+        fn = api.getCollection;
 
-      api.getStudyPage(param, (res) => {
+        param.type = 'post';
+        delete param.include;
+      } else {
+        fn = api.getStudyPage;
+      }
+
+      this.togglePageLoading(true);
+      fn(param, (res) => {
         let pagination = res.meta.pagination;
         res.data.forEach((item, index) => {
           let cover = PathUtil.getFilePath(item.cover);
