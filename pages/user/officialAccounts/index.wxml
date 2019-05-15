@@ -1,7 +1,8 @@
 <!-- 公众号 -->
+<loadModal id="loadModalComponent" />
 <view class="official-accounts">
   <view class="body-container">
-    <image class="qr-code" src="{{qrCode}}" />
+    <image wx:if="{{qrCode}}" class="qr-code" src="{{qrCode}}" catchtap="previewImage" />
     <view class="text">将二维码保存到相册识别关注</view>
     <view class="tip">最新动态资讯、定期抽奖票务教程免费拿</view>
     <view class="btn-container">

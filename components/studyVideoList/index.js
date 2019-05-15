@@ -105,7 +105,7 @@ Component({
         }, (res) => {
           TipUtil.message('已取消收藏');
 
-          // 显示我的收藏，把被取消收藏的创作去掉
+          // 显示我的收藏，把被取消收藏去掉
           if (this.data.page.showCollection) {
             let list = page.list;
             list.splice(index, 1);

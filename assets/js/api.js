@@ -12,6 +12,12 @@ export function saveFormId(data, fn, completeFn) {
   UrlUtil.post('utils/save-formid', data, fn, completeFn);
 }
 
+// 获取rap二维码
+export function getRapQrcode(fn, completeFn, failFn) {
+  UrlUtil.get('utils/wx-qrcode', null, fn, completeFn, failFn);
+}
+
+// 分类列表
 export function getCategoryList(data, fn, completeFn) {
   UrlUtil.get('categories', data, fn, completeFn);
 }

@@ -1,4 +1,6 @@
 import DownloadUtil from '../../../assets/js/DownloadUtil';
+import * as api from '../../../assets/js/api';
+import PathUtil from '../../../assets/js/PathUtil';
 
 Page({
 
@@ -6,14 +8,22 @@ Page({
    * 页面的初始数据
    */
   data: {
-    qrCode: '/assets/imgs/shuochang-qrcode.png'
+    qrCode: null,
+    loadModalComponent: null,
+    tempQrCode: null
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let loadModalComponent = this.selectComponent('#loadModalComponent');
+    loadModalComponent.init(this);
+    this.setData({
+      loadModalComponent
+    });
 
+    this.getRapQrcode();
   },
 
   /**
@@ -64,7 +74,25 @@ Page({
   onShareAppMessage: function () {
 
   },
+  getRapQrcode() {
+    let loadModalComponent = this.data.loadModalComponent;
+
+    loadModalComponent.toggleLoading(true);
+    api.getRapQrcode((res) => {
+      this.setData({
+        qrCode: res.data.url
+      });
+    }, () => {
+      loadModalComponent.toggleLoading(false);
+    });
+  },
   save() {
     DownloadUtil.authorize(this.data.qrCode);
+  },
+  previewImage() {
+    // 必须是网络图片
+    wx.previewImage({
+      urls: [this.data.qrCode]
+    });
   }
 })

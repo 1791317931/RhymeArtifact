@@ -1,5 +1,7 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "loadModal": "/components/common/loadModal/index"
+  },
   "navigationBarTitleText": "关注公众号",
   "enablePullDownRefresh": false
 }

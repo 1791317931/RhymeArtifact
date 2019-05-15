@@ -1,5 +1,3 @@
-@import "/templates/submitting/index.wxss";
-
 .lyrics-container {
   padding-bottom: 20rpx;
 }

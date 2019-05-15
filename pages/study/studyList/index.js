@@ -79,7 +79,7 @@ Page({
       musicPosterComponent
     });
 
-    this.getCategoryList();
+    this.getCategoryList(this.getPage);
   },
 
   /**
@@ -101,23 +101,12 @@ Page({
     }
 
     let data = this.data,
-    tabs = data.tabs,
-    item = data.tabs[data.activeIndex],
-    id = item.id || item.flag;
+    tabs = data.tabs;
 
-    if (id == tabs[tabs.length - 1].flag) {
-      if (!data.articleComponent.data.page.list.length) {
-        this.getPage(1);
-      }
+    if (!this.data.tabs.length) {
+      this.getCategoryList(this.renderForOnShow);
     } else {
-      for (let i = 0; i < tabs.length - 1; i++) {
-        if (tabs[i].id == id) {
-          if (!data.articleComponent.data.page.list.length) {
-            this.getPage(1);
-          }
-          break;
-        }
-      }
+      this.renderForOnShow();
     }
   },
 
@@ -150,7 +139,7 @@ Page({
   onReachBottom: function () {
     let data = this.data,
     tabs = data.tabs,
-    item = data.tabs[data.activeIndex],
+    item = tabs[data.activeIndex],
     id = item.id || item.flag;
 
     if (id == tabs[tabs.length - 1].flag) {
@@ -175,7 +164,8 @@ Page({
         path: '/pages/study/studyList/index'
       };
     } else if (e.from == 'button') {
-      let item = this.data.tabs[this.data.activeIndex],
+      let tabs = this.data.tabs,
+      item = tabs[this.data.activeIndex],
       id = item.id || item.flag;
 
       if (id == tabs[tabs.length - 1].flag) {
@@ -185,7 +175,28 @@ Page({
       }
     }
   },
-  getCategoryList() {
+  renderForOnShow() {
+    let data = this.data,
+    tabs = data.tabs,
+    item = tabs[data.activeIndex],
+    id = item.id || item.flag;
+
+    if (id == tabs[tabs.length - 1].flag) {
+      if (!data.articleComponent.data.page.list.length) {
+        this.getPage(1);
+      }
+    } else {
+      for (let i = 0; i < tabs.length - 1; i++) {
+        if (tabs[i].id == id) {
+          if (!data.videoComponent.data.page.list.length) {
+            this.getPage(1);
+          }
+          break;
+        }
+      }
+    }
+  },
+  getCategoryList(callback) {
     api.getCategoryList({
       type: 1
     }, (res) => {
@@ -200,7 +211,7 @@ Page({
         tabs
       });
 
-      this.getPage(1);
+      callback && callback();
     });
   },
   toggleTab(e) {

@@ -87,11 +87,16 @@ Component({
     toggleMortgage(e) {
       let value = e.currentTarget.dataset.value;
 
-      if (value != this.data.mortgage) {
+      if (value != this.data.rhymePage.mortgage) {
         this.setData({
           'rhymePage.mortgage': value
         });
-        this.getRhymeList();
+
+        let data = this.data,
+        kwd = data.rhymePage.keyword.trim();
+        if (kwd.length) {
+          this.getRhymeList();
+        }
       }
     },
     toggleRhymeLoading(loading) {
@@ -105,11 +110,16 @@ Component({
         this.changeKeyword(e);
       }
 
-      let data = this.data;
+      let data = this.data,
+      kwd = data.rhymePage.keyword.trim();
+      if (!kwd.length) {
+        TipUtil.message('请输入词汇');
+        return;
+      }
 
       this.toggleRhymeLoading(true);
       api.getRhymeList({
-        kwd: data.rhymePage.keyword,
+        kwd,
         mortgage: data.rhymePage.mortgage
       }, (res) => {
         this.setData({

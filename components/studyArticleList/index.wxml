@@ -8,6 +8,11 @@
     <image class="content-image" src="{{item.cover}}"/>
     <view class="title">{{item.title}}</view>
     <view class="operation-container">
+      <view class="collection-container" data-index="{{index}}" catchtap="toggleCollectionItem">
+        <image hidden="{{item.isCollection ||  page.showCollection}}" src="/assets/imgs/collection.png"/>
+        <image hidden="{{!item.isCollection && !page.showCollection}}" src="/assets/imgs/collection-active.png"/>
+        <text>{{item.collection_num}}</text>
+      </view>
       <view class="moments-container" data-index="{{index}}" catchtap="generatePoster">
         <image src="/assets/imgs/moments.png"/>
         <text>海报分享</text>

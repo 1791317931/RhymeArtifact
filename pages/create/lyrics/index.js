@@ -1,7 +1,6 @@
 import CommonUtil from '../../../assets/js/CommonUtil';
 import TipUtil from '../../../assets/js/TipUtil';
 import * as api from '../../../assets/js/api';
-import SubmittingUtil from '../../../assets/js/components/SubmittingUtil';
 
 Page({
   /**
@@ -23,15 +22,24 @@ Page({
     },
     // create创建   search搜索
     mode: 'create',
-    submittingForm: SubmittingUtil.submittingForm,
-    showSubmit: true,
-    readonly: false
+    submitting: true,
+    readonly: false,
+    loadModalComponent: null
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let loadModalComponent = this.selectComponent('#loadModalComponent');
+    loadModalComponent.init(this);
+    loadModalComponent.setData({
+      loadingMessage: '数据提交中...'
+    });
+    this.setData({
+      loadModalComponent
+    });
+
     if (options.readonly == 'Y') {
       this.setData({
         readonly: true
@@ -134,7 +142,7 @@ Page({
     });
   },
   save() {
-    if (!this.data.showSubmit) {
+    if (!this.data.loadModalComponent.isLoading()) {
       return;
     }
 
@@ -154,7 +162,7 @@ Page({
       api.createLyric(form, (res) => {
         this.editLyricCallback(res);
       }, () => {
-        SubmittingUtil.toggleSubmitting(false, this);
+        this.data.loadModalComponent.toggleLoading(false);
       });
     } else {
       let obj = {
@@ -164,14 +172,11 @@ Page({
       api.updateLyricById(obj, (res) => {
         this.editLyricCallback(res);
       }, () => {
-        SubmittingUtil.toggleSubmitting(false, this);
+        this.data.loadModalComponent.toggleLoading(false);
       });
     }
   },
   editLyricCallback(res) {
-    this.setData({
-      showSubmit: false
-    });
     TipUtil.message('操作成功');
     setTimeout(() => {
       wx.navigateBack({

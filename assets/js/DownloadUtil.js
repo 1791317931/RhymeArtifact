@@ -43,25 +43,18 @@ let DownloadUtil = {
       title: '图片保存中',
     });
 
-    DownloadUtil.saveImageToPhotosAlbum(url, callback);
-    // if (/^http/.test(url)) {
-    //   DownloadUtil.saveImageToPhotosAlbum(url, callback);
-    // } else {
-    //   wx.downloadFile({
-    //     url,
-    //     success: (res) => {
-    //       let filePath = res.tempFilePath;
-    //       DownloadUtil.saveImageToPhotosAlbum(filePath, callback);
-    //     },
-    //     fail: () => {
-    //       TipUtil.message('图片下载失败');
-    //       wx.hideLoading();
-    //     },
-    //     complete: (res) => {
-    //       // console.log(res);
-    //     }
-    //   });
-    // }
+    // 还需要将https转换为本地图片，http不考虑，直接默认是本地图片
+    if (/^https/.test(url)) {
+      wx.downloadFile({
+        url,
+        success: (res) => {
+          let tempFilePath = res.tempFilePath;
+          DownloadUtil.authorize(tempFilePath);
+        }
+      });
+    } else {
+      DownloadUtil.saveImageToPhotosAlbum(url, callback);
+    }
   },
   saveImageToPhotosAlbum(filePath, callback) {
     // 保存到本地

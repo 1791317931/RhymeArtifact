@@ -21,7 +21,8 @@ Component({
       loading: false,
       current_page: 1,
       per_page: 10,
-      total_pages: 0
+      total_pages: 0,
+      showCollection: false
     },
     scope: null
   },
@@ -52,6 +53,51 @@ Component({
     getItem(e) {
       let index = this.getIndex(e);
       return this.data.page.list[index];
+    },
+    toggleCollectionItem(e) {
+      let item = this.getItem(e),
+      index = this.getIndex(e),
+      page = this.data.page,
+      type = 'post';
+
+      if (item.isCollection || page.showCollection) {
+        api.deleteCollection({
+          id: item.id,
+          type
+        }, (res) => {
+          TipUtil.message('已取消收藏');
+
+          // 显示我的收藏，把被取消收藏去掉
+          if (this.data.page.showCollection) {
+            let list = page.list;
+            list.splice(index, 1);
+
+            this.setData({
+              'page.list': list
+            });
+          } else {
+            item.collection_num--;
+            item.isCollection = false;
+
+            this.setData({
+              [`page.list[${index}]`]: item
+            });
+          }
+        });
+      } else {
+        api.addCollection({
+          id: item.id,
+          type
+        }, (res) => {
+          TipUtil.message('收藏成功');
+          item.collection_num++;
+          item.isCollection = true;
+
+          this.setData({
+            [`page.list[${index}]`]: item
+          });
+        });
+      }
     },
     // 下载海报
     generatePoster(e) {
@@ -133,6 +179,7 @@ Component({
         res.data.forEach((item, index) => {
           let cover = PathUtil.getFilePath(item.cover);
           item.cover = cover;
+          item.collection_num = parseInt(item.collection_num);
           this.getPosterInfo(list.length, cover);
           list.push(item);
         });

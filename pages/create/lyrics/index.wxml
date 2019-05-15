@@ -1,6 +1,4 @@
-<import src="/templates/submitting/index.wxml"/>
-
-<template is="submitting" data="{{submittingForm}}"></template>
+<loadModal id="loadModalComponent" />
 <view class="lyrics-container">
   <form bindsubmit="save">
     <view hidden="{{readonly}}" class="top-btn-container clearfix">
