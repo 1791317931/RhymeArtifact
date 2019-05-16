@@ -151,6 +151,11 @@ export function getFreestylePage(data, fn, completeFn) {
   UrlUtil.get(`freestyles`, data, fn, completeFn);
 }
 
+// 周榜
+export function getFreestyleWeekRank(data, fn, completeFn) {
+  UrlUtil.get(`freestyle-activity/week-rank`, data, fn, completeFn);
+}
+
 export function getFreestyleTopRank(data, fn, completeFn) {
   UrlUtil.get(`freestyle-activity/rank`, data, fn, completeFn);
 }

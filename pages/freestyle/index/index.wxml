@@ -1,6 +1,5 @@
 <loadModal id="loadModalComponent"/>
 <view class="adver">
-  <!-- <ad class="ad" unit-id="adunit-c8c2d9e4ba6bd4dc"></ad> -->
   <ad class="ad" unit-id="adunit-b59bbe130064bdef"></ad>
   <!-- <image class="ad" src="/assets/imgs/banner.png" catchtap="toH5" /> -->
 </view>

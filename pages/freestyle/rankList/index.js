@@ -18,24 +18,22 @@ Page({
       {
         flag: 'latest',
         text: '最新'
+      },
+      {
+        flag: 'hot',
+        text: '热度'
       }
-      // ,
-      // {
-      //   flag: 'hot',
-      //   text: '热度'
-      // }
     ],
     activeIndex: 0,
     popImageComponent: null,
-    voiceRankComponent: null,
-    weekRankComponent: null,
+    activityRankList: null,
     latestRankComponent: null,
     hotRankComponent: null,
     topRankList: [],
     endTimeArr: [],
     // setTimeout是否可以循环
     cycleAble: true,
-    // 由于声量榜前三名不在组建中，需要全局控制
+    // 前三名不在组建中，需要全局控制
     picking: false
   },
 
@@ -43,28 +41,25 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    // let weekRankComponent = this.selectComponent('#weekRankComponent'),
+    let activityRankList = this.selectComponent('#activityRankList');
     let latestRankComponent = this.selectComponent('#latestRankComponent');
     let popImageComponent = this.selectComponent('#popImageComponent');
-    // let hotRankComponent = this.selectComponent('#hotRankComponent');
-
-    let voiceRankComponent = this.selectComponent('#voiceRankComponent');
+    let hotRankComponent = this.selectComponent('#hotRankComponent');
 
     this.setData({
       popImageComponent,
-      // weekRankComponent,
+      activityRankList,
       latestRankComponent,
-      // hotRankComponent
-      voiceRankComponent
+      hotRankComponent
     });
 
     this.getActivitySetting();
-    voiceRankComponent.init(this);
-    // weekRankComponent.init(this);
+    activityRankList.init(this);
     latestRankComponent.init(this);
-    // hotRankComponent.init(this);
+    hotRankComponent.init(this);
+    hotRankComponent.setType('hot');
+
     this.getPage(1);
-    // voiceRankComponent.getTopRankList(1);
   },
 
   /**
@@ -102,7 +97,6 @@ Page({
    */
   onPullDownRefresh: function () {
     wx.stopPullDownRefresh();
-    // this.data.voiceRankComponent.getTopRankList(1);
     this.getPage(1);
   },
 
@@ -116,8 +110,7 @@ Page({
 
     switch (tabs[activeIndex].flag) {
       case 'week':
-        // this.data.weekRankComponent.onReachBottom();
-        this.data.voiceRankComponent.onReachBottom();
+        this.data.activityRankList.onReachBottom();
         break;
       case 'latest':
         this.data.latestRankComponent.onReachBottom();
@@ -135,7 +128,7 @@ Page({
     return {
       title: CommonUtil.getShareTitle(),
       imageUrl: CommonUtil.getShareImage(),
-      path: '/pages/freestyle/rankList/index'
+      path: '/pages/main/index'
     };
   },
   toggleTab(e) {
@@ -191,14 +184,11 @@ Page({
 
     // 需要设置参数
     if (flag === 'week') {
-      // data.weekRankComponent.getPage(1);
-      this.data.voiceRankComponent.getTopRankList(pageNum);
+      data.activityRankList.getPage(pageNum);
     } else if (flag === 'latest') {
-      data.latestRankComponent.setType(flag);
-      data.latestRankComponent.getPage(1);
+      data.latestRankComponent.getPage(pageNum);
     } else if (flag === 'hot') {
-      data.hotRankComponent.setType(flag);
-      data.hotRankComponent.getPage(1);
+      data.hotRankComponent.getPage(pageNum);
     }
   },
   setTopRank(e) {

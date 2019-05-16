@@ -50,7 +50,7 @@
       </view>
     </view>
     <view class="week-container-wrapper">
-      <voiceRankList id="voiceRankComponent" bind:setTopRank="setTopRank"/>
+      <activityRankList id="activityRankList" bind:setTopRank="setTopRank"/>
     </view>
   </view>
   <view hidden="{{tabs[activeIndex].flag != 'latest'}}" class="latest-container">

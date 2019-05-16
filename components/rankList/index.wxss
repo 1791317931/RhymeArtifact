@@ -159,6 +159,9 @@
   color:rgba(38,38,40,1);
   line-height:42rpx;
   text-align: center;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .hot-rank-list-container .rank-item .user-name {
@@ -169,6 +172,9 @@
   color:rgba(152,152,152,1);
   line-height:33rpx;
   text-align: center;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .empty-container {

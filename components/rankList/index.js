@@ -22,10 +22,12 @@ Component({
       current_page: 1,
       per_page: 10,
       total_pages: 0,
-      list: [],
-      type: 'latest'
+      list: []
     },
-    scope: null
+    scope: null,
+    type: 'latest',
+    // 超过HOT_COUNT票为热门
+    HOT_COUNT: 10000
   },
 
   /**
@@ -40,9 +42,9 @@ Component({
     init(scope) {
       this.setScope(scope);
     },
-    setType(type) {
+    setType(type = 'hot') {
       this.setData({
-        'page.type': type
+        type
       });
     },
     onReachBottom(scope) {
@@ -116,8 +118,13 @@ Component({
         list = page.list;
       }
 
-      if (page.type == 'latest') {
+      let type = this.data.type;
+      // 默认查询“最新”
+      if (type == 'latest') {
         param.order = '-created_at';
+      } else if (type == 'hot') {
+        param.order = '-created_at';
+        param.isHot = 1
       }
 
       this.togglePageLoading(true);

@@ -43,7 +43,7 @@ Component({
     onReachBottom(scope) {
       let page = this.data.page;
       if (page.current_page < page.total_pages) {
-        this.getTopRankList(page.current_page + 1);
+        this.getPage(page.current_page + 1);
       }
     },
     clickRankItem(e) {
@@ -94,7 +94,7 @@ Component({
         'page.loading': loading
       });
     },
-    getTopRankList(current_page = 1) {
+    getPage(current_page = 1) {
       let page = this.data.page;
       if (page.loading) {
         return;
