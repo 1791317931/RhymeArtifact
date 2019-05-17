@@ -9,7 +9,8 @@ Page({
    */
   data: {
     loadModalComponent: null,
-    user: null
+    user: null,
+    rankListImg: null
   },
 
   /**
@@ -63,6 +64,14 @@ Page({
    */
   onShow: function () {
     this.getUserInfo();
+    let app = getApp(),
+    activity = app.globalData.activity;
+
+    if (activity) {
+      this.setData({
+        rankListImg: activity.adv_img
+      });
+    }
   },
 
   /**
@@ -128,6 +137,11 @@ Page({
   toBeatList() {
     wx.navigateTo({
       url: '/pages/freestyle/record/index'
+    });
+  },
+  toH5() {
+    wx.navigateTo({
+      url: '/pages/webview/index?path=https://admin.miyupp.com/activity/2019-04-17/voice-rank.html'
     });
   },
   toH5() {

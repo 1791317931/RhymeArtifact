@@ -28,14 +28,14 @@ let StudyUtil = {
       title = data.section_title;
     } else {
       // 封面内容
-      poster = data.course_cover;
+      poster = data.temp_course_cover;
       title = data.course_title;
     }
     context.drawImage(poster, 0, 0, 610, 327);
     StudyUtil.fillTitle(context, title);
   },
   drawArticleContent(context, data) {
-    let cover = data.cover,
+    let cover = data.temp_cover,
     title = data.title;
 
     context.drawImage(cover, 0, 0, 610, 327);

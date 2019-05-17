@@ -101,6 +101,33 @@ Page({
     });
   },
   generatePoster(e) {
-    this.data.musicPosterComponent.generatePoster(this.data.article, 'article');
+    let article = this.data.article;
+    this.getPosterInfo(article, () => {
+      this.data.musicPosterComponent.generatePoster(article, 'article');
+    });
+  },
+  getPosterInfo(article, callback) {
+    // 已经获取过本地图片
+    if (article.temp_cover) {
+      callback && callback(path);
+      return;
+    }
+
+    wx.showLoading({
+      title: '海报生成中...',
+    });
+    wx.getImageInfo({
+      src: article.cover,
+      success: (res) => {
+        let path = res.path;
+        this.setData({
+          'article.temp_cover': path
+        });
+        callback && callback(path);
+      },
+      complete: () => {
+        wx.hideLoading();
+      }
+    });
   }
 })

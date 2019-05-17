@@ -1,6 +1,7 @@
 import * as api from '../../../assets/js/api';
 import CommonUtil from '../../../assets/js/CommonUtil';
 import PathUtil from '../../../assets/js/PathUtil';
+import ConfigUtil from '../../../assets/js/ConfigUtil';
 import TipUtil from '../../../assets/js/TipUtil';
 
 let shareKey = 'shareObj',
@@ -12,6 +13,12 @@ Page({
    */
   data: {
     list: [],
+    money: null,
+    // 是否需要购买
+    needBuy: false,
+    // 是否已经购买
+    hasBuy: false,
+    freeNum: 0,
     playIndex: null,
     loading: false,
     // 课程分组id
@@ -24,11 +31,12 @@ Page({
     seekTime: null,
     videoContext: null,
     loadModal: null,
+    uploadModal: null,
     // 是否需要分享（要求用户每天至少分享一次）
     musicPosterComponent: null,
     ad: null,
     TOGGLE_VIDEO_COUNT: 3,
-    shouldShowAd: true
+    shouldShowAd: false
   },
 
   /**
@@ -36,10 +44,16 @@ Page({
    * 
    */
   onLoad: function (options) {
+    let uploadModal = this.selectComponent('#uploadModal');
+    uploadModal.setData({
+      loadingMessage: '数据提交中...'
+    });
+
     this.setData({
       groupId: options.id,
       videoContext: wx.createVideoContext('studyVideo'),
-      loadModal: this.selectComponent('#loadModal')
+      loadModal: this.selectComponent('#loadModal'),
+      uploadModal
     });
 
     if (options.sectionId) {
@@ -184,11 +198,9 @@ Page({
     this.setData({
       shouldShowAd: false
     });
-    app.globalData.studyVideo = {
-      toggleVideoCount: 0
-    };
+    app.globalData.studyVideo.toggleVideoCount = 0;
     app.globalData.studyVideo.isFirstComeIn = false;
-    videoContext.play();
+    this.data.videoContext.play();
   },
   toggleLoading(loading) {
     let loadModal = this.data.loadModal;
@@ -204,13 +216,18 @@ Page({
     
     api.getVideoById({
       id: groupId,
-      include: 'sections'
+      include: 'sections',
+      hasBuy: 1
     }, (res) => {
-      let list = res.data.sections.data;
+      let obj = res.data,
+      list = obj.sections.data,
+      money = parseFloat(obj.money),
+      hasBuy = obj.hasBuy,
+      freeNum = obj.free_num;
+
       list.forEach((item, index) => {
         let section_cover = PathUtil.getFilePath(item.section_cover);
         item.section_cover = section_cover;
-        this.getPosterInfo(index, section_cover);
         // 为了海报分享使用分辨参数
         item.groupId = groupId;
         item.sectionId = item.id;
@@ -237,7 +254,10 @@ Page({
         list,
         playIndex,
         videoRecordId,
-        seekTime
+        seekTime,
+        money,
+        hasBuy,
+        freeNum
       });
 
       this.playVideo(videoRecordId, seekTime);
@@ -262,7 +282,7 @@ Page({
     this.playVideo(videoRecordId, seekTime);
   },
   bindPlay() {
-    if (this.data.shouldShowAd) {
+    if (this.data.shouldShowAd || this.data.needBuy) {
       this.data.videoContext.pause();
     }
   },
@@ -290,19 +310,67 @@ Page({
 
     wx.setStorageSync('videoPlayRecord', videoPlayRecord);
   },
+  // 判断是否需要显示广告
+  needBuyCourse() {
+    let data = this.data,
+    hasBuy = data.hasBuy,
+    freeNum = data.freeNum,
+    playIndex = data.playIndex,
+    money = data.money;
+
+    // 已经购买付费
+    if (hasBuy) {
+      return false;
+    }
+
+    // 是否全部免费
+    if (money == 0) {
+      return false;
+    } else {
+      // 是否需要付费
+      return playIndex + 1 > freeNum;
+    }
+  },
+  // 判断是否应该显示广告
+  judgeShowAd() {
+    let data = this.data,
+    globalData = app.globalData,
+    needBuy = this.needBuyCourse(),
+    money = data.money;
+
+    this.setData({
+      needBuy
+    });
+
+    // 没有买过，并且不需要买
+    if (!data.hasBuy && (money == 0 || (money > 0 && !needBuy))) {
+      if (!globalData.studyVideo.isFirstComeIn) {
+        // 切换次数+1
+        let count = ++globalData.studyVideo.toggleVideoCount;
+        this.setData({
+          shouldShowAd: count >= this.data.TOGGLE_VIDEO_COUNT
+        });
+      } else {
+        this.setData({
+          shouldShowAd: true
+        });
+      }
+    } else {
+      this.setData({
+        shouldShowAd: false
+      });
+    }
+  },
   playVideo(videoId, seekTime) {
     let data = this.data,
-    videoContext = data.videoContext,
-    globalData = app.globalData;
+    videoContext = data.videoContext;
     // 如果seekTime超出了视频总时长，会自动重新播放
     videoContext.seek(seekTime);
 
-    if (!globalData.studyVideo.isFirstComeIn) {
-      // 切换次数+1
-      let count = ++globalData.studyVideo.toggleVideoCount;
-      this.setData({
-        shouldShowAd: count >= this.data.TOGGLE_VIDEO_COUNT
-      });
+    this.judgeShowAd();
+
+    if (this.data.hasBuy) {
+      videoContext.play();
     }
 
     api.addClickNum({
@@ -321,8 +389,11 @@ Page({
     });
   },
   generatePoster(e) {
-    let item = this.data.list[this.data.playIndex];
-    this.data.musicPosterComponent.generatePoster(item, 'video');
+    let index = this.data.playIndex;
+    let item = this.data.list[index];
+    this.getPosterInfo(item, index, () => {
+      this.data.musicPosterComponent.generatePoster(item, 'video');
+    });
   },
   getPosterInfo(index, url) {
     if (!url) {
@@ -339,6 +410,70 @@ Page({
       fail: (res) => {
 
       }
+    });
+  },
+  getPosterInfo(item, index, callback) {
+    // 已经获取过本地图片
+    if (item.temp_section_cover) {
+      callback && callback(path);
+      return;
+    }
+
+    wx.showLoading({
+      title: '海报生成中...',
+    });
+    wx.getImageInfo({
+      src: item.section_cover,
+      success: (res) => {
+        let path = res.path;
+        this.setData({
+          [`list[${index}].temp_section_cover`]: path
+        });
+        callback && callback(path);
+      },
+      complete: () => {
+        wx.hideLoading();
+      }
+    });
+  },
+  toggleUploading(loading) {
+    let uploadModal = this.data.uploadModal;
+
+    uploadModal.setData({
+      loading
+    });
+  },
+  toBuy() {
+    let uploadModal = this.data.uploadModal;
+    if (uploadModal.isLoading()) {
+      return;
+    }
+
+    this.toggleUploading(true);
+    api.buyCourseById({
+      courseId: this.data.groupId
+    }, (res) => {
+      let data = res.data,
+      packageParam = data.package;
+
+      wx.requestPayment({
+        ...packageParam,
+        success: (res) => {
+          this.init();
+        },
+        fail: (res) => {
+          if (ConfigUtil.isDev()) {
+            wx.showModal({
+              title: 'x',
+              content: '' + JSON.stringify(res),
+            });
+          } else {
+            TipUtil.error('支付失败');
+          }
+        }
+      });
+    }, () => {
+      this.toggleUploading(false);
     });
   }
 })

@@ -1,4 +1,7 @@
+import * as api from './assets/js/api';
+import PathUtil from './assets/js/PathUtil';
 const ald = require('./utils/ald-stat.js')
+
 App({
   onLaunch: function () {
     const updateManager = wx.getUpdateManager()
@@ -18,6 +21,21 @@ App({
         }
       });
     });
+
+    this.getActivitySetting();
+  },
+  getActivitySetting() {
+    api.getActivitySetting(null, (res) => {
+      let activity = res.data;
+      // rank-list-banner
+      activity.adv_img = PathUtil.getFilePath(activity.adv_img);
+      // rank-list-bg
+      activity.details_img = PathUtil.getFilePath(activity.details_img);
+      // share img
+      activity.share_img = PathUtil.getFilePath(activity.share_img);
+
+      this.globalData.activity = activity;
+    });
   },
   globalData: {
     userInfo: null,
@@ -26,6 +44,8 @@ App({
       // 切换视频次数，如果达到一定的次数，就需要弹出广告提示
       toggleVideoCount: 0,
       isFirstComeIn: true
-    }
+    },
+    // 活动
+    activity: null
   }
 })

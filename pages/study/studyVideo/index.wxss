@@ -24,7 +24,7 @@
   left: 0;
 }
 
-.video-container .show-ad-container {
+.video-container .show-ad-container, .video-container .show-buy-container {
   position: absolute;
   width: 750rpx;
   height: 422rpx;
@@ -49,6 +49,38 @@
   font-family:PingFang-SC-Regular;
   font-weight:400;
   color:rgba(51,51,51,1);
+  text-align: center;
+}
+
+.video-container .show-buy-container .inner {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  width: 100%;
+}
+
+.video-container .show-buy-container .description {
+  font-size:34rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(255,255,255,1);
+  line-height:48rpx;
+  text-align: center;
+}
+
+.video-container .show-buy-container .buy {
+  margin: 50rpx auto 0;
+  display: block;
+  width:432rpx;
+  height:78rpx;
+  line-height: 78rpx;
+  background:rgba(197,167,99,1);
+  border-radius:14rpx;
+  font-size:26rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(67,54,34,1);
   text-align: center;
 }
 
@@ -185,15 +217,39 @@
 }
 
 .video-list-inner .item .left-container .status {
-  width:122rpx;
   height:44rpx;
   background:rgba(0,0,0,.4);
   position: absolute;
-  right: 0;
-  bottom: 0;
+  right: 10rpx;
+  bottom: 10rpx;
+  padding: 0 8rpx;
 }
 
-.video-list-inner .item .left-container .status:before {
+.video-list-inner .item .left-container .status:after {
+  content: '';
+  display: block;
+  font-size:22rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(255,255,255,1);
+  line-height:44rpx;
+}
+
+.video-list-inner .item .left-container .is-free:after {
+  content: '试看';
+}
+
+.video-list-inner .item .left-container .not-free:after {
+  content: '收费';
+}
+
+.video-list-inner .item .left-container .status.active {
+  right: 0;
+  bottom: 0;
+  padding: 0 13rpx 0 21rpx;
+}
+
+.video-list-inner .item .left-container .status.active:before {
   content: '';
   width:5rpx;
   height:5rpx;
@@ -204,17 +260,8 @@
   transform: translateY(-50%);
 }
 
-.video-list-inner .item .left-container .status:after {
+.video-list-inner .item .left-container .status.active:after {
   content: '正在播放';
-  font-size:22rpx;
-  font-family:PingFang-SC-Medium;
-  font-weight:500;
-  color:rgba(255,255,255,1);
-  line-height:30rpx;
-  position: absolute;
-  top: 50%;
-  right: 13rpx;
-  transform: translateY(-50%);
 }
 
 .video-list-inner .item .right-container {

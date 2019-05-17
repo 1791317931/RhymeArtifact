@@ -123,6 +123,10 @@ export function getVideoById(data, fn, completeFn) {
 export function getArticleById(data, fn, completeFn) {
   UrlUtil.get(`posts/${data.id}`, data, fn, completeFn);
 }
+
+export function buyCourseById(data, fn, completeFn) {
+  UrlUtil.post(`courses/${data.courseId}/buy`, data, fn, completeFn);
+}
 // ---------------------学习------------------------
 
 // ---------------------freestyle------------------------

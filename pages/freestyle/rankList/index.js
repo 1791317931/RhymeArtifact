@@ -13,7 +13,7 @@ Page({
     tabs: [
       {
         flag: 'week',
-        text: '声量榜'
+        text: '周榜'
       },
       {
         flag: 'latest',
@@ -34,7 +34,8 @@ Page({
     // setTimeout是否可以循环
     cycleAble: true,
     // 前三名不在组建中，需要全局控制
-    picking: false
+    picking: false,
+    rankListBg: null
   },
 
   /**
@@ -73,7 +74,14 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
+    let app = getApp(),
+    activity = app.globalData.activity;
+
+    if (activity) {
+      this.setData({
+        rankListBg: activity.details_img
+      });
+    }
   },
 
   /**
@@ -141,17 +149,23 @@ Page({
     }
   },
   getActivitySetting() {
-    api.getActivitySetting(null, (res) => {
-      let data = res.data,
-      currentTime = data.current_time,
-      endTime = data.end_time;
+    let app = getApp(),
+    activity = app.globalData.activity;
+
+    if (activity) {
+      this.setData({
+        [`tabs[0].text`]: activity.activity_name
+      });
+
+      let currentTime = activity.current_time,
+      endTime = activity.end_time;
 
       let caculateTime = () => {
         let diffTime = Math.max(0, endTime - currentTime);
 
         let arr = TimeUtil.numberToArr(diffTime),
-        days = parseInt(arr[0] / 24),
-        hours = arr[0] % 24;
+          days = parseInt(arr[0] / 24),
+          hours = arr[0] % 24;
 
         let endTimeArr = [days, hours, arr[1], arr[2]].map((item) => {
           item = parseInt(item);
@@ -176,7 +190,7 @@ Page({
         }, 1000);
       };
       caculateTime();
-    });
+    }
   },
   getPage(pageNum = 1) {
     let data = this.data,

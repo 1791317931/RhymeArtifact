@@ -11,7 +11,7 @@
 <view class="rank-wrapper">
   <view hidden="{{tabs[activeIndex].flag != 'week'}}" class="week-container">
     <view class="rank-list-bg-container">
-      <image class="rank-list-bg" src="/assets/imgs/rank-list-bg.png" />
+      <image class="rank-list-bg" src="{{rankListBg}}" />
       <view class="day">{{endTimeArr[0]}}</view>
       <view class="hour">{{endTimeArr[1]}}</view>
       <view class="minute">{{endTimeArr[2]}}</view>

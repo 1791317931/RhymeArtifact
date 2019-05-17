@@ -61,7 +61,7 @@ Page({
     firstVideoMuted: false,
     secondVideoMuted: false,
     // 0 ~ 1
-    volume: 1
+    volume: 0.8
   },
 
   /**

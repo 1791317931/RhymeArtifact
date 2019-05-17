@@ -55,7 +55,7 @@ Page({
     trackContainerWidth: null,
     hideSubmittingModal: true,
     // 0 ~ 1
-    volume: 1,
+    volume: 0.8,
     // 选中阿卡贝拉的情况下不用提示直接录制，没有选择阿卡贝拉的情况下提示选择伴奏。
     // 这个就第一次进入软件的时候提示用户选择过一次以后就没有了
     // beat akbl

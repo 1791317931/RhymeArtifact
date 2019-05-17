@@ -2,9 +2,10 @@
 <musicPoster id="musicPosterComponent"/>
 
 <loadModal id="loadModal" />
+<loadModal id="uploadModal" />
 <view class="video-container">
   <video 
-    hidden="{{shouldShowAd}}"
+    hidden="{{shouldShowAd || needBuy}}"
     class="video"
     id="studyVideo"
     src="{{list[playIndex].section_url}}"
@@ -17,8 +18,14 @@
     binderror="bindError"
   />
   <view class="title-container">{{list[playIndex].section_title}}</view>
-  <view hidden="{{!shouldShowAd}}" class="show-ad-container">
+  <view wx:if="{{shouldShowAd}}" class="show-ad-container">
     <view class="tip" catchtap="loadRewardAd">点击观看完整广告播放视频</view>
+  </view>
+  <view wx:if="{{needBuy}}" class="show-buy-container">
+    <view class="inner">
+      <view class="description">试看结束付费继续观看</view>
+      <view class="buy" catchtap="toBuy">{{money}}元购买 永久观看</view>
+    </view>
   </view>
 </view>
 <view class="bottom-container">
@@ -43,7 +50,13 @@
       <view wx:for="{{list}}" class="item" wx:for-index="index" wx:for-item="item" wx:key="{{index}}" data-index="{{index}}" catchtap="toggleVideoItem">
         <view class="left-container">
           <image class="poster" src="{{item.section_cover}}"/>
-          <view hidden="{{playIndex != index}}" class="status"></view>
+          <!-- 已购买，不显示标签 -->
+          <view wx:if="{{hasBuy ? 'has-buy' : ''}}" class="status has-buy {{playIndex == index ? 'active' : ''}}"></view>
+          <!-- 需要付费，未购买 -->
+          <view wx:elif="{{money > 0}}"
+            class="status {{index + 1 <= freeNum ? 'is-free' : 'not-free'}} {{!shouldShowAd && (hasBuy || index + 1 <= freeNum) && playIndex == index ? 'active' : ''}}"></view>
+          <!-- 免费 -->
+          <view wx:else class="status is-free {{!shouldShowAd && playIndex == index ? 'active' : ''}}"></view>
         </view>
         <view class="right-container">
           <view class="title">{{item.section_title}}</view>

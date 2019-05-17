@@ -102,7 +102,9 @@ Component({
     // 下载海报
     generatePoster(e) {
       let item = this.getItem(e);
-      this.data.scope.data.musicPosterComponent.generatePoster(item, 'article');
+      this.getPosterInfo(item, this.getIndex(e), () => {
+        this.data.scope.data.musicPosterComponent.generatePoster(item, 'article');
+      });
     },
     shareItem(e) {
       if (e.from == 'button') {
@@ -189,7 +191,6 @@ Component({
           let cover = PathUtil.getFilePath(item.cover);
           item.cover = cover;
           item.collection_num = parseInt(item.collection_num);
-          this.getPosterInfo(list.length, cover);
           list.push(item);
         });
 
@@ -204,20 +205,27 @@ Component({
         });
       });
     },
-    getPosterInfo(index, url) {
-      if (!url) {
+    getPosterInfo(item, index, callback) {
+      // 已经获取过本地图片
+      if (item.temp_cover) {
+        callback && callback(path);
         return;
       }
 
+      wx.showLoading({
+        title: '海报生成中...',
+      });
       wx.getImageInfo({
-        src: url,
+        src: item.cover,
         success: (res) => {
+          let path = res.path;
           this.setData({
-            [`page.list[${index}].cover`]: res.path
+            [`page.list[${index}].temp_cover`]: path
           });
+          callback && callback(path);
         },
-        fail: (res) => {
-
+        complete: () => {
+          wx.hideLoading();
         }
       });
     }

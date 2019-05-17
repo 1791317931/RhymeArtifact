@@ -20,10 +20,22 @@ let CommonUtil = {
     return JSON.parse(JSON.stringify(obj));
   },
   getShareTitle() {
-    return 'freestyle打榜赢百元现金';
+    let app = getApp(),
+    activity = app.globalData.activity;
+
+    if (activity) {
+      return activity.share_title;
+    } else {
+      app.globalData.appName;
+    }
   },
   getShareImage() {
-    return '/assets/imgs/share-logo.png';
+    let app = getApp(),
+    activity = app.globalData.activity;
+
+    if (activity) {
+      return activity.share_img
+    }
   },
   share() {
     return {

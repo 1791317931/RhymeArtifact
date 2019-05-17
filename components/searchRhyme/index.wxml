@@ -37,7 +37,7 @@
     <view class="mask"></view>
     <view class="content">
       <text class="tips">提示</text>
-      <view class="article">请添加赞助商微信</view>
+      <view class="article">请添加船长微信</view>
       <view class="article">
         <text class="special">"{{wechat}}"</text>拉你进群
       </view>
