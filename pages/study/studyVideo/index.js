@@ -282,7 +282,7 @@ Page({
     this.playVideo(videoRecordId, seekTime);
   },
   bindPlay() {
-    if (this.data.shouldShowAd || this.data.needBuy) {
+    if ((this.data.shouldShowAd && this.data.money == 0) || this.data.needBuy) {
       this.data.videoContext.pause();
     }
   },
@@ -342,8 +342,12 @@ Page({
       needBuy
     });
 
-    // 没有买过，并且不需要买
-    if (!data.hasBuy && (money == 0 || (money > 0 && !needBuy))) {
+    // 买过或者需要付费，都不需要显示广告
+    if (data.hasBuy || money > 0) {
+      this.setData({
+        shouldShowAd: false
+      });
+    } else {
       if (!globalData.studyVideo.isFirstComeIn) {
         // 切换次数+1
         let count = ++globalData.studyVideo.toggleVideoCount;
@@ -355,10 +359,6 @@ Page({
           shouldShowAd: true
         });
       }
-    } else {
-      this.setData({
-        shouldShowAd: false
-      });
     }
   },
   playVideo(videoId, seekTime) {

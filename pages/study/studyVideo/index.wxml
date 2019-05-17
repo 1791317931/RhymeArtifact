@@ -5,7 +5,6 @@
 <loadModal id="uploadModal" />
 <view class="video-container">
   <video 
-    hidden="{{shouldShowAd || needBuy}}"
     class="video"
     id="studyVideo"
     src="{{list[playIndex].section_url}}"
@@ -18,6 +17,7 @@
     binderror="bindError"
   />
   <view class="title-container">{{list[playIndex].section_title}}</view>
+  <view wx:if="{{shouldShowAd || needBuy}}" class="video-mask"></view>
   <view wx:if="{{shouldShowAd}}" class="show-ad-container">
     <view class="tip" catchtap="loadRewardAd">点击观看完整广告播放视频</view>
   </view>

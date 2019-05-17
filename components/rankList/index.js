@@ -27,7 +27,7 @@ Component({
     scope: null,
     type: 'latest',
     // 超过HOT_COUNT票为热门
-    HOT_COUNT: 10000
+    HOT_COUNT: 500
   },
 
   /**
