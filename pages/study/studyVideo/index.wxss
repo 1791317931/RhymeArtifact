@@ -31,7 +31,7 @@
   top: 0;
   left: 0;
   background: linear-gradient(to bottom,  rgba(0, 0, 0, .5), transparent);
-  z-index: 1;
+  z-index: 3;
 }
 
 .video-container .show-ad-container .tip {
@@ -91,6 +91,7 @@
   top: 0;
   left: 0;
   background: #fff;
+  z-index: 2;
 }
 
 .video-mask:before {
