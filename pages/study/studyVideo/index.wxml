@@ -3,8 +3,10 @@
 
 <loadModal id="loadModal" />
 <loadModal id="uploadModal" />
+<!-- 必须隐藏video，否则有的ios中video会覆盖广告或者支付 -->
 <view class="video-container">
-  <video 
+  <video
+    hidden="{{(shouldShowAd || needBuy) && (platform == 'ios' || platform == 'pc')}}"
     class="video"
     id="studyVideo"
     src="{{list[playIndex].section_url}}"
@@ -17,7 +19,9 @@
     binderror="bindError"
   />
   <view class="title-container">{{list[playIndex].section_title}}</view>
-  <view wx:if="{{shouldShowAd || needBuy}}" class="video-mask"></view>
+  <!-- 安卓video必须在显示的状况下才能start或者puase -->
+  <view class="video-mask"
+    wx:if="{{(shouldShowAd || needBuy) && (platform == 'android' || platform == 'pc')}}" ></view>
   <view wx:if="{{shouldShowAd}}" class="show-ad-container">
     <view class="tip" catchtap="loadRewardAd">点击观看完整广告播放视频</view>
   </view>

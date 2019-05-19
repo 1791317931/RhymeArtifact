@@ -23,6 +23,7 @@ App({
     });
 
     this.getActivitySetting();
+    this.getPlatForm();
   },
   getActivitySetting() {
     api.getActivitySetting(null, (res) => {
@@ -37,6 +38,19 @@ App({
       this.globalData.activity = activity;
     });
   },
+  getPlatForm() {
+    wx.getSystemInfo({
+      success: (res) => {
+        if (res.platform == "devtools") {
+          this.globalData.platform = 'pc';
+        } else if (res.platform == "ios") {
+          this.globalData.platform = 'ios';
+        } else if (res.platform == "android") {
+          this.globalData.platform = 'android';
+        }
+      }
+    });
+  },
   globalData: {
     userInfo: null,
     appName: '押韵Rap',
@@ -46,6 +60,7 @@ App({
       isFirstComeIn: true
     },
     // 活动
-    activity: null
+    activity: null,
+    platform: null
   }
 })

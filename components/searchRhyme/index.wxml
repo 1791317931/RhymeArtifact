@@ -37,9 +37,9 @@
     <view class="mask"></view>
     <view class="content">
       <text class="tips">提示</text>
-      <view class="article">请添加船长微信</view>
+      <view class="article">请添加光旭微信</view>
       <view class="article">
-        <text class="special">"{{wechat}}"</text>拉你进群
+        <text class="special">"押韵rap"</text>拉你进粉丝群
       </view>
       <view class="article">和rapper一起交流学习</view>
       <button class="ok" catchtap="setClipboardData">点击复制去添加</button>

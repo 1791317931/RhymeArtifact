@@ -4,8 +4,7 @@ import PathUtil from '../../../assets/js/PathUtil';
 import ConfigUtil from '../../../assets/js/ConfigUtil';
 import TipUtil from '../../../assets/js/TipUtil';
 
-let shareKey = 'shareObj',
-app = getApp();
+let app = getApp();
 Page({
 
   /**
@@ -36,7 +35,8 @@ Page({
     musicPosterComponent: null,
     ad: null,
     TOGGLE_VIDEO_COUNT: 3,
-    shouldShowAd: false
+    shouldShowAd: false,
+    platform: null
   },
 
   /**
@@ -53,7 +53,8 @@ Page({
       groupId: options.id,
       videoContext: wx.createVideoContext('studyVideo'),
       loadModal: this.selectComponent('#loadModal'),
-      uploadModal
+      uploadModal,
+      platform: app.globalData.platform
     });
 
     if (options.sectionId) {
@@ -282,7 +283,7 @@ Page({
     this.playVideo(videoRecordId, seekTime);
   },
   bindPlay() {
-    if ((this.data.shouldShowAd && this.data.money == 0) || this.data.needBuy) {
+    if (this.data.shouldShowAd || this.data.needBuy) {
       this.data.videoContext.pause();
     }
   },
@@ -468,7 +469,9 @@ Page({
               content: '' + JSON.stringify(res),
             });
           } else {
-            TipUtil.error('支付失败');
+            if (!/cancel/.test(res.errMsg || '')) {
+              TipUtil.error('支付失败');
+            }
           }
         }
       });
