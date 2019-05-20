@@ -12,7 +12,7 @@
   <view class="menu-container extral-container">
     <view hidden="{{item.show == false}}" class="item" wx:for="{{extrals}}" wx:for-index="index" wx:for-item="item" wx:key="{{index}}" data-index="{{index}}" catchtap="clickExtralMenu">
       <text hidden="{{item.openType}}">{{item.text}}{{item.openType}}</text>
-      <button hidden="{{!item.openType}}" open-type="{{item.openType}}">{{item.text}}</button>
+      <button hidden="{{!item.openType}}" open-type="{{item.openType}}" data-index="{{index}}">{{item.text}}</button>
       <image src="../../../assets/imgs/arrow-left.png"/>
     </view>
   </view>

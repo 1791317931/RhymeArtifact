@@ -1,5 +1,6 @@
 <view class="modal {{!loading ? 'hide' : ''}}">
   <view class="{{loading ? '' : 'hide'}} loading">
-    {{loadingMessage}}
+    <image src="/assets/imgs/circle-loading.png"/>
+    <view class="msg">{{loadingMessage}}</view>
   </view>
 </view>

@@ -45,9 +45,6 @@ Page({
    */
   onLoad: function (options) {
     let uploadModal = this.selectComponent('#uploadModal');
-    uploadModal.setData({
-      loadingMessage: '数据提交中...'
-    });
 
     this.setData({
       groupId: options.id,

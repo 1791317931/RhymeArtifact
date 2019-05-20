@@ -10,8 +10,8 @@ Component({
    * 组件的初始数据
    */
   data: {
-    loading: true,
-    loadingMessage: '数据加载中...',
+    loading: false,
+    loadingMessage: '数据处理中',
     scope: null
   },
 

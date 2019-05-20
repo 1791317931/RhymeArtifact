@@ -33,9 +33,6 @@ Page({
   onLoad: function (options) {
     let loadModalComponent = this.selectComponent('#loadModalComponent');
     loadModalComponent.init(this);
-    loadModalComponent.setData({
-      loadingMessage: '数据提交中...'
-    });
     this.setData({
       loadModalComponent
     });
@@ -105,6 +102,9 @@ Page({
     }
   },
   getLyricById() {
+    let loadModalComponent = this.data.loadModalComponent;
+    loadModalComponent.toggleLoading(true);
+
     let lyric_id = this.data.lyricsForm.lyric_id;
     api.getLyricById({
       lyric_id,
@@ -113,6 +113,8 @@ Page({
       this.setData({
         lyricsForm: res.data
       });
+    }, () => {
+      loadModalComponent.toggleLoading(false);
     });
   },
   changeTitle(e) {
@@ -142,7 +144,8 @@ Page({
     });
   },
   save() {
-    if (!this.data.loadModalComponent.isLoading()) {
+    let loadModalComponent = this.data.loadModalComponent;
+    if (loadModalComponent.isLoading()) {
       return;
     }
 
@@ -157,12 +160,12 @@ Page({
       return;
     }
 
-    SubmittingUtil.toggleSubmitting(true, this);
+    loadModalComponent.toggleLoading(true);
     if (!form.id) {
       api.createLyric(form, (res) => {
         this.editLyricCallback(res);
       }, () => {
-        this.data.loadModalComponent.toggleLoading(false);
+        loadModalComponent.toggleLoading(false);
       });
     } else {
       let obj = {
@@ -172,7 +175,7 @@ Page({
       api.updateLyricById(obj, (res) => {
         this.editLyricCallback(res);
       }, () => {
-        this.data.loadModalComponent.toggleLoading(false);
+        loadModalComponent.toggleLoading(false);
       });
     }
   },
