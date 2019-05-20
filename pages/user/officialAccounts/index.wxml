@@ -3,7 +3,7 @@
 <view class="official-accounts">
   <view class="body-container">
     <image wx:if="{{qrCode}}" class="qr-code" src="{{qrCode}}" catchtap="previewImage" />
-    <view class="text">将二维码保存到相册识别关注</view>
+    <view class="text">点击二维码可发送给朋友</view>
     <view class="tip">最新动态资讯、定期抽奖票务教程免费拿</view>
     <view class="btn-container">
       <button class="save-btn" catchtap="save">保存到相册</button>

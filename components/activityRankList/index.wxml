@@ -8,7 +8,7 @@
     </view>
     <view class="theme-name">{{item.nickname}}</view>
     <view class="created-time">{{item.created_at}}</view>
-    <view class="count">{{item.pick_num}}</view>
+    <view class="count">{{item.pick_activity_count}}</view>
     <image class="pick" src="/assets/imgs/pick-btn.png" data-index="{{index}}" catchtap="pick" />
   </view>
 </view>

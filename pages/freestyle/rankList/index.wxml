@@ -25,7 +25,7 @@
           <image src="/assets/imgs/rank-first.png" />
         </view>
         <view class="theme-name">{{topRankList[0].nickname}}</view>
-        <view class="count">{{topRankList[0].pick_num}}</view>
+        <view class="count">{{topRankList[0].pick_activity_count}}</view>
         <image class="pick" src="/assets/imgs/pick-btn.png" data-index="{{0}}" catchtap="pick" />
       </view>
       <view wx:if="{{topRankList.length >= 2}}" class="item rank-second-container"
@@ -35,7 +35,7 @@
           <image src="/assets/imgs/rank-second.png" />
         </view>
         <view class="theme-name">{{topRankList[1].nickname}}</view>
-        <view class="count">{{topRankList[1].pick_num}}</view>
+        <view class="count">{{topRankList[1].pick_activity_count}}</view>
         <image class="pick" src="/assets/imgs/pick-btn.png" data-index="{{1}}" catchtap="pick" />
       </view>
       <view wx:if="{{topRankList.length == 3}}" class="item rank-third-container"
@@ -45,7 +45,7 @@
           <image src="/assets/imgs/rank-third.png" />
         </view>
         <view class="theme-name">{{topRankList[2].nickname}}</view>
-        <view class="count">{{topRankList[2].pick_num}}</view>
+        <view class="count">{{topRankList[2].pick_activity_count}}</view>
         <image class="pick" src="/assets/imgs/pick-btn.png" data-index="{{2}}" catchtap="pick" />
       </view>
     </view>

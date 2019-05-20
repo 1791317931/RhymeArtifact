@@ -61,7 +61,9 @@ Page({
     firstVideoMuted: false,
     secondVideoMuted: false,
     // 0 ~ 1
-    volume: 0.8
+    volume: 0.8,
+    // 页面是否即将被卸载
+    beforeUnload: false
   },
 
   /**
@@ -155,6 +157,9 @@ Page({
    */
   onUnload: function () {
     if (this.data.mode == 'record' && this.data.recordState == 'recording') {
+      this.setData({
+        beforeUnload: true
+      });
       this.endRecord();
     }
     
@@ -490,10 +495,13 @@ Page({
     // 结束录制
     RM.stop();
 
+    if (this.data.beforeUnload) {
+      return;
+    }
+
     wx.showLoading({
       title: '音频保存中，请稍后'
     });
-
     RM.onStop((res) => {
       wx.hideLoading();
       BAC.pause();
