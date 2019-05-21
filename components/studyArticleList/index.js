@@ -124,16 +124,8 @@ Component({
 
         return {
           title: item.title,
-          path: '/pages/study/studyList/index?type=article&id=' + item.id,
-          success: (res) => {
-
-          },
-          fail(res) {
-
-          },
-          complete(res) {
-
-          }
+          imageUrl: item.cover,
+          path: '/pages/study/studyList/index?type=article&id=' + item.id
         };
       }
     },

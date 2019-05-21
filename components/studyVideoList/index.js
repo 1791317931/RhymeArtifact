@@ -85,6 +85,7 @@ Component({
 
         return {
           title: item.course_title,
+          imageUrl: item.course_cover,
           path: '/pages/study/studyVideo/index?type=video&id=' + item.id
         };
       }
