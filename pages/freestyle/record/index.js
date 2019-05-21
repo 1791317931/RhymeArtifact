@@ -640,6 +640,7 @@ Page({
     RM.stop();
 
     if (this.data.beforeUnload) {
+      BAC.pause();
       return;
     }
 
