@@ -1,0 +1,376 @@
+.swiper-wrapper {
+  height: 597rpx;
+  padding: 50rpx 0 0;
+  background: #fff;
+}
+
+.swiper {
+  width: 408rpx;
+  height: 503rpx;
+  margin: 0 auto;
+}
+
+.swiper .item {
+  padding: 0 0 100rpx;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.swiper .item .cover {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper .item .status {
+  widtH: 79rpx;
+  height: 95rpx;
+  position: absolute;
+  top: 204rpx;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.name-price {
+  padding: 18rpx 53rpx 20rpx;
+  background: #fff;
+  border-top: 1rpx solid #F7F7F7;
+}
+
+.name-price .name {
+  font-size:32rpx;
+  font-family:PingFang-SC-Heavy;
+  font-weight:800;
+  color:rgba(29,29,29,1);
+  line-height:45rpx;
+  letter-spacing:1rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.name-price .price {
+  margin-top: 34rpx;
+  text-align: center;
+}
+
+.name-price .price .unit {
+  font-size:30rpx;
+  font-family:DIN-Bold;
+  font-weight:bold;
+  color:rgba(29,29,29,1);
+  line-height:36rpx;
+}
+
+.name-price .price .count {
+  font-size:50rpx;
+  font-family:DINAlternate-Bold;
+  font-weight:bold;
+  color:rgba(29,29,29,1);
+  line-height:58rpx;
+}
+
+.description {
+  margin-top: 10rpx;
+  padding: 97rpx 30rpx 185rpx;
+  background: #fff;
+  position: relative;
+}
+
+.description .label {
+  font-size:30rpx;
+  font-family:PingFang-SC-Bold;
+  font-weight:bold;
+  color:rgba(29,29,29,1);
+  line-height:42rpx;
+  letter-spacing:1rpx;
+  position: absolute;
+  top: 20rpx;
+  left: 30rpx;
+}
+
+.description view {
+  font-size:30rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(29,29,29,1);
+  line-height:42rpx;
+  letter-spacing:1rpx;
+}
+
+.detail-wrapper .operation-container {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 155rpx;
+  background: #fff;
+  box-shadow:0px -2px 0px 0px rgba(0,0,0,0.12);
+  padding: 24rpx 120rpx;
+}
+
+.detail-wrapper .operation-container button {
+  width: 100%;
+  height: 88rpx;
+  background:rgba(1,1,1,1);
+  border-radius:44rpx;
+  line-height: 88rpx;
+  font-size:32rpx;
+  font-family:PingFangSC-Light;
+  font-weight:300;
+  color:rgba(255,255,255,1);
+  letter-spacing:1rpx;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  background: rgba(0, 0, 0, .5);
+}
+
+.modal .inner {
+  padding: 30rpx 30rpx 43rpx;
+  max-height: 80%;
+  overflow-y: auto;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+}
+
+.choose .label {
+  font-size:30rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(29,29,29,1);
+  line-height:42rpx;
+  letter-spacing:1rpx;
+}
+
+.choose .common-view {
+  margin-top: 40rpx;
+  width:690rpx;
+  height:261rpx;
+  background:rgba(245,245,245,1);
+}
+
+.choose .common-view image {
+  width: 261rpx;
+  height: 261rpx;
+  display: block;
+  margin: 0 auto;
+}
+
+.choose .product-imgs {
+  margin-top: 20rpx;
+}
+
+.choose .product-imgs image {
+  width: 100rpx;
+  height: 100rpx;
+  margin-right: 20rpx;
+}
+
+.choose .formats {
+  margin-top: 40rpx;
+}
+
+.choose .formats view {
+  float: left;
+  width: 334rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+  border: 1rpx solid rgba(226,226,226,1);
+  font-size:28rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(29,29,29,1);
+  letter-spacing:1rpx;
+  text-align: center;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.choose .formats view:nth-child(2n) {
+  float: right;
+}
+
+.choose .formats view:nth-child(n+3) {
+  margin-top: 20rpx;
+}
+
+.choose .formats view.active {
+  background:rgba(1,1,1,1);
+  color: #fff;
+}
+
+.choose .operation-container {
+  margin-top: 76rpx;
+  padding: 0 13rpx 13rpx 245rpx;
+  position: relative;
+}
+
+.choose .operation-container .price {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 240rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.choose .operation-container .price .unit {
+  font-size:26rpx;
+  font-family:DINAlternate-Bold;
+  font-weight:bold;
+  color:rgba(255,51,40,1);
+  line-height:30rpx;
+}
+
+.choose .operation-container .price .count {
+  font-size:42rpx;
+  font-family:DINAlternate-Bold;
+  font-weight:bold;
+  color:rgba(255,51,40,1);
+  line-height:48rpx;
+  letter-spacing:1rpx;
+}
+
+.choose .operation-container button {
+  display: block;
+  width: 100%;
+  height: 88rpx;
+  line-height: 88rpx;
+  background:rgba(1,1,1,1);
+  border-radius:44rpx;
+  font-size:32rpx;
+  font-family:PingFangSC-Light;
+  font-weight:300;
+  color:rgba(255,255,255,1);
+  letter-spacing:1rpx;
+}
+
+.payment.modal .inner {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.payment .base-info {
+  position: relative;
+  padding: 18rpx 30rpx 0 233rpx;
+  height: 181rpx;
+}
+
+.payment .base-info .img-container {
+  width: 183rpx;
+  height: 181rpx;
+  padding: 10rpx;
+  position: absolute;
+  left: 30rpx;
+  top: 0;
+  background:rgba(245,245,245,1);
+}
+
+.payment .base-info .img-container image {
+  display: block;
+  margin: 0 auto;
+  width:163rpx;
+  height:161rpx;
+  border-radius:81rpx;
+}
+
+.payment .base-info .name {
+  font-size:30rpx;
+  font-family:PingFang-SC-Bold;
+  font-weight:bold;
+  color:rgba(29,29,29,1);
+  line-height:42rpx;
+  letter-spacing:1rpx;
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.payment .tabs {
+  margin-top: 20rpx;
+}
+
+.payment .tabs .item {
+  height:110rpx;
+  background:rgba(255,255,255,1);
+  border-bottom: 2rpx solid rgba(0, 0, 0, .1);
+  padding: 0 20rpx 0 30rpx;
+  position: relative;
+}
+
+.payment .tabs .item > text:first-child {
+  line-height: 110rpx;
+  font-size:28rpx;
+  font-family:PingFangSC-Semibold;
+  font-weight:600;
+  color:rgba(29,29,29,1);
+}
+
+.payment .tabs .item image {
+  width: 31rpx;
+  height: 31rpx;
+  position: absolute;
+  top: 50%;
+  right: 21rpx;
+  transform: translateY(-50%) rotateZ(180deg);
+}
+
+.payment .price {
+  position: absolute;
+  top: 50%;
+  right: 30rpx;
+  transform: translateY(-50%);
+}
+
+.payment .price .unit {
+  font-size:26rpx;
+  font-family:DINAlternate-Bold;
+  font-weight:bold;
+  color:rgba(255,51,40,1);
+  line-height:30rpx;
+}
+
+.payment .price .count {
+  font-size:42rpx;
+  font-family:DINAlternate-Bold;
+  font-weight:bold;
+  color:rgba(255,51,40,1);
+  line-height:48rpx;
+  letter-spacing:1rpx;
+}
+
+.payment .operation-container {
+  margin-top: 127rpx;
+  padding: 0 120rpx 13rpx;
+}
+
+.payment .operation-container button {
+  display: block;
+  width: 100%;
+  height: 88rpx;
+  background:rgba(1,1,1,1);
+  border-radius:44rpx;
+  line-height: 88rpx;
+  font-size:32rpx;
+  font-family:PingFangSC-Light;
+  font-weight:300;
+  color:rgba(255,255,255,1);
+  letter-spacing:1rpx;
+}

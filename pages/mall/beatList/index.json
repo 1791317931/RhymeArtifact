@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "beatList": "/components/mall/beatList/index"
+  },
+  "enablePullDownRefresh": true
+}

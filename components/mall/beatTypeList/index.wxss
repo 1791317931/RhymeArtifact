@@ -1,0 +1,35 @@
+.container .item {
+  height: 322rpx;
+  margin-top: 20rpx;
+  position: relative;
+}
+
+.container .item:first-child {
+  margin-top: 0;
+}
+
+.item .cover {
+  width: 100%;
+  height: 322rpx;
+}
+
+.item .name {
+  position: absolute;
+  top: 50%;
+  left: 50rpx;
+  right: 50rpx;
+  transform: translateY(-50%);
+  font-size:50rpx;
+  font-family:PingFang-SC-Bold;
+  font-weight:bold;
+  color:rgba(255,255,255,1);
+  line-height:70rpx;
+  letter-spacing:3rpx;
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+}

@@ -1,0 +1,11 @@
+<view class="container">
+  <view wx:for="{{page.list}}" wx:for-item="item" wx:for-index="index" wx:key="{{item.id}}" data-index="{{index}}"
+    class="item" catchtap="clickItem">
+    <image class="cover" src="{{item.cover}}"/>
+    <view class="name">{{item.name}}</view>
+  </view>
+</view>
+<empty 
+  loading="{{page.loading}}"
+  hasData="{{!!page.list.length}}"
+  hasMore="{{page.current_page < page.total_pages}}"/>

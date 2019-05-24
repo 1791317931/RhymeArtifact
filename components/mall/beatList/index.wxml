@@ -1,0 +1,24 @@
+<view class="container clear">
+  <view wx:for="{{page.list}}" wx:for-item="item" wx:for-index="index" wx:key="{{item.id}}" data-index="{{index}}"
+    class="item" catchtap="clickItem">
+    <view class="cover-container">
+      <image class="cover" src="{{item.cover}}"/>
+      <image class="to-play" src="/assets/imgs/to-play.png"/>
+    </view>
+    <view class="detail-container">
+      <view class="name">{{item.name}}</view>
+      <view class="user-name">音乐人：{{item.user.data.nickname}}</view>
+      <view class="price">
+        <text class="unit">￥</text>
+        <text class="count">{{item.price}}</text>
+      </view>
+      <view class="buy">
+        <text>{{item.buy_count}}人付款</text>
+      </view>
+    </view>
+  </view>
+</view>
+<empty 
+  loading="{{page.loading}}"
+  hasData="{{!!page.list.length}}"
+  hasMore="{{page.current_page < page.total_pages}}"/>

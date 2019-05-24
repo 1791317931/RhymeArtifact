@@ -1,0 +1,96 @@
+<loadModal id="loadModal"/>
+<view class="detail-wrapper">
+  <view class="swiper-wrapper">
+    <swiper
+      class="swiper"
+      indicator-dots="{{swipperOption.showIndicatorDots}}"
+      indicator-color="{{swipperOption.indicatorColor}}"
+      indicator-active-color="{{swipperOption.indicatorActiveColor}}">
+      <swiper-item>
+        <view class="item" catchtap="togglePlay">
+          <image class="cover" src="{{detail.beat_cover}}"/>
+          <image class="status" hidden="{{playing}}" src="/assets/imgs/to-play.png"/>
+          <image class="status" hidden="{{!playing}}" src="/assets/imgs/to-pause.png"/>
+        </view>
+      </swiper-item>
+      <swiper-item wx:for="{{detail.products}}" wx:for-item="item" wx:key="{{item.id}}">
+        <view class="item">
+          <image class="cover" src="{{item.cover}}"/>
+        </view>
+      </swiper-item>
+    </swiper>
+  </view>
+  <view class="name-price">
+    <view class="name">{{detail.name}}</view>
+    <view class="price">
+      <text>￥</text>
+      <text class="count">{{detail.price}}</text>
+    </view>
+  </view>
+  <view class="description">
+    <text class="label">介绍信息</text>
+    <view>{{detail.description}}</view>
+  </view>
+  <view class="operation-container">
+    <button catchtap="toBuy">立即购买</button>
+  </view>
+</view>
+<!-- 颜色规格选择 -->
+<view class="modal {{modalLevel == 1 ? '' : 'hide'}} choose" catchtap="closeModal">
+  <view class="inner" catchtap="preventEvent">
+    <view class="label">颜色规格选择</view>
+    <view class="common-view">
+      <image src="{{detail.products[activeProductIndex].cover}}"/>
+    </view>
+    <view class="product-imgs clearfix">
+      <image wx:for="{{detail.products}}" wx:for-item="item" wx:key="{{item.id}}" src="{{item.cover}}"
+         data-index="{{index}}" catchtap="toggleProduct"/>
+    </view>
+    <view class="formats clearfix">
+      <view wx:for="{{detail.types}}" wx:for-item="item" wx:key="{{item.id}}" data-index="{{index}}"
+        wx:for-index="index" class="{{activeFormatIndex == index ? 'active' : ''}}" catchtap="toggleFormat">{{item.name}}</view>
+    </view>
+    <view class="operation-container">
+      <view class="price">
+        <text class="unit">￥</text>
+        <text class="count">{{detail.price}}</text>
+      </view>
+      <button catchtap="toSetAddress">立即购买</button>
+    </view>
+  </view>
+</view>
+<!-- 去支付 -->
+<view class="modal {{modalLevel == 2 ? '' : 'hide'}} payment" catchtap="closeModal">
+  <view class="inner" catchtap="preventEvent">
+    <view class="base-info">
+      <view class="img-container">
+        <image src="{{detail.beat_cover}}"/>
+      </view>
+      <view class="name">{{detail.name}}</view>
+    </view>
+    <view class="tabs">
+      <view class="item">
+        <text>添加配送地址</text>
+        <image src="/assets/imgs/arrow-left.png"/>
+      </view>
+      <view class="item">
+        <text>电子邮件</text>
+        <image src="/assets/imgs/arrow-left.png"/>
+      </view>
+      <!-- <view class="item">
+        <text>电子发票</text>
+        <image src="/assets/imgs/arrow-left.png"/>
+      </view> -->
+      <view class="item">
+        <text>订单总额</text>
+        <view class="price">
+          <text class="unit">￥</text>
+          <text class="count">{{detail.price}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="operation-container">
+      <button>立即购买</button>
+    </view>
+  </view>
+</view>

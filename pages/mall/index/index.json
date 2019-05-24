@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "beatTypeList": "/components/mall/beatTypeList/index",
+    "roundList": "/components/mall/roundList/index"
+  },
+  "navigationBarTitleText": "商城",
+  "enablePullDownRefresh": true
+}

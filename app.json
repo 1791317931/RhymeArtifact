@@ -22,7 +22,10 @@
     "pages/study/studyArticle/index",
     "pages/user/officialAccounts/index",
     "pages/webview/index",
-    "pages/user/fans/index"
+    "pages/user/fans/index",
+    "pages/mall/index/index",
+    "pages/mall/beatList/index",
+    "pages/mall/beatDetail/index"
   ],
   "window": {
     "backgroundColor": "#f7f7f7",
@@ -38,32 +41,32 @@
     "borderStyle": "black",
     "list": [
       {
-        "selectedIconPath": "assets/imgs/rhyme-active.png",
-        "iconPath": "assets/imgs/rhyme.png",
+        "selectedIconPath": "assets/imgs/nav/rhyme-active.png",
+        "iconPath": "assets/imgs/nav/rhyme.png",
         "pagePath": "pages/main/index",
         "text": "押韵"
       },
       {
-        "selectedIconPath": "assets/imgs/study-active.png",
-        "iconPath": "assets/imgs/study.png",
+        "selectedIconPath": "assets/imgs/nav/study-active.png",
+        "iconPath": "assets/imgs/nav/study.png",
         "pagePath": "pages/study/studyList/index",
         "text": "学习"
       },
       {
-        "selectedIconPath": "assets/imgs/freestyle-active.png",
-        "iconPath": "assets/imgs/freestyle.png",
-        "pagePath": "pages/freestyle/index/index",
-        "text": "Freestyle"
+        "selectedIconPath": "assets/imgs/nav/mall-active.png",
+        "iconPath": "assets/imgs/nav/mall.png",
+        "pagePath": "pages/mall/index/index",
+        "text": "商城"
       },
       {
-        "selectedIconPath": "assets/imgs/create-active.png",
-        "iconPath": "assets/imgs/create.png",
+        "selectedIconPath": "assets/imgs/nav/create-active.png",
+        "iconPath": "assets/imgs/nav/create.png",
         "pagePath": "pages/create/beatList/index",
         "text": "创作"
       },
       {
-        "selectedIconPath": "assets/imgs/mine-active.png",
-        "iconPath": "assets/imgs/mine.png",
+        "selectedIconPath": "assets/imgs/nav/mine-active.png",
+        "iconPath": "assets/imgs/nav/mine.png",
         "pagePath": "pages/user/mine/index",
         "text": "我的"
       }

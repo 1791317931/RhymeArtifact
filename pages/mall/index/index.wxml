@@ -1,0 +1,16 @@
+<view class="tab-container">
+  <view class="clearfix">
+    <view wx:for="{{tabs}}" wx:for-item="item" wx:for-index="index" wx:key="{{item.flag}}"
+    class="tab-item {{activeIndex == index ? 'active' : ''}} item-{{index}}" data-index="{{index}}" catchtap="toggleTab">
+      {{item.name}}
+    </view>
+  </view>
+</view>
+<view class="mall-wrapper">
+  <view hidden="{{tabs[activeIndex].flag != 'beat'}}">
+    <beatTypeList id="beatTypeComponent"/>
+  </view>
+  <view hidden="{{tabs[activeIndex].flag != 'round'}}" class="article-container">
+    <roundList id="roundComponent"/>
+  </view>
+</view>
