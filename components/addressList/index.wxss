@@ -1,0 +1,66 @@
+.item {
+  background:rgba(255,255,255,1);
+  position: relative;
+  padding: 30rpx 24rpx 30rpx 30rpx;
+}
+
+/* .item .map {
+  position: absolute;
+  top: 40rpx;
+  left: 35rpx;
+  width: 24rpx;
+  height: 31rpx;
+} */
+
+.item .arrow {
+  width:31rpx;
+  height:31rpx;
+  position: absolute;
+  top: 39rpx;
+  right: 21rpx;
+  transform: rotateZ(180deg);
+}
+
+.name {
+  font-size:32rpx;
+  font-family:PingFangSC-Semibold;
+  font-weight:600;
+  color:rgba(29,29,29,1);
+  line-height:45rpx;
+  letter-spacing:1rpx;
+}
+
+.name.active:after {
+  content: '(默认)';
+  color: #bbb;
+}
+
+.phone {
+  font-size:32rpx;
+  font-family:PingFangSC-Semibold;
+  font-weight:600;
+  color:rgba(29,29,29,1);
+  line-height:45rpx;
+  letter-spacing:1rpx;
+  float: right;
+  margin-right: 47rpx;
+}
+
+.address {
+  margin-top: 14rpx;
+  font-size:28rpx;
+  font-family:PingFangSC-Regular;
+  font-weight:400;
+  color:rgba(102,102,102,1);
+  line-height:46rpx;
+}
+
+.edit {
+  margin-top: 25rpx;
+  font-size:24rpx;
+  font-family:PingFangSC-Regular;
+  font-weight:400;
+  color:rgba(0,0,0,1);
+  line-height:46rpx;
+  text-decoration: underline;
+}

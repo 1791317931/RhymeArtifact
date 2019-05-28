@@ -1,4 +1,5 @@
 import CommonUtil from '../../../assets/js/CommonUtil';
+import TipUtil from '../../../assets/js/TipUtil';
 import * as api from '../../../assets/js/api';
 
 Page({
@@ -8,6 +9,7 @@ Page({
    */
   data: {
     id: null,
+    type: null,
     swipperOption: {
       showIndicatorDots: true,
       indicatorColor: 'rgb(229, 229, 229)',
@@ -22,7 +24,24 @@ Page({
     showAddressModal: false,
     activeProductIndex: 0,
     activeFormatIndex: 0,
-    modalLevel: 0
+    modalLevel: 0,
+    email: '123@qq.com',
+    address: null,
+    formats: [
+      {
+        id: 1,
+        name: 'beat租用.MP3'
+      },
+      {
+        id: 2,
+        name: 'beat租用.WAV'
+      },
+      {
+        // 买断
+        id: 3,
+        name: 'beat独家包分轨'
+      }
+    ]
   },
 
   /**
@@ -34,7 +53,9 @@ Page({
 
     this.setData({
       loadModal,
-      id: options.id
+      id: options.id,
+      // 商品类型（beat、周边）
+      type: options.type || 'beat'
     });
 
     this.getById();
@@ -119,26 +140,22 @@ Page({
               cover: '/assets/imgs/logo.png'
             }
           ],
-          types: [
-            {
-              id: 1,
-              name: 'beat租用.MP3'
-            },
-            {
-              id: 2,
-              name: 'beat租用.WAV'
-            },
-            {
-              id: 3,
-              name: 'beat独家包分轨'
-            }
-          ],
           price: 98,
           description: 'old school风格beat可以用于写老学校带有一定的情歌，此beat融合了一定的中国风旋律色彩、融合竹笛、古筝等中国风元素。在音乐制作上可以大大发挥一定空灵的通透感。 购买beat可选择一个品牌嘻哈帽'
         }
       });
       this.toggleLoading(false);
     }, 1000);
+  },
+  previewImg(e) {
+    let index = this.getIndex(e);
+    let urls = this.data.detail.products.map(item => {
+      return item.cover;
+    });
+    wx.previewImage({
+      urls,
+      current: urls[index]
+    });
   },
   // 默认增加modalLevel
   toggleModalLevel(increase = true) {
@@ -147,6 +164,13 @@ Page({
     this.setData({
       modalLevel
     });
+
+    if (!increase) {
+      this.setData({
+        showEmailModal: false,
+        showAddressModal: false
+      });
+    }
   },
   toggleEmailModal(showEmailModal) {
     this.setData({
@@ -191,5 +215,46 @@ Page({
   },
   toSetAddress() {
     this.toggleModalLevel(true);
+  },
+  toggleShowAddress(showAddressModal) {
+    this.setData({
+      showAddressModal
+    });
+    this.toggleModalLevel(showAddressModal);
+  },
+  showAddress() {
+    this.toggleShowAddress(true);
+  },
+  toggleShowEmail(showEmailModal) {
+    this.setData({
+      showEmailModal
+    });
+    this.toggleModalLevel(showEmailModal);
+  },
+  showEmail() {
+    this.toggleShowEmail(true);
+  },
+  emailBlur(e) {
+    this.setData({
+      email: e.detail.value
+    });
+  },
+  saveEmail() {
+    if (this.validateEmail()) {
+      this.toggleEmailModal(false);
+    }
+  },
+  validateEmail() {
+    let email = this.data.email;
+    if (/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/.test(email)) {
+      return true;
+    } else {
+      TipUtil.error('请输入有效的电子邮箱');
+    }
+  },
+  toChooseAddress() {
+    wx.navigateTo({
+      url: '/pages/mall/address/list/index?forChoose=true'
+    });
   }
 })

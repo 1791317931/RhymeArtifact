@@ -1,0 +1,70 @@
+.row {
+  height:110rpx;
+  background:rgba(255,255,255,1);
+  border-bottom: 2rpx solid rgba(0, 0, 0, .1);
+  padding: 0 0 0 185rpx;
+  position: relative;
+}
+
+.row > text {
+  position: absolute;
+  top: 50%;
+  left: 30rpx;
+  transform: translateY(-50%);
+  font-size:28rpx;
+  font-family:PingFangSC-Semibold;
+  font-weight:600;
+  color:rgba(29,29,29,1);
+  line-height:40rpx;
+}
+
+.row input {
+  width: 100%;
+  height: 100%;
+  padding: 0 30rpx;
+  font-size:28rpx;
+  font-family:PingFang-SC-Regular;
+  font-weight:400;
+  color:rgba(154,154,154,1);
+  line-height:40rpx;
+}
+
+.row .checkbox {
+  position: relative;
+  width: 90rpx;
+  height: 100%;
+}
+
+.row .checkbox:before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30rpx;
+  height: 30rpx;
+  border-radius: 50%;
+  border:2rpx solid rgba(0,0,0,1);
+}
+
+.row .checkbox.active:before {
+  background: #ff7d00;
+}
+
+.operation-container {
+  margin-top: 120rpx;
+  padding: 0 120rpx;
+}
+
+.operation-container button {
+  width: 100%;
+  height:88rpx;
+  background:rgba(1,1,1,1);
+  border-radius:44rpx;
+  font-size:32rpx;
+  font-family:PingFangSC-Light;
+  font-weight:300;
+  color:rgba(255,255,255,1);
+  line-height:88rpx;
+  letter-spacing:1rpx;
+}

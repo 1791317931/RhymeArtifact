@@ -1,0 +1,6 @@
+<view class="address-wrapper">
+  <addressList id="addressComponent" />
+  <view class="to-add">
+    <button catchtap="addAddress">新增地址</button>
+  </view>
+</view>

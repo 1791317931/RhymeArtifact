@@ -1,0 +1,26 @@
+<loadModal id="loadModal"/>
+<form bindsubmit="save">
+  <view class="row">
+    <text>姓名</text>
+    <input name="name" value="{{form.name}}" placeholder="输入姓名"></input>
+  </view>
+  <view class="row">
+    <text>地区</text>
+    <input name="area" value="{{form.area}}" placeholder="请选择地区"></input>
+  </view>
+  <view class="row">
+    <text>地址</text>
+    <input name="address" value="{{form.address}}" placeholder="请输入详细地址"></input>
+  </view>
+  <view class="row">
+    <text>电话号码</text>
+    <input name="phone" value="{{form.phone}}" placeholder="请输入电话号码"></input>
+  </view>
+  <view class="row">
+    <text>设为默认</text>
+    <view class="checkbox {{form.isDefault ? 'active' : ''}}" catchtap="toggleCheckbox"></view>
+  </view>
+  <view class="operation-container">
+    <button form-type="submit">保存</button>
+  </view>
+</form>

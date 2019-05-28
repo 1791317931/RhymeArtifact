@@ -25,7 +25,9 @@
     "pages/user/fans/index",
     "pages/mall/index/index",
     "pages/mall/beatList/index",
-    "pages/mall/beatDetail/index"
+    "pages/mall/beatDetail/index",
+    "pages/mall/address/edit/index",
+    "pages/mall/address/list/index"
   ],
   "window": {
     "backgroundColor": "#f7f7f7",

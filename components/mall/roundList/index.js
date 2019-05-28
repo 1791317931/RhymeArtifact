@@ -38,7 +38,10 @@ Component({
       this.setScope(scope);
     },
     clickItem(e) {
-
+      let item = this.getItem(e);
+      wx.navigateTo({
+        url: `/pages/mall/beatDetail/index?type=round&id=${item.id}`
+      });
     },
     onReachBottom(scope) {
       let page = this.data.page;

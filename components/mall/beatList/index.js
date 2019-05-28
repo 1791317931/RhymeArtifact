@@ -40,7 +40,7 @@ Component({
     clickItem(e) {
       let item = this.getItem(e);
       wx.navigateTo({
-        url: `/pages/mall/beatDetail/index?id=${item.id}`
+        url: `/pages/mall/beatDetail/index?type=beat&id=${item.id}`
       });
     },
     onReachBottom(scope) {

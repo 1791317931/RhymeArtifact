@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "addressList": "/components/addressList/index"
+  },
+  "navigationBarTitleText": "配送地址",
+  "enablePullDownRefresh": true
+}
