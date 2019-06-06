@@ -133,43 +133,40 @@ Page({
       mode: 'create'
     });
   },
-  changeTitle(e) {
-    this.setData({
-      'lyricsForm.lyric_title': e.detail.value.trim()
-    });
-  },
-  changeContent(e) {
-    this.setData({
-      'lyricsForm.lyric_content': e.detail.value.trim()
-    });
-  },
-  save() {
+  save(e) {
     let loadModalComponent = this.data.loadModalComponent;
     if (loadModalComponent.isLoading()) {
       return;
     }
 
     let form = this.data.lyricsForm;
-    if (!form.lyric_title.length) {
+    let title = e.detail.value.title.trim()
+    let content = e.detail.value.content.trim()
+    if (!title.length) {
       TipUtil.message('请填写标题');
       return;
     }
 
-    if (!form.lyric_content.length) {
+    if (!content.length) {
       TipUtil.message('请填写歌词内容');
       return;
     }
 
     loadModalComponent.toggleLoading(true);
     if (!form.id) {
-      api.createLyric(form, (res) => {
+      let obj = {
+        lyric_title: title,
+        lyric_content: content
+      }
+      api.createLyric(obj, (res) => {
         this.editLyricCallback(res);
       }, () => {
         loadModalComponent.toggleLoading(false);
       });
     } else {
       let obj = {
-        ...form,
+        lyric_title: title,
+        lyric_content: content,
         id: form.id
       };
       api.updateLyricById(obj, (res) => {
@@ -182,6 +179,8 @@ Page({
   editLyricCallback(res) {
     TipUtil.message('操作成功');
     setTimeout(() => {
+      let pages = getCurrentPages()
+      pages[pages.length - 2].init()
       wx.navigateBack({
 
       });

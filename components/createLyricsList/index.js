@@ -129,8 +129,8 @@ Component({
 
         this.setData({
           'page.list': list,
-          'page.total_pages': pagination.page || 0,
-          'page.current_page': pagination.page || 1
+          'page.total_pages': pagination.total_pages || 0,
+          'page.current_page': pagination.current_page || 1
         });
       }, () => {
         this.togglePageLoading(false);

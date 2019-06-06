@@ -238,7 +238,7 @@ Component({
 
         res.data.forEach((item, index) => {
           item.origin_url = PathUtil.getFilePath(item.origin_url);
-          item.mixture_url = PathUtil.getFilePath(item.mixture_url);
+          item.mixture_url = item.mixture_url && PathUtil.getFilePath(item.mixture_url);
           item.collection_num = parseInt(item.collection_num);
           item.share_num = parseInt(item.share_num);
 

@@ -9,8 +9,7 @@
     <view hidden="{{mode == 'search'}}" class="edit-container">
       <view class="song-title-keyword">
         <view>歌曲名称：</view>
-        <input value="{{lyricsForm.lyric_title}}" maxlength="{{lyricsRule.title.length}}" bindchange="changeTitle"
-          placeholder="最多{{lyricsRule.title.length}}字" placeholder-class="input-placeholder"></input>
+        <input name="title" value="{{lyricsForm.lyric_title}}" maxlength="{{lyricsRule.title.length}}" placeholder="最多{{lyricsRule.title.length}}字" placeholder-class="input-placeholder"></input>
       </view>
     </view>
     <view hidden="{{mode == 'create'}}" class="search-lyric-wrapper">
@@ -19,7 +18,7 @@
       </view>
     </view>
     <view class="content-container">
-      <textarea value="{{lyricsForm.lyric_content}}" placeholder="请输入歌词（最多{{lyricsRule.content.length}}字）" name="content" maxlength="500" placeholder-class="textarea-placeholder" bindblur="changeContent"></textarea>
+      <textarea value="{{lyricsForm.lyric_content}}" placeholder="请输入歌词（最多{{lyricsRule.content.length}}字）" name="content" maxlength="500" placeholder-class="textarea-placeholder"></textarea>
     </view>
   </form>
   
