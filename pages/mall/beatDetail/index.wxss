@@ -38,8 +38,8 @@
 }
 
 .swiper-wrapper.round .swiper {
-  width: 543rpx;
-  height: 579rpx;
+  width: 540rpx;
+  height: 584rpx;
   margin: 0 auto;
 }
 

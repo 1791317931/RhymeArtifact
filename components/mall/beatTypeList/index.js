@@ -1,6 +1,7 @@
 import TipUtil from '../../../assets/js/TipUtil';
 import ConfigUtil from '../../../assets/js/ConfigUtil';
 import PathUtil from '../../../assets/js/PathUtil';
+import CategoryType from '../../../assets/js/CategoryType';
 import * as api from '../../../assets/js/api';
 
 Component({
@@ -17,9 +18,6 @@ Component({
   data: {
     page: {
       loading: false,
-      current_page: 1,
-      per_page: 10,
-      total_pages: 0,
       list: []
     },
     scope: null
@@ -40,14 +38,11 @@ Component({
     clickItem(e) {
       let item = this.getItem(e);
       wx.navigateTo({
-        url: `/pages/mall/beatList/index?id=${item.id}`
+        url: `/pages/mall/beatList/index?id=${item.id}&title=${item.name}`
       });
     },
     onReachBottom(scope) {
-      let page = this.data.page;
-      if (page.current_page < page.total_pages) {
-        this.getPage(page.current_page + 1);
-      }
+
     },
     getIndex(e) {
       let index = e.target.dataset.index;
@@ -66,75 +61,30 @@ Component({
         'page.loading': loading
       });
     },
-    getPage(current_page = 1) {
+    getPage() {
       let page = this.data.page;
       if (page.loading) {
         return;
       }
 
       let param = {
-        page: current_page,
-        per_page: page.per_page
-      },
-      list = [];
-
-      if (current_page > 1) {
-        list = page.list;
-      }
+        type: CategoryType.BEAT
+      };
 
       this.togglePageLoading(true);
-      this.setData({
-        'page.current_page': current_page
-      });
 
-      setTimeout(() => {
-        let list = [
-          {
-            id: 1,
-            name: 'Old schoolOld schoolOld schoolOld schoolOld schoolOld schoolOld schoolOld schoolOld schoolOld schoolOld school',
-            cover: '/assets/imgs/logo.png'
-          },
-          {
-            id: 2,
-            name: 'Trap',
-            cover: '/assets/imgs/logo.png'
-          },
-          {
-            id: 3,
-            name: '旋律',
-            cover: '/assets/imgs/logo.png'
-          },
-          {
-            id: 4,
-            name: '中国·异域风中国·异域风中国·异域风中国·异域风中国·异域风中国·异域风中国·异域风中国·异域风中国·异域风',
-            cover: '/assets/imgs/logo.png'
-          }
-        ]
-        this.setData({
-          'page.list': list,
-          'page.total_pages': 1,
-          'page.current_page': 1
+      api.getCategoryList(param, (res) => {
+        let list = res.data;
+        list.forEach((item, index) => {
+          item.cover = PathUtil.getFilePath(item.image);
         });
+
+        this.setData({
+          'page.list': list
+        });
+      }, () => {
         this.togglePageLoading(false);
-      }, 100);
-
-      // api.getBeatTypeInMall(param, (res) => {
-      //   let pagination = res.meta.pagination;
-
-      //   res.data.forEach((item, index) => {
-      //     item.beat_url = PathUtil.getFilePath(item.beat_url);
-
-      //     list.push(item);
-      //   });
-
-      //   this.setData({
-      //     'page.list': list,
-      //     'page.total_pages': pagination.total_pages || 0,
-      //     'page.current_page': pagination.current_page || 1
-      //   });
-      // }, () => {
-      //   this.togglePageLoading(false);
-      // });
+      });
     }
   }
 })

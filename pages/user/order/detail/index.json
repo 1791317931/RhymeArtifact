@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "loadModal": "/components/common/loadModal/index"
+  }
+}

@@ -40,13 +40,20 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 0,
+			"current": 1,
 			"list": [
 				{
 					"id": 0,
 					"name": "扫码进入",
 					"pathName": "pages/freestyle/index/index",
 					"query": "scene=id%3D3%26userId%3D12",
+					"scene": null
+				},
+				{
+					"id": 1,
+					"name": "扫码进入",
+					"pathName": "pages/user/order/detail/index",
+					"query": "id=1",
 					"scene": null
 				}
 			]

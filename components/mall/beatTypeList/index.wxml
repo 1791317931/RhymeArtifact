@@ -5,7 +5,3 @@
     <view class="name">{{item.name}}</view>
   </view>
 </view>
-<empty 
-  loading="{{page.loading}}"
-  hasData="{{!!page.list.length}}"
-  hasMore="{{page.current_page < page.total_pages}}"/>

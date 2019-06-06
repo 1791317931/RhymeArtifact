@@ -1,6 +1,7 @@
 import TipUtil from '../../../assets/js/TipUtil';
 import ConfigUtil from '../../../assets/js/ConfigUtil';
 import PathUtil from '../../../assets/js/PathUtil';
+import CategoryType from '../../../assets/js/CategoryType';
 import * as api from '../../../assets/js/api';
 
 Component({
@@ -74,9 +75,10 @@ Component({
 
       let param = {
         page: current_page,
-        per_page: page.per_page
+        per_page: page.per_page,
+        type: CategoryType.PRODUCT
       },
-        list = [];
+      list = [];
 
       if (current_page > 1) {
         list = page.list;
@@ -87,62 +89,24 @@ Component({
         'page.current_page': current_page
       });
 
-      setTimeout(() => {
-        let list = [
-          {
-            id: 1,
-            name: 'Old schoolOld schoolOld schoolOld schoolOld schoolOld schoolOld schoolOld schoolOld schoolOld schoolOld school',
-            cover: '/assets/imgs/logo.png',
-            price: 999,
-            buy_count: 111
-          },
-          {
-            id: 2,
-            name: 'Trap',
-            cover: '/assets/imgs/logo.png',
-            price: 99,
-            buy_count: 111
-          },
-          {
-            id: 3,
-            name: '旋律',
-            cover: '/assets/imgs/logo.png',
-            price: 99999999,
-            buy_count: 111
-          },
-          {
-            id: 4,
-            name: '中国·异域风中国·异域风中国·异域风中国·异域风中国·异域风中国·异域风中国·异域风中国·异域风中国·异域风',
-            cover: '/assets/imgs/logo.png',
-            price: 99999999,
-            buy_count: 111
-          }
-        ]
+      api.getGoodsPage(param, (res) => {
+        let pagination = res.meta.pagination;
+
+        res.data.forEach((item, index) => {
+          let cover_images = JSON.parse(item.cover_images || '[]');
+          item.cover = PathUtil.getFilePath(cover_images[0] && cover_images[0].url);
+
+          list.push(item);
+        });
+
         this.setData({
           'page.list': list,
-          'page.total_pages': 1,
-          'page.current_page': 1
+          'page.total_pages': pagination.total_pages || 0,
+          'page.current_page': pagination.current_page || 1
         });
+      }, () => {
         this.togglePageLoading(false);
-      }, 100);
-
-      // api.getRoundInMall(param, (res) => {
-      //   let pagination = res.meta.pagination;
-
-      //   res.data.forEach((item, index) => {
-      //     item.beat_url = PathUtil.getFilePath(item.beat_url);
-
-      //     list.push(item);
-      //   });
-
-      //   this.setData({
-      //     'page.list': list,
-      //     'page.total_pages': pagination.total_pages || 0,
-      //     'page.current_page': pagination.current_page || 1
-      //   });
-      // }, () => {
-      //   this.togglePageLoading(false);
-      // });
+      });
     }
   }
 })

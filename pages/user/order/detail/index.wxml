@@ -1,0 +1,48 @@
+<loadModal id="loadModalComponent" />
+<view class="order-container">
+  <view class="detail-container">
+    <view class="o-code">
+      <view class="label">订单号</view>
+      <view class="value">{{order.code}}</view>
+    </view>
+    <view class="o-status">
+      <view class="label">订单状态</view>
+      <view class="value {{order.status == OrderStatus.NEED_PAY ? 'active' : ''}}">{{status}}</view>
+    </view>
+    <view class="detail">
+      <view wx:if="order.products.length" class="product">
+        <view class="label">{{order.products.length}}件商品</view>
+        <view wx:for="{{order.products}}" wx:for-item="item" wx:key="{{index}}" class="item">
+          <image src="{{item.cover}}"/>
+          <view class="name">{{item.name}}</view>
+          <view class="author">作曲：{{item.author}}</view>
+          <view class="price">{{item.price}}</view>
+          <view class="type">{{item.type}}</view>
+        </view>
+      </view>
+      <view wx:if="order.presents.length" class="present">
+        <view class="label">赠送商品</view>
+        <view wx:for="{{order.presents}}" wx:for-item="item" wx:key="{{index}}" class="item">
+          <image src="{{item.cover}}"/>
+          <view class="name">{{item.name}}</view>
+          <view class="color">颜色：{{item.color}}</view>
+          <view class="price">{{item.price}}</view>
+          <view class="count">数量：{{item.count}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="address">
+    <view class="label">配送地址</view>
+    <view class="body">
+      <view class="name">{{order.address.receiver}}</view>
+      <view class="phone">{{order.address.phone}}</view>
+      <view class="detail-address">{{order.address.address}}</view>
+      <view class="email">{{order.address.email}}</view>
+    </view>
+  </view>
+  <view class="operation-container">
+    <button wx:if="{{order.status == OrderStatus.NEED_PAY}}" catchtap="toPay">去支付</button>
+    <button wx:if="{{order.status == OrderStatus.TIMEOUT}}" catchtap="goToProduct">重新购买</button>
+  </view>
+</view>

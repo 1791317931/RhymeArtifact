@@ -1,0 +1,88 @@
+.container {
+  background: #fff;
+  padding-left: 30rpx;
+}
+
+.container .item {
+  height: 180rpx;
+  background: #fff;
+  padding: 22rpx 160rpx 22rpx 166rpx;
+  position: relative;
+}
+
+.container .item:not(:last-child) {
+  border-bottom: 1rpx solid #B4B4B4;
+}
+
+.cover {
+  position: absolute;
+  width: 136rpx;
+  height: 136rpx;
+  top: 22rpx;
+  left: 0;
+}
+
+.date {
+  position: absolute;
+  top: 25rpx;
+  right: 30rpx;
+  font-size:24rpx;
+  font-family:PingFangSC-Regular;
+  font-weight:400;
+  color:rgba(180,180,180,1);
+  line-height:33rpx;
+  letter-spacing:1rpx;
+}
+
+.code {
+  font-size:30rpx;
+  font-family:PingFangSC-Regular;
+  font-weight:400;
+  color:rgba(57,57,62,1);
+  line-height:42rpx;
+  letter-spacing:1rpx;
+}
+
+.price {
+  margin-top: 10rpx;
+  font-size:30rpx;
+  font-family:PingFangSC-Regular;
+  font-weight:400;
+  color:rgba(57,57,62,1);
+  line-height:42rpx;
+  letter-spacing:1rpx;
+}
+
+.price:before {
+  content: '￥';
+  font-size:30rpx;
+  font-family:PingFangSC-Regular;
+  font-weight:400;
+  color:rgba(57,57,62,1);
+  line-height:42rpx;
+  letter-spacing:1rpx;
+  margin-right: 5rpx;
+}
+
+.status {
+  margin-top: 10rpx;
+  font-size:24rpx;
+  font-family:PingFangSC-Regular;
+  font-weight:400;
+  color:rgba(57,57,62,1);
+  line-height:33rpx;
+  letter-spacing:1rpx;
+}
+
+.status.need-pay:before {
+  content: '待支付';
+  color:rgba(255,51,40,1);
+}
+
+.status.has-pay:before {
+  content: '订单完成';
+}
+
+.status.cancel-pay:before {
+  content: '已取消';
+}

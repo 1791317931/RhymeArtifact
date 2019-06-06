@@ -3,7 +3,7 @@
     class="item" catchtap="clickItem">
     <image class="cover" src="{{item.cover}}"/>
     <view class="detail-container">
-      <view class="name">{{item.name}}</view>
+      <view class="name">{{item.goods_name}}</view>
       <view class="price">
         <text class="unit">￥</text>
         <text class="count">{{item.price}}</text>

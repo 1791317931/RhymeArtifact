@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "orderList": "/components/orderList/index"
+  },
+  "navigationBarTitleText": "我的订单",
+  "enablePullDownRefresh": true
+}

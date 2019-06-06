@@ -4,6 +4,12 @@
     <view>{{userInfo.nickName}}</view>
   </view>
   <view class="menu-container">
+    <view hidden="{{item.show == false}}" class="item" wx:for="{{firstMenus}}" wx:for-index="index" wx:for-item="item" wx:key="{{index}}" data-index="{{index}}" catchtap="clickFirstMenu">
+      {{item.text}}
+      <image src="../../../assets/imgs/arrow-left.png"/>
+    </view>
+  </view>
+  <view class="menu-container">
     <view hidden="{{item.show == false}}" class="item" wx:for="{{menus}}" wx:for-index="index" wx:for-item="item" wx:key="{{index}}" data-index="{{index}}" catchtap="clickMenu">
       {{item.text}}
       <image src="../../../assets/imgs/arrow-left.png"/>

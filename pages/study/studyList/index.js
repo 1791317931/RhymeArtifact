@@ -1,4 +1,5 @@
 import CommonUtil from '../../../assets/js/CommonUtil';
+import CategoryType from '../../../assets/js/CategoryType';
 import * as api from '../../../assets/js/api';
 
 Page({
@@ -198,7 +199,7 @@ Page({
   },
   getCategoryList(callback) {
     api.getCategoryList({
-      type: 1
+      type: CategoryType.VIDEO
     }, (res) => {
       let tabs = res.data;
 

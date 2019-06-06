@@ -3,6 +3,7 @@ import CommonUtil from '../../assets/js/CommonUtil';
 import ConfigUtil from '../../assets/js/ConfigUtil';
 import PathUtil from '../../assets/js/PathUtil';
 import TimeUtil from '../../assets/js/TimeUtil';
+import CategoryType from '../../assets/js/CategoryType';
 import PosterCanvasUtil from '../../assets/js/components/PosterCanvasUtil';
 import * as api from '../../assets/js/api';
 
@@ -65,7 +66,7 @@ Component({
     },
     getCategoryList(renderCallback) {
       api.getCategoryList({
-        type: 2
+        type: CategoryType.BEAT
       }, (res) => {
         let tabs = res.data;
         if (!tabs.length) {

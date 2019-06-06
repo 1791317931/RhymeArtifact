@@ -1,0 +1,283 @@
+.order-container {
+  background: #fff;
+}
+
+.detail-container {
+  padding: 25rpx 30rpx 40rpx;
+  border-bottom: 1prx solid rgba(220,220,220,1);
+}
+
+.o-code .label {
+  font-size:24rpx;
+  font-family:PingFangSC-Regular;
+  font-weight:400;
+  color:rgba(29,29,29,1);
+  line-height:33rpx;
+  letter-spacing:1rpx;
+}
+
+.o-code .value {
+  margin-top: 10rpx;
+  font-size:42rpx;
+  font-family:PingFang-SC-Bold;
+  font-weight:bold;
+  color:rgba(57,57,62,1);
+  line-height:59rpx;
+  letter-spacing:1rpx;
+}
+
+.o-status .label {
+  margin-top: 40rpx;
+  font-size:24rpx;
+  font-family:PingFangSC-Regular;
+  font-weight:400;
+  color:rgba(29,29,29,1);
+  line-height:33rpx;
+  letter-spacing:1rpx;
+}
+
+.o-status .value {
+  margin-top: 10rpx;
+  font-size:42rpx;
+  font-family:PingFang-SC-Bold;
+  font-weight:bold;
+  color:rgba(57,57,62,1);
+  line-height:59rpx;
+  letter-spacing:1rpx;
+}
+
+.o-status .value.active {
+  color: #FF3328;
+}
+
+.detail-container .detail {
+  margin-top: 40rpx;
+}
+
+.product .label {
+  font-size:24rpx;
+  font-family:PingFangSC-Regular;
+  font-weight:400;
+  color:rgba(29,29,29,1);
+  line-height:33rpx;
+  letter-spacing:1rpx;
+}
+
+.product .item {
+  height: 226rpx;
+  margin-top: 30rpx;
+  position: relative;
+  padding-left: 255rpx;
+}
+
+.product .item image {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width:226rpx;
+  height:226rpx;
+}
+
+.product .item .name {
+  font-size:38rpx;
+  font-family:PingFang-SC-Bold;
+  font-weight:bold;
+  color:rgba(57,57,62,1);
+  line-height:53rpx;
+  letter-spacing:1rpx;
+}
+
+.product .item .author {
+  margin-top: 10rpx;
+  font-size:26rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(57,57,62,1);
+  line-height:37rpx;
+  letter-spacing:1rpx;
+}
+
+.product .item .price:before {
+  content: '价格';
+  margin-right: 10rpx;
+  font-size:26rpx;
+  font-family:PingFangSC-Regular;
+  font-weight:400;
+  color:rgba(57,57,62,1);
+  line-height:37rpx;
+  letter-spacing:1rpx;
+}
+
+.product .item .price {
+  margin-top: 10rpx;
+  font-size:26rpx;
+  font-family:PingFangSC-Regular;
+  font-weight:400;
+  color:rgba(57,57,62,1);
+  line-height:37rpx;
+  letter-spacing:1rpx;
+}
+
+.product .item .type {
+  margin-top: 10rpx;
+  font-size:26rpx;
+  font-family:PingFangSC-Regular;
+  font-weight:400;
+  color:rgba(57,57,62,1);
+  line-height:37rpx;
+  letter-spacing:1rpx;
+}
+
+.present {
+  margin-top: 40rpx;
+}
+
+.present .label {
+  font-size:24rpx;
+  font-family:PingFangSC-Regular;
+  font-weight:400;
+  color:rgba(29,29,29,1);
+  line-height:33rpx;
+  letter-spacing:1rpx;
+}
+
+.present .item {
+  height: 226rpx;
+  margin-top: 30rpx;
+  position: relative;
+  padding-left: 255rpx;
+}
+
+.present .item image {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width:226rpx;
+  height:226rpx;
+}
+
+.present .item .name {
+  font-size:38rpx;
+  font-family:PingFang-SC-Bold;
+  font-weight:bold;
+  color:rgba(57,57,62,1);
+  line-height:53rpx;
+  letter-spacing:1rpx;
+}
+
+.present .item .color {
+  margin-top: 10rpx;
+  font-size:26rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(57,57,62,1);
+  line-height:37rpx;
+  letter-spacing:1rpx;
+}
+
+.present .item .price:before {
+  content: '价格';
+  margin-right: 10rpx;
+  font-size:26rpx;
+  font-family:PingFangSC-Regular;
+  font-weight:400;
+  color:rgba(57,57,62,1);
+  line-height:37rpx;
+  letter-spacing:1rpx;
+}
+
+.present .item .price {
+  margin-top: 10rpx;
+  font-size:26rpx;
+  font-family:PingFangSC-Regular;
+  font-weight:400;
+  color:rgba(57,57,62,1);
+  line-height:37rpx;
+  letter-spacing:1rpx;
+}
+
+.present .item .count {
+  margin-top: 10rpx;
+  font-size:26rpx;
+  font-family:PingFangSC-Regular;
+  font-weight:400;
+  color:rgba(57,57,62,1);
+  line-height:37rpx;
+  letter-spacing:1rpx;
+}
+
+.address {
+  padding: 40rpx 30rpx;
+}
+
+.address .label {
+  font-size:30rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(29,29,29,1);
+  line-height:42rpx;
+  letter-spacing:1rpx;
+}
+
+.address .body {
+  margin-top: 30rpx;
+  padding: 30rpx;
+  border:1rpx solid rgba(208,208,208,1);
+}
+
+.address .name {
+  font-size:34rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(29,29,29,1);
+  line-height:48rpx;
+  letter-spacing:1rpx;
+}
+
+.address .phone {
+  margin-top: 12rpx;
+  font-size:28rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(29,29,29,1);
+  line-height:40rpx;
+  letter-spacing:1rpx;
+}
+
+.address .detail-address {
+  margin-top: 10rpx;
+  font-size:28rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(29,29,29,1);
+  line-height:40rpx;
+  letter-spacing:1rpx;
+}
+
+.address .email {
+  margin-top: 14rpx;
+  font-size:28rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(29,29,29,1);
+  line-height:40rpx;
+  letter-spacing:1rpx;
+}
+
+.operation-container {
+  margin-top: 20rpx;
+  padding: 0 120rpx 43rpx;
+}
+
+.operation-container button {
+  width: 100%;
+  height:88rpx;
+  background:rgba(1,1,1,1);
+  border-radius:44rpx;
+  font-size:32rpx;
+  font-family:PingFangSC-Light;
+  font-weight:300;
+  color:rgba(255,255,255,1);
+  line-height:88rpx;
+  letter-spacing:1rpx;
+}

@@ -119,6 +119,24 @@ Page({
     let id = this.data.id;
     this.toggleLoading(true);
 
+    api.getGoodsById({
+      id
+    }, (res) => {
+      let data = res.goods[0];
+      this.setData({
+        detail: data
+      });
+    }, () => {
+      this.toggleLoading(false);
+    }, () => {
+      setTimeout(() => {
+        wx.navigateBack({
+          
+        });
+      }, 1000);
+    });
+
+    return;
     setTimeout(() => {
       this.setData({
         detail: {
@@ -129,15 +147,15 @@ Page({
           products: [
             {
               id: 1,
-              cover: '/assets/imgs/logo.png'
+              cover: '/assets/imgs/demo/hat_1.png'
             },
             {
               id: 2,
-              cover: '/assets/imgs/logo.png'
+              cover: '/assets/imgs/demo/hat_2.png'
             },
             {
               id: 3,
-              cover: '/assets/imgs/logo.png'
+              cover: '/assets/imgs/demo/hat_3.png'
             }
           ],
           price: 98,

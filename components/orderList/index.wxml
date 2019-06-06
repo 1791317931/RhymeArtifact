@@ -1,0 +1,16 @@
+<view class="container">
+  <view wx:for="{{page.list}}" wx:for-item="item" wx:for-index="index" wx:key="{{item.id}}" data-index="{{index}}"
+    class="item" catchtap="clickItem">
+    <image class="cover" src="{{item.cover}}"/>
+    <view class="date">{{item.created_at}}</view>
+    <view class="code">{{item.code}}</view>
+    <view class="price">{{item.price}}</view>
+    <view wx:if="{{item.status == OrderStatus.NEED_PAY}}" class="status need-pay"></view>
+    <view wx:if="{{item.status == OrderStatus.HAS_PAY}}" class="status has-pay"></view>
+    <view wx:if="{{item.status == OrderStatus.CANCEL_PAY}}" class="status cancel-pay"></view>
+  </view>
+</view>
+<empty 
+  loading="{{page.loading}}"
+  hasData="{{!!page.list.length}}"
+  hasMore="{{page.current_page < page.total_pages}}"/>

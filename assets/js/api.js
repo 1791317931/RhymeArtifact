@@ -210,3 +210,13 @@ export function getFansPage(data, fn, completeFn) {
   UrlUtil.get(`fans`, data, fn, completeFn);
 }
 // ---------------------用户------------------------
+
+// ---------------------商城------------------------
+export function getGoodsPage(data, fn, completeFn) {
+  UrlUtil.get(`goods`, data, fn, completeFn);
+}
+
+export function getGoodsById(data, fn, completeFn) {
+  UrlUtil.get(`goods/${data.id}`, data, fn, completeFn);
+}
+// ---------------------商城------------------------

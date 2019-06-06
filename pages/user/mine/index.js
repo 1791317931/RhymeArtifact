@@ -7,6 +7,12 @@ Page({
    * 页面的初始数据
    */
   data: {
+    firstMenus: [
+      {
+        path: '/pages/user/order/index/index',
+        text: '我的订单'
+      }
+    ],
     menus: [
       {
         path: '/pages/user/music/index',
@@ -106,6 +112,16 @@ Page({
    */
   onShareAppMessage: function (e) {
     return CommonUtil.share(e);
+  },
+  clickFirstMenu(e) {
+    let index = e.target.dataset.index,
+    url = this.data.firstMenus[index].path;
+
+    if (url) {
+      wx.navigateTo({
+        url
+      });
+    }
   },
   clickMenu(e) {
     let index = e.target.dataset.index,

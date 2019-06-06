@@ -1,33 +1,25 @@
-import CommonUtil from '../../../assets/js/CommonUtil';
-import * as api from '../../../assets/js/api';
-
+import CommonUtil from '../../../../assets/js/CommonUtil';
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    beatComponent: null,
-    categoryId: null
+    orderComponent: null
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    wx.setNavigationBarTitle({
-      title: options.title
-    });
-    let beatComponent = this.selectComponent('#beatComponent');
+    let orderComponent = this.selectComponent('#orderComponent');
 
-    beatComponent.init(this);
-
+    orderComponent.init(this);
     this.setData({
-      beatComponent,
-      categoryId: options.id
+      orderComponent
     });
 
-    this.getPage(1);
+    orderComponent.getPage(1);
   },
 
   /**
@@ -64,26 +56,20 @@ Page({
   onPullDownRefresh: function () {
     wx.stopPullDownRefresh();
     wx.vibrateShort()
-    this.getPage(1);
+    this.data.orderComponent.getPage(1);
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    this.data.beatComponent.onReachBottom();
+    this.data.orderComponent.onReachBottom();
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
-    return {
-      title: getApp().globalData.appName,
-      path: '/pages/mall/beatList/index'
-    };
-  },
-  getPage(current_page = 1) {
-    this.data.beatComponent.getPage(current_page);
+  onShareAppMessage: function (e) {
+    return CommonUtil.share(e);
   }
 })
