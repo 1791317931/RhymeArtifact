@@ -8,14 +8,14 @@
       indicator-active-color="{{swipperOption.indicatorActiveColor}}">
       <swiper-item>
         <view class="item" catchtap="togglePlay">
-          <image class="cover" src="{{detail.beat_cover}}"/>
-          <image class="status" hidden="{{playing}}" src="/assets/imgs/to-play.png"/>
-          <image class="status" hidden="{{!playing}}" src="/assets/imgs/to-pause.png"/>
+          <image class="cover" src="{{detail.cover_images[0]}}"/>
+          <image class="status" hidden="{{beatPlaying}}" src="/assets/imgs/to-play.png"/>
+          <image class="status" hidden="{{!beatPlaying}}" src="/assets/imgs/to-pause.png"/>
         </view>
       </swiper-item>
-      <swiper-item wx:for="{{detail.products}}" wx:for-item="item" wx:key="{{item.id}}">
+      <swiper-item wx:if="{{index > 0}}" wx:for="{{detail.cover_images}}" wx:for-item="item" wx:for-index="index" wx:key="{{index}}">
         <view class="item" data-index="{{index}}" catchtap="previewImg">
-          <image class="cover" src="{{item.cover}}"/>
+          <image class="cover" src="{{item}}"/>
         </view>
       </swiper-item>
     </swiper>
@@ -26,9 +26,9 @@
       indicator-dots="{{swipperOption.showIndicatorDots}}"
       indicator-color="{{swipperOption.indicatorColor}}"
       indicator-active-color="{{swipperOption.indicatorActiveColor}}">
-      <swiper-item wx:for="{{detail.products}}" wx:for-item="item" wx:key="{{item.id}}">
+      <swiper-item wx:for="{{detail.cover_images}}" wx:for-item="item" wx:for-index="index" wx:key="{{index}}">
         <view class="item" data-index="{{index}}" catchtap="previewImg">
-          <image class="cover" src="{{item.cover}}"/>
+          <image class="cover" src="{{item}}"/>
         </view>
       </swiper-item>
     </swiper>
@@ -37,12 +37,12 @@
     <view class="name">{{detail.name}}</view>
     <view class="price">
       <text>￥</text>
-      <text class="count">{{detail.price}}</text>
+      <text class="count">{{detail.original_price}}</text>
     </view>
   </view>
   <view class="description">
     <text class="label">介绍信息</text>
-    <view>{{detail.description}}</view>
+    <view>{{detail.introduce}}</view>
   </view>
   <view class="operation-container">
     <button catchtap="toBuy">立即购买</button>
@@ -51,22 +51,34 @@
 <!-- 颜色规格选择 -->
 <view class="modal {{modalLevel == 1 ? '' : 'hide'}} choose" catchtap="closeModal">
   <view class="inner" catchtap="preventEvent">
-    <view class="label">颜色规格选择</view>
-    <view class="common-view">
-      <image src="{{detail.products[activeProductIndex].cover}}"  data-index="{{activeProductIndex}}" catchtap="previewImg"/>
+    <view class="gift-item" wx:for="{{gifts}}" wx:for-item="item" wx:for-index="index" wx:key="{{index}}">
+      <view class="label">{{item.spec}}</view>
+      <view wx:if="{{item.type == 'image'}}" class="mt30">
+        <view class="common-view">
+          <image src="{{item.spec_value[item.activeIndex].image}}" data-index="{{item.activeIndex}}" catchtap="previewGiftImg"/>
+        </view>
+        <view class="product-imgs clearfix">
+          <image wx:for="{{item.spec_value}}" wx:for-item="childItem" wx:for-index="childIndex"
+            wx:key="{{childIndex}}" src="{{childItem.image}}" data-index="{{index}}"
+            data-child-index="{{childIndex}}" catchtap="toggleColorPresent"/>
+        </view>
+      </view>
+      <view wx:if="{{item.type == 'text'}}" class="formats clearfix mt30">
+        <view wx:for="{{item.spec_value}}" wx:for-item="childItem" wx:key="{{childIndex}}" data-index="{{index}}"
+          data-child-index="{{childIndex}}" wx:for-index="childIndex"
+          class="{{item.activeIndex == childIndex ? 'active' : ''}}" catchtap="togglePresent">
+          {{childItem}}</view>
+      </view>
     </view>
-    <view class="product-imgs clearfix">
-      <image wx:for="{{detail.products}}" wx:for-item="item" wx:key="{{item.id}}" src="{{item.cover}}"
-         data-index="{{index}}" catchtap="toggleProduct"/>
-    </view>
+    <view class="format-label">Beat购买类型</view>
     <view class="formats clearfix">
-      <view wx:for="{{formats}}" wx:for-item="item" wx:key="{{item.id}}" data-index="{{index}}"
-        wx:for-index="index" class="{{activeFormatIndex == index ? 'active' : ''}}" catchtap="toggleFormat">{{item.name}}</view>
+      <view wx:for="{{detail.goods_sku}}" wx:for-item="item" wx:key="{{item.id}}" data-index="{{index}}"
+        wx:for-index="index" class="{{activeFormatIndex == index ? 'active' : ''}}" catchtap="toggleFormat">{{item.title}}</view>
     </view>
     <view class="operation-container">
       <view class="price">
         <text class="unit">￥</text>
-        <text class="count">{{detail.price}}</text>
+        <text class="count">{{detail.goods_sku[activeFormatIndex].price}}</text>
       </view>
       <button catchtap="toSetAddress">立即购买</button>
     </view>
@@ -77,9 +89,9 @@
   <view class="inner" catchtap="preventEvent">
     <view class="base-info">
       <view class="img-container">
-        <image src="{{detail.beat_cover}}"/>
+        <image src="{{colorGift.spec_value[colorGift.activeIndex].image || detail.cover_images[0]}}"/>
       </view>
-      <view class="name">{{detail.name}}</view>
+      <view class="name">{{detail.goods_name}}</view>
     </view>
     <view class="tabs">
       <view class="item" catchtap="showAddress">
@@ -99,12 +111,12 @@
         <text>订单总额</text>
         <view class="price">
           <text class="unit">￥</text>
-          <text class="count">{{detail.price}}</text>
+          <text class="count">{{detail.goods_sku[activeFormatIndex].price}}</text>
         </view>
       </view>
     </view>
     <view class="operation-container">
-      <button>立即购买</button>
+      <button catchtap="buyNow">立即购买</button>
     </view>
   </view>
 </view>
@@ -125,15 +137,15 @@
     <view class="address-detail" catchtap="toChooseAddress">
       <view hidden="{{address}}" class="empty-tip">添加配送地址</view>
       <view hidden="{{!address}}" class="content">
-        <view class="name">{{address.name}}</view>
-        <view class="mobile">{{address.phone}}</view>
-        <view class="first-level-address">{{address.area}}</view>
-        <view class="second-level-address">{{address.address}}</view>
+        <view class="name">{{address.receiver}}</view>
+        <view class="mobile">{{address.tel_number}}</view>
+        <view class="first-level-address">{{address.province_name}} {{address.city_name}} {{address.county_name}}</view>
+        <view class="second-level-address">{{address.detail_info}}</view>
       </view>
       <image class="arrow" src="/assets/imgs/arrow-left.png"/>
     </view>
     <view class="operation-container">
-      <button catchtap="saveEmail">保存</button>
+      <button catchtap="closeAddressModal">确定</button>
     </view>
   </view>
 </view>

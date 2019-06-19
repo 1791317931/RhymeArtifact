@@ -2,13 +2,6 @@ import * as api from './assets/js/api';
 import PathUtil from './assets/js/PathUtil';
 const ald = require('./utils/ald-stat.js')
 
-// {
-//   "selectedIconPath": "assets/imgs/nav/mall-active.png",
-//     "iconPath": "assets/imgs/nav/mall.png",
-//       "pagePath": "pages/mall/index/index",
-//         "text": "商城"
-// },
-
 App({
   onLaunch: function () {
     const updateManager = wx.getUpdateManager()

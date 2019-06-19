@@ -4,14 +4,15 @@
     <!-- <image class="map" src="/assets/imgs/logo.png"/> -->
     <image class="arrow" src="/assets/imgs/arrow-left.png"/>
     <view>
-      <text class="name {{item.isDefault ? 'active' : ''}}">收货人：{{item.name}}</text>
+      <text class="name {{item.isDefault ? 'active' : ''}}">收货人：{{item.receiver}}</text>
       <text class="phone">{{item.anonymousPhone}}</text>
     </view>
-    <view class="address">{{item.address}}</view>
+    <view class="address">{{item.province_name}}{{item.city_name}}{{item.county_name}}  {{item.detail_info}}</view>
     <text class="edit" data-index="{{index}}" catchtap="toEdit">编辑</text>
   </view>
 </view>
-<empty 
+<empty
+  customNoData="address"
   loading="{{page.loading}}"
   hasData="{{!!page.list.length}}"
   hasMore="{{page.current_page < page.total_pages}}"/>

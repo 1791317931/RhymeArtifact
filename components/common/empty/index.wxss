@@ -27,3 +27,19 @@
 .empty.no-more-data:empty:before {
   content: '没有更多数据了';
 }
+
+.product:empty:before {
+  content: '暂无商品' !important;
+}
+
+.empty.no-more-data.product:empty:before {
+  content: '没有更多商品了' !important;
+}
+
+.address:empty:before {
+  content: '暂无地址' !important;
+}
+
+.empty.no-more-data.address:empty:before {
+  content: '没有更多地址了' !important;
+}

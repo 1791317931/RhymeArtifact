@@ -9,19 +9,26 @@ Page({
    */
   data: {
     form: {
+      id: null,
       name: '',
       area: '',
       address: '',
       phone: '',
       isDefault: 1
-    }
+    },
+    loadModal: null
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let loadModal = this.selectComponent('#loadModal');
+    loadModal.init(this);
 
+    this.setData({
+      loadModal
+    });
   },
 
   /**
@@ -83,6 +90,9 @@ Page({
       'form.isDefault': isDefault
     });
   },
+  toggleLoading(loading) {
+    this.data.loadModal.toggleLoading(loading);
+  },
   save(e) {
     let valueObj = e.detail.value,
     name = valueObj.name.trim(),
@@ -116,13 +126,23 @@ Page({
     }
 
     form = {
-      name,
+      receiver: name,
       area,
-      address,
-      phone,
+      detail_info: address,
+      tel_number: phone,
       isDefault
     };
 
-    console.log(form)
+    this.toggleLoading(true)
+    api.addAddress(form, (res) => {
+      TipUtil.success('操作成功')
+      setTimeout(() => {
+        wx.navigateBack({
+          
+        });
+      }, 500)
+    }, () => {
+      this.toggleLoading(false)
+    })
   }
 })

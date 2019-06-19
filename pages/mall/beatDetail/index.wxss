@@ -1,3 +1,8 @@
+.detail-wrapper {
+  height: 100%;
+  background: #fff;
+}
+
 .swiper-wrapper.beat {
   height: 597rpx;
   padding: 50rpx 0 10rpx;
@@ -167,6 +172,10 @@
   background: #fff;
 }
 
+.inner .gift-item:not(:first-child) {
+  margin-top: 50rpx;
+}
+
 .choose .label {
   font-size:30rpx;
   font-family:PingFang-SC-Medium;
@@ -200,8 +209,18 @@
   margin-right: 20rpx;
 }
 
-.choose .formats {
+.choose .format-label {
   margin-top: 40rpx;
+  font-size:30rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(29,29,29,1);
+  line-height:42rpx;
+  letter-spacing:1rpx;
+}
+
+.choose .formats {
+  margin-top: 30rpx;
 }
 
 .choose .formats view {

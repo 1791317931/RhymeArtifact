@@ -1,3 +1,4 @@
+<loadModal id="loadModal"/>
 <view class="address-wrapper">
   <addressList id="addressComponent" />
   <view class="to-add">

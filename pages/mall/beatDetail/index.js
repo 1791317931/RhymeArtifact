@@ -1,5 +1,7 @@
 import CommonUtil from '../../../assets/js/CommonUtil';
+import ConfigUtil from '../../../assets/js/ConfigUtil';
 import TipUtil from '../../../assets/js/TipUtil';
+import PathUtil from '../../../assets/js/PathUtil';
 import * as api from '../../../assets/js/api';
 
 Page({
@@ -16,32 +18,22 @@ Page({
       indicatorActiveColor: 'rgb(20,21,26)'
     },
     detail: {},
+    // 颜色、规格
+    gifts: [],
+    colorGift: null,
     loadModal: null,
     playing: false,
     // 邮箱
     showEmailModal: false,
     // 配送地址详情
     showAddressModal: false,
-    activeProductIndex: 0,
     activeFormatIndex: 0,
     modalLevel: 0,
-    email: '123@qq.com',
+    email: '',
     address: null,
-    formats: [
-      {
-        id: 1,
-        name: 'beat租用.MP3'
-      },
-      {
-        id: 2,
-        name: 'beat租用.WAV'
-      },
-      {
-        // 买断
-        id: 3,
-        name: 'beat独家包分轨'
-      }
-    ]
+    BAC: null,
+    beatPlaying: false,
+    beatParam: {}
   },
 
   /**
@@ -86,7 +78,8 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    this.data.BAC.pause()
+    this.data.BAC.destroy();
   },
 
   /**
@@ -122,7 +115,32 @@ Page({
     api.getGoodsById({
       id
     }, (res) => {
-      let data = res.goods[0];
+      let data = res.data;
+      let cover_images = data.cover_images.map(item => {
+        return PathUtil.getFilePath(item)
+      })
+      data.cover_images = cover_images
+
+      if (data.gift && data.gift.goods_specs.length) {
+        let gifts = data.gift.goods_specs
+        gifts.forEach((item, index) => {
+          item.activeIndex = 0
+          if (item.type == 'image') {
+            this.setData({
+              colorGift: item
+            })
+          }
+        })
+        this.setData({
+          gifts
+        });
+      }
+
+      // beat，需要初始化BAC
+      if (data.beat_try_url) {
+        this.initBAC(data.beat_try_url)
+      }
+
       this.setData({
         detail: data
       });
@@ -135,41 +153,99 @@ Page({
         });
       }, 1000);
     });
+  },
+  initBAC(url) {
+    let BAC = wx.createInnerAudioContext();
+    BAC.src = PathUtil.getFilePath(url);
+    this.setData({
+      BAC
+    });
+    this.bindBACEvent();
+  },
+  bindBACEvent() {
+    let BAC = this.data.BAC;
 
-    return;
-    setTimeout(() => {
-      this.setData({
-        detail: {
-          id: 1,
-          name: 'old school风格beat《一条鱼》加嘻哈帽子',
-          beat_cover: '/assets/imgs/logo.png',
-          beat_url: '/beat/cuco.mp3',
-          products: [
-            {
-              id: 1,
-              cover: '/assets/imgs/demo/hat_1.png'
-            },
-            {
-              id: 2,
-              cover: '/assets/imgs/demo/hat_2.png'
-            },
-            {
-              id: 3,
-              cover: '/assets/imgs/demo/hat_3.png'
-            }
-          ],
-          price: 98,
-          description: 'old school风格beat可以用于写老学校带有一定的情歌，此beat融合了一定的中国风旋律色彩、融合竹笛、古筝等中国风元素。在音乐制作上可以大大发挥一定空灵的通透感。 购买beat可选择一个品牌嘻哈帽'
-        }
-      });
-      this.toggleLoading(false);
-    }, 1000);
+    BAC.autoplay = false;
+    BAC.onTimeUpdate(() => {
+      this.audioTimeUpdate(BAC.duration, BAC.currentTime);
+    });
+
+    BAC.onError((res) => {
+      this.audioError();
+    });
+
+    BAC.onEnded((res) => {
+      this.beatAudioEnded();
+    });
+  },
+  togglePlay(e) {
+    if (this.data.beatPlaying) {
+      this.pausePlay(e)
+    } else {
+      this.play(e)
+    }
+  },
+  play(e) {
+    let BAC = this.data.BAC;
+
+    this.setData({
+      beatPlaying: true
+    });
+
+    // 播放音频
+    BAC.play();
+  },
+  pausePlay(e) {
+    let BAC = this.data.BAC;
+
+    this.setData({
+      beatPlaying: false
+    });
+
+    BAC.pause();
+  },
+  audioError(e) {
+    if (e.detail.errMsg == 'MEDIA_ERR_SRC_NOT_SUPPORTED') {
+      TipUtil.message('播放失败');
+    }
+    this.beatAudioEnded(e);
+  },
+  audioTimeUpdate(totalTime, time) {
+    this.setBeatTime(totalTime, time);
+  },
+  // 计算剩余时间
+  setBeatTime(totalTime, currentTime) {
+    let beatParam = this.data.beatParam
+
+    beatParam.totalTime = totalTime;
+    beatParam.currentTime = currentTime;
+
+    this.setData({
+      beatParam
+    });
+  },
+  beatAudioEnded(e) {
+    let BAC = this.data.BAC;
+
+    this.setData({
+      beatPlaying: false
+    });
+
+    BAC.seek(0);
   },
   previewImg(e) {
-    let index = this.getIndex(e);
-    let urls = this.data.detail.products.map(item => {
-      return item.cover;
+    let index = this.getIndex(e),
+    urls = this.data.detail.cover_images
+    wx.previewImage({
+      urls,
+      current: urls[index]
     });
+  },
+  previewGiftImg(e) {
+    let index = this.getIndex(e),
+    urls = this.data.colorGift.spec_value.map(item => {
+      return item.image
+    })
     wx.previewImage({
       urls,
       current: urls[index]
@@ -200,7 +276,7 @@ Page({
     this.setData({
       showAddressModal
     });
-    this.toggleModalLevel(showEmailModal);
+    this.toggleModalLevel(showAddressModal);
   },
   toBuy() {
     this.toggleModalLevel(true);
@@ -216,10 +292,27 @@ Page({
 
     return parseInt(index);
   },
-  toggleProduct(e) {
-    let index = this.getIndex(e);
+  getChildIndex(e) {
+    let childIndex = e.target.dataset.childIndex;
+    if (isNaN(childIndex)) {
+      childIndex = e.currentTarget.dataset.childIndex;
+    }
+
+    return parseInt(childIndex);
+  },
+  toggleColorPresent(e) {
+    let index = this.getIndex(e),
+    childIndex = this.getChildIndex(e);
     this.setData({
-      activeProductIndex: index
+      [`gifts[${index}].activeIndex`]: childIndex,
+      [`colorGift.activeIndex`]: childIndex
+    });
+  },
+  togglePresent(e) {
+    let index = this.getIndex(e),
+    childIndex = this.getChildIndex(e);
+    this.setData({
+      [`gifts[${index}].activeIndex`]: childIndex
     });
   },
   toggleFormat(e) {
@@ -273,6 +366,86 @@ Page({
   toChooseAddress() {
     wx.navigateTo({
       url: '/pages/mall/address/list/index?forChoose=true'
+    });
+  },
+  closeAddressModal() {
+    if (this.data.address) {
+      this.toggleAddressModal(false);
+    } else {
+      TipUtil.error('请设置收货地址');
+    }
+  },
+  buyNow() {
+    let address = this.data.address,
+    email = this.data.email;
+
+    if (!this.data.address) {
+      TipUtil.error('请设置收货地址');
+      return
+    }
+
+    if (!this.validateEmail()) {
+      TipUtil.error('请输入有效的电子邮箱');
+      return
+    }
+
+    let detail = this.data.detail,
+    specs = this.data.gifts.map(item => {
+      let label = item.spec
+      let type = item.type
+      let value = item.spec_value[item.activeIndex]
+      return {
+        type,
+        label,
+        value
+      }
+    }),
+    param = {
+      id: this.data.id,
+      skuId: detail.goods_sku[this.data.activeFormatIndex].sku_id,
+      addressId: address.id,
+      email,
+      details: {
+        // 规格
+        specs
+      }
+    }
+
+    // 如果是beat（只有beat有赠品），需要giftId
+    if (detail.beat_try_url && detail.gift) {
+      param.details.giftId = detail.gift.id
+    }
+
+    this.toggleLoading(true);
+    api.buyGoodsById(param, (res) => {
+      let data = res.data,
+      packageParam = data.package;
+
+      wx.requestPayment({
+        ...packageParam,
+        success: (res) => {
+          TipUtil.success('购买成功')
+          setTimeout(() => {
+            wx.navigateBack({
+
+            })
+          }, 1000)
+        },
+        fail: (res) => {
+          if (ConfigUtil.isDev()) {
+            wx.showModal({
+              title: 'x',
+              content: '' + JSON.stringify(res),
+            });
+          } else {
+            if (!/cancel/.test(res.errMsg || '')) {
+              TipUtil.error('支付失败');
+            }
+          }
+        }
+      });
+    }, () => {
+      this.toggleLoading(false);
     });
   }
 })

@@ -93,8 +93,8 @@ Component({
         let pagination = res.meta.pagination;
 
         res.data.forEach((item, index) => {
-          let cover_images = JSON.parse(item.cover_images || '[]');
-          item.cover = PathUtil.getFilePath(cover_images[0] && cover_images[0].url);
+          let cover_images = item.cover_images;
+          item.cover = PathUtil.getFilePath(cover_images[0]);
 
           list.push(item);
         });

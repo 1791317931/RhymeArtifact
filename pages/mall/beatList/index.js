@@ -7,8 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    beatComponent: null,
-    categoryId: null
+    beatComponent: null
   },
 
   /**
@@ -21,10 +20,12 @@ Page({
     let beatComponent = this.selectComponent('#beatComponent');
 
     beatComponent.init(this);
+    beatComponent.setData({
+      categoryId: options.id
+    })
 
     this.setData({
-      beatComponent,
-      categoryId: options.id
+      beatComponent
     });
 
     this.getPage(1);

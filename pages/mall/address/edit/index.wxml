@@ -6,7 +6,7 @@
   </view>
   <view class="row">
     <text>地区</text>
-    <input name="area" value="{{form.area}}" placeholder="请选择地区"></input>
+    <input name="area" value="{{form.area}}" placeholder="请选择省份、城市、县区"></input>
   </view>
   <view class="row">
     <text>地址</text>

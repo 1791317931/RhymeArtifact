@@ -6,7 +6,7 @@
       <view class="name">{{item.goods_name}}</view>
       <view class="price">
         <text class="unit">￥</text>
-        <text class="count">{{item.price}}</text>
+        <text class="count">{{item.original_price}}</text>
       </view>
       <view class="buy">
         <text>{{item.buy_count}}人付款</text>
@@ -14,7 +14,8 @@
     </view>
   </view>
 </view>
-<empty 
+<empty
+  customNoData="product"
   loading="{{page.loading}}"
   hasData="{{!!page.list.length}}"
   hasMore="{{page.current_page < page.total_pages}}"/>

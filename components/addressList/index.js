@@ -106,79 +106,24 @@ Component({
         'page.current_page': current_page
       });
 
+      api.getAddressList(param, (res) => {
+        let pagination = res.meta.pagination;
 
+        res.data.forEach((item, index) => {
+          let phone = item.tel_number
+          item.anonymousPhone = `${phone.substring(0, 3)}****${phone.substring(7, 11)}`
 
+          list.push(item);
+        });
 
-      list = [
-        {
-          id: 1,
-          name: '张三6',
-          isDefault: 1,
-          phone: '12345678901',
-          address: '北京市昌平区回龙观新龙城街道 新龙城小区27号楼7单元101室'
-        },
-        {
-          id: 2,
-          name: '张三5',
-          isDefault: 0,
-          phone: '12345678901',
-          address: '北京市昌平区回龙观新龙城街道 新龙城小区27号楼7单元101室'
-        },
-        {
-          id: 8,
-          name: '张三4',
-          isDefault: 0,
-          phone: '12345678901',
-          address: '北京市昌平区回龙观新龙城街道 新龙城小区27号楼7单元101室'
-        },
-        {
-          id: 9,
-          name: '张三3',
-          isDefault: 0,
-          phone: '12345678901',
-          address: '北京市昌平区回龙观新龙城街道 新龙城小区27号楼7单元101室'
-        },
-        {
-          id: 10,
-          name: '张三2',
-          isDefault: 0,
-          phone: '12345678901',
-          address: '北京市昌平区回龙观新龙城街道 新龙城小区27号楼7单元101室'
-        },
-        {
-          id: 111,
-          name: '张三11',
-          isDefault: 0,
-          phone: '12345678901',
-          address: '北京市昌平区回龙观新龙城街道 新龙城小区27号楼7单元101室'
-        }
-      ]
-      list.forEach(item => {
-        let phone = item.phone
-        item.anonymousPhone = `${phone.substring(0, 3)}****${phone.substring(7, 11)}`
-      })
-      this.setData({
-        'page.list': list,
-        'page.total_pages': 1,
-        'page.current_page': 1
+        this.setData({
+          'page.list': list,
+          'page.total_pages': pagination.total_pages || 0,
+          'page.current_page': pagination.current_page || 1
+        });
+      }, () => {
+        this.togglePageLoading(false);
       });
-      this.togglePageLoading(false);
-
-      // api.getAddressPage(param, (res) => {
-      //   let pagination = res.meta.pagination;
-
-      //   res.data.forEach((item, index) => {
-      //     list.push(item);
-      //   });
-
-      //   this.setData({
-      //     'page.list': list,
-      //     'page.total_pages': pagination.total_pages || 0,
-      //     'page.current_page': pagination.current_page || 1
-      //   });
-      // }, () => {
-      //   this.togglePageLoading(false);
-      // });
     }
   }
 })

@@ -81,11 +81,11 @@ button:after {
 }
 .hide {display: none !important;}
 
-.mt10 {margin-top: 10rpx;}
-.mt20 {margin-top: 20rpx;}
-.mt30 {margin-top: 30rpx;}
-.mt40 {margin-top: 40rpx;}
-.mt50 {margin-top: 50rpx;}
+.mt10 {margin-top: 10rpx !important;}
+.mt20 {margin-top: 20rpx !important;}
+.mt30 {margin-top: 30rpx !important;}
+.mt40 {margin-top: 40rpx !important;}
+.mt50 {margin-top: 50rpx !important;}
 
 .poster-canvas {
   position: fixed;

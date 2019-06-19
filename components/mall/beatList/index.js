@@ -23,7 +23,8 @@ Component({
       total_pages: 0,
       list: []
     },
-    scope: null
+    scope: null,
+    categoryId: null
   },
 
   /**
@@ -79,7 +80,13 @@ Component({
         type: CategoryType.BEAT,
         include: 'user'
       },
+      categoryId = this.data.categoryId,
       list = [];
+
+
+      if (categoryId) {
+        param.categoryId = categoryId;
+      }
 
       if (current_page > 1) {
         list = page.list;
@@ -94,8 +101,8 @@ Component({
         let pagination = res.meta.pagination;
 
         res.data.forEach((item, index) => {
-          let cover_images = JSON.parse(item.cover_images || '[]');
-          item.cover = PathUtil.getFilePath(cover_images[0] && cover_images[0].url);
+          let cover_images = item.cover_images;
+          item.cover = PathUtil.getFilePath(cover_images[0]);
 
           list.push(item);
         });

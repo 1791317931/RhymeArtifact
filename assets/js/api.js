@@ -219,4 +219,16 @@ export function getGoodsPage(data, fn, completeFn) {
 export function getGoodsById(data, fn, completeFn) {
   UrlUtil.get(`goods/${data.id}`, data, fn, completeFn);
 }
+
+export function getAddressList(data, fn, completeFn) {
+  UrlUtil.get(`user/addresses`, data, fn, completeFn);
+}
+
+export function addAddress(data, fn, completeFn) {
+  UrlUtil.post(`addresses`, data, fn, completeFn);
+}
+
+export function buyGoodsById(data, fn, completeFn) {
+  UrlUtil.post(`goods/${data.id}/buy`, data, fn, completeFn);
+}
 // ---------------------商城------------------------
