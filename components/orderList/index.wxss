@@ -24,13 +24,13 @@
 
 .date {
   position: absolute;
-  top: 25rpx;
+  top: 22rpx;
   right: 30rpx;
   font-size:24rpx;
   font-family:PingFangSC-Regular;
   font-weight:400;
   color:rgba(180,180,180,1);
-  line-height:33rpx;
+  line-height:42rpx;
   letter-spacing:1rpx;
 }
 

@@ -1,14 +1,14 @@
 <view class="list-container">
   <view class="item" wx:for="{{page.list}}" wx:for-index="index" wx:for-item="item"
     wx:key="{{item.id}}" data-index="{{index}}" catchtap="clickItem">
-    <!-- <image class="map" src="/assets/imgs/logo.png"/> -->
     <image class="arrow" src="/assets/imgs/arrow-left.png"/>
     <view>
-      <text class="name {{item.isDefault ? 'active' : ''}}">收货人：{{item.receiver}}</text>
+      <text class="name {{item.is_default == 1 ? 'active' : ''}}">收货人：{{item.receiver}}</text>
       <text class="phone">{{item.anonymousPhone}}</text>
     </view>
     <view class="address">{{item.province_name}}{{item.city_name}}{{item.county_name}}  {{item.detail_info}}</view>
-    <text class="edit" data-index="{{index}}" catchtap="toEdit">编辑</text>
+    <text class="delete" data-index="{{index}}" catchtap="toDelete">删除</text>
+    <text wx:if="{{item.is_default == 0}}" class="set-default" data-index="{{index}}" catchtap="toSetDefault">设为默认地址</text>
   </view>
 </view>
 <empty

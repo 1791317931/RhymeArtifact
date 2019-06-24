@@ -3,31 +3,53 @@
   <view class="detail-container">
     <view class="o-code">
       <view class="label">订单号</view>
-      <view class="value">{{order.code}}</view>
+      <view class="value">{{order.order_sn}}</view>
     </view>
     <view class="o-status">
       <view class="label">订单状态</view>
-      <view class="value {{order.status == OrderStatus.NEED_PAY ? 'active' : ''}}">{{status}}</view>
+      <view class="value {{order.order_status == OrderStatus.NEED_PAY ? 'active' : ''}}">{{status}}</view>
     </view>
     <view class="detail">
-      <view wx:if="order.products.length" class="product">
-        <view class="label">{{order.products.length}}件商品</view>
-        <view wx:for="{{order.products}}" wx:for-item="item" wx:key="{{index}}" class="item">
-          <image src="{{item.cover}}"/>
-          <view class="name">{{item.name}}</view>
-          <view class="author">作曲：{{item.author}}</view>
-          <view class="price">{{item.price}}</view>
-          <view class="type">{{item.type}}</view>
+      <view wx:if="{{goodsList.length}}" class="product">
+        <view class="label">{{goodsList.length}}件商品</view>
+        <view wx:for="{{goodsList}}" wx:for-item="item" wx:key="{{index}}" class="item">
+          <image src="{{item.cover_images[0]}}"/>
+          <!-- beat -->
+          <view wx:if="{{item.beat_try_url}}">
+            <view class="name">{{item.goods_name}}</view>
+            <view class="sub-item">作曲：{{item.beat_try_url}}</view>
+            <view class="sub-item price">￥{{order.payment_money}}</view>
+            <view class="sub-item">{{order.beat_sku.title}}</view>
+          </view>
+          <!-- 周边商品 -->
+          <view wx:if="{{!item.beat_try_url}}">
+            <image wx:for="{{order.details.specs}}" wx:for-item="item" wx:key="{{index}}"
+              wx:if="{{item.type == 'image'}}" src="{{item.value.image}}"/>
+            <view class="name">{{goodsList[0].goods_name}}</view>
+            <view wx:for="{{order.details.specs}}" wx:for-item="item" wx:key="{{index}}"
+              wx:if="{{item.type == 'image'}}" class="sub-item">
+              {{item.label}}：{{item.value.name}}</view>
+            <view class="sub-item price">￥{{order.payment_money}}</view>
+            <view class="sub-item mixed-info clearfix">
+              <view wx:for="{{order.details.specs}}" wx:for-item="item" wx:key="{{index}}"
+              wx:if="{{item.type != 'image'}}" class="mixed-item">{{item.label}}：{{item.value}}</view>
+              <view class="mixed-item">数量：1</view>
+            </view>
+          </view>
         </view>
       </view>
-      <view wx:if="order.presents.length" class="present">
+      <!-- 只有beat有赠品 -->
+      <view wx:if="{{order.beat_sku && order.details.specs.length}}" class="present">
         <view class="label">赠送商品</view>
-        <view wx:for="{{order.presents}}" wx:for-item="item" wx:key="{{index}}" class="item">
-          <image src="{{item.cover}}"/>
-          <view class="name">{{item.name}}</view>
-          <view class="color">颜色：{{item.color}}</view>
-          <view class="price">{{item.price}}</view>
-          <view class="count">数量：{{item.count}}</view>
+        <view class="item">
+          <image wx:for="{{order.details.specs}}" wx:for-item="item" wx:key="{{index}}"
+           wx:if="{{item.type == 'image'}}" src="{{item.value.image}}"/>
+          <view class="name">{{order.details.name}}</view>
+          <view wx:for="{{order.details.specs}}" wx:for-item="item" wx:key="{{index}}"
+           wx:if="{{item.type == 'image'}}" class="color">
+            {{item.label}}：{{item.value.name}}</view>
+          <view class="price">价格：0</view>
+          <view class="count">数量：1</view>
         </view>
       </view>
     </view>
@@ -36,13 +58,16 @@
     <view class="label">配送地址</view>
     <view class="body">
       <view class="name">{{order.address.receiver}}</view>
-      <view class="phone">{{order.address.phone}}</view>
-      <view class="detail-address">{{order.address.address}}</view>
-      <view class="email">{{order.address.email}}</view>
+      <view class="phone">{{order.address.tel_number}}</view>
+      <view class="detail-address mt10">{{order.address.province_name}} {{order.address.city_name}} {{order.address.county_name}}</view>
+      <view class="detail-address">{{order.address.detail_info}}</view>
+      <view wx:if="{{order.beat_sku}}" class="email">邮箱：{{order.email}}</view>
     </view>
   </view>
   <view class="operation-container">
-    <button wx:if="{{order.status == OrderStatus.NEED_PAY}}" catchtap="toPay">去支付</button>
-    <button wx:if="{{order.status == OrderStatus.TIMEOUT}}" catchtap="goToProduct">重新购买</button>
+    <view wx:if="{{order.order_status == OrderStatus.NEED_PAY}}" class="wx-buy-btn" catchtap="toPay">
+      <image src="/assets/imgs/wechat_payment.png"/>去支付
+    </view>
+    <button wx:if="{{order.order_status == OrderStatus.TIMEOUT}}" catchtap="goToProduct">重新购买</button>
   </view>
 </view>

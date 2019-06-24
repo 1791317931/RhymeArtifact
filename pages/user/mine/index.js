@@ -11,6 +11,10 @@ Page({
       {
         path: '/pages/user/order/index/index',
         text: '我的订单'
+      },
+      {
+        path: '/pages/mall/address/list/index',
+        text: '收货地址'
       }
     ],
     menus: [
@@ -25,11 +29,6 @@ Page({
       {
         path: '/pages/user/freestyle/index',
         text: '我的Freestyle'
-      },
-      {
-        path: '',
-        text: '收货地址',
-        show: false
       },
       {
         path: '/pages/user/fans/index',

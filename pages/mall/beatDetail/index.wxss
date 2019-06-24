@@ -1,58 +1,64 @@
-.detail-wrapper {
-  height: 100%;
+page {
   background: #fff;
+}
+
+.detail-wrapper {
+  background:rgba(247,247,247,1);
 }
 
 .swiper-wrapper.beat {
-  height: 597rpx;
-  padding: 50rpx 0 10rpx;
-  background: #fff;
-}
-
-.swiper-wrapper.beat .swiper {
-  width: 408rpx;
-  height: 539rpx;
-  margin: 0 auto;
-}
-
-.swiper-wrapper.beat .swiper .item {
-  padding: 0 0 134rpx;
-  width: 100%;
-  height: 100%;
-  position: relative;
-}
-
-.swiper-wrapper.beat .swiper .item .cover {
-  width: 100%;
-  height: 100%;
-}
-
-.swiper-wrapper.beat .swiper .item .status {
-  widtH: 79rpx;
-  height: 95rpx;
-  position: absolute;
-  top: 204rpx;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.swiper-wrapper.round {
   height: 597rpx;
   padding: 0 0 10rpx;
   background: #fff;
 }
 
-.swiper-wrapper.round .swiper {
-  width: 540rpx;
-  height: 584rpx;
+.swiper-wrapper.beat .swiper {
+  width: 550rpx;
+  height: 100%;
   margin: 0 auto;
 }
 
-.swiper-wrapper.round .swiper .item {
-  padding: 0 0 44rpx;
+.swiper-wrapper.beat .swiper .item {
   width: 100%;
   height: 100%;
   position: relative;
+  padding: 0 0 37rpx;
+}
+
+.swiper-wrapper.beat .swiper .item .cover {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.swiper-wrapper.beat .swiper .item .status {
+  width:120rpx;
+  height:130rpx;
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%);
+}
+
+.swiper-wrapper.round {
+  height: 804rpx;
+  padding: 0 0 10rpx;
+  background: #fff;
+}
+
+.swiper-wrapper.round .swiper {
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 0 11rpx;
+}
+
+.swiper-wrapper.round .swiper .item {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  padding: 0 0 43rpx;
 }
 
 .swiper-wrapper.round .swiper .item .cover {
@@ -73,9 +79,7 @@
   color:rgba(29,29,29,1);
   line-height:45rpx;
   letter-spacing:1rpx;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  text-align: center;
 }
 
 .name-price .price {
@@ -567,4 +571,28 @@
   font-weight:300;
   color:rgba(255,255,255,1);
   letter-spacing:1rpx;
+}
+
+.wx-buy-btn {
+  width: 100%;
+  height:88rpx;
+  line-height:88rpx;
+  background:rgba(1,1,1,1);
+  border-radius:44rpx;
+  padding: 0 0 0 241rpx;
+  position: relative;
+  font-size:32rpx;
+  font-family:PingFangSC-Light;
+  font-weight:300;
+  color:rgba(255,255,255,1);
+  letter-spacing:1rpx;
+}
+
+.wx-buy-btn image {
+  position: absolute;
+  top: 50%;
+  left: 170rpx;
+  transform: translateY(-50%);
+  width: 44rpx;
+  height: 40rpx;
 }

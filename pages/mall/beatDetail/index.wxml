@@ -33,14 +33,14 @@
       </swiper-item>
     </swiper>
   </view>
-  <view class="name-price">
-    <view class="name">{{detail.name}}</view>
+  <view class="name-price {{type == 'round' ? 'mt20' : ''}}">
+    <view class="name">{{detail.goods_name}}</view>
     <view class="price">
       <text>￥</text>
       <text class="count">{{detail.original_price}}</text>
     </view>
   </view>
-  <view class="description">
+  <view class="description {{type == 'round' ? 'mt20' : 'mt10'}}">
     <text class="label">介绍信息</text>
     <view>{{detail.introduce}}</view>
   </view>
@@ -70,15 +70,18 @@
           {{childItem}}</view>
       </view>
     </view>
-    <view class="format-label">Beat购买类型</view>
-    <view class="formats clearfix">
-      <view wx:for="{{detail.goods_sku}}" wx:for-item="item" wx:key="{{item.id}}" data-index="{{index}}"
-        wx:for-index="index" class="{{activeFormatIndex == index ? 'active' : ''}}" catchtap="toggleFormat">{{item.title}}</view>
+    <view wx:if="{{detail.goods_sku.length}}">
+      <view class="format-label">Beat购买类型</view>
+      <view class="formats clearfix">
+        <view wx:for="{{detail.goods_sku}}" wx:for-item="item" wx:key="{{item.id}}" data-index="{{index}}"
+          wx:for-index="index" class="{{activeFormatIndex == index ? 'active' : ''}}" catchtap="toggleFormat">{{item.title}}</view>
+      </view>
     </view>
     <view class="operation-container">
       <view class="price">
         <text class="unit">￥</text>
-        <text class="count">{{detail.goods_sku[activeFormatIndex].price}}</text>
+        <!-- 如果是beat，取被选中的beat sku的价格，否则显示外层商品的价格 -->
+        <text class="count">{{detail.goods_sku && detail.goods_sku[activeFormatIndex].price || detail.original_price}}</text>
       </view>
       <button catchtap="toSetAddress">立即购买</button>
     </view>
@@ -94,11 +97,11 @@
       <view class="name">{{detail.goods_name}}</view>
     </view>
     <view class="tabs">
-      <view class="item" catchtap="showAddress">
+      <view wx:if="{{gifts.length}}" class="item" catchtap="showAddress">
         <text>添加配送地址</text>
         <image src="/assets/imgs/arrow-left.png"/>
       </view>
-      <view class="item" catchtap="showEmail">
+      <view wx:if="{{detail.beat_try_url}}" class="item" catchtap="showEmail">
         <text>电子邮件</text>
         <text class="tip">接收beat文件使用</text>
         <image src="/assets/imgs/arrow-left.png"/>
@@ -111,12 +114,14 @@
         <text>订单总额</text>
         <view class="price">
           <text class="unit">￥</text>
-          <text class="count">{{detail.goods_sku[activeFormatIndex].price}}</text>
+          <text class="count">{{detail.goods_sku && detail.goods_sku[activeFormatIndex].price || detail.original_price}}</text>
         </view>
       </view>
     </view>
     <view class="operation-container">
-      <button catchtap="buyNow">立即购买</button>
+      <view class="wx-buy-btn" catchtap="buyNow">
+        <image src="/assets/imgs/wechat_payment.png"/>去支付
+      </view>
     </view>
   </view>
 </view>

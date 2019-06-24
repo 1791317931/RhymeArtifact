@@ -1,3 +1,7 @@
+.mine-container {
+  padding:0 0 20rpx;
+}
+
 .user-container {
   padding-left: 190rpx;
   height: 210rpx;
@@ -23,7 +27,7 @@
 }
 
 .menu-container {
-  margin-top: 40rpx;
+  margin-top: 30rpx;
   padding: 0 0 0 30rpx;
   background: #fff;
 }
@@ -50,10 +54,6 @@
   top: 50%;
   right: 30rpx;
   transform: translateY(-50%) rotateZ(180deg);
-}
-
-.extral-container {
-  margin-top: 30rpx;
 }
 
 .extral-container button {

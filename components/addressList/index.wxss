@@ -4,14 +4,6 @@
   padding: 30rpx 24rpx 30rpx 30rpx;
 }
 
-/* .item .map {
-  position: absolute;
-  top: 40rpx;
-  left: 35rpx;
-  width: 24rpx;
-  height: 31rpx;
-} */
-
 .item .arrow {
   width:31rpx;
   height:31rpx;
@@ -55,8 +47,18 @@
   line-height:46rpx;
 }
 
-.edit {
+.delete {
   margin-top: 25rpx;
+  font-size:24rpx;
+  font-family:PingFangSC-Regular;
+  font-weight:400;
+  color:rgba(0,0,0,1);
+  line-height:46rpx;
+  text-decoration: underline;
+}
+
+.set-default {
+  margin: 25rpx 0 0 20rpx;
   font-size:24rpx;
   font-family:PingFangSC-Regular;
   font-weight:400;

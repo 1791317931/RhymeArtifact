@@ -1,5 +1,6 @@
 {
   "usingComponents": {
     "loadModal": "/components/common/loadModal/index"
-  }
+  },
+  "navigationBarTitleText": "订单详情"
 }

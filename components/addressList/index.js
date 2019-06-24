@@ -62,10 +62,32 @@ Component({
         });
       }
     },
-    toEdit(e) {
+    toDelete(e) {
       let item = this.getItem(e);
-      wx.navigateTo({
-        url: '/pages/mall/address/edit/index?id=' + item.id
+      wx.showModal({
+        title: '系统提示',
+        content: '确认要删除该数据吗？',
+        success: (e) => {
+          if (e.confirm) {
+            api.deleteAddress({
+              id: item.id
+            }, (res) => {
+              TipUtil.message('操作成功');
+
+              this.getPage(1);
+            });
+          }
+        }
+      })
+    },
+    toSetDefault(e) {
+      let item = this.getItem(e);
+      api.setDefaultAddress({
+        id: item.id
+      }, (res) => {
+        TipUtil.message('操作成功');
+
+        this.getPage(1);
       });
     },
     getIndex(e) {

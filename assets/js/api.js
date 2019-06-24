@@ -211,7 +211,7 @@ export function getFansPage(data, fn, completeFn) {
 }
 // ---------------------用户------------------------
 
-// ---------------------商城------------------------
+// ---------------------商品------------------------
 export function getGoodsPage(data, fn, completeFn) {
   UrlUtil.get(`goods`, data, fn, completeFn);
 }
@@ -220,6 +220,12 @@ export function getGoodsById(data, fn, completeFn) {
   UrlUtil.get(`goods/${data.id}`, data, fn, completeFn);
 }
 
+export function buyGoodsById(data, fn, completeFn) {
+  UrlUtil.post(`goods/${data.id}/buy`, data, fn, completeFn);
+}
+// ---------------------商品------------------------
+
+// ---------------------收货地址------------------------
 export function getAddressList(data, fn, completeFn) {
   UrlUtil.get(`user/addresses`, data, fn, completeFn);
 }
@@ -228,7 +234,29 @@ export function addAddress(data, fn, completeFn) {
   UrlUtil.post(`addresses`, data, fn, completeFn);
 }
 
-export function buyGoodsById(data, fn, completeFn) {
-  UrlUtil.post(`goods/${data.id}/buy`, data, fn, completeFn);
+export function deleteAddress(data, fn, completeFn) {
+  UrlUtil.delete(`addresses/${data.id}`, data, fn, completeFn);
 }
-// ---------------------商城------------------------
+
+export function setDefaultAddress(data, fn, completeFn) {
+  UrlUtil.post(`user/addresses/default/${data.id}`, data, fn, completeFn);
+}
+
+export function getDefaultAddress(data, fn, completeFn) {
+  UrlUtil.get(`user/addresses/default`, data, fn, completeFn);
+}
+// ---------------------收货地址------------------------
+
+// ---------------------订单------------------------
+export function getOrderPage(data, fn, completeFn) {
+  UrlUtil.get(`shop/user/orders`, data, fn, completeFn);
+}
+
+export function getOrderById(data, fn, completeFn) {
+  UrlUtil.get(`shop/orders/${data.id}`, data, fn, completeFn);
+}
+
+export function payOrderAgain(data, fn, completeFn) {
+  UrlUtil.post(`order/pay-again`, data, fn, completeFn);
+}
+// ---------------------订单------------------------

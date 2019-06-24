@@ -43,3 +43,11 @@
 .empty.no-more-data.address:empty:before {
   content: '没有更多地址了' !important;
 }
+
+.order:empty:before {
+  content: '暂无订单' !important;
+}
+
+.empty.no-more-data.order:empty:before {
+  content: '没有更多订单了' !important;
+}

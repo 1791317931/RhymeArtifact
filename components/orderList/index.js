@@ -78,7 +78,8 @@ Component({
 
       let param = {
         page: current_page,
-        per_page: page.per_page
+        per_page: page.per_page,
+        include: 'goods'
       },
       list = [];
 
@@ -86,54 +87,12 @@ Component({
         list = page.list;
       }
 
-
       this.togglePageLoading(true);
-      setTimeout(() => {
-        list = [
-          {
-            id: 1,
-            cover: '/assets/imgs/logo.png',
-            code: '56jiok;l,',
-            price: 32,
-            status: 0,
-            created_at: '2019-06-04 10:50:22'
-          },
-          {
-            id: 1,
-            cover: '/assets/imgs/logo.png',
-            code: '563213jiok;l,',
-            price: 32,
-            status: 1,
-            created_at: '2019-06-04 10:50:22'
-          },
-          {
-            id: 1,
-            cover: '/assets/imgs/logo.png',
-            code: '56jiok;l,',
-            price: 3211,
-            status: 2,
-            created_at: '2019-06-04 10:50:22'
-          }
-        ]
-        list.forEach(item => {
-          item.created_at = item.created_at.split(' ')[0]
-        })
-        this.setData({
-          'page.list': list,
-          'page.total_pages': 1,
-          'page.current_page': 1
-        });
-        this.togglePageLoading(false);
-      }, 1000)
-      return
-
-
-
-      this.togglePageLoading(true);
-      api.getMyOrderPage(param, (res) => {
+      api.getOrderPage(param, (res) => {
         let pagination = res.meta.pagination;
         res.data.forEach((item, index) => {
-          item.cover = PathUtil.getFilePath(item.cover);
+          item.created_at_year = item.created_at.split(' ')[0]
+          item.cover = PathUtil.getFilePath(item.goods.data.cover_images[0]);
           list.push(item);
         });
 

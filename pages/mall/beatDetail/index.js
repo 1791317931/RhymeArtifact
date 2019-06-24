@@ -33,7 +33,9 @@ Page({
     address: null,
     BAC: null,
     beatPlaying: false,
-    beatParam: {}
+    beatParam: {},
+    // 接收beat的邮箱key
+    MALL_RECEIVE_BEAT_EMAIL_KEY: 'mall_beat_email'
   },
 
   /**
@@ -46,11 +48,13 @@ Page({
     this.setData({
       loadModal,
       id: options.id,
+      email: wx.getStorageSync(this.data.MALL_RECEIVE_BEAT_EMAIL_KEY) || '',
       // 商品类型（beat、周边）
       type: options.type || 'beat'
     });
 
     this.getById();
+    this.getDefaultAddress()
   },
 
   /**
@@ -78,8 +82,10 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    this.data.BAC.pause()
-    this.data.BAC.destroy();
+    if (this.data.BAC) {
+      this.data.BAC.pause()
+      this.data.BAC.destroy();
+    }
   },
 
   /**
@@ -121,20 +127,28 @@ Page({
       })
       data.cover_images = cover_images
 
-      if (data.gift && data.gift.goods_specs.length) {
-        let gifts = data.gift.goods_specs
-        gifts.forEach((item, index) => {
-          item.activeIndex = 0
-          if (item.type == 'image') {
-            this.setData({
-              colorGift: item
-            })
-          }
-        })
-        this.setData({
-          gifts
-        });
+      let gifts = []
+      // beat
+      if (data.beat_try_url) {
+        if (data.gift && data.gift.goods_specs.length) {
+          gifts = data.gift.goods_specs || []
+        }
+      } else {
+        // 周边商城
+        gifts = data.goods_specs || []
       }
+
+      gifts.forEach((item, index) => {
+        item.activeIndex = 0
+        if (item.type == 'image') {
+          this.setData({
+            colorGift: item
+          })
+        }
+      })
+      this.setData({
+        gifts
+      });
 
       // beat，需要初始化BAC
       if (data.beat_try_url) {
@@ -153,6 +167,15 @@ Page({
         });
       }, 1000);
     });
+  },
+  getDefaultAddress() {
+    api.getDefaultAddress(null, (res) => {
+      if (res.data) {
+        this.setData({
+          address: res.data
+        })
+      }
+    })
   },
   initBAC(url) {
     let BAC = wx.createInnerAudioContext();
@@ -376,21 +399,24 @@ Page({
     }
   },
   buyNow() {
-    let address = this.data.address,
-    email = this.data.email;
+    let detail = this.data.detail,
+    address = this.data.address,
+    email = this.data.email,
+    type = this.data.type;
 
-    if (!this.data.address) {
+    // 有赠品的情况系，必须填写收货地址
+    if (detail.gift && !this.data.address) {
       TipUtil.error('请设置收货地址');
       return
     }
 
-    if (!this.validateEmail()) {
+    // 只有beat需要邮箱
+    if (type == 'beat' && !this.validateEmail()) {
       TipUtil.error('请输入有效的电子邮箱');
       return
     }
 
-    let detail = this.data.detail,
-    specs = this.data.gifts.map(item => {
+    let specs = this.data.gifts.map(item => {
       let label = item.spec
       let type = item.type
       let value = item.spec_value[item.activeIndex]
@@ -402,18 +428,22 @@ Page({
     }),
     param = {
       id: this.data.id,
-      skuId: detail.goods_sku[this.data.activeFormatIndex].sku_id,
       addressId: address.id,
-      email,
       details: {
-        // 规格
+        // 规格、颜色、尺寸
         specs
       }
     }
 
     // 如果是beat（只有beat有赠品），需要giftId
-    if (detail.beat_try_url && detail.gift) {
-      param.details.giftId = detail.gift.id
+    if (type == 'beat') {
+      param.email = email
+      param.skuId = detail.goods_skus[this.data.activeFormatIndex].sku_id;
+      if (detail.gift) {
+        param.details.giftId = detail.gift.id
+        // 赠品名称
+        param.details.name = detail.gift.goods_name
+      }
     }
 
     this.toggleLoading(true);
@@ -425,6 +455,7 @@ Page({
         ...packageParam,
         success: (res) => {
           TipUtil.success('购买成功')
+          wx.setStorageSync(this.data.MALL_RECEIVE_BEAT_EMAIL_KEY, email);
           setTimeout(() => {
             wx.navigateBack({
 

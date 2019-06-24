@@ -19,7 +19,7 @@ Page({
       orderComponent
     });
 
-    orderComponent.getPage(1);
+    this.getPage(1)
   },
 
   /**
@@ -71,5 +71,8 @@ Page({
    */
   onShareAppMessage: function (e) {
     return CommonUtil.share(e);
+  },
+  getPage(current_page = 1) {
+    this.data.orderComponent.getPage(current_page);
   }
 })

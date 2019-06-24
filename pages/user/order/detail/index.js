@@ -1,4 +1,5 @@
 import CommonUtil from '../../../../assets/js/CommonUtil';
+import TipUtil from '../../../../assets/js/TipUtil';
 import * as api from '../../../../assets/js/api';
 import OrderStatus from '../../../../assets/js/OrderStatus';
 
@@ -11,6 +12,8 @@ Page({
     order: {
       id: null
     },
+    goodsList: [],
+    gift: null,
     loadModalComponent: null,
     OrderStatus,
     status: ''
@@ -87,43 +90,15 @@ Page({
   },
   getDetailById() {
     let id = this.data.order.id;
-    
+
     this.toggleLoading(true);
-    setTimeout(() => {
-      let order = {
-        id,
-        code: '#C0009443F',
-        status: 0,
-        product_id: 1,
-        products: [
-          {
-            id: 1,
-            name: 'old school beat',
-            cover: '/assets/imgs/logo.png',
-            author: '今晚吃鱼丸',
-            price: 298,
-            type: 'beat独家包分轨'
-          }
-        ],
-        presents: [
-          {
-            id: 1,
-            name: '棒球帽子',
-            cover: '/assets/imgs/logo.png',
-            color: '白色',
-            price: 0,
-            count: 1
-          }
-        ],
-        address: {
-          receiver: '金光旭',
-          phone: '17701050044',
-          address: '北京市 昌平区 回龙观 新龙城小区27号楼7单元101室',
-          email: '邮箱：NPCAKA@163.COM'
-        }
-      }
+    api.getOrderById({
+      id
+    }, (res) => {
+      let order = res.data.order
+      let goodsList = res.data.goodsInfo || []
       let OrderStatus = this.data.OrderStatus;
-      let status = order.status;
+      let status = order.order_status;
       if (status == OrderStatus.NEED_PAY) {
         status = '待支付';
       } else if (status == OrderStatus.HAS_PAY) {
@@ -135,16 +110,55 @@ Page({
       }
       this.setData({
         order,
+        goodsList,
         status
       });
+    }, () => {
       this.toggleLoading(false);
-    }, 1000);
+    })
   },
   toPay() {
-    let productId = this.data.order.product_id;
+    let orderId = this.data.order.id;
+
+    this.toggleLoading(true)
+    api.payOrderAgain({
+      orderId
+    }, (res) => {
+      let data = res.data,
+      packageParam = data.package;
+
+      wx.requestPayment({
+        ...packageParam,
+        success: (res) => {
+          TipUtil.success('购买成功')
+          let pages = getCurrentPages()
+          pages[pages.length - 2].getPage(1)
+
+          setTimeout(() => {
+            wx.navigateBack({
+
+            })
+          }, 1000)
+        },
+        fail: (res) => {
+          if (ConfigUtil.isDev()) {
+            wx.showModal({
+              title: 'x',
+              content: '' + JSON.stringify(res),
+            });
+          } else {
+            if (!/cancel/.test(res.errMsg || '')) {
+              TipUtil.error('支付失败');
+            }
+          }
+        }
+      });
+    }, () => {
+      this.toggleLoading(false)
+    })
   },
   goToProduct() {
-    let productId = this.data.order.product_id;
+    let productId = this.data.goodsList[0].id;
     wx.navigateTo({
       url: `/pages/mall/beatDetail/index?id=${productId}`
     });
