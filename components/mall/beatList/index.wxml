@@ -7,7 +7,7 @@
     </view>
     <view class="detail-container">
       <view class="name">{{item.goods_name}}</view>
-      <view class="user-name">音乐人：{{item.user.data.nickname}}</view>
+      <view class="user-name">音乐人：{{item.author}}</view>
       <view class="price">
         <text class="unit">￥</text>
         <text class="count">{{item.original_price}}</text>
