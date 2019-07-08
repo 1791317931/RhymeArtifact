@@ -1,6 +1,6 @@
 let ConfigUtil = {
-  env: 'dev',
-  // env: 'production',
+  // env: 'dev',
+  env: 'production',
   isDev() {
     return ConfigUtil.env == 'dev';
   },
