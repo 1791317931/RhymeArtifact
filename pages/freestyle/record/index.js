@@ -115,13 +115,13 @@ Page({
     });
 
     // 用户使用过录制选择beat后退出在进来显示上次选择beat
-    // let beatItem = wx.getStorageSync('beatItem');
-    // this.setBeatItem(beatItem);
+    let beatItem = wx.getStorageSync('beatItem');
+    this.setBeatItem(beatItem);
 
 
 
-    this.setBeatItem();
-    this.setFreestyleMode('akbl');
+    // this.setBeatItem();
+    // this.setFreestyleMode('akbl');
 
 
 
@@ -337,6 +337,7 @@ Page({
       this.changeMode('try');
 
       if (this.data.freestyleMode == 'beat') {
+        BAC.volume = 0
         BAC.play();
       }
 
@@ -543,6 +544,7 @@ Page({
     } else {
       // 伴奏
       BAC.seek(this.data.beatItem.tryBeatTime);
+      BAC.volume = this.data.volume;
       BAC.play();
     }
     this.changeTryPlayState(true);
@@ -605,6 +607,7 @@ Page({
 
     // 伴奏录制
     if (this.data.beatItem.beat_url) {
+      BAC.volume = this.data.volume;
       // 从头播放
       BAC.seek(0);
       BAC.play();
@@ -778,9 +781,10 @@ Page({
             size: form.fileSize,
           };
 
-          if (form.beatId) {
-            param.beat_id = form.beatId;
-          }
+          // 不提交beat
+          // if (form.beatId) {
+          //   param.beat_id = form.beatId;
+          // }
 
           api.addFreestyle(param, (res) => {
             // TipUtil.message('服务器正在合成音频');

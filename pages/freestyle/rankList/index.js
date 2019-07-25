@@ -11,10 +11,10 @@ Page({
    */
   data: {
     tabs: [
-      {
-        flag: 'week',
-        text: '周榜'
-      },
+      // {
+      //   flag: 'week',
+      //   text: '周榜'
+      // },
       {
         flag: 'latest',
         text: '最新'
@@ -153,9 +153,9 @@ Page({
     activity = app.globalData.activity;
 
     if (activity) {
-      this.setData({
-        [`tabs[0].text`]: activity.activity_name
-      });
+      // this.setData({
+      //   [`tabs[0].text`]: activity.activity_name
+      // });
 
       let currentTime = activity.current_time,
       endTime = activity.end_time;
