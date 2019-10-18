@@ -1,0 +1,32 @@
+<view class="wrapper">
+  <view class="flex relative">
+    <view class="head">
+      <image class="avatar" src="{{userInfo.avatarUrl}}" />
+    </view>
+    <view class="name-info">
+      <view class="name">金光旭啊</view>
+      <view class="sex">男，20，北京</view>
+    </view>
+    <view class="edit" catchtap="edit">编辑</view>
+  </view>
+  <view class="desc">AYO 这里是看见我会放光的金光旭日东升来自东北  要开辟自己的边疆心里peaceandlove 从不嚣张  不夸张请你记住我的名字 金光旭  you feel me</view>
+  <view class="ex-info">
+    <view class="item skill" catchtap="toChooseSkill">
+      <view>技能标签</view>
+      <view class="skills">
+        <view wx:for="{{userInfo.skills}}" wx:for-item="item" wx:for-index="index" wx:key="{{index}}" class="skill-item">
+          {{item}}
+        </view>
+      </view>
+      <image class="arrow" src="/assets/imgs/arrow_right_25_40.png" />
+    </view>
+    <view class="item">
+      <label>厂牌</label>
+      <label>PAL</label>
+    </view>
+    <view class="item">
+      <label>毕业学校</label>
+      <label>北京现代音乐学院</label>
+    </view>
+  </view>
+</view>

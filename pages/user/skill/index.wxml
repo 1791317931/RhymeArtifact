@@ -1,0 +1,9 @@
+<view class="wrapper">
+  <view class="list">
+    <view wx:for="{{skills}}" wx:for-item="item" wx:for-index="index" wx:key="{{index}}"
+      class="item {{item.active ? 'active' : ''}}" data-index="{{index}}" catchtap="clickItem">
+      {{item.text}}
+    </view>
+  </view>
+  <view class="submit" catchtap="submit">保存</view>
+</view>

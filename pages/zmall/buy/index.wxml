@@ -1,0 +1,34 @@
+<loadModal id="loadModalComponent"/>
+<view class="wrapper">
+  <view class="info-container">
+    <view class="cover">
+      <image src="{{beat.cover}}"/>
+    </view>
+    <view class="info">
+      <view class="title">{{beat.title}}</view>
+      <view class="author">{{beat.author}}</view>
+    </view>
+  </view>
+  <view class="skus">
+    <view wx:for="{{beat.skus}}" wx:for-index="index" wx:for-item="item" wx:key="{{item.id}}"
+      class="item {{item.open ? 'active' : ''}}" data-index="{{index}}" catchtap="clickItem">
+      <view class="sku-info">
+        <view class="title">{{skuMap[item.level].title}}</view>
+        <view class="format">{{skuMap[item.level].format}}</view>
+        <view hidden="{{!item.open}}">
+          <skuFormat level="{{item.level}}" />
+        </view>
+        <view class="desc">
+          <view class="dot"></view>
+          显示使用条款
+        </view>
+      </view>
+      <view class="buy">
+        <view class="btn" data-index="{{index}}" catchtap="buy">
+          <image class="shopcar" src="/assets/imgs/mall/btn-shopcar.png" />
+          {{item.price > 0 ? item.price : '免费'}}
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

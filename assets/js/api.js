@@ -1,7 +1,8 @@
-import UrlUtil from 'UrlUtil';
+import UrlUtil from 'UrlUtil'
+import PathUtil from 'PathUtil'
 
 export function login(data, fn, completeFn) {
-  UrlUtil.post('authorizations', data, fn, completeFn);
+  UrlUtil.post(PathUtil.getNewPath('authorizations'), data, fn, completeFn);
 }
 
 export function getPolicyParam(fn, completeFn, failFn) {
@@ -212,8 +213,12 @@ export function getFansPage(data, fn, completeFn) {
 // ---------------------用户------------------------
 
 // ---------------------商品------------------------
+export function getGoodsCategoryList(data, fn, completeFn) {
+  UrlUtil.get(PathUtil.getNewPath('categories'), data, fn, completeFn);
+}
+
 export function getGoodsPage(data, fn, completeFn) {
-  UrlUtil.get(`goods`, data, fn, completeFn);
+  UrlUtil.get(PathUtil.getNewPath(`goods`), data, fn, completeFn);
 }
 
 export function getGoodsById(data, fn, completeFn) {

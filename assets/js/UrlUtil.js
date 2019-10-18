@@ -29,7 +29,9 @@ let UrlUtil = {
       method,
       header: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + wx.getStorageSync('token')
+        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+        'rapper-device-type': 'wxapp',
+        'rapper-third-type': 'wxapp'
       },
       success(res) {
         let statusCode = res.statusCode;

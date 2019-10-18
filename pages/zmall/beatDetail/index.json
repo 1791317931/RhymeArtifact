@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "loadModal": "/components/common/loadModal/index",
+    "beatList": "/components/zmall/beatList/index",
+    "commentList": "/components/zmall/comment/index"
+  },
+  "navigationBarTitleText": "beat详情"
+}

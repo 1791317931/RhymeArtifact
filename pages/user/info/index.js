@@ -7,29 +7,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-    menus: [
-      {
-        path: '/pages/user/music/index',
-        text: '成为音乐人'
-      },
-      {
-        path: '/pages/user/collection/index',
-        text: '我的喜欢'
-      },
-      {
-        path: '/pages/create/createLyricsList/index',
-        text: '我的歌词创作'
-      },
-      {
-        path: '/pages/user/music/index',
-        text: '我的音乐创作'
-      },
-      {
-        path: '',
-        text: '商务合作',
-        openType: 'contact'
-      }
-    ],
     userInfo: null
   },
 
@@ -40,8 +17,14 @@ Page({
     let userInfo = wx.getStorageSync('userInfo');
     userInfo.avatarUrl = PathUtil.getFilePath(userInfo.avatarUrl);
     this.setData({
-      userInfo 
-    });
+      userInfo: {
+        ...userInfo,
+        skills: ['编曲', '录音师', 'Trap'],
+        brand: 'PAL',
+        sex: '男',
+        school: '北京现代音乐学院'
+      }
+    })
   },
 
   /**
@@ -92,33 +75,14 @@ Page({
   onShareAppMessage: function (e) {
     return CommonUtil.share(e);
   },
-  toOrderList() {
+  edit() {
     wx.navigateTo({
-      url: '/pages/user/order/index/index'
+      url: `/pages/user/editInfo/index?data=${JSON.stringify(this.data.userInfo)}`
     })
   },
-  toCollectionList() {
+  toChooseSkill() {
     wx.navigateTo({
-      url: '/pages/zmall/beatDetail/index?type=collection'
-    })
-  },
-  clickMenu(e) {
-    let index = e.target.dataset.index
-    let item = this.data.menus[index]
-    let openType = item.openType
-    let url = item.path
-
-    if (openType == 'concat') {
-      
-    } else if (url) {
-      wx.navigateTo({
-        url
-      })
-    }
-  },
-  toDetail() {
-    wx.navigateTo({
-      url: '/pages/user/info/index'
+      url: `/pages/user/skill/index?data=${JSON.stringify(this.data.userInfo.skills)}`
     })
   }
 })

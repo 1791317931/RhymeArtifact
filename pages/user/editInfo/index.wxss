@@ -1,0 +1,29 @@
+page {
+  background: #fff;
+}
+
+.head {
+  margin: 50rpx auto 0;
+  width: 270rpx;
+  height: 270rpx;
+  position: relative;
+}
+
+.head .avatar {
+  width: 270rpx;
+  height: 270rpx;
+  border-radius: 50%;
+}
+
+.head .camera {
+  width: 80rpx;
+  height: 80rpx;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+.info {
+  margin-top: 40rpx;
+  padding: 0 40rpx;
+}

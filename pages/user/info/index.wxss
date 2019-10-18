@@ -1,0 +1,145 @@
+page {
+  background: #fff;
+}
+
+.wrapper {
+  padding: 30rpx 40rpx;
+}
+
+.head {
+  width: 120rpx;
+  height: 120rpx;
+  position: relative;
+}
+
+.avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+}
+
+.name-info {
+  flex: 1;
+  padding: 15rpx 170rpx 0 30rpx;
+}
+
+.name-info .name {
+  font-size:34rpx;
+  font-family:PingFangSC-Semibold,PingFangSC;
+  font-weight:600;
+  color:rgba(4,4,4,1);
+  line-height:48rpx;
+}
+
+.name-info .sex {
+  margin-top: 10rpx;
+  font-size:24rpx;
+  font-family:PingFangSC-Regular,PingFangSC;
+  font-weight:400;
+  color:rgba(90,90,90,1);
+  line-height:33rpx;
+}
+
+.edit {
+  width:154rpx;
+  line-height:60rpx;
+  border-radius:30rpx;
+  border:1rpx solid rgba(19,19,19,1);
+  text-align: center;
+  font-size:26rpx;
+  font-family:PingFangSC-Regular,PingFangSC;
+  font-weight:400;
+  color:rgba(4,4,4,1);
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+}
+
+.desc {
+  margin-top: 25rpx;
+  padding: 15rpx 106rpx;
+  font-size:22rpx;
+  font-family:PingFangSC-Regular,PingFangSC;
+  font-weight:400;
+  color:rgba(51,51,51,1);
+  line-height:33rpx;
+  background: rgb(209, 225, 254);
+}
+
+.ex-info .item {
+  position: relative;
+  padding: 30rpx 0;
+  border-bottom: 2rpx solid rgba(240,240,240,1);
+}
+
+.ex-info .item:not(:first-child) {
+  margin-top: 10rpx;
+}
+
+.ex-info .item > label:first-child {
+  font-size:32rpx;
+  font-family:PingFangSC-Regular,PingFangSC;
+  font-weight:400;
+  color:rgba(4,4,4,1);
+  line-height:48rpx;
+}
+
+.ex-info .item > label:last-child {
+  float: right;
+  font-size:32rpx;
+  font-family:PingFangSC-Regular,PingFangSC;
+  font-weight:400;
+  color:rgba(4,4,4,1);
+  line-height:48rpx;
+}
+
+.ex-info .item.skill {
+  padding: 30rpx 35rpx 30rpx 130rpx;
+}
+
+.ex-info .item.skill > view:first-child {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  font-size:32rpx;
+  font-family:PingFangSC-Regular,PingFangSC;
+  font-weight:400;
+  color:rgba(4,4,4,1);
+}
+
+.skills {
+  padding: 0 0 0 10rpx;
+}
+
+.skills .skill-item {
+  display: inline-block;
+  margin: 0 0 10rpx 10rpx;
+  padding: 0 25rpx;
+  line-height: 40rpx;
+  background:rgba(255,111,111,1);
+  border-radius:4rpx;
+  font-size:20rpx;
+  font-family:PingFangSC-Regular,PingFangSC;
+  font-weight:400;
+  color:rgba(255,255,255,1);
+  word-break: break-all;
+}
+
+.skills .skill-item:nth-child(2) {
+  background: #6F93FF;
+}
+
+.skills .skill-item:nth-child(3) {
+  background: #19D6A7;
+}
+
+.ex-info .item.skill .arrow {
+  width: 25rpx;
+  height: 40rpx;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+}

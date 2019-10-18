@@ -1,0 +1,14 @@
+<view class="wrapper">
+  <view class="head">
+    <image class="avatar" src="{{user.avatarUrl}}" />
+    <image class="camera" src="{{user.avatarUrl}}" />
+  </view>
+  <form bindsubmit="save">
+    <view class="info">
+      <view class="item">
+        <view>昵称</view>
+        <input name="nickname" />
+      </view>
+    </view>
+  </form>
+</view>

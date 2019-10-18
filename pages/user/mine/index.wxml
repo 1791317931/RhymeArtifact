@@ -1,25 +1,31 @@
 <view class="mine-container">
   <view class="user-container">
-    <image src="{{userInfo.avatarUrl}}"/>
-    <view>{{userInfo.nickName}}</view>
-  </view>
-  <view class="menu-container">
-    <view hidden="{{item.show == false}}" class="item" wx:for="{{firstMenus}}" wx:for-index="index" wx:for-item="item" wx:key="{{index}}" data-index="{{index}}" catchtap="clickFirstMenu">
-      {{item.text}}
-      <image src="../../../assets/imgs/arrow-left.png"/>
+    <image class="bg" src="/assets/imgs/user-bg.png"/>
+    <view class="flex" catchtap="toDetail">
+      <view class="head">
+        <image src="{{userInfo.avatarUrl}}"/>
+      </view>
+      <view class="info">
+        <view class="name">{{userInfo.nickName}}</view>
+        <image class="arrow" src="/assets/imgs/arrow_right_white.png"/>
+      </view>
+    </view>
+    <view class="tabs">
+      <view class="item" catchtap="toOrderList">
+        <image src="/assets/imgs/order.png"/>
+        <view>订单中心</view>
+      </view>
+      <view class="item" catchtap="toCollectionList">
+        <image src="/assets/imgs/collection-active-60.png"/>
+        <view>红心歌单</view>
+      </view>
     </view>
   </view>
   <view class="menu-container">
     <view hidden="{{item.show == false}}" class="item" wx:for="{{menus}}" wx:for-index="index" wx:for-item="item" wx:key="{{index}}" data-index="{{index}}" catchtap="clickMenu">
-      {{item.text}}
-      <image src="../../../assets/imgs/arrow-left.png"/>
-    </view>
-  </view>
-  <view class="menu-container extral-container">
-    <view hidden="{{item.show == false}}" class="item" wx:for="{{extrals}}" wx:for-index="index" wx:for-item="item" wx:key="{{index}}" data-index="{{index}}" catchtap="clickExtralMenu">
-      <text hidden="{{item.openType}}">{{item.text}}{{item.openType}}</text>
+      <text hidden="{{item.openType}}">{{item.text}}</text>
       <button hidden="{{!item.openType}}" open-type="{{item.openType}}" data-index="{{index}}">{{item.text}}</button>
-      <image src="../../../assets/imgs/arrow-left.png"/>
+      <image src="/assets/imgs/arrow-left.png"/>
     </view>
   </view>
 </view>

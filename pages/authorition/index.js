@@ -87,8 +87,8 @@ Page({
             obj.encryptData = encryptedData;
             obj.iv = iv;
 
-            api.login(obj, (data) => {
-              wx.setStorageSync('token', data.api_token);
+            api.login(obj, (res) => {
+              wx.setStorageSync('token', res.data.token);
               wx.switchTab({
                 url: '/pages/main/index'
               });

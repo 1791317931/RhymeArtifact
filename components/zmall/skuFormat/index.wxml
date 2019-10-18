@@ -1,0 +1,6 @@
+<view class="list">
+  <view wx:for="{{map[level]}}" wx:for-index="index" wx:for-item="item" wx:key="{{item.id}}" class="item">
+    <image src="{{item.path}}" style="width: {{item.width}}rpx; height: {{item.height}}rpx;" />
+    {{item.text}}
+  </view>
+</view>

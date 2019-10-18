@@ -1,0 +1,23 @@
+.list {
+  margin-bottom: 30rpx;
+}
+
+.list .item {
+  margin-top: 40rpx;
+  position: relative;
+  padding: 0 0 0 50rpx;
+  line-height: 32rpx;
+  font-size:24rpx;
+  font-family:PingFangSC-Regular,PingFangSC;
+  font-weight:400;
+  color:rgba(0,0,0,1);
+}
+
+.list .item image {
+  width: 24rpx !important;
+  height: 32rpx !important;
+  position: absolute;
+  top: 50%;
+  left: 3rpx;
+  transform: translateY(-50%);
+}

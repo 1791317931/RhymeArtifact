@@ -1,39 +1,103 @@
+page {
+  background: #fff;
+}
+
 .mine-container {
   padding:0 0 20rpx;
 }
 
 .user-container {
-  padding-left: 190rpx;
-  height: 210rpx;
-  line-height: 210rpx;
-  padding: 0 30rpx 0 190rpx;
+  height: 344rpx;
+  padding: 60rpx 40rpx 124rpx;
   position: relative;
-  font-size:36rpx;
-  font-family:PingFangSC-Semibold;
-  font-weight:600;
-  color:rgba(57,57,62,1);
-  letter-spacing:1rpx;
-  background: #fff;
 }
 
-.user-container image {
-  width: 120rpx;
-  height: 120rpx;
+.user-container .bg {
+  width: 750rpx;
+  height: 344rpx;
   position: absolute;
-  top: 50%;
-  left: 30rpx;
-  transform: translateY(-50%);
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.user-container .head {
+  width: 160rpx;
+  height: 160rpx;
+}
+
+.user-container .head image {
+  width: 160rpx;
+  height: 160rpx;
   border-radius: 50%;
 }
 
+.user-container .info {
+  flex: 1;
+  position: relative;
+}
+
+.user-container .info .name {
+  line-height: 160rpx;
+  padding: 0 60rpx 0 30rpx;
+  font-size:34rpx;
+  font-family:PingFangSC-Semibold,PingFangSC;
+  font-weight:600;
+  color:rgba(255,255,255,1);
+}
+
+.user-container .info .arrow {
+  width: 29rpx;
+  height: 43rpx;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+}
+
+.user-container .tabs {
+  width: 670rpx;
+  height: 170rpx;
+  display: flex;
+  position: absolute;
+  left: 40rpx;
+  bottom: -86rpx;
+  background:rgba(255,255,255,1);
+  box-shadow:0 2rpx 14rpx 0 rgba(0,0,0,0.14);
+  border-radius:13rpx;
+  z-index: 2;
+}
+
+.user-container .tabs .item {
+  flex: 1;
+  text-align: center;
+  padding: 30rpx 0 0;
+}
+
+.user-container .tabs .item image:first-child {
+  display: block;
+  width: 60rpx;
+  height: 60rpx;
+  margin: 0 auto;
+}
+
+.user-container .tabs .item view {
+  margin-top: 20rpx;
+  font-size:24rpx;
+  font-family:PingFangSC-Regular,PingFangSC;
+  font-weight:400;
+  color:rgba(4,4,4,1);
+  line-height:33rpx;
+}
+
 .menu-container {
-  margin-top: 30rpx;
+  margin-top: 86rpx;
   padding: 0 0 0 30rpx;
   background: #fff;
 }
 
 .menu-container .item {
-  height: 100rpx;
+  height: 110rpx;
   line-height: 100rpx;
   position: relative;
   font-size:30rpx;
@@ -41,10 +105,6 @@
   color:rgba(57,57,62,1);
   letter-spacing:1rpx;
   border-bottom:1rpx solid rgba(220,220,220,1);
-}
-
-.menu-container .item:last-child {
-  border-bottom: 0;
 }
 
 .menu-container .item image {
@@ -56,7 +116,7 @@
   transform: translateY(-50%) rotateZ(180deg);
 }
 
-.extral-container button {
+.menu-container .item button {
   height:100rpx;
   line-height:100rpx;
   text-align:left;
@@ -66,9 +126,4 @@
   font-family:PingFangSC-Regular;
   color:rgba(57,57,62,1);
   letter-spacing:1rpx;
-}
-
-contact-button {
-  width: 300rpx !important;
-  height: 100rpx !important;
 }

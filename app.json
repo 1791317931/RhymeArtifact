@@ -1,6 +1,10 @@
 {
   "pages": [
     "pages/main/index",
+    "pages/zmall/beatDetail/index",
+    "pages/zmall/orderDetail/index",
+    "pages/zmall/index/index",
+    "pages/zmall/buy/index",
     "pages/user/collection/index",
     "pages/freestyle/play/index",
     "pages/freestyle/beatList/index",
@@ -29,7 +33,10 @@
     "pages/mall/address/edit/index",
     "pages/mall/address/list/index",
     "pages/user/order/index/index",
-    "pages/user/order/detail/index"
+    "pages/user/order/detail/index",
+    "pages/user/info/index",
+    "pages/user/skill/index",
+    "pages/user/editInfo/index"
   ],
   "window": {
     "backgroundColor": "#f7f7f7",
@@ -57,10 +64,10 @@
         "text": "学习"
       },
       {
-        "selectedIconPath": "assets/imgs/nav/freestyle-active.png",
-        "iconPath": "assets/imgs/nav/freestyle.png",
-        "pagePath": "pages/freestyle/index/index",
-        "text": "freestyle"
+        "selectedIconPath": "assets/imgs/nav/mall-active.png",
+        "iconPath": "assets/imgs/nav/mall.png",
+        "pagePath": "pages/zmall/index/index",
+        "text": "商城"
       },
       {
         "selectedIconPath": "assets/imgs/nav/create-active.png",

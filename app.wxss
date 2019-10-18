@@ -35,6 +35,7 @@ button:after {
   overflow-y: auto;
 }
 
+.flex {display: flex;}
 .text-fixed {
   text-overflow: ellipsis;
 	overflow: hidden;
@@ -48,11 +49,11 @@ button:after {
 .pull-right {float: right;}
 .clearfix:before {
   content: ' ';
-  display: table;
+  display: table !important;
 }
 .clearfix:after {
   content: ' ';
-  display: table;
+  display: table !important;
   clear: both;
 }
 

@@ -1,0 +1,33 @@
+<view class="title">动态评论({{page.total_count}})</view>
+<view class="list">
+  <view class="item" wx:for="{{page.list}}" wx:for-index="index" wx:for-item="item" wx:key="{{item.id}}">
+    <view class="head">
+      <image src="{{item.user.avatar}}"/>
+    </view>
+    <view class="info">
+      <view class="name">{{item.user.name}}</view>
+      <view class="time">{{item.created_at}}</view>
+      <view class="content">{{item.content}}</view>
+    </view>
+  </view>
+  <empty 
+    loading="{{page.loading}}"
+    hasData="{{!!page.list.length}}"
+    hasMore="{{page.current_page < page.total_pages}}"/>
+</view>
+<view class="comment-area {{commentFocus ? 'active' : ''}}">
+  <form bindsubmit="sendComment">
+    <textarea
+      value="{{commentContent}}"
+      name="commentContent"
+      class="comment-input"
+      placeholder="用freestyle来评论吧~"
+      placeholder-class="ph"
+      maxlength="{{commentMaxLength}}"
+      cursor-spacing="40"
+      fixed="{{true}}"
+      bindfocus="commentContentFocus"
+      bindblur="changeCommentContent"/>
+    <button formType="submit">发布</button>
+  </form>
+</view>

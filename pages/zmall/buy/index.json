@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "loadModal": "/components/common/loadModal/index",
+    "skuFormat": "/components/zmall/skuFormat/index"
+  },
+  "navigationBarTitleText": "立即购买"
+}

@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "beatList": "/components/zmall/beatList/index"
+  },
+  "navigationBarTitleText": "商城",
+  "enablePullDownRefresh": true
+}
