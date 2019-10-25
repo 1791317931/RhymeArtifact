@@ -135,7 +135,7 @@ Page({
               TipUtil.message('服务器繁忙，请稍后重试');
             }
           }, null, () => {
-            this.toggleLoading(false);
+            this.toggleLoading(false)
           });
         });
       }
