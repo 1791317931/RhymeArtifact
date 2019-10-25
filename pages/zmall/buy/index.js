@@ -1,3 +1,7 @@
+import TimeUtil from '../../../assets/js/TimeUtil'
+import TipUtil from '../../../assets/js/TipUtil'
+import * as api from '../../../assets/js/api';
+
 Page({
 
   /**
@@ -96,41 +100,16 @@ Page({
   },
   getById() {
     this.toggleLoading(true)
-    setTimeout(() => {
+    api.getGoodsById({
+      id: this.data.id
+    }, (res) => {
+      let beat = res.data
       this.setData({
-        beat: {
-          id: 1,
-          title: '机器铃 砍菜刀',
-          cover: '/assets/imgs/end-record.png',
-          author: '张三',
-          duration: 240,
-          skus: [
-            {
-              id: 1,
-              price: 100,
-              level: 1
-            },
-            {
-              id: 2,
-              price: 200,
-              level: 2
-            },
-            {
-              id: 3,
-              price: 300,
-              level: 3
-            },
-            {
-              id: 4,
-              price: 400,
-              level: 4
-            }
-          ]
-        }
+        beat
       })
-
+    }, () => {
       this.toggleLoading(false)
-    }, 1000)
+    })
   },
   getIndex(e) {
     let index = e.target.dataset.index;
@@ -153,6 +132,6 @@ Page({
     })
   },
   buy(e) {
-
+    
   }
 })

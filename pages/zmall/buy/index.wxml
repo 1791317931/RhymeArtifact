@@ -2,15 +2,15 @@
 <view class="wrapper">
   <view class="info-container">
     <view class="cover">
-      <image src="{{beat.cover}}"/>
+      <image src="{{beat.cover_images[0]}}"/>
     </view>
     <view class="info">
-      <view class="title">{{beat.title}}</view>
-      <view class="author">{{beat.author}}</view>
+      <view class="title">{{beat.goods_name}}</view>
+      <view class="author">{{beat.authorInfo.nickname}}</view>
     </view>
   </view>
   <view class="skus">
-    <view wx:for="{{beat.skus}}" wx:for-index="index" wx:for-item="item" wx:key="{{item.id}}"
+    <view wx:for="{{beat.goods_skus}}" wx:for-index="index" wx:for-item="item" wx:key="{{item.id}}"
       class="item {{item.open ? 'active' : ''}}" data-index="{{index}}" catchtap="clickItem">
       <view class="sku-info">
         <view class="title">{{skuMap[item.level].title}}</view>

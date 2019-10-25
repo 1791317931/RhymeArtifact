@@ -24,6 +24,17 @@ Component({
       per_page: 10,
       total_pages: 0,
     },
+    tabs: [
+      {
+        flag: 'buy-order',
+        text: '购买订单'
+      },
+      {
+        flag: 'sale-order',
+        text: '售卖订单'
+      }
+    ],
+    activeFlag: 'buy-order',
     scope: null,
     OrderStatus
   },
@@ -64,6 +75,16 @@ Component({
       wx.navigateTo({
         url: '/pages/user/order/detail/index?id=' + item.id
       });
+    },
+    toggleTab(e) {
+      let activeFlag = this.data.activeFlag
+      let currentFlag = this.data.tabs[e.target.dataset.index].flag
+      if (currentFlag != activeFlag) {
+        this.setData({
+          activeFlag: currentFlag
+        })
+        this.getPage(1)
+      }
     },
     togglePageLoading(loading) {
       this.setData({

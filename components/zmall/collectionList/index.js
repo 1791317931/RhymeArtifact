@@ -136,7 +136,7 @@ Component({
           this.continuePlay(e);
         }
       } else {
-        this.startPlay(e);
+        this.startPlay(index);
       }
     },
     toggleStatus(playing) {
@@ -147,9 +147,10 @@ Component({
         playing
       })
     },
-    startPlay(e) {
-      let index = this.getIndex(e)
+    startPlay(index) {
       this.play(index)
+      // 获取评论
+      this.data.scope.getCommentPage()
     },
     play(index) {
       let BAC = this.data.BAC
@@ -272,24 +273,27 @@ Component({
         // 默认没有收藏
         let flagIndex = -1
         let originList = page.list
+        // 可能没有beat
         let beat = this.data.beat
         list.forEach((item, index) => {
           item.price = new Number(parseFloat(item.original_price)).toFixed(2)
           item.collection = true
           originList.push(item)
 
-          if (beat.id == item.id) {
+          if (beat && beat.id == item.id) {
             flagIndex = index
           }
         })
 
         let playIndex = 0
         // 存在
-        if (flagIndex != -1) {
-          playIndex = flagIndex
-        } else {
-          // 没有在收藏列表，需要添加到首位
-          originList.unshift(beat)
+        if (beat) {
+          if (flagIndex != -1) {
+            playIndex = flagIndex
+          } else {
+            // 没有在收藏列表，需要添加到首位
+            originList.unshift(beat)
+          }
         }
 
         this.data.scope.setData({
@@ -301,7 +305,7 @@ Component({
           page
         })
 
-        this.play(playIndex)
+        this.startPlay(playIndex)
       }, () => {
         this.togglePageLoading(false)
       })

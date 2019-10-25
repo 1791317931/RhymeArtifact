@@ -46,11 +46,17 @@ Page({
     this.setData({
       loadModalComponent,
       beatComponent,
-      commentComponent,
-      id: options.id
+      commentComponent
     })
 
-    this.getById()
+    if (options.id) {
+      this.setData({
+        id: options.id
+      })
+      this.getById()
+    } else {
+      beatComponent.getPage(1)
+    }
   },
 
   /**
@@ -71,14 +77,14 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-    this.data.beatComponent.destroy()
+    this.data.beatComponent.pausePlay()
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    this.data.beatComponent.pausePlay()
+    this.data.beatComponent.onUnload()
   },
 
   /**
@@ -116,14 +122,11 @@ Page({
         beat
       })
 
-      this.setTitle(beat)
       let beatComponent = this.data.beatComponent
       beatComponent.setData({
         beat
       })
       beatComponent.getPage(1)
-      // 获取评论
-      this.getCommentPage()
     }, () => {
       this.toggleLoading(false)
     })
@@ -213,6 +216,11 @@ Page({
       })
     }, () => {
       this.toggleCollecting(false)
+    })
+  },
+  toBuy() {
+    wx.navigateTo({
+      url: `/pages/zmall/buy/index?id=${this.data.beat.id}`
     })
   }
 })

@@ -1,3 +1,11 @@
+<view class="tab-container">
+  <view class="clearfix" style="width: {{tabWidth}}px">
+    <view wx:for="{{tabs}}" wx:for-item="item" wx:for-index="index" wx:key="{{item.flag}}"
+    class="tab-item {{activeFlag == item.flag ? 'active' : ''}} item-{{index}}" data-index="{{index}}" catchtap="toggleTab">
+      {{item.text}}
+    </view>
+  </view>
+</view>
 <view class="container">
   <view wx:for="{{page.list}}" wx:for-item="item" wx:for-index="index" wx:key="{{item.id}}" data-index="{{index}}"
     class="item" catchtap="clickItem">

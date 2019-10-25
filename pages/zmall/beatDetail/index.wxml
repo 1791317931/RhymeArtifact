@@ -32,7 +32,7 @@
     <image hidden="{{beat.collection}}" src="/assets/imgs/mall/collection-big.png"/>
     <image hidden="{{!beat.collection}}" src="/assets/imgs/mall/collection-active-big.png"/>
   </view>
-  <view class="buy">
+  <view class="buy" catchtap="toBuy">
     <image src="/assets/imgs/mall/btn-shopcar.png"/>
     <view>去购买</view>
   </view>

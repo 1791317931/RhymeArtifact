@@ -10,7 +10,6 @@ Page({
   data: {
     menus: [
       {
-        flag: 'identify',
         html: 'https://www.peaceandlovemusic.cn/#/residence',
         text: '成为音乐人'
       },

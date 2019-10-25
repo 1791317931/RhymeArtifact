@@ -2,5 +2,6 @@
   "component": true,
   "usingComponents": {
     "empty": "/components/common/empty/index"
-  }
+  },
+  "navigationBarTitleText": "订单中心"
 }
