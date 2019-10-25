@@ -1,5 +1,6 @@
 import CommonUtil from '../../../assets/js/CommonUtil';
 import TipUtil from '../../../assets/js/TipUtil';
+import * as api from '../../../assets/js/api'
 
 Page({
 
@@ -7,17 +8,36 @@ Page({
    * 页面的初始数据
    */
   data: {
+    loading: false,
+    loadModalComponent: null,
+    user: null,
     skills: [
       {
         text: '录音师',
         active: false
       },
       {
-        text: '录音师1',
+        text: '混音师',
         active: false
       },
       {
-        text: 'FreestyleFreestyleFreestyleFreestyleFreestyleFreestyleFreestyleFreestyleFreestyleFreestyleFreestyleFreestyleFreestyle',
+        text: '母带师',
+        active: false
+      },
+      {
+        text: '作词',
+        active: false
+      },
+      {
+        text: '编曲',
+        active: false
+      },
+      {
+        text: 'rapper',
+        active: false
+      },
+      {
+        text: 'Trap',
         active: false
       }
     ]
@@ -27,31 +47,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let data = JSON.parse(options.data || '[]')
-    let skills = this.data.skills
-    let skill
-    data.forEach(item => {
-      let exit = false
-      for (let i = 0; i < skills.length; i++) {
-        skill = skills[i]
-        if (skill.text == item) {
-          skill.active = exit = true
-          break
-        }
-      }
-
-      // 如果系统没有，添加到数组
-      if (!exit) {
-        skills.push({
-          text: item,
-          active: false
-        })
-      }
-    })
-
+    let loadModalComponent = this.selectComponent('#loadModalComponent')
     this.setData({
-      skills
+      loadModalComponent
     })
+    this.getUserInfo()
   },
 
   /**
@@ -121,7 +121,56 @@ Page({
       skills
     })
   },
+  toggleLoading(loading) {
+    this.data.loadModalComponent.setData({
+      loading
+    })
+  },
+  getUserInfo() {
+    this.toggleLoading(true)
+    api.getUserInfoByToken((res) => {
+      let userInfo = res.data
+      this.setData({
+        user: userInfo
+      });
+      this.setSkill(userInfo)
+    }, () => {
+      this.toggleLoading(false)
+    })
+  },
+  setSkill(userInfo) {
+    let data = JSON.parse(userInfo.info.skill_tag || '[]')
+
+    let skills = this.data.skills
+    let skill
+    data.forEach(item => {
+      let exit = false
+      for (let i = 0; i < skills.length; i++) {
+        skill = skills[i]
+        if (skill.text == item) {
+          skill.active = exit = true
+          break
+        }
+      }
+
+      // 如果系统没有，添加到数组
+      if (!exit) {
+        skills.push({
+          text: item,
+          active: false
+        })
+      }
+    })
+
+    this.setData({
+      skills
+    })
+  },
   submit() {
+    if (this.data.loading) {
+      return
+    }
+
     let skills = this.data.skills.filter(item => {
       if (item.active) {
         return true
@@ -138,13 +187,26 @@ Page({
       return
     }
 
-    let pages = getCurrentPages()
-    pages[pages.length - 2].setData({
-      'userInfo.skills': skills
-    })
+    let skill_tag = JSON.stringify(skills)
+    this.toggleLoading(true)
+    let user = this.data.user
+    let info = user.info
+    api.updateUser({
+      nickname: user.nickname,
+      introduce: info.introduce,
+      team: info.team,
+      school: info.school,
+      skill_tag,
+      type: 'info'
+    }, (res) => {
+      user.info.skill_tag = skill_tag
+      wx.setStorageSync('userInfo', user)
 
-    wx.navigateBack({
-      
+      wx.navigateBack({
+
+      })
+    }, () => {
+      this.toggleLoading(false)
     })
   }
 })

@@ -9,6 +9,7 @@ Page({
    */
   data: {
     tabs: [],
+    tabWidth: 10000,
     activeIndex: 0,
     videoComponent: null,
     articleComponent: null,
@@ -211,9 +212,24 @@ Page({
       this.setData({
         tabs
       });
+      this.setTabWidth()
 
       callback && callback();
     });
+  },
+  setTabWidth() {
+    let query = wx.createSelectorQuery().in(this),
+      that = this;
+    query.selectAll('.tab-item').boundingClientRect(function (rectList) {
+      let tabWidth = 0;
+      for (let i = 0; i < rectList.length; i++) {
+        tabWidth += Math.ceil(rectList[i].width);
+      }
+
+      that.setData({
+        tabWidth
+      });
+    }).exec();
   },
   toggleTab(e) {
     let index = e.target.dataset.index;

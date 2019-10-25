@@ -5,8 +5,20 @@ export function login(data, fn, completeFn) {
   UrlUtil.post(PathUtil.getNewPath('authorizations'), data, fn, completeFn);
 }
 
+// export function login(data, fn, completeFn) {
+//   UrlUtil.post('authorizations', data, fn, completeFn);
+// }
+
+export function bindUserPhone(data, fn, completeFn) {
+  UrlUtil.post(PathUtil.getNewPath('wechat/getAuthPhone'), data, fn, completeFn);
+}
+
 export function getPolicyParam(fn, completeFn, failFn) {
   UrlUtil.get('utils/oss-policy', null, fn, completeFn, failFn);
+}
+
+export function getNewPolicyParam(fn, completeFn, failFn) {
+  UrlUtil.get(PathUtil.getNewPath('utils/oss-policy'), null, fn, completeFn, failFn);
 }
 
 export function saveFormId(data, fn, completeFn) {
@@ -45,6 +57,18 @@ export function addCollection(data, fn, completeFn) {
 
 export function deleteCollection(data, fn, completeFn) {
   UrlUtil.delete(`collections/${data.type}/${data.id}`, data, fn, completeFn);
+}
+
+export function getNewCollection(data, fn, completeFn) {
+  UrlUtil.get(PathUtil.getNewPath('user/collectionsBeats'), data, fn, completeFn);
+}
+
+export function addNewCollection(data, fn, completeFn) {
+  UrlUtil.post(PathUtil.getNewPath(`collection`), data, fn, completeFn);
+}
+
+export function deleteNewCollection(data, fn, completeFn) {
+  UrlUtil.post(PathUtil.getNewPath(`cancelCollection`), data, fn, completeFn);
 }
 // ---------------------收藏------------------------
 
@@ -265,3 +289,35 @@ export function payOrderAgain(data, fn, completeFn) {
   UrlUtil.post(`order/pay-again`, data, fn, completeFn);
 }
 // ---------------------订单------------------------
+
+// ---------------------评论------------------------
+export function addNewComment(data, fn, completeFn) {
+  UrlUtil.post(PathUtil.getNewPath(`comments`), data, fn, completeFn);
+}
+
+export function deleteNewComment(data, fn, completeFn) {
+  UrlUtil.delete(PathUtil.getNewPath(`comments`), data, fn, completeFn);
+}
+
+export function getNewCommentPage(data, fn, completeFn) {
+  UrlUtil.get(PathUtil.getNewPath(`comments`), data, fn, completeFn);
+}
+
+export function addNewCommentPraise(data, fn, completeFn) {
+  UrlUtil.put(PathUtil.getNewPath(`comments`), data, fn, completeFn);
+}
+
+export function deleteNewCommentPraise(data, fn, completeFn) {
+  UrlUtil.put(PathUtil.getNewPath(`comments`), data, fn, completeFn);
+}
+// ---------------------评论------------------------
+
+// ---------------------用户------------------------
+export function getUserInfoByToken(fn, completeFn) {
+  UrlUtil.post(PathUtil.getNewPath(`getUserInfoByToken`), null, fn, completeFn);
+}
+
+export function updateUser(data, fn, completeFn) {
+  UrlUtil.put(PathUtil.getNewPath(`user-info`), data, fn, completeFn);
+}
+// ---------------------用户------------------------

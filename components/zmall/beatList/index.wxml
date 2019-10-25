@@ -1,4 +1,4 @@
-<view hidden="{{!showCategory}}" class="tab-container">
+<view class="tab-container">
   <view class="clearfix" style="width: {{tabWidth}}px">
     <view wx:for="{{tabs}}" wx:for-item="item" wx:for-index="index" wx:key="{{item.id}}"
     class="tab-item {{activeId == item.id ? 'active' : ''}} item-{{index}}" data-index="{{index}}" catchtap="toggleTab">
@@ -9,12 +9,15 @@
 <view class="list-container">
   <view class="item" wx:for="{{page.list}}" wx:for-index="index" wx:for-item="item" wx:key="{{item.id}}"
     data-index="{{index}}" catchtap="clickItem">
-    <view class="cover-container" data-index="{{index}}" catchtap="toggleBeat">
-      <image src="{{item.cover}}" class="cover" />
-      <image hidden="{{playIndex != index || !play}}" src="/assets/imgs/dash-to-play.png" class="play" />
+    <view class="cover-container" data-index="{{index}}" catchtap="toggleItemStatus">
+      <image src="{{item.cover_images[0]}}" class="cover" />
+      <view hidden="{{playIndex != index}}" class="play-container">
+        <image hidden="{{playIndex != index || playing}}" src="/assets/imgs/dash-to-play.png" class="play" />
+        <image hidden="{{playIndex != index || !playing}}" src="/assets/imgs/dash-to-pause.png" class="play" />
+      </view>
     </view>
     <view class="info">
-      <view class="title">{{item.title}}</view>
+      <view class="title">{{item.goods_name}}</view>
       <view class="author">{{item.author}}</view>
     </view>
     <view class="price">
@@ -32,18 +35,20 @@
   hasMore="{{page.current_page < page.total_pages}}"/>
 <view hidden="{{playIndex == -1}}" class="beat-modal">
   <view class="cover-container" catchtap="togglePlay">
-    <image src="{{page.list[playIndex].cover}}" class="cover" />
-    <image hidden="{{play}}" src="/assets/imgs/dash-to-play.png" class="play" />
-    <image hidden="{{!play}}" src="/assets/imgs/dash-to-pause.png" class="play" />
+    <image src="{{page.list[playIndex].cover_images[0]}}" class="cover" />
+    <view class="play-container" data-index="{{playIndex}}" catchtap="toggleItemStatus">
+      <image hidden="{{playing}}" src="/assets/imgs/dash-to-play.png" class="play" />
+      <image hidden="{{!playing}}" src="/assets/imgs/dash-to-pause.png" class="play" />
+    </view>
   </view>
   <view class="info">
-    <view class="title">{{page.list[playIndex].title}}</view>
+    <view class="title">{{page.list[playIndex].goods_name}}</view>
     <view class="play-info">
       <view class="time">
-        {{playTimeArr[1]}}:{{playTimeArr[2]}}/{{page.list[playIndex].timeArr[1]}}:{{page.list[playIndex].timeArr[2]}}
+        {{playTimeArr[1]}}:{{playTimeArr[2]}}/{{totalTimeArr[1]}}:{{totalTimeArr[2]}}
       </view>
       <view class="progress">
-        <view class="progress-bar">
+        <view class="progress-bar" style="width: {{playPercent}}%">
           <view class="circle-bar"></view>
         </view>
       </view>
@@ -80,6 +85,7 @@
       <view class="item" catchtap="share">
         <image src="/assets/imgs/mall/share.png" />
         <view>分享</view>
+        <button open-type="share" class="open-type"></button>
       </view>
     </view>
     <view class="close-more-modal" catchtap="hideMoreModal">取消</view>

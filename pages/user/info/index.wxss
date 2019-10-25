@@ -110,6 +110,7 @@ page {
 }
 
 .skills {
+  min-height: 40rpx;
   padding: 0 0 0 10rpx;
 }
 

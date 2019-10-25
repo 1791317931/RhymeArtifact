@@ -85,41 +85,46 @@ Component({
       });
     },
     getPage(pageNum = 1) {
-      this.togglePageLoading(true)
-      setTimeout(() => {
-        let list = [
-          {
-            id: 1,
-            user: {
-              name: '牛大头',
-              avatar: '/assets/imgs/mall/share.png'
-            },
-            created_at: Date.now(),
-            content: '一双纯白的球鞋挑个拉风的tee我随便freestyle的歌词他们发疯的记我们的风格是新的我搭配是新的我吐出的歌词全部变成了金子'
-          },
-          {
-            id: 2,
-            user: {
-              id: 1,
-              name: '牛大头1',
-              avatar: '/assets/imgs/mall/share.png'
-            },
-            to: {
-              id: 2,
-              name: '张三'
-            },
-            created_at: Date.now(),
-            content: '一双纯白的球鞋挑个拉风的tee我随便freestyle的歌词他们发疯的记我们的风格是新的我搭配是新的我吐出的歌词全部变成了金子'
-          }
-        ]
+      return
 
-        list.forEach(item => {
-          item.created_at = DateUtil.getFormatTime(new Date(item.created_at))
+
+
+      
+      this.togglePageLoading(true)
+      let page = this.data.page
+      if (pageNum == 1) {
+        this.setData({
+          'page.list': []
         })
+      }
+
+      let param = {
+        per_page: page.per_page,
+        page: pageNum,
+        include: 'user,parentuser,parentcomment'
+      }
+      let categoryId = this.data.activeId
+      if (categoryId != -1) {
+        param.category_id = categoryId
+      }
+
+      api.getNewCommentPage(param, (res) => {
+        let list = res.data
+        let pagination = res.meta.pagination
+        page.total_pages = pagination.total_pages
+        page.current_page = pageNum
+
+        let originList = page.list
+        list.forEach(item => {
+          item.price = new Number(parseFloat(item.original_price)).toFixed(2)
+          originList.push(item)
+        })
+        page.list = originList
 
         this.setData({
-          'page.list': list
+          page
         })
+      }, () => {
         this.togglePageLoading(false)
       })
     }

@@ -1,5 +1,6 @@
 import CommonUtil from '../../../assets/js/CommonUtil';
 import PathUtil from '../../../assets/js/PathUtil';
+import * as api from '../../../assets/js/api'
 
 Page({
 
@@ -7,23 +8,21 @@ Page({
    * 页面的初始数据
    */
   data: {
-    userInfo: null
+    userInfo: null,
+    skills: [],
+    sexMap: {
+      0: '男',
+      1: '女'
+    }
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let userInfo = wx.getStorageSync('userInfo');
-    userInfo.avatarUrl = PathUtil.getFilePath(userInfo.avatarUrl);
+    let loadModalComponent = this.selectComponent('#loadModalComponent')
     this.setData({
-      userInfo: {
-        ...userInfo,
-        skills: ['编曲', '录音师', 'Trap'],
-        brand: 'PAL',
-        sex: '男',
-        school: '北京现代音乐学院'
-      }
+      loadModalComponent
     })
   },
 
@@ -38,7 +37,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.init()
   },
 
   /**
@@ -75,14 +74,34 @@ Page({
   onShareAppMessage: function (e) {
     return CommonUtil.share(e);
   },
+  init() {
+    this.getUserInfo()
+  },
+  toggleLoading(loading) {
+    this.data.loadModalComponent.setData({
+      loading
+    })
+  },
+  getUserInfo() {
+    this.toggleLoading(true)
+    api.getUserInfoByToken((res) => {
+      let userInfo = res.data
+      this.setData({
+        userInfo,
+        skills: JSON.parse(userInfo.info.skill_tag || '[]')
+      });
+    }, () => {
+      this.toggleLoading(false)
+    })
+  },
   edit() {
     wx.navigateTo({
-      url: `/pages/user/editInfo/index?data=${JSON.stringify(this.data.userInfo)}`
+      url: `/pages/user/editInfo/index`
     })
   },
   toChooseSkill() {
     wx.navigateTo({
-      url: `/pages/user/skill/index?data=${JSON.stringify(this.data.userInfo.skills)}`
+      url: `/pages/user/skill/index`
     })
   }
 })

@@ -108,3 +108,9 @@ button:after {
   height: 180rpx !important;
   border-radius: 20rpx !important;
 }
+
+.input-placeholder {
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(173,173,173,1);
+}

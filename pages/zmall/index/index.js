@@ -1,3 +1,5 @@
+import CommonUtil from '../../../assets/js/CommonUtil';
+
 Page({
 
   /**
@@ -16,7 +18,14 @@ Page({
 
     this.setData({
       beatComponent
-    });
+    })
+
+    let id = options.id
+    if (id) {
+      wx.navigateTo({
+        url: `/pages/zmall/beatDetail/index?type=list&id=${id}`
+      })
+    }
   },
 
   /**
@@ -30,21 +39,25 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    let beatComponent = this.data.beatComponent
+    if (!beatComponent.data.tabs.length) {
+      beatComponent.getCategoryList()
+    }
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+    // 暂停播放
+    this.data.beatComponent.pausePlay()
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    this.data.beatComponent.onUnload()
   },
 
   /**
@@ -58,13 +71,17 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    this.data.beatComponent.onReachBottom()
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
-
+  onShareAppMessage: function (e) {
+    if (e.from == 'menu') {
+      return CommonUtil.share()
+    } else {
+      return this.data.beatComponent.shareItem()
+    }
   }
 })

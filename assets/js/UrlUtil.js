@@ -23,6 +23,13 @@ let UrlUtil = {
       url = PathUtil.getPath(url);
     }
 
+    let userInfo = wx.getStorageSync('userInfo')
+    if (userInfo && !userInfo.mobile && url.indexOf('authorizations') == -1 && url.indexOf('getAuthPhone') == -1) {
+      // 绑定手机号
+      UrlUtil.toLogin()
+      return
+    }
+
     let param = {
       url,
       data,

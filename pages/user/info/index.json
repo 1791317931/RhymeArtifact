@@ -1,4 +1,6 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "loadModal": "/components/common/loadModal/index"
+  },
   "navigationBarTitleText": "个人资料"
 }

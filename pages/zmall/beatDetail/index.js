@@ -1,4 +1,6 @@
 import TimeUtil from '../../../assets/js/TimeUtil'
+import TipUtil from '../../../assets/js/TipUtil'
+import * as api from '../../../assets/js/api';
 
 Page({
 
@@ -7,19 +9,20 @@ Page({
    */
   data: {
     id: null,
-    beat: {},
+    beat: null,
     loading: false,
-    beatList: [],
     loadModalComponent: null,
-    playTime: null,
     playTimeArr: [],
-    totalTime: null,
     totalTimeArr: [],
+    playPercent: 0,
+    playIndex: 0,
+    total: 0,
     playing: false,
     beatComponent: null,
     commentComment: null,
     showList: false,
-    showCommentList: false
+    showCommentList: false,
+    collecting: false
   },
 
   /**
@@ -29,20 +32,25 @@ Page({
     let loadModalComponent = this.selectComponent('#loadModalComponent')
     let beatComponent = this.selectComponent('#beatComponent')
     let commentComponent = this.selectComponent('#commentComponent')
-    beatComponent.init(this, false);
+
+    let BAC = wx.createInnerAudioContext()
+    beatComponent.init(this, {
+      audioContext: BAC
+    });
     commentComponent.init(this);
+    // 保持不锁屏
+    wx.setKeepScreenOn({
+      keepScreenOn: true
+    });
 
     this.setData({
       loadModalComponent,
       beatComponent,
       commentComponent,
-      // id: options.id
+      id: options.id
     })
 
     this.getById()
-    wx.setNavigationBarTitle({
-      title: 'beat标题'
-    })
   },
 
   /**
@@ -63,14 +71,14 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+    this.data.beatComponent.destroy()
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    this.data.beatComponent.pausePlay()
   },
 
   /**
@@ -91,7 +99,7 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    
   },
   toggleLoading(loading) {
     this.data.loadModalComponent.setData({
@@ -100,41 +108,37 @@ Page({
   },
   getById() {
     this.toggleLoading(true)
-    setTimeout(() => {
+    api.getGoodsById({
+      id: this.data.id
+    }, (res) => {
+      let beat = res.data
       this.setData({
-        beat: {
-          id: 1,
-          title: '机器铃 砍菜刀',
-          cover: '/assets/imgs/end-record.png',
-          author: '张三',
-          duration: 240
-        }
+        beat
       })
-      this.setPlayTime()
-      this.setTotalTime()
 
+      this.setTitle(beat)
+      let beatComponent = this.data.beatComponent
+      beatComponent.setData({
+        beat
+      })
+      beatComponent.getPage(1)
       // 获取评论
-      let commentComponent = this.data.commentComponent
-      commentComponent.setData({
-        beatId: 1
-      })
-      commentComponent.getPage(1)
-
+      this.getCommentPage()
+    }, () => {
       this.toggleLoading(false)
-    }, 1000)
-  },
-  setPlayTime() {
-    this.setData({
-      playTime: 0,
-      playTimeArr: TimeUtil.numberToArr(0)
     })
   },
-  setTotalTime() {
-    let beat = this.data.beat
-    this.setData({
-      totalTime: beat.duration,
-      totalTimeArr: TimeUtil.numberToArr(beat.duration)
+  setTitle(item) {
+    wx.setNavigationBarTitle({
+      title: item.goods_name
     })
+  },
+  getCommentPage() {
+    let commentComponent = this.data.commentComponent
+    commentComponent.setData({
+      beatId: this.data.beat.id
+    })
+    commentComponent.getPage(1)
   },
   showListModal() {
     this.setData({
@@ -151,9 +155,64 @@ Page({
       showList: false
     })
   },
-  showCommentModal() {
+  closeCommentModal() {
     this.setData({
       showCommentList: false
+    })
+  },
+  prev() {
+    let beatComponent = this.data.beatComponent
+    beatComponent.prevItem()
+  },
+  next() {
+    let beatComponent = this.data.beatComponent
+    beatComponent.nextItem()
+  },
+  continuePlay() {
+    this.data.beatComponent.continuePlay()
+  },
+  pausePlay() {
+    this.data.beatComponent.pausePlay()
+  },
+  toggleCollecting(collecting) {
+    this.setData({
+      collecting
+    })
+  },
+  toggleCollection(e) {
+    if (this.data.collecting) {
+      return
+    }
+
+    this.toggleCollecting(true)
+    let index = typeof e == 'number' ? e : this.data.playIndex
+    let beatComponent = this.data.beatComponent
+    let list = beatComponent.data.page.list
+    let beat = list[index]
+    let isCollected = beat.collection
+    let fn
+
+    if (isCollected) {
+      fn = api.deleteNewCollection
+    } else {
+      fn = api.addNewCollection
+    }
+
+    fn({
+      id: beat.id,
+      type: 'goods'
+    }, (res) => {
+      beat.collection = !isCollected
+
+      beatComponent.setData({
+        [`page.list[${index}]`]: beat
+      })
+      // 操作的可能是正在播放的beat
+      this.setData({
+        beat: list[this.data.playIndex]
+      })
+    }, () => {
+      this.toggleCollecting(false)
     })
   }
 })

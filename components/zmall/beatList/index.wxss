@@ -40,7 +40,7 @@ page {
 }
 
 .list-container {
-  padding: 0 30rpx;
+  padding: 0 30rpx 130rpx;
 }
 
 .list-container .item {
@@ -64,14 +64,22 @@ page {
   height: 120rpx;
 }
 
+.list-container .item .cover-container .play-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, .5);
+  z-index: 1;
+}
+
 .list-container .item .cover-container .play {
   width: 120rpx;
   height: 120rpx;
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 1;
-  background: rgba(0, 0, 0, .3);
 }
 
 .list-container .item .info {
@@ -135,7 +143,7 @@ page {
   left: 40rpx;
   bottom: 40rpx;
   padding: 20rpx;
-  background:rgba(255,255,255,0.65);
+  background:rgba(255,255,255, 1);
   box-shadow:0 0 34rpx 0rpx rgba(0,0,0,0.1);
   border-radius:20rpx;
 }
@@ -154,13 +162,22 @@ page {
   height:106rpx;
 }
 
-.beat-modal .cover-container .play {
+.beat-modal .cover-container .play-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, .5);
+  z-index: 1;
+}
+
+.beat-modal .cover-container .play-container .play {
   width:106rpx;
   height:106rpx;
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 1;
 }
 
 .beat-modal .info {
@@ -225,7 +242,6 @@ page {
 }
 
 .beat-modal .info .play-info .progress .progress-bar {
-  width: 100rpx;
   height: 28rpx;
   position: absolute;
   top: 0;
@@ -265,6 +281,7 @@ page {
   right: 0;
   bottom: 0;
   left: 0;
+  z-index: 1000;
   background: rgba(0, 0, 0, .6);
 }
 
@@ -273,6 +290,7 @@ page {
   left: 0;
   right: 0;
   bottom: 0;
+  z-index: 1001;
   background:rgba(255,255,255,1);
   border-radius:40rpx 40rpx 0px 0px;
   padding: 25rpx 40rpx 60rpx;
@@ -283,6 +301,7 @@ page {
   width: 25%;
   float: left;
   text-align: center;
+  position: relative;
 }
 
 .more-modal .modal-inner .item image {
@@ -299,6 +318,15 @@ page {
   font-weight:400;
   color:rgba(113,113,113,1);
   line-height:40rpx;
+}
+
+.more-modal .modal-inner .item .open-type {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: transparent;
 }
 
 .more-modal .modal-inner .close-more-modal {

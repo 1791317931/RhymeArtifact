@@ -20,7 +20,7 @@ Component({
       list: [],
       loading: false,
       current_page: 1,
-      per_page: 10,
+      per_page: 5,
       total_pages: 0,
       showCollection: false
     },

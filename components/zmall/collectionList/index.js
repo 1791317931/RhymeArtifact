@@ -4,7 +4,6 @@ import ConfigUtil from '../../../assets/js/ConfigUtil';
 import PathUtil from '../../../assets/js/PathUtil';
 import TimeUtil from '../../../assets/js/TimeUtil';
 import * as api from '../../../assets/js/api';
-import CategoryType from '../../../assets/js/CategoryType'
 
 Component({
   /**
@@ -28,7 +27,8 @@ Component({
       playingIndex: -1,
       playing: false,
       current_page: 1,
-      per_page: 10,
+      // 查所有
+      per_page: 5000,
       total_pages: 0,
       list: []
     },
@@ -37,7 +37,9 @@ Component({
     playTimeArr: 0,
     totalTimeArr: 0,
     playPercent: 0,
-    showIndex: -1
+    showIndex: -1,
+    // 外部可能单独传递了一个beat，goods详情页
+    beat: null
   },
 
   /**
@@ -68,6 +70,7 @@ Component({
     },
     bindBACEvent() {
       let BAC = this.data.BAC;
+      let scope = this.data.scope
 
       BAC.autoplay = true;
       BAC.onTimeUpdate(() => {
@@ -78,7 +81,7 @@ Component({
         // 80
         let playPercent = (currentTime / totalTime > 1 ? 1 : currentTime / totalTime) * 100
 
-        this.setData({
+        this.setPlayProgress({
           playTimeArr,
           totalTimeArr,
           playPercent
@@ -92,6 +95,15 @@ Component({
       BAC.onEnded((res) => {
         this.beatAudioEnded();
       });
+    },
+    setPlayProgress(data) {
+      this.setData({
+        ...data
+      })
+
+      this.data.scope.setData({
+        ...data
+      })
     },
     beatAudioEnded(e) {
       let BAC = this.data.BAC;
@@ -107,47 +119,11 @@ Component({
       }
       this.beatAudioEnded(e);
     },
-    setTabWidth() {
-      let query = wx.createSelectorQuery().in(this),
-        that = this;
-      query.selectAll('.tab-item').boundingClientRect(function (rectList) {
-        let tabWidth = 0;
-        for (let i = 0; i < rectList.length; i++) {
-          tabWidth += Math.ceil(rectList[i].width);
-        }
-
-        that.setData({
-          tabWidth
-        });
-      }).exec();
-    },
-    getCategoryList() {
-      api.getGoodsCategoryList({
-        type: CategoryType.BEAT
-      }, (res) => {
-        let tabs = res.data.category || []
-        tabs.unshift({
-          id: -1,
-          name: '全部'
-        })
-        this.setData({
-          tabs
-        })
-
-        this.setTabWidth()
-        this.getPage(1)
-      })
-    },
     onReachBottom() {
       let page = this.data.page;
       if (page.current_page < page.total_pages) {
         this.getPage(page.current_page + 1);
       }
-    },
-    clickItem(e) {
-      wx.navigateTo({
-        url: `/pages/zmall/beatDetail/index?id=${this.getItem(e).id}`
-      })
     },
     toggleItemStatus(e) {
       let index = e.currentTarget.dataset.index
@@ -163,37 +139,48 @@ Component({
         this.startPlay(e);
       }
     },
+    toggleStatus(playing) {
+      this.setData({
+        playing
+      });
+      this.data.scope.setData({
+        playing
+      })
+    },
     startPlay(e) {
       let index = this.getIndex(e)
       this.play(index)
     },
     play(index) {
       let BAC = this.data.BAC
-      BAC.src = this.data.page.list[index].beat_try_url
+      let beat = this.data.page.list[index]
+      BAC.src = beat.beat_try_url
 
+      this.toggleStatus(true)
       this.setData({
+        playIndex: index
+      })
+      this.data.scope.setData({
         playIndex: index,
-        playing: true
-      });
+        beat
+      })
+      this.data.scope.setTitle(beat)
 
       // 播放音频
       BAC.seek(0);
       BAC.play();
     },
-    toggleStatus(playing) {
-      this.setData({
-        playing
-      });
-    },
     continuePlay(e) {
       let BAC = this.data.BAC;
 
       this.toggleStatus(true)
+
       // 播放音频
       BAC.play();
     },
     pausePlay() {
       let BAC = this.data.BAC;
+
       this.toggleStatus(false)
 
       BAC.pause();
@@ -210,20 +197,27 @@ Component({
       })
     },
     toggleCollectionItem() {
-      let item = this.data.page.list[this.data.showIndex]
+      this.data.scope.toggleCollection(this.data.showIndex)
     },
-    prevItem() {
-      let showIndex = this.data.showIndex
-      this.play(showIndex - 1)
+    prevItem(index) {
+      index = index == undefined ? this.data.playIndex : this.data.showIndex
+      if (index == 0) {
+        index = this.data.page.list.length - 1
+      } else {
+        index--
+      }
+
+      this.play(index)
     },
-    nextItem() {
-      let showIndex = this.data.showIndex
-      this.play(showIndex + 1)
-    },
-    toBuy() {
-      wx.navigateTo({
-        url: `/pages/zmall/buy/index?id=${this.data.page.list[this.data.showIndex].id}`
-      })
+    nextItem(index) {
+      index = index == undefined ? this.data.playIndex : this.data.showIndex
+      if (index == this.data.page.list.length - 1) {
+        index = 0
+      } else {
+        index++
+      }
+
+      this.play(index)
     },
     shareItem() {
       let item = this.data.page.list[this.data.showIndex]
@@ -250,6 +244,7 @@ Component({
         'page.loading': loading
       });
     },
+    // 一次性查出所有数据
     getPage(pageNum = 1) {
       if (this.data.loading) {
         return
@@ -265,41 +260,51 @@ Component({
 
       let param = {
         per_page: page.per_page,
-        page: pageNum,
-        hasCollection: 1
-      }
-      let categoryId = this.data.activeId
-      if (categoryId != -1) {
-        param.category_id = categoryId
+        page: page.current_page
       }
 
-      api.getGoodsPage(param, (res) => {
+      api.getNewCollection(param, (res) => {
         let list = res.data
         let pagination = res.meta.pagination
         page.total_pages = pagination.total_pages
         page.current_page = pageNum
 
+        // 默认没有收藏
+        let flagIndex = -1
         let originList = page.list
-        list.forEach(item => {
+        let beat = this.data.beat
+        list.forEach((item, index) => {
           item.price = new Number(parseFloat(item.original_price)).toFixed(2)
+          item.collection = true
           originList.push(item)
+
+          if (beat.id == item.id) {
+            flagIndex = index
+          }
+        })
+
+        let playIndex = 0
+        // 存在
+        if (flagIndex != -1) {
+          playIndex = flagIndex
+        } else {
+          // 没有在收藏列表，需要添加到首位
+          originList.unshift(beat)
+        }
+
+        this.data.scope.setData({
+          total: originList.length
         })
         page.list = originList
 
         this.setData({
           page
         })
+
+        this.play(playIndex)
       }, () => {
         this.togglePageLoading(false)
       })
-    },
-    toggleTab(e) {
-      let index = this.getIndex(e);
-      let item = this.data.tabs[index]
-      this.setData({
-        activeId: item.id
-      })
-      this.getPage(1)
     }
   }
 })

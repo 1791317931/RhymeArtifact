@@ -1,20 +1,25 @@
 <view class="title">动态评论({{page.total_count}})</view>
-<view class="list">
-  <view class="item" wx:for="{{page.list}}" wx:for-index="index" wx:for-item="item" wx:key="{{item.id}}">
-    <view class="head">
-      <image src="{{item.user.avatar}}"/>
+<scroll-view
+  class="list"
+  scroll-y
+>
+  <view class="list-container-inner">
+    <view class="item" wx:for="{{page.list}}" wx:for-index="index" wx:for-item="item" wx:key="{{item.id}}">
+      <view class="head">
+        <image src="{{item.user.avatar}}"/>
+      </view>
+      <view class="info">
+        <view class="name">{{item.user.name}}</view>
+        <view class="time">{{item.created_at}}</view>
+        <view class="content">{{item.content}}</view>
+      </view>
     </view>
-    <view class="info">
-      <view class="name">{{item.user.name}}</view>
-      <view class="time">{{item.created_at}}</view>
-      <view class="content">{{item.content}}</view>
-    </view>
+    <empty 
+      loading="{{page.loading}}"
+      hasData="{{!!page.list.length}}"
+      hasMore="{{page.current_page < page.total_pages}}"/>
   </view>
-  <empty 
-    loading="{{page.loading}}"
-    hasData="{{!!page.list.length}}"
-    hasMore="{{page.current_page < page.total_pages}}"/>
-</view>
+</scroll-view>
 <view class="comment-area {{commentFocus ? 'active' : ''}}">
   <form bindsubmit="sendComment">
     <textarea

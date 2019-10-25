@@ -62,7 +62,6 @@ page {
 }
 
 .play-info .progress .progress-bar {
-  width: 50%;
   height:68rpx;
   position: relative;
 }

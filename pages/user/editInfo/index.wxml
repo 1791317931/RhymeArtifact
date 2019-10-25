@@ -1,14 +1,30 @@
+<loadModal id="loadModalComponent"/>
 <view class="wrapper">
-  <view class="head">
-    <image class="avatar" src="{{user.avatarUrl}}" />
-    <image class="camera" src="{{user.avatarUrl}}" />
+  <view class="head" catchtap="toUpload">
+    <image class="avatar" src="{{user.avatar}}" />
+    <image class="camera" src="/assets/imgs/camera.png" />
   </view>
-  <form bindsubmit="save">
+  <form bindsubmit="submit">
     <view class="info">
       <view class="item">
         <view>昵称</view>
-        <input name="nickname" />
+        <input value="{{user.nickname}}" name="nickname" bindblur="changeNickname" />
       </view>
+      <view class="item">
+        <view>自我介绍</view>
+        <textarea value="{{user.info.introduce}}" name="introduce" maxlength="200" bindblur="changeDesc" />
+      </view>
+      <view class="item">
+        <view>厂牌</view>
+        <input value="{{user.info.team}}" name="team" bindblur="changeTeam" />
+      </view>
+      <view class="item">
+        <view>毕业学校</view>
+        <input value="{{user.info.school}}" name="school" bindblur="changeSchool" />
+      </view>
+    </view>
+    <view class="operation">
+      <button formType="submit">保存</button>
     </view>
   </form>
 </view>

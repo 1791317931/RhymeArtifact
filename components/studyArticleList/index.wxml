@@ -3,7 +3,7 @@
     class="item" catchtap="clickItem">
     <view class="head-info">
       <image src="{{item.author.data.avatar}}"/>
-      <view>{{item.author.data.name}}</view>
+      <view>{{item.author.data.nickname}}</view>
     </view>
     <image class="content-image" src="{{item.cover}}"/>
     <view class="title">{{item.title}}</view>

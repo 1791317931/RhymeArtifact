@@ -2,6 +2,10 @@ page {
   background: #fff;
 }
 
+.wrapper {
+  padding-bottom: 40rpx;
+}
+
 .head {
   margin: 50rpx auto 0;
   width: 270rpx;
@@ -25,5 +29,64 @@ page {
 
 .info {
   margin-top: 40rpx;
+  padding: 0 45rpx;
+}
+
+.info .item:not(:first-child) {
+  margin-top: 40rpx;
+}
+
+.info .item > view:first-child {
+  font-size:32rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(193,193,193,1);
+  line-height:45rpx;
+  letter-spacing:1rpx;
+  margin-bottom: 18rpx;
+}
+
+.info .item input {
+  height:88rpx;
+  background:rgba(250,250,250,1);
+  border-radius:13rpx;
+  border:2rpx solid rgba(243,243,243,1);
+  text-align: center;
+  font-size:32rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(44,44,44,1);
+  letter-spacing:1rpx;
+  padding: 0 20rpx;
+}
+
+.info .item textarea {
+  width: 100%;
+  height: 400rpx;
+  background:rgba(250,250,250,1);
+  border-radius:13rpx;
+  border:2rpx solid rgba(243,243,243,1);
+  line-height:50rpx;
+  font-size:32rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(44,44,44,1);
+  letter-spacing:1rpx;
+  padding: 20rpx;
+}
+
+.operation {
+  margin-top: 55rpx;
   padding: 0 40rpx;
+}
+
+.operation button {
+  line-height:100rpx;
+  background:rgba(12,207,142,1);
+  border-radius:55rpx;
+  text-align: center;
+  font-size:34rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(255,255,255,1);
 }

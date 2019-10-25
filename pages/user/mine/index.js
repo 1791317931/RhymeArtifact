@@ -1,5 +1,6 @@
 import CommonUtil from '../../../assets/js/CommonUtil';
 import PathUtil from '../../../assets/js/PathUtil';
+import * as api from '../../../assets/js/api'
 
 Page({
 
@@ -9,7 +10,8 @@ Page({
   data: {
     menus: [
       {
-        path: '/pages/user/music/index',
+        flag: 'identify',
+        html: 'https://www.peaceandlovemusic.cn/#/residence',
         text: '成为音乐人'
       },
       {
@@ -30,6 +32,7 @@ Page({
         openType: 'contact'
       }
     ],
+    loadModalComponent: null,
     userInfo: null
   },
 
@@ -37,11 +40,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let userInfo = wx.getStorageSync('userInfo');
-    userInfo.avatarUrl = PathUtil.getFilePath(userInfo.avatarUrl);
+    let loadModalComponent = this.selectComponent('#loadModalComponent')
     this.setData({
-      userInfo 
-    });
+      loadModalComponent
+    })
   },
 
   /**
@@ -55,7 +57,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.getUserInfo()
   },
 
   /**
@@ -92,6 +94,21 @@ Page({
   onShareAppMessage: function (e) {
     return CommonUtil.share(e);
   },
+  toggleLoading(loading) {
+    this.data.loadModalComponent.setData({
+      loading
+    })
+  },
+  getUserInfo() {
+    this.toggleLoading(true)
+    api.getUserInfoByToken((res) => {
+      this.setData({
+        userInfo: res.data
+      });
+    }, () => {
+      this.toggleLoading(false)
+    })
+  },
   toOrderList() {
     wx.navigateTo({
       url: '/pages/user/order/index/index'
@@ -107,9 +124,14 @@ Page({
     let item = this.data.menus[index]
     let openType = item.openType
     let url = item.path
+    let html = item.html
 
     if (openType == 'concat') {
-      
+      // 不用加代码
+    } else if (html) {
+      wx.navigateTo({
+        url: `/pages/webview/index?path=${html}`,
+      })
     } else if (url) {
       wx.navigateTo({
         url

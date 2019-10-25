@@ -10,14 +10,14 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    shouldBindPhone: false
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    UrlUtil.isLogin = true;
+    UrlUtil.isLogin = true
   },
 
   /**
@@ -80,7 +80,6 @@ Page({
             let encryptedData = res.encryptedData,
             iv = res.iv,
             userInfo = res.userInfo;
-            wx.setStorageSync('userInfo', userInfo);
 
             let obj = {};
             obj.code = code;
@@ -89,11 +88,46 @@ Page({
 
             api.login(obj, (res) => {
               wx.setStorageSync('token', res.data.token);
-              wx.switchTab({
-                url: '/pages/main/index'
-              });
+              wx.setStorageSync('userInfo', res.data.userInfo);
+
+              if (res.data.userInfo.mobile) {
+                wx.switchTab({
+                  url: '/pages/zmall/index/index'
+                });
+              } else {
+                TipUtil.message('请绑定手机号')
+                this.setData({
+                  shouldBindPhone: true
+                })
+              }
             });
           }
+        });
+      }
+    });
+  },
+  bindGetPhone(e) {
+    let encryptedData = e.detail.encryptedData
+    let iv = e.detail.iv
+
+    // 1、先在微信服务器登录
+    wx.login({
+      success: (res) => {
+        let code = res.code;
+        let userInfo = wx.getStorageSync('userInfo');
+        console.log(userInfo)
+        let obj = {
+          open_id: userInfo.open_id
+        };
+        obj.code = code;
+        obj.encryptData = encryptedData;
+        obj.iv = iv;
+
+        api.bindUserPhone(obj, (res) => {
+          wx.setStorageSync('userInfo', res.data);
+          wx.switchTab({
+            url: '/pages/main/index'
+          });
         });
       }
     });

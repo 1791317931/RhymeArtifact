@@ -1,12 +1,13 @@
+<loadModal id="loadModalComponent"/>
 <view class="mine-container">
   <view class="user-container">
     <image class="bg" src="/assets/imgs/user-bg.png"/>
     <view class="flex" catchtap="toDetail">
       <view class="head">
-        <image src="{{userInfo.avatarUrl}}"/>
+        <image src="{{userInfo.avatar}}"/>
       </view>
       <view class="info">
-        <view class="name">{{userInfo.nickName}}</view>
+        <view class="name">{{userInfo.nickname}}</view>
         <image class="arrow" src="/assets/imgs/arrow_right_white.png"/>
       </view>
     </view>
@@ -22,7 +23,7 @@
     </view>
   </view>
   <view class="menu-container">
-    <view hidden="{{item.show == false}}" class="item" wx:for="{{menus}}" wx:for-index="index" wx:for-item="item" wx:key="{{index}}" data-index="{{index}}" catchtap="clickMenu">
+    <view class="item {{item.hide ? 'hide' : ''}}" wx:for="{{menus}}" wx:for-index="index" wx:for-item="item" wx:key="{{index}}" data-index="{{index}}" catchtap="clickMenu">
       <text hidden="{{item.openType}}">{{item.text}}</text>
       <button hidden="{{!item.openType}}" open-type="{{item.openType}}" data-index="{{index}}">{{item.text}}</button>
       <image src="/assets/imgs/arrow-left.png"/>

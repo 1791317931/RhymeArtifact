@@ -1,9 +1,9 @@
 {
   "pages": [
+    "pages/zmall/index/index",
     "pages/main/index",
     "pages/zmall/beatDetail/index",
     "pages/zmall/orderDetail/index",
-    "pages/zmall/index/index",
     "pages/zmall/buy/index",
     "pages/user/collection/index",
     "pages/freestyle/play/index",
@@ -52,22 +52,16 @@
     "borderStyle": "black",
     "list": [
       {
-        "selectedIconPath": "assets/imgs/nav/rhyme-active.png",
-        "iconPath": "assets/imgs/nav/rhyme.png",
-        "pagePath": "pages/main/index",
-        "text": "押韵"
+        "selectedIconPath": "assets/imgs/nav/mall-active.png",
+        "iconPath": "assets/imgs/nav/mall.png",
+        "pagePath": "pages/zmall/index/index",
+        "text": "商城"
       },
       {
         "selectedIconPath": "assets/imgs/nav/study-active.png",
         "iconPath": "assets/imgs/nav/study.png",
         "pagePath": "pages/study/studyList/index",
-        "text": "学习"
-      },
-      {
-        "selectedIconPath": "assets/imgs/nav/mall-active.png",
-        "iconPath": "assets/imgs/nav/mall.png",
-        "pagePath": "pages/zmall/index/index",
-        "text": "商城"
+        "text": "玩家"
       },
       {
         "selectedIconPath": "assets/imgs/nav/create-active.png",

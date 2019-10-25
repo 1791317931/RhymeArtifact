@@ -7,15 +7,15 @@
   line-height:45rpx;
 }
 
-.list {
-  padding: 0 40rpx 110rpx;
+.list-container-inner {
+  padding: 0 0 50rpx;
 }
 
 .list .item {
   display: flex;
   margin-top: 30rpx;
   border-bottom: 2rpx solid rgba(240,240,240,1);
-  padding-bottom: 30rpx;
+  padding: 0 40rpx 30rpx;
 }
 
 .list .item .head {

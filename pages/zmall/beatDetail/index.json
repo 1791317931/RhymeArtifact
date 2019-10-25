@@ -1,7 +1,7 @@
 {
   "usingComponents": {
     "loadModal": "/components/common/loadModal/index",
-    "beatList": "/components/zmall/beatList/index",
+    "beatList": "/components/zmall/collectionList/index",
     "commentList": "/components/zmall/comment/index"
   },
   "navigationBarTitleText": "beat详情"

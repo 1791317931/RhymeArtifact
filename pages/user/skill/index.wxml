@@ -1,3 +1,4 @@
+<loadModal id="loadModalComponent"/>
 <view class="wrapper">
   <view class="list">
     <view wx:for="{{skills}}" wx:for-item="item" wx:for-index="index" wx:key="{{index}}"

@@ -19,6 +19,7 @@ Component({
    * 组件的初始数据
    */
   data: {
+    tabWidth: 10000,
     page: {
       loading: false,
       playingIndex: -1,
@@ -68,7 +69,7 @@ Component({
       api.getCategoryList({
         type: CategoryType.BEAT
       }, (res) => {
-        let tabs = res.data;
+        let tabs = res.data || [];
         if (!tabs.length) {
           return;
         }
@@ -76,13 +77,24 @@ Component({
         this.setData({
           tabs
         });
+        this.setTabWidth()
 
         renderCallback && renderCallback();
-        // setTimeout(() => {
-        //   this.setTabWidth();
-        //   renderCallback && renderCallback();
-        // }, 20);
       });
+    },
+    setTabWidth() {
+      let query = wx.createSelectorQuery().in(this),
+        that = this;
+      query.selectAll('.tab-item').boundingClientRect(function (rectList) {
+        let tabWidth = 0;
+        for (let i = 0; i < rectList.length; i++) {
+          tabWidth += Math.ceil(rectList[i].width);
+        }
+
+        that.setData({
+          tabWidth
+        });
+      }).exec();
     },
     toggleTab(e) {
       let index = e.target.dataset.index;
@@ -115,7 +127,7 @@ Component({
       });
 
       BAC.onEnded((res) => {
-        this.audioEnded();
+        this.beatAudioEnded();
       });
     },
     toggleItemStatus(e) {
@@ -299,19 +311,6 @@ Component({
       this.setData({
         'page.loading': loading
       });
-    },
-    setTabWidth() {
-      let query = wx.createSelectorQuery().in(this),
-      that = this;
-      query.selectAll('.tab-item').boundingClientRect(function (rectList) {
-        let tabWidth = 0;
-        for (let i = 0; i < rectList.length; i++) {
-          tabWidth += Math.ceil(rectList[i].width);
-        }
-        that.setData({
-          tabWidth
-        });
-      }).exec();
     },
     getPage(current_page = 1) {
       let page = this.data.page;

@@ -1,6 +1,6 @@
 <view class="beat-list-wrapper {{showTab && tabs.length ? 'show-tab' : ''}}">
   <view hidden="{{!tabs.length}}" class="tab-container {{showTab ? '' : 'hide'}}">
-    <view class="clearfix">
+    <view class="clearfix" style="width: {{tabWidth}}px">
       <view wx:for="{{tabs}}" wx:for-item="item" wx:for-index="index" wx:key="{{item.flag}}"
       class="tab-item {{activeIndex == index ? 'active' : ''}} item-{{index}}" data-index="{{index}}" catchtap="toggleTab">
         {{item.name}}

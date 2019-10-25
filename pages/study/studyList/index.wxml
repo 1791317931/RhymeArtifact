@@ -1,5 +1,5 @@
 <view class="tab-container">
-  <view class="clearfix">
+  <view class="clearfix" style="width: {{tabWidth}}px">
     <view wx:for="{{tabs}}" wx:for-item="item" wx:for-index="index" wx:key="{{item.flag}}"
     class="tab-item {{activeIndex == index ? 'active' : ''}} item-{{index}}" data-index="{{index}}" catchtap="toggleTab">
       {{item.name}}

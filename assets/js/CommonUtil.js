@@ -12,7 +12,7 @@ function uuid() {
 let CommonUtil = {
   toLogin() {
     wx.navigateTo({
-      url: '/pages/authorition/index'
+      url: `/pages/authorition/index`
     });
   },
   // 禁止出现正则、function
