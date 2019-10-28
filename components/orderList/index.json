@@ -1,6 +1,7 @@
 {
   "component": true,
   "usingComponents": {
+    "skuFormat": "/components/zmall/skuFormat/index",
     "empty": "/components/common/empty/index"
   },
   "navigationBarTitleText": "订单中心"

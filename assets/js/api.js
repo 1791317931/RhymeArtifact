@@ -5,10 +5,6 @@ export function login(data, fn, completeFn) {
   UrlUtil.post(PathUtil.getNewPath('authorizations'), data, fn, completeFn);
 }
 
-// export function login(data, fn, completeFn) {
-//   UrlUtil.post('authorizations', data, fn, completeFn);
-// }
-
 export function bindUserPhone(data, fn, completeFn) {
   UrlUtil.post(PathUtil.getNewPath('wechat/getAuthPhone'), data, fn, completeFn);
 }
@@ -234,6 +230,18 @@ export function cancelFollow(data, fn, completeFn) {
 export function getFansPage(data, fn, completeFn) {
   UrlUtil.get(`fans`, data, fn, completeFn);
 }
+
+export function getUserInfoByToken(fn, completeFn) {
+  UrlUtil.post(PathUtil.getNewPath(`getUserInfoByToken`), null, fn, completeFn);
+}
+
+export function updateUser(data, fn, completeFn) {
+  UrlUtil.put(PathUtil.getNewPath(`user-info`), data, fn, completeFn);
+}
+
+export function getMyIncomePage(data, fn, completeFn) {
+  UrlUtil.get(PathUtil.getNewPath(`user/income`), data, fn, completeFn);
+}
 // ---------------------用户------------------------
 
 // ---------------------商品------------------------
@@ -277,16 +285,12 @@ export function getDefaultAddress(data, fn, completeFn) {
 // ---------------------收货地址------------------------
 
 // ---------------------订单------------------------
+export function buyGoods(data, fn, completeFn) {
+  UrlUtil.post(PathUtil.getNewPath('goods/pay'), data, fn, completeFn);
+}
+
 export function getOrderPage(data, fn, completeFn) {
-  UrlUtil.get(`shop/user/orders`, data, fn, completeFn);
-}
-
-export function getOrderById(data, fn, completeFn) {
-  UrlUtil.get(`shop/orders/${data.id}`, data, fn, completeFn);
-}
-
-export function payOrderAgain(data, fn, completeFn) {
-  UrlUtil.post(`order/pay-again`, data, fn, completeFn);
+  UrlUtil.get(PathUtil.getNewPath('orderLists'), data, fn, completeFn);
 }
 // ---------------------订单------------------------
 
@@ -296,28 +300,10 @@ export function addNewComment(data, fn, completeFn) {
 }
 
 export function deleteNewComment(data, fn, completeFn) {
-  UrlUtil.delete(PathUtil.getNewPath(`comments`), data, fn, completeFn);
+  UrlUtil.delete(PathUtil.getNewPath(`comments/${data.id}`), data, fn, completeFn);
 }
 
 export function getNewCommentPage(data, fn, completeFn) {
   UrlUtil.get(PathUtil.getNewPath(`comments`), data, fn, completeFn);
 }
-
-export function addNewCommentPraise(data, fn, completeFn) {
-  UrlUtil.put(PathUtil.getNewPath(`comments`), data, fn, completeFn);
-}
-
-export function deleteNewCommentPraise(data, fn, completeFn) {
-  UrlUtil.put(PathUtil.getNewPath(`comments`), data, fn, completeFn);
-}
 // ---------------------评论------------------------
-
-// ---------------------用户------------------------
-export function getUserInfoByToken(fn, completeFn) {
-  UrlUtil.post(PathUtil.getNewPath(`getUserInfoByToken`), null, fn, completeFn);
-}
-
-export function updateUser(data, fn, completeFn) {
-  UrlUtil.put(PathUtil.getNewPath(`user-info`), data, fn, completeFn);
-}
-// ---------------------用户------------------------

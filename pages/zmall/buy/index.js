@@ -1,5 +1,6 @@
 import TimeUtil from '../../../assets/js/TimeUtil'
 import TipUtil from '../../../assets/js/TipUtil'
+import ConfigUtil from '../../../assets/js/ConfigUtil'
 import * as api from '../../../assets/js/api';
 
 Page({
@@ -104,6 +105,9 @@ Page({
       id: this.data.id
     }, (res) => {
       let beat = res.data
+      beat.goods_skus.forEach(item => {
+        item.price = new Number(item.price).toFixed(2)
+      })
       this.setData({
         beat
       })
@@ -121,17 +125,58 @@ Page({
   },
   getItem(e) {
     let index = this.getIndex(e);
-    return this.data.beat.suks.list[index];
+    return this.data.beat.goods_skus[index];
   },
   clickItem(e) {
     let index = this.getIndex(e)
     let beat = this.data.beat
-    beat.skus[index].open = !beat.skus[index].open
+    beat.goods_skus[index].open = !beat.goods_skus[index].open
     this.setData({
       beat
     })
   },
   buy(e) {
-    
+    // 免费的不用购买
+    let sku = this.getItem(e)
+    if (sku.price <= 0) {
+      return
+    }
+
+    let loadModalComponent = this.data.loadModalComponent
+    if (loadModalComponent.data.loading) {
+      return
+    }
+
+    this.toggleLoading(true)
+    api.buyGoods({
+      goods_id: this.data.id,
+      sku_id: sku.sku_id,
+      // 小程序
+      payment_method: 3
+    }, (res) => {
+      let data = res.data
+      let packageParam = data.package;
+
+      wx.requestPayment({
+        ...packageParam,
+        success: (res) => {
+          TipUtil.message('支付成功')
+        },
+        fail: (res) => {
+          if (ConfigUtil.isDev()) {
+            wx.showModal({
+              title: 'x',
+              content: '' + JSON.stringify(res),
+            });
+          } else {
+            if (!/cancel/.test(res.errMsg || '')) {
+              TipUtil.error('支付失败');
+            }
+          }
+        }
+      });
+    }, () => {
+      this.toggleLoading(false)
+    })
   }
 })

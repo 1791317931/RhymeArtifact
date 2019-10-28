@@ -40,7 +40,7 @@ page {
 }
 
 .list-container {
-  padding: 0 30rpx 130rpx;
+  padding: 0 30rpx 0;
 }
 
 .list-container .item {

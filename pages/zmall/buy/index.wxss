@@ -36,7 +36,7 @@ page {
   font-size:34rpx;
   font-family:PingFangSC-Semibold,PingFangSC;
   font-weight:600;
-  color:rgba(4,4,4, .4);
+  color:rgba(4,4,4, 1);
   line-height:48rpx;
 }
 
@@ -110,6 +110,7 @@ page {
 .skus .item .sku-info .desc .dot:before, .skus .item .sku-info .desc .dot:after {
   content: '';
   width: 10rpx;
+  height: 2rpx;
   background: #fff;
   border-radius: 1rpx;
   position: absolute;
@@ -140,9 +141,16 @@ page {
   padding: 11rpx 0 0;
 }
 
+.skus .item .btn-item {
+  width: 170rpx;
+  text-align: center;
+  font-size:28rpx;
+  color: #999;
+}
+
 .skus .item .buy .btn {
   position: relative;
-  padding: 0 0 0 75rpx;
+  padding: 0 0 0 60rpx;
   line-height:66rpx;
   background:linear-gradient(270deg,rgba(248,77,121,1) 0%,rgba(252,128,100,1) 100%);
   border-radius:55rpx;
@@ -156,7 +164,34 @@ page {
   width: 26rpx;
   height: 25rpx;
   position: absolute;
-  left: 39rpx;
+  left: 26rpx;
   top: 50%;
   transform: translateY(-50%);
+}
+
+.tip-container .item {
+  border-bottom: 2rpx solid rgba(240,240,240,1);
+  padding: 30rpx 0;
+  font-size:32rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(4,4,4,1);
+  line-height: 50rpx;
+}
+
+.tip-container .item text:nth-child(2) {
+  float: right;
+}
+
+.download-tip {
+  margin-top: 20rpx;
+  font-size:28rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(4,4,4,1);
+  line-height:40rpx;
+}
+
+.download-tip text {
+  color: #F84D78;
 }

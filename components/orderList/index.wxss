@@ -1,6 +1,5 @@
-.container {
+page {
   background: #fff;
-  padding-left: 30rpx;
 }
 
 .clearfix:before {
@@ -15,7 +14,7 @@
 
 .tab-container {
   overflow-x: auto;
-  padding: 30rpx;
+  padding: 5rpx 30rpx;
 }
 
 .tab-container .clearfix .tab-item {
@@ -40,86 +39,159 @@
   font-weight: 600;
 }
 
+.container {
+  padding: 0 40rpx;
+}
+
 .container .item {
-  height: 180rpx;
-  background: #fff;
-  padding: 22rpx 160rpx 22rpx 166rpx;
+  padding: 30rpx 0 20rpx;
+  border-bottom: 2rpx solid rgba(240,240,240,1);
+}
+
+.container .item .inner {
+  display: flex;
+}
+
+.item .cover {
+  width: 120rpx;
+  height: 120rpx;
+}
+
+.item .cover image {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius:8rpx;
+}
+
+.item .user {
+  width: 380rpx;
+  padding: 15rpx 20rpx 0;
+}
+
+.item .user .title {
+  width: 350rpx;
+  font-size:34rpx;
+  font-family:PingFangSC-Semibold,PingFang SC;
+  font-weight:600;
+  color:rgba(4,4,4,1);
+  line-height:48rpx;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.item .user .name {
+  margin-top: 10rpx;
+  font-size:24rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(90,90,90,1);
+  line-height:33rpx;
+}
+
+.item .price-status {
+  width: 130rpx;
+}
+
+.item .price-status .price {
+  font-size:30rpx;
+  font-family:DINAlternate-Bold,DINAlternate;
+  font-weight:bold;
+  color:rgba(248,77,120,1);
+  line-height:35rpx;
+  text-align: right;
+}
+
+.item .price-status .price:after {
+  content: '元';
+  margin-left: 5rpx;
+  font-size:20rpx;
+  font-family:PingFangSC-Semibold,PingFang SC;
+  font-weight:600;
+  color:rgba(248,77,120,1);
+  line-height:28rpx;
+}
+
+.item .price-status .status {
+  margin-top: 10rpx;
+  font-size:32rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(4,4,4,1);
+  line-height:45rpx;
+  text-align: right;
+}
+
+.tip-container {
+  margin-top: 20rpx;
   position: relative;
 }
 
-.container .item:not(:last-child) {
-  border-bottom: 1rpx solid #B4B4B4;
+.format-tip {
+  font-size:26rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(4,4,4,1);
+  line-height:37rpx;
 }
 
-.cover {
-  position: absolute;
-  width: 136rpx;
-  height: 136rpx;
-  top: 22rpx;
-  left: 0;
-}
-
-.date {
-  position: absolute;
-  top: 22rpx;
-  right: 30rpx;
+.format {
+  margin-top: 5rpx;
   font-size:24rpx;
-  font-family:PingFangSC-Regular;
+  font-family:PingFangSC-Regular,PingFang SC;
   font-weight:400;
-  color:rgba(180,180,180,1);
-  line-height:42rpx;
-  letter-spacing:1rpx;
-}
-
-.code {
-  font-size:30rpx;
-  font-family:PingFangSC-Regular;
-  font-weight:400;
-  color:rgba(57,57,62,1);
-  line-height:42rpx;
-  letter-spacing:1rpx;
-}
-
-.price {
-  margin-top: 10rpx;
-  font-size:30rpx;
-  font-family:PingFangSC-Regular;
-  font-weight:400;
-  color:rgba(57,57,62,1);
-  line-height:42rpx;
-  letter-spacing:1rpx;
-}
-
-.price:before {
-  content: '￥';
-  font-size:30rpx;
-  font-family:PingFangSC-Regular;
-  font-weight:400;
-  color:rgba(57,57,62,1);
-  line-height:42rpx;
-  letter-spacing:1rpx;
-  margin-right: 5rpx;
-}
-
-.status {
-  margin-top: 10rpx;
-  font-size:24rpx;
-  font-family:PingFangSC-Regular;
-  font-weight:400;
-  color:rgba(57,57,62,1);
+  color:rgba(4,4,4,1);
   line-height:33rpx;
-  letter-spacing:1rpx;
 }
 
-.status.need-pay:before {
-  content: '待支付';
-  color:rgba(255,51,40,1);
+.desc {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  padding: 0 0 0 30rpx;
+  font-size:22rpx;
+  font-family:PingFangSC-Regular,PingFangSC;
+  font-weight:400;
+  color:rgba(4,4,4,1);
 }
 
-.status.has-pay:before {
-  content: '订单完成';
+.desc .dot {
+  width: 24rpx;
+  height: 24rpx;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  border-radius: 50%;
+  background: #000;
+  transform: translateY(-50%);
 }
 
-.status.cancel-pay:before {
-  content: '已取消';
+.desc .dot:before, .desc .dot:after {
+  content: '';
+  width: 10rpx;
+  height: 2rpx;
+  background: #fff;
+  border-radius: 1rpx;
+  position: absolute;
+  top: 50%;
+  transition: transform .3s ease;
+}
+
+.desc .dot:before {
+  left: 6rpx;
+  transform: translateY(-50%) rotateZ(45deg);
+}
+
+.desc .dot:after {
+  right: 6rpx;
+  transform: translateY(-50%) rotateZ(-45deg);
+}
+
+.item.active .desc .dot:before {
+  transform: translateY(-50%) rotateZ(-45deg);
+}
+
+.item.active .desc .dot:after {
+  transform: translateY(-50%) rotateZ(45deg);
 }

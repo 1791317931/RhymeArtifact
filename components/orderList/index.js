@@ -1,7 +1,6 @@
 import TipUtil from '../../assets/js/TipUtil';
 import ConfigUtil from '../../assets/js/ConfigUtil';
 import PathUtil from '../../assets/js/PathUtil';
-import OrderStatus from '../../assets/js/OrderStatus';
 import * as api from '../../assets/js/api';
 
 Component({
@@ -35,8 +34,31 @@ Component({
       }
     ],
     activeFlag: 'buy-order',
+    skuMap: {
+      1: {
+        title: '标准MP3租赁',
+        format: 'MP3格式音频'
+      },
+      2: {
+        title: '高级WAV租赁',
+        format: 'MP3和WAV格式音频'
+      },
+      3: {
+        title: '分轨音频租赁',
+        format: 'MP3、WAV和分轨格式音频文件'
+      },
+      4: {
+        title: '独家买断',
+        format: 'MP3、WAV和分轨格式音频文件'
+      }
+    },
     scope: null,
-    OrderStatus
+    orderStatusMap: {
+      0: '待支付',
+      1: '已支付',
+      2: '已取消',
+      3: '支付超时'
+    }
   },
 
   /**
@@ -70,10 +92,17 @@ Component({
       }
     },
     clickItem(e) {
+      let index = this.getIndex(e)
+      let item = this.getItem(e)
+      item.open = !item.open
+      this.setData({
+        [`page.list[${index}]`]: item
+      })
+    },
+    toDetail(e) {
       let item = this.getItem(e);
-
       wx.navigateTo({
-        url: '/pages/user/order/detail/index?id=' + item.id
+        url: '/pages/zmall/beatDetail/index?id=' + item.goods_id
       });
     },
     toggleTab(e) {
@@ -100,31 +129,55 @@ Component({
       let param = {
         page: current_page,
         per_page: page.per_page,
-        include: 'goods'
-      },
-      list = [];
+        include: 'goods,goodsSku,goodsUser',
+        see_user_id: 8
+      }
+      console.log(JSON.stringify(param))
+      let list = [];
 
       if (current_page > 1) {
         list = page.list;
+      } else {
+        this.setData({
+          'page.list': []
+        })
       }
 
       this.togglePageLoading(true);
-      api.getOrderPage(param, (res) => {
-        let pagination = res.meta.pagination;
-        res.data.forEach((item, index) => {
-          item.created_at_year = item.created_at.split(' ')[0]
-          item.cover = PathUtil.getFilePath(item.goods.data.cover_images[0]);
-          list.push(item);
-        });
+      let flag = this.data.activeFlag
+      if (flag == 'buy-order') {
+        api.getOrderPage(param, (res) => {
+          let pagination = res.meta.pagination;
+          res.data.forEach((item, index) => {
+            item.open = false
+            list.push(item);
+          });
 
-        this.setData({
-          'page.list': list,
-          'page.total_pages': parseInt(pagination.total_pages || 0),
-          'page.current_page': parseInt(pagination.current_page || 1)
+          this.setData({
+            'page.list': list,
+            'page.total_pages': parseInt(pagination.total_pages || 0),
+            'page.current_page': parseInt(pagination.current_page || 1)
+          });
+        }, () => {
+          this.togglePageLoading(false);
         });
-      }, () => {
-        this.togglePageLoading(false);
-      });
+      } else if (flag == 'sale-order') {
+        api.getMyIncomePage(param, (res) => {
+          let data = res.data
+          data.lists.data.forEach((item, index) => {
+            item.open = false
+            list.push(item);
+          });
+
+          this.setData({
+            'page.list': list,
+            'page.total_pages': parseInt(data.last_page || 0),
+            'page.current_page': parseInt(data.from || 1)
+          });
+        }, () => {
+          this.togglePageLoading(false);
+        });
+      }
     }
   }
 })

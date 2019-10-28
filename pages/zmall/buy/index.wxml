@@ -24,11 +24,26 @@
         </view>
       </view>
       <view class="buy">
-        <view class="btn" data-index="{{index}}" catchtap="buy">
+        <view wx:if="{{beat.buy_level >= item.level}}" class="btn-item">
+          已购买
+        </view>
+        <view wx:elif="{{item.price == 0}}" class="btn-item">
+          免费
+        </view>
+        <view wx:else class="btn" data-index="{{index}}" catchtap="buy">
           <image class="shopcar" src="/assets/imgs/mall/btn-shopcar.png" />
-          {{item.price > 0 ? item.price : '免费'}}
+          {{item.price}}
         </view>
       </view>
     </view>
+  </view>
+  <view class="tip-container">
+    <view class="item">
+      <text>音乐下载地址</text>
+      <text>www.peaceandlovemusic.cn</text>
+    </view>
+  </view>
+  <view class="download-tip">
+    Beat购买成功请使用电脑访问官网登录账号点击{{'<'}}<text>头像-我的购买</text>{{'>'}}中进行下载使用
   </view>
 </view>

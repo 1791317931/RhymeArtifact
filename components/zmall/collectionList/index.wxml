@@ -1,5 +1,6 @@
 <scroll-view
   class="list-container"
+  bindscrolltolower="onReachBottom"
   scroll-y
 >
   <view class="list-container-inner">

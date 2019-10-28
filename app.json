@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/zmall/index/index",
+    "pages/user/order/index/index",
     "pages/main/index",
     "pages/zmall/beatDetail/index",
     "pages/zmall/orderDetail/index",
@@ -32,7 +33,6 @@
     "pages/mall/beatDetail/index",
     "pages/mall/address/edit/index",
     "pages/mall/address/list/index",
-    "pages/user/order/index/index",
     "pages/user/order/detail/index",
     "pages/user/info/index",
     "pages/user/skill/index",

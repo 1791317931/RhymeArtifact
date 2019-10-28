@@ -14,8 +14,6 @@
 }
 
 .list .item image {
-  width: 24rpx !important;
-  height: 32rpx !important;
   position: absolute;
   top: 50%;
   left: 3rpx;

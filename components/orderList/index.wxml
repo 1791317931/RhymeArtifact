@@ -8,14 +8,31 @@
 </view>
 <view class="container">
   <view wx:for="{{page.list}}" wx:for-item="item" wx:for-index="index" wx:key="{{item.id}}" data-index="{{index}}"
-    class="item" catchtap="clickItem">
-    <image class="cover" src="{{item.cover}}"/>
-    <view class="date">{{item.created_at_year}}</view>
-    <view class="code">{{item.order_sn}}</view>
-    <view class="price">{{item.payment_money}}</view>
-    <view wx:if="{{item.order_status == OrderStatus.NEED_PAY}}" class="status need-pay"></view>
-    <view wx:if="{{item.order_status == OrderStatus.HAS_PAY}}" class="status has-pay"></view>
-    <view wx:if="{{item.order_status == OrderStatus.CANCEL_PAY}}" class="status cancel-pay"></view>
+    class="item {{item.open ? 'active' : ''}}" catchtap="clickItem">
+    <view class="inner" data-index="{{index}}" catchtap="toDetail">
+      <view class="cover">
+        <image src="{{item.goods.data.cover_images[0] || item.goods.cover_images[0]}}"/>
+      </view>
+      <view class="user">
+        <view class="title">{{item.goods.data.goods_name || item.goods.goods_name}}</view>
+        <view class="name">{{item.goodsUser.data.nickname}}</view>
+      </view>
+      <view class="price-status">
+        <view class="price">{{item.payment_money}}</view>
+        <view class="status">{{orderStatusMap[item.order_status]}}</view>
+      </view>
+    </view>
+    <view class="tip-container">
+      <view class="format-tip">{{skuMap[item.goodsSku.data.level].title || skuMap[item.goods_sku.level].title}}</view>
+      <view class="format">{{skuMap[item.goodsSku.data.level].format || skuMap[item.goods_sku.level].format}}</view>
+      <view class="desc">
+        <view class="dot"></view>
+        显示使用条款
+      </view>
+    </view>
+    <view hidden="{{!item.open}}">
+      <skuFormat level="{{item.goodsSku.data.level || item.goods_sku.level}}" />
+    </view>
   </view>
 </view>
 <empty
