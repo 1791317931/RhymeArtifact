@@ -15,7 +15,7 @@
       </view>
       <view class="user">
         <view class="title">{{item.goods.data.goods_name || item.goods.goods_name}}</view>
-        <view class="name">{{item.goodsUser.data.nickname}}</view>
+        <view class="name">{{item.goodsUser.data.nickname || item.user.nickname}}</view>
       </view>
       <view class="price-status">
         <view class="price">{{item.payment_money}}</view>

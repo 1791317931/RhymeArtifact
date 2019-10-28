@@ -129,8 +129,7 @@ Component({
       let param = {
         page: current_page,
         per_page: page.per_page,
-        include: 'goods,goodsSku,goodsUser',
-        see_user_id: 8
+        include: 'goods,goodsSku,goodsUser'
       }
       console.log(JSON.stringify(param))
       let list = [];
