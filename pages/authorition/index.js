@@ -115,7 +115,6 @@ Page({
       success: (res) => {
         let code = res.code;
         let userInfo = wx.getStorageSync('userInfo');
-        console.log(userInfo)
         let obj = {
           open_id: userInfo.open_id
         };
@@ -124,9 +123,10 @@ Page({
         obj.iv = iv;
 
         api.bindUserPhone(obj, (res) => {
-          wx.setStorageSync('userInfo', res.data);
+          wx.setStorageSync('token', res.data.token);
+          wx.setStorageSync('userInfo', res.data.userInfo);
           wx.switchTab({
-            url: '/pages/main/index'
+            url: 'pages/zmall/index/index'
           });
         });
       }

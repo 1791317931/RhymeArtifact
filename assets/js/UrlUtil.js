@@ -24,10 +24,12 @@ let UrlUtil = {
     }
 
     let userInfo = wx.getStorageSync('userInfo')
-    if (userInfo && !userInfo.mobile && url.indexOf('authorizations') == -1 && url.indexOf('getAuthPhone') == -1) {
-      // 绑定手机号
-      UrlUtil.toLogin()
-      return
+    if (url.indexOf('authorizations') == -1 && url.indexOf('getAuthPhone') == -1) {
+      if (!userInfo || (userInfo && !userInfo.mobile)) {
+        // 绑定手机号
+        UrlUtil.toLogin()
+        return
+      }
     }
 
     let param = {
