@@ -14,15 +14,24 @@ Page({
     loadModalComponent: null,
     playTimeArr: [],
     totalTimeArr: [],
-    playPercent: 0,
     playIndex: 0,
     total: 0,
     playing: false,
     beatComponent: null,
     commentComment: null,
+    commentCount: 0,
     showList: false,
     showCommentList: false,
-    collecting: false
+    collecting: false,
+    currentTime: 0,
+    duration: 0,
+    movingBar: false,
+    trackContainerWidth: null,
+    pageX: null,
+    playPercent: 0,
+    startPercent: null,
+    startPageX: null,
+    startPercent: null
   },
 
   /**
@@ -57,6 +66,14 @@ Page({
     } else {
       beatComponent.getPage(1)
     }
+
+    const query = wx.createSelectorQuery().in(this);
+    query.select('#progress').boundingClientRect();
+    query.exec((res) => {
+      this.setData({
+        trackContainerWidth: res[0].width
+      });
+    });
   },
 
   /**
@@ -107,6 +124,7 @@ Page({
   onShareAppMessage: function () {
     
   },
+  prevent() {},
   toggleLoading(loading) {
     this.data.loadModalComponent.setData({
       loading
@@ -163,6 +181,46 @@ Page({
       showCommentList: false
     })
   },
+  // ---------------------拖动指针--------------------------
+  touchStart(e) {
+    this.setData({
+      startPageX: e.touches[0].pageX,
+      startPercent: this.data.playPercent,
+      movingBar: true
+    });
+
+    this.pausePlay()
+  },
+  movePointer(e) {
+    let touches = e.touches
+    let prePageX = this.data.startPageX
+    let pageX = e.touches[0].pageX
+    let duration = this.data.duration;
+
+    let width = pageX - prePageX
+    let percent = width / this.data.trackContainerWidth;
+    let currentPercent = this.data.startPercent / 100 + percent;
+    currentPercent = Math.min(1, currentPercent);
+    currentPercent = Math.max(0, currentPercent);
+    let time = currentPercent * duration
+
+    if (time >= duration) {
+      time = duration;
+      this.data.beatComponent.beatAudioEnded();
+    }
+
+    this.data.beatComponent.caculateTime(time)
+  },
+  touchEnd(e) {
+    let that = this.data.beatComponent
+    let BAC = that.data.BAC;
+    this.setData({
+      movingBar: false
+    })
+    BAC.seek(this.data.currentTime);
+    this.continuePlay()
+  },
+  // ---------------------拖动指针--------------------------
   prev() {
     let beatComponent = this.data.beatComponent
     beatComponent.prevItem()

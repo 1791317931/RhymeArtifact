@@ -19,7 +19,8 @@
           <skuFormat level="{{item.level}}" />
         </view>
         <view class="desc">
-          <view class="dot"></view>
+          <image hidden="{{!item.open}}" class="dot" src="/assets/imgs/mall/circle-up.png"></image>
+          <image hidden="{{item.open}}" class="dot" src="/assets/imgs/mall/circle-down.png"></image>
           显示使用条款
         </view>
       </view>

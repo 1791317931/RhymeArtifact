@@ -33,14 +33,13 @@ page {
 .list-container .item .cover-container {
   width: 120rpx;
   height: 120rpx;
-  border-radius:8px;
-  overflow: hidden;
   position: relative;
 }
 
 .list-container .item .cover-container .cover {
   width: 120rpx;
   height: 120rpx;
+  border-radius:8px;
 }
 
 .list-container .item .cover-container .play-container {
@@ -51,6 +50,7 @@ page {
   left: 0;
   background: rgba(0, 0, 0, .5);
   z-index: 1;
+  border-radius:8px;
 }
 
 .list-container .item .cover-container .play {
@@ -72,7 +72,7 @@ page {
   font-weight:600;
   color:rgba(4,4,4,1);
   line-height:48rpx;
-  width: 300rpx;
+  width: 230rpx;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

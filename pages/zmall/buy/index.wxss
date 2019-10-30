@@ -15,13 +15,12 @@ page {
 .info-container .cover {
   width: 120rpx;
   height: 120rpx;
-  border-radius:8rpx;
-  overflow: hidden;
 }
 
 .info-container .cover image {
   width: 120rpx;
   height: 120rpx;
+  border-radius:8rpx;
 }
 
 .info-container .info {
@@ -103,37 +102,7 @@ page {
   top: 50%;
   left: 0;
   border-radius: 50%;
-  background: #000;
   transform: translateY(-50%);
-}
-
-.skus .item .sku-info .desc .dot:before, .skus .item .sku-info .desc .dot:after {
-  content: '';
-  width: 10rpx;
-  height: 2rpx;
-  background: #fff;
-  border-radius: 1rpx;
-  position: absolute;
-  top: 50%;
-  transition: transform .3s ease;
-}
-
-.skus .item .sku-info .desc .dot:before {
-  left: 6rpx;
-  transform: translateY(-50%) rotateZ(45deg);
-}
-
-.skus .item .sku-info .desc .dot:after {
-  right: 6rpx;
-  transform: translateY(-50%) rotateZ(-45deg);
-}
-
-.skus .item.active .sku-info .desc .dot:before {
-  transform: translateY(-50%) rotateZ(-45deg);
-}
-
-.skus .item.active .sku-info .desc .dot:after {
-  transform: translateY(-50%) rotateZ(45deg);
 }
 
 .skus .item .buy {

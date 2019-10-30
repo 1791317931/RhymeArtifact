@@ -14,8 +14,10 @@
 }
 
 .list .item image {
+  width: 40rpx !important;
+  height: 40rpx !important;
   position: absolute;
   top: 50%;
-  left: 3rpx;
+  left: 0;
   transform: translateY(-50%);
 }

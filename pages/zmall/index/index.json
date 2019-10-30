@@ -2,6 +2,6 @@
   "usingComponents": {
     "beatList": "/components/zmall/beatList/index"
   },
-  "navigationBarTitleText": "商城",
+  "navigationBarTitleText": "PAL Music",
   "enablePullDownRefresh": true
 }

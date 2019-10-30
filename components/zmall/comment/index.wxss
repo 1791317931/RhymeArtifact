@@ -8,7 +8,7 @@
 }
 
 .list-container-inner {
-  padding: 0 0 160rpx;
+  padding: 0 0 180rpx;
 }
 
 .list {
@@ -94,7 +94,7 @@
   position: fixed;
   left: 40rpx;
   right: 40rpx;
-  bottom: 20rpx;
+  bottom: 40rpx;
 }
 
 textarea {

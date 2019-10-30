@@ -1,49 +1,58 @@
 <loadModal id="loadModalComponent"/>
-<view class="cover-info">
-  <image src="{{beat.cover_images[0]}}" class="cover" />
-  <view class="title">{{beat.goods_name}}</view>
-  <view class="author">{{beat.author || beat.authorInfo.nickname}}</view>
-</view>
-<view class="play-info">
-  <view class="progress">
-    <view class="progress-bar" style="width: {{playPercent}}%">
-      <view class="circle-bar"></view>
+<view class="wrapper-container">
+  <view class="cover-info">
+    <image src="{{beat.cover_images[0]}}" class="cover" />
+    <view class="title">{{beat.goods_name}}</view>
+    <view class="author">{{beat.author || beat.authorInfo.nickname}}</view>
+  </view>
+  <view class="play-info">
+    <view class="progress" id="progress">
+      <view class="progress-bar" style="width: {{playPercent}}%">
+        <view
+          class="circle-bar {{movingBar ? 'active' : ''}}"
+          catchtouchmove="movePointer"
+          catchtouchstart="touchStart"
+          catchtouchend="touchEnd"
+          >
+        </view>
+      </view>
+    </view>
+    <view class="time-info">
+      <view class="play-time">{{playTimeArr[1]}}:{{playTimeArr[2]}}</view>
+      <view class="total-time">{{totalTimeArr[1]}}:{{totalTimeArr[2]}}</view>
     </view>
   </view>
-  <view class="time-info">
-    <view class="play-time">{{playTimeArr[1]}}:{{playTimeArr[2]}}</view>
-    <view class="total-time">{{totalTimeArr[1]}}:{{totalTimeArr[2]}}</view>
+  <view class="play-option">
+    <image class="prev" src="/assets/imgs/mall/prev.png" catchtap="prev" />
+    <image hidden="{{playing}}" class="play" src="/assets/imgs/mall/to-play.png" catchtap="continuePlay"/>
+    <image hidden="{{!playing}}" class="play" src="/assets/imgs/mall/to-pause.png" catchtap="pausePlay"/>
+    <image class="next" src="/assets/imgs/mall/next.png" catchtap="next"/>
+  </view>
+  <view class="option">
+    <view class="item" catchtap="showListModal">
+      <image src="/assets/imgs/mall/play-list.png"/>
+    </view>
+    <view class="item comment" catchtap="showCommentModal">
+      <image src="/assets/imgs/mall/comment.png"/>
+      <view class="count">{{commentCount > 999 ? '999+' : commentCount}}</view>
+    </view>
+    <view class="item" catchtap="toggleCollection">
+      <image hidden="{{beat.collection}}" src="/assets/imgs/mall/collection-88.png"/>
+      <image hidden="{{!beat.collection}}" src="/assets/imgs/mall/collection-active-88.png"/>
+    </view>
+    <view class="buy" catchtap="toBuy">
+      <image src="/assets/imgs/mall/btn-shopcar.png"/>
+      <view>去购买</view>
+    </view>
   </view>
 </view>
-<view class="play-option">
-  <image class="prev" src="/assets/imgs/mall/prev.png" catchtap="prev" />
-  <image hidden="{{playing}}" class="play" src="/assets/imgs/mall/to-play.png" catchtap="continuePlay"/>
-  <image hidden="{{!playing}}" class="play" src="/assets/imgs/mall/to-pause.png" catchtap="pausePlay"/>
-  <image class="next" src="/assets/imgs/mall/next.png" catchtap="next"/>
-</view>
-<view class="option">
-  <view class="item" catchtap="showListModal">
-    <image src="/assets/imgs/mall/play-list.png"/>
-  </view>
-  <view class="item" catchtap="showCommentModal">
-    <image src="/assets/imgs/mall/comment.png"/>
-  </view>
-  <view class="item" catchtap="toggleCollection">
-    <image hidden="{{beat.collection}}" src="/assets/imgs/mall/collection-big.png"/>
-    <image hidden="{{!beat.collection}}" src="/assets/imgs/mall/collection-active-big.png"/>
-  </view>
-  <view class="buy" catchtap="toBuy">
-    <image src="/assets/imgs/mall/btn-shopcar.png"/>
-    <view>去购买</view>
-  </view>
-</view>
-<view hidden="{{!showList}}">
+<view hidden="{{!showList}}" catchtouchmove="prevent">
   <view class="mask" catchtap="closeListModal"></view>
   <view class="list-wrapper">
     <beatList id="beatComponent" />
   </view>
 </view>
-<view hidden="{{!showCommentList}}">
+<view hidden="{{!showCommentList}}" catchtouchmove="prevent">
   <view class="mask" catchtap="closeCommentModal"></view>
   <view class="list-wrapper">
     <commentList id="commentComponent" />

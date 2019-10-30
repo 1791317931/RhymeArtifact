@@ -68,24 +68,26 @@ Component({
     onUnload() {
       this.data.BAC.destroy()
     },
+    caculateTime(currentTime) {
+      let BAC = this.data.BAC
+      let totalTime = BAC.duration
+      let totalTimeArr = TimeUtil.numberToArr(Math.round(totalTime))
+      let playPercent = (currentTime / totalTime > 1 ? 1 : currentTime / totalTime) * 100
+
+      this.setPlayProgress({
+        totalTimeArr,
+        duration: totalTime,
+        currentTime,
+        playTimeArr: TimeUtil.numberToArr(Math.round(currentTime)),
+        playPercent
+      })
+    },
     bindBACEvent() {
       let BAC = this.data.BAC;
-      let scope = this.data.scope
-
       BAC.autoplay = true;
-      BAC.onTimeUpdate(() => {
-        let currentTime = BAC.currentTime
-        let totalTime = BAC.duration
-        let playTimeArr = TimeUtil.numberToArr(Math.ceil(currentTime))
-        let totalTimeArr = TimeUtil.numberToArr(Math.ceil(totalTime))
-        // 80
-        let playPercent = (currentTime / totalTime > 1 ? 1 : currentTime / totalTime) * 100
 
-        this.setPlayProgress({
-          playTimeArr,
-          totalTimeArr,
-          playPercent
-        })
+      BAC.onTimeUpdate(() => {
+        this.caculateTime(BAC.currentTime)
       });
 
       BAC.onError((res) => {
@@ -219,6 +221,7 @@ Component({
       }
 
       this.play(index)
+      this.hideMoreModal()
     },
     shareItem() {
       let item = this.data.page.list[this.data.showIndex]

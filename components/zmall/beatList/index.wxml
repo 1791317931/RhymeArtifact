@@ -33,7 +33,7 @@
   loading="{{page.loading}}"
   hasData="{{!!page.list.length}}"
   hasMore="{{page.current_page < page.total_pages}}"/>
-<view hidden="{{playIndex == -1}}" class="beat-modal">
+<view class="beat-modal {{playIndex != -1 ? 'active' : ''}}" catchtouchmove="prevent">
   <view class="cover-container" catchtap="togglePlay">
     <image src="{{page.list[playIndex].cover_images[0]}}" class="cover" />
     <view class="play-container" data-index="{{playIndex}}" catchtap="toggleItemStatus">
@@ -47,9 +47,14 @@
       <view class="time">
         {{playTimeArr[1]}}:{{playTimeArr[2]}}/{{totalTimeArr[1]}}:{{totalTimeArr[2]}}
       </view>
-      <view class="progress">
+      <view class="progress" id="progress">
         <view class="progress-bar" style="width: {{playPercent}}%">
-          <view class="circle-bar"></view>
+          <view
+            class="circle-bar {{movingBar ? 'active' : ''}}"
+            catchtouchmove="movePointer"
+            catchtouchstart="touchStart"
+            catchtouchend="touchEnd">
+          </view>
         </view>
       </view>
     </view>
@@ -58,7 +63,7 @@
     <view class="buy">去购买</view>
   </view>
 </view>
-<view hidden="{{showIndex == -1}}" class="more-modal">
+<view hidden="{{showIndex == -1}}" class="more-modal" catchtouchmove="prevent">
   <view class="mask" catchtap="hideMoreModal"></view>
   <view class="modal-inner">
     <view class="clearfix">
@@ -70,11 +75,7 @@
         <image src="/assets/imgs/mall/collection-active.png"/>
         <view>不喜欢</view>
       </view>
-      <view hidden="{{!page.list[showIndex - 1]}}" class="item" catchtap="prevItem">
-        <image src="/assets/imgs/mall/prev.png"/>
-        <view>上一首</view>
-      </view>
-      <view hidden="{{!page.list[showIndex + 1]}}" class="item" catchtap="nextItem">
+      <view class="item" catchtap="nextItem">
         <image src="/assets/imgs/mall/next.png" />
         <view>下一首</view>
       </view>

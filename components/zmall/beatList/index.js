@@ -36,8 +36,17 @@ Component({
     playing: false,
     playTimeArr: 0,
     totalTimeArr: 0,
+    showIndex: -1,
+    collecting: false,
+    currentTime: 0,
+    duration: 0,
+    movingBar: false,
+    trackContainerWidth: null,
+    pageX: null,
     playPercent: 0,
-    showIndex: -1
+    startPercent: null,
+    startPageX: null,
+    startPercent: null
   },
 
   /**
@@ -62,27 +71,38 @@ Component({
       })
       this.setScope(scope)
       this.bindBACEvent()
+
+      const query = wx.createSelectorQuery().in(this);
+      query.select('#progress').boundingClientRect();
+      query.exec((res) => {
+        this.setData({
+          trackContainerWidth: res[0].width
+        });
+      });
     },
     onUnload() {
       this.data.BAC.destroy()
+    },
+    prevent() {},
+    caculateTime(currentTime) {
+      let BAC = this.data.BAC
+      let totalTime = BAC.duration
+      let totalTimeArr = TimeUtil.numberToArr(Math.round(totalTime))
+      let playPercent = (currentTime / totalTime > 1 ? 1 : currentTime / totalTime) * 100
+      this.setData({
+        totalTimeArr,
+        duration: totalTime,
+        currentTime,
+        playTimeArr: TimeUtil.numberToArr(Math.round(currentTime)),
+        playPercent
+      })
     },
     bindBACEvent() {
       let BAC = this.data.BAC;
 
       BAC.autoplay = true;
       BAC.onTimeUpdate(() => {
-        let currentTime = BAC.currentTime
-        let totalTime = BAC.duration
-        let playTimeArr = TimeUtil.numberToArr(Math.ceil(currentTime))
-        let totalTimeArr = TimeUtil.numberToArr(Math.ceil(totalTime))
-        // 80
-        let playPercent = (currentTime / totalTime > 1 ? 1 : currentTime / totalTime) * 100
-
-        this.setData({
-          playTimeArr,
-          totalTimeArr,
-          playPercent
-        })
+        this.caculateTime(BAC.currentTime)
       });
 
       BAC.onError((res) => {
@@ -107,9 +127,48 @@ Component({
       }
       this.beatAudioEnded(e);
     },
+    // ---------------------拖动指针--------------------------
+    touchStart(e) {
+      this.setData({
+        startPageX: e.touches[0].pageX,
+        startPercent: this.data.playPercent,
+        movingBar: true
+      });
+
+      this.pausePlay()
+    },
+    movePointer(e) {
+      let touches = e.touches
+      let prePageX = this.data.startPageX
+      let pageX = e.touches[0].pageX
+      let duration = this.data.duration;
+
+      let width = pageX - prePageX
+      let percent = width / this.data.trackContainerWidth;
+      let currentPercent = this.data.startPercent / 100 + percent;
+      currentPercent = Math.min(1, currentPercent);
+      currentPercent = Math.max(0, currentPercent);
+      let time = currentPercent * duration
+
+      if (time >= duration) {
+        time = duration;
+        this.beatAudioEnded();
+      }
+
+      this.caculateTime(time)
+    },
+    touchEnd(e) {
+      let BAC = this.data.BAC;
+      this.setData({
+        movingBar: false
+      })
+      BAC.seek(this.data.currentTime);
+      this.continuePlay()
+    },
+    // ---------------------拖动指针--------------------------
     setTabWidth() {
-      let query = wx.createSelectorQuery().in(this),
-        that = this;
+      let query = wx.createSelectorQuery().in(this)
+      let that = this;
       query.selectAll('.tab-item').boundingClientRect(function (rectList) {
         let tabWidth = 0;
         for (let i = 0; i < rectList.length; i++) {
@@ -185,7 +244,7 @@ Component({
         playing
       });
     },
-    continuePlay(e) {
+    continuePlay() {
       let BAC = this.data.BAC;
 
       this.toggleStatus(true)
@@ -209,8 +268,44 @@ Component({
         showIndex: -1
       })
     },
+    toggleCollecting(collecting) {
+      this.setData({
+        collecting
+      })
+    },
     toggleCollectionItem() {
-      let item = this.data.page.list[this.data.showIndex]
+      if (this.data.collecting) {
+        return
+      }
+
+      this.toggleCollecting(true)
+      let index = this.data.showIndex
+      let beat = this.data.page.list[index]
+      let isCollected = beat.isCollection
+      let fn
+
+      if (isCollected) {
+        fn = api.deleteNewCollection
+      } else {
+        fn = api.addNewCollection
+      }
+
+      fn({
+        id: beat.id,
+        type: 'goods'
+      }, (res) => {
+        beat.isCollection = !isCollected
+
+        this.setData({
+          [`page.list[${index}].isCollection`]: beat.isCollection
+        })
+        // 操作的可能是正在播放的beat
+        this.data.scope.setData({
+          'beat.isCollection': beat.isCollection
+        })
+      }, () => {
+        this.toggleCollecting(false)
+      })
     },
     prevItem() {
       let showIndex = this.data.showIndex
@@ -218,7 +313,11 @@ Component({
     },
     nextItem() {
       let showIndex = this.data.showIndex
+      if (showIndex == this.data.page.list.length - 1) {
+        showIndex = -1
+      }
       this.play(showIndex + 1)
+      this.hideMoreModal()
     },
     toBuy() {
       wx.navigateTo({
@@ -281,6 +380,7 @@ Component({
 
         let originList = page.list
         list.forEach(item => {
+          item.isCollection = true
           item.price = new Number(parseFloat(item.original_price)).toFixed(2)
           originList.push(item)
         })

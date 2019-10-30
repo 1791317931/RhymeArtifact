@@ -43,10 +43,6 @@
         <image src="/assets/imgs/mall/collection-active.png"/>
         <view>不喜欢</view>
       </view>
-      <view class="item" catchtap="prevItem">
-        <image src="/assets/imgs/mall/prev.png"/>
-        <view>上一首</view>
-      </view>
       <view class="item" catchtap="nextItem">
         <image src="/assets/imgs/mall/next.png" />
         <view>下一首</view>

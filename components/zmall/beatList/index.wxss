@@ -25,6 +25,7 @@ page {
   font-family:PingFangSC-Regular,PingFangSC;
   font-weight:400;
   color:rgba(90,90,90,1);
+  position: relative;
 }
 
 .tab-container .clearfix .tab-item:first-child {
@@ -35,8 +36,20 @@ page {
   padding-right: 30rpx;
 }
 
-.tab-container .clearfix .tab-item.active {
-  font-weight: 600;
+.tab-container .clearfix .tab-item.active:before {
+  content: '';
+  width: 40rpx;
+  height: 8rpx;
+  border-radius: 4rpx;
+  background: #0CCD9A;
+  position: absolute;
+  left: 50%;
+  bottom: -2rpx;
+  transform: translateX(-50%) translateX(20rpx);
+}
+
+.tab-container .clearfix .tab-item.active:first-child:before {
+  transform: translateX(-50%);
 }
 
 .list-container {
@@ -54,14 +67,13 @@ page {
 .list-container .item .cover-container {
   width: 120rpx;
   height: 120rpx;
-  border-radius:8px;
-  overflow: hidden;
   position: relative;
 }
 
 .list-container .item .cover-container .cover {
   width: 120rpx;
   height: 120rpx;
+  border-radius:8px;
 }
 
 .list-container .item .cover-container .play-container {
@@ -72,6 +84,8 @@ page {
   left: 0;
   background: rgba(0, 0, 0, .5);
   z-index: 1;
+  border-radius: 8rpx;
+  overflow: hidden;
 }
 
 .list-container .item .cover-container .play {
@@ -93,7 +107,7 @@ page {
   font-weight:600;
   color:rgba(4,4,4,1);
   line-height:48rpx;
-  width: 300rpx;
+  width: 230rpx;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -109,9 +123,9 @@ page {
 }
 
 .list-container .item .price {
-  width: 190rpx;
+  width: 142rpx;
   line-height: 120rpx;
-  font-size:30prx;
+  font-size:30rpx;
   font-family:DINAlternate-Bold,DINAlternate;
   font-weight:bold;
   color:rgba(248,77,120,1);
@@ -140,12 +154,18 @@ page {
   width: 670rpx;
   display: flex;
   position: fixed;
-  left: 40rpx;
-  bottom: 40rpx;
+  left: 800rpx;
+  bottom: -500rpx;
   padding: 20rpx;
   background:rgba(255,255,255, 1);
   box-shadow:0 0 34rpx 0rpx rgba(0,0,0,0.1);
   border-radius:20rpx;
+  z-index: 1;
+}
+
+.beat-modal.active {
+  left: 40rpx;
+  bottom: 40rpx;
 }
 
 .beat-modal .cover-container {
@@ -191,6 +211,10 @@ page {
   font-weight:600;
   color:rgba(4,4,4,1);
   line-height:48rpx;
+  width: 320rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .beat-modal .operation {

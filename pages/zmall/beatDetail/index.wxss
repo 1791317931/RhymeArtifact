@@ -2,6 +2,11 @@ page {
   background: #fff;
 }
 
+.wrapper-container {
+  height: 100%;
+  padding-bottom: 175rpx;
+}
+
 .cover-info {
   padding: 50rpx 0 0;
 }
@@ -10,15 +15,13 @@ page {
   display: block;
   width: 366rpx;
   height: 366rpx;
+  box-shadow:0 2rpx 30rpx 0 rgba(0,0,0,0.44);
   margin: 0 auto;
 }
 
 .cover-info .title {
-  width: 700rpx;
+  width: 470rpx;
   margin: 50rpx auto 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
   text-align: center;
   font-size:34rpx;
   font-family:PingFangSC-Semibold,PingFangSC;
@@ -38,7 +41,7 @@ page {
 }
 
 .play-info {
-  width: 650rpx;
+  width: 500rpx;
   height: 83rpx;
   margin: 25rpx auto 0;
   position: relative;
@@ -82,10 +85,14 @@ page {
   width: 68rpx;
   height: 68rpx;
   border-radius: 34rpx;
-  background:rgba(1,1,1, .1);
+  background: transparent;
   position: absolute;
   top: 0;
   right: -34rpx;
+}
+
+.play-info .progress .progress-bar .circle-bar.active {
+  background:rgba(1,1,1, .1);
 }
 
 .play-info .progress .progress-bar .circle-bar:before {
@@ -167,6 +174,22 @@ page {
 .option .item image {
   width: 88rpx;
   height: 88rpx;
+}
+
+.option .item.comment .count {
+  min-width: 40rpx;
+  padding: 0 6rpx;
+  line-height:34rpx;
+  background:rgba(254,37,83,1);
+  border-radius:17rpx;
+  font-size:20rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(255,255,255,1);
+  position: absolute;
+  top: 8rpx;
+  left: 44rpx;
+  text-align: center;
 }
 
 .option .buy {

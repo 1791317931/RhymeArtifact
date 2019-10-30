@@ -13,7 +13,7 @@
     </view>
     <view class="createMusicList_item_content">
       <view class="createMusicList_item_info"
-        data-index="{{index}}
+        data-index="{{index}}"
         catchtap="toggleItemStatus">
         <view class="createMusicList_item_status">
           <image src="/assets/imgs/disk.png" />

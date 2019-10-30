@@ -203,6 +203,9 @@ Component({
         page.total_pages = pagination.total_pages
         page.total_count = pagination.total
         page.current_page = pageNum
+        this.data.scope.setData({
+          commentCount: pagination.total
+        })
 
         let originList = page.list
         list.forEach(item => {
