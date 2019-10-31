@@ -9,6 +9,10 @@ export function bindUserPhone(data, fn, completeFn) {
   UrlUtil.post(PathUtil.getNewPath('wechat/getAuthPhone'), data, fn, completeFn);
 }
 
+export function getSystemStatus(fn, completeFn) {
+  UrlUtil.get(PathUtil.getNewPath('auth/status'), null, fn, completeFn);
+}
+
 export function getPolicyParam(fn, completeFn, failFn) {
   UrlUtil.get('utils/oss-policy', null, fn, completeFn, failFn);
 }

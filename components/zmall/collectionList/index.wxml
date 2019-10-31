@@ -47,7 +47,7 @@
         <image src="/assets/imgs/mall/next.png" />
         <view>下一首</view>
       </view>
-      <view class="item" catchtap="toBuy">
+      <view hidden="{{isIos}}" class="item" catchtap="toBuy">
         <image src="/assets/imgs/mall/shopcar.png" />
         <view>去购买</view>
       </view>

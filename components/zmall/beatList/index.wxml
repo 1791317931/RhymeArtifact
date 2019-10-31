@@ -60,7 +60,8 @@
     </view>
   </view>
   <view class="operation">
-    <view class="buy" catchtap="playToBuy">去购买</view>
+    <view hidden="{{isIos}}" class="buy" catchtap="playToBuy">去购买</view>
+    <view hidden="{{!isIos}}" class="buy" catchtap="toDetail">详情</view>
   </view>
 </view>
 <view hidden="{{showIndex == -1}}" class="more-modal" catchtouchmove="prevent">
@@ -79,7 +80,7 @@
         <image src="/assets/imgs/mall/next.png" />
         <view>下一首</view>
       </view>
-      <view class="item" catchtap="toBuy">
+      <view hidden="{{isIos}}" class="item" catchtap="toBuy">
         <image src="/assets/imgs/mall/shopcar.png" />
         <view>去购买</view>
       </view>

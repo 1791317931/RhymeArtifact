@@ -8,6 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    isIos: false,
     id: null,
     beat: null,
     loading: false,
@@ -55,7 +56,8 @@ Page({
     this.setData({
       loadModalComponent,
       beatComponent,
-      commentComponent
+      commentComponent,
+      isIos: getApp().globalData.platform == 'ios'
     })
 
     if (options.id) {

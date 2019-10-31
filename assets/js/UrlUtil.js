@@ -23,9 +23,10 @@ let UrlUtil = {
       url = PathUtil.getPath(url);
     }
 
+    let authStatus = wx.getStorageSync('authStatus')
     let userInfo = wx.getStorageSync('userInfo')
     if (url.indexOf('authorizations') == -1 && url.indexOf('getAuthPhone') == -1) {
-      if (!userInfo || (userInfo && !userInfo.mobile)) {
+      if (authStatus == 1 && (!userInfo || (userInfo && !userInfo.mobile))) {
         // 绑定手机号
         UrlUtil.toLogin()
         return

@@ -18,6 +18,7 @@ Component({
    * 组件的初始数据
    */
   data: {
+    isIos: false,
     scope: null,
     tabs: [],
     BAC: null,
@@ -68,7 +69,8 @@ Component({
       let BAC = option.audioContext || wx.createInnerAudioContext()
       // let BAC = option.audioContext || wx.getBackgroundAudioManager()
       this.setData({
-        BAC
+        BAC,
+        isIos: getApp().globalData.platform == 'ios'
       })
       this.setScope(scope)
       this.bindBACEvent()
@@ -278,6 +280,11 @@ Component({
     playToBuy() {
       wx.navigateTo({
         url: `/pages/zmall/buy/index?id=${this.data.page.list[this.data.playIndex].id}`
+      })
+    },
+    toDetail() {
+      wx.navigateTo({
+        url: `/pages/zmall/beatDetail/index?id=${this.data.page.list[this.data.playIndex].id}`
       })
     },
     toggleCollectionItem() {

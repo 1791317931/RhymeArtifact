@@ -17,6 +17,7 @@ Component({
    * 组件的初始数据
    */
   data: {
+    isIos: false,
     scope: null,
     tabs: [],
     BAC: null,
@@ -60,7 +61,8 @@ Component({
 
       let BAC = option.audioContext || wx.createInnerAudioContext()
       this.setData({
-        BAC
+        BAC,
+        isIos: getApp().globalData.platform == 'ios'
       })
       this.setScope(scope)
       this.bindBACEvent()
