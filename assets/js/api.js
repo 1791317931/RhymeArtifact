@@ -292,6 +292,10 @@ export function buyGoods(data, fn, completeFn) {
 export function getOrderPage(data, fn, completeFn) {
   UrlUtil.get(PathUtil.getNewPath('orderLists'), data, fn, completeFn);
 }
+
+export function getOrderDetail(data, fn, completeFn) {
+  UrlUtil.get(PathUtil.getNewPath(`orderDetail/${data.id}`), data, fn, completeFn);
+}
 // ---------------------订单------------------------
 
 // ---------------------评论------------------------

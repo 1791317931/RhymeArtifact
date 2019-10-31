@@ -66,6 +66,7 @@ Component({
       });
 
       let BAC = option.audioContext || wx.createInnerAudioContext()
+      // let BAC = option.audioContext || wx.getBackgroundAudioManager()
       this.setData({
         BAC
       })
@@ -228,7 +229,8 @@ Component({
     },
     play(index) {
       let BAC = this.data.BAC
-      BAC.src = this.data.page.list[index].beat_try_url
+      let beat = this.data.page.list[index]
+      BAC.src = beat.beat_try_url
 
       this.setData({
         playIndex: index,
@@ -271,6 +273,11 @@ Component({
     toggleCollecting(collecting) {
       this.setData({
         collecting
+      })
+    },
+    playToBuy() {
+      wx.navigateTo({
+        url: `/pages/zmall/buy/index?id=${this.data.page.list[this.data.playIndex].id}`
       })
     },
     toggleCollectionItem() {

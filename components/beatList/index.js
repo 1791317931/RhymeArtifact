@@ -67,7 +67,7 @@ Component({
     },
     getCategoryList(renderCallback) {
       api.getCategoryList({
-        type: CategoryType.BEAT
+        type: 6
       }, (res) => {
         let tabs = res.data || [];
         if (!tabs.length) {

@@ -200,7 +200,7 @@ Page({
   },
   getCategoryList(callback) {
     api.getCategoryList({
-      type: CategoryType.VIDEO
+      type: 5
     }, (res) => {
       let tabs = res.data;
 

@@ -1,31 +1,33 @@
 <loadModal id="loadModalComponent"/>
 <view class="wrapper">
-  <view class="status">{{orderStatusMap[order.status]}}</view>
+  <view class="status">{{orderStatusMap[order.order_status]}}</view>
   <view class="info-container">
     <view class="cover">
-      <image src="{{beat.cover}}"/>
+      <image src="{{beat.cover_images[0]}}"/>
     </view>
     <view class="info">
-      <view class="title">{{beat.title}}</view>
-      <view class="author">{{beat.author}}</view>
+      <view class="title">{{beat.goods_name}}</view>
+      <view class="author">{{user.nickname}}</view>
     </view>
-    <view class="price">{{order.price}}</view>
+    <view class="price">{{order.payment_money}}</view>
   </view>
   <!-- 待支付 -->
-  <view hidden="{{order.status != 0}}">
+  <view hidden="{{order.order_status != 0}}">
     <view class="detail">
       <view class="item">
         <text>下单时间</text>
-        <text>{{order.created_time}}</text>
+        <text>{{order.created_at}}</text>
       </view>
       <view class="item" catchtap="toggleTip">
         <view class="format-wrapper {{openFormat ? 'active' : ''}}">
           <view class="format">
-            <view>{{skuMap[order.level].title}}</view>
-            <view>{{skuMap[order.level].format}}</view>
+            <view>{{skuMap[goodsSku.level].title}}</view>
+            <view>{{skuMap[goodsSku.level].format}}</view>
           </view>
           <view class="tip">
-            <view class="dot"></view>显示使用条款
+            <image hidden="{{!openFormat}}" class="dot" src="/assets/imgs/mall/circle-up.png"></image>
+            <image hidden="{{openFormat}}" class="dot" src="/assets/imgs/mall/circle-down.png"></image>
+            显示使用条款
           </view>
         </view>
         <view class="mt30" hidden="{{!openFormat}}">
@@ -39,33 +41,35 @@
     </view>
   </view>
   <!-- 已支付 -->
-  <view hidden="{{order.status != 1}}">
+  <view hidden="{{order.order_status != 1}}">
     <view class="detail">
       <view class="item">
         <text>下单时间</text>
-        <text>{{order.created_time}}</text>
+        <text>{{order.created_at}}</text>
       </view>
       <view class="item" catchtap="toggleTip">
         <view class="format-wrapper {{openFormat ? 'active' : ''}}">
           <view class="format">
-            <view>基础租用</view>
-            <view>{{order.created_time}}</view>
+            <view>{{skuMap[goodsSku.level].title}}</view>
+            <view>{{skuMap[goodsSku.level].format}}</view>
           </view>
           <view class="tip">
-            <view class="dot"></view>显示使用条款
+            <image hidden="{{!openFormat}}" class="dot" src="/assets/imgs/mall/circle-up.png"></image>
+            <image hidden="{{openFormat}}" class="dot" src="/assets/imgs/mall/circle-down.png"></image>
+            显示使用条款
           </view>
         </view>
         <view class="mt30" hidden="{{!openFormat}}">
-          <skuFormat level="{{order.level}}" />
+          <skuFormat level="{{goodsSku.level}}" />
         </view>
       </view>
       <view class="item">
         <text>音乐下载地址</text>
-        <text>www.peaceandlovemusic.cn</text>
+        <text>{{url}}</text>
       </view>
       <view class="item">
         <text>订单号</text>
-        <text>{{order.code}}</text>
+        <text>{{order.order_sn}}</text>
       </view>
     </view>
     <view>
@@ -73,26 +77,30 @@
         Beat购买成功请使用电脑访问官网登录账号点击{{'<'}}<text>头像-我的购买</text>{{'>'}}中进行下载使用
       </view>
       <view class="client">
-        <image src="/assets/imgs/earphones.png"/>
+        <button open-type="contact">
+          <image src="/assets/imgs/mall/earphones.png" />
+        </button>
       </view>
       <view class="copy" catchtap="copy">点击复制网址</view>
     </view>
   </view>
   <!-- 已取消、已超时 -->
-  <view hidden="{{order.status != 2 && order.status != 3}}">
+  <view hidden="{{order.order_status != 2 && order.order_status != 3}}">
     <view class="detail">
       <view class="item">
         <text>下单时间</text>
-        <text>{{order.created_time}}</text>
+        <text>{{order.created_at}}</text>
       </view>
       <view class="item" catchtap="toggleTip">
         <view class="format-wrapper {{openFormat ? 'active' : ''}}">
           <view class="format">
-            <view>{{skuMap[order.level].title}}</view>
-            <view>{{skuMap[order.level].format}}</view>
+            <view>{{skuMap[goodsSku.level].title}}</view>
+            <view>{{skuMap[goodsSku.level].format}}</view>
           </view>
           <view class="tip">
-            <view class="dot"></view>显示使用条款
+            <image hidden="{{!openFormat}}" class="dot" src="/assets/imgs/mall/circle-up.png"></image>
+            <image hidden="{{openFormat}}" class="dot" src="/assets/imgs/mall/circle-down.png"></image>
+            显示使用条款
           </view>
         </view>
         <view class="mt30" hidden="{{!openFormat}}">
@@ -100,6 +108,5 @@
         </view>
       </view>
     </view>
-    <view class="buy" catchtap="buy">提交订单</view>
   </view>
 </view>

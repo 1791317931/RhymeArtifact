@@ -60,7 +60,7 @@
     </view>
   </view>
   <view class="operation">
-    <view class="buy">去购买</view>
+    <view class="buy" catchtap="playToBuy">去购买</view>
   </view>
 </view>
 <view hidden="{{showIndex == -1}}" class="more-modal" catchtouchmove="prevent">

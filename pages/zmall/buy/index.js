@@ -161,6 +161,10 @@ Page({
         ...packageParam,
         success: (res) => {
           TipUtil.message('支付成功')
+          this.getById()
+          wx.navigateTo({
+            url: `/pages/zmall/orderDetail/index?id=${data.order.id}`
+          })
         },
         fail: (res) => {
           if (ConfigUtil.isDev()) {

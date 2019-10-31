@@ -25,12 +25,12 @@ page {
   width: 120rpx;
   height: 120rpx;
   border-radius:8rpx;
-  overflow: hidden;
 }
 
 .info-container .cover image {
   width: 120rpx;
   height: 120rpx;
+  border-radius:8rpx;
 }
 
 .info-container .info {
@@ -38,7 +38,7 @@ page {
 }
 
 .info-container .info .title {
-  width: 400rpx;
+  width: 300rpx;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -59,7 +59,7 @@ page {
 }
 
 .info-container .price {
-  width: 130rpx;
+  width: 180rpx;
   line-height: 120rpx;
   text-align: right;
   font-size:40rpx;
@@ -129,43 +129,14 @@ page {
   color:rgba(4,4,4,1);
 }
 
-.format-wrapper .dot {
+.dot {
   width: 24rpx;
   height: 24rpx;
   position: absolute;
   top: 50%;
   left: 0;
   border-radius: 50%;
-  background: #000;
   transform: translateY(-50%);
-}
-
-.format-wrapper .dot:before, .format-wrapper .dot:after {
-  content: '';
-  width: 10rpx;
-  height: 2rpx;
-  background: #fff;
-  position: absolute;
-  top: 50%;
-  transition: transform .3s ease;
-}
-
-.format-wrapper .dot:before {
-  left: 6rpx;
-  transform: translateY(-50%) rotateZ(45deg);
-}
-
-.format-wrapper .dot:after {
-  right: 6rpx;
-  transform: translateY(-50%) rotateZ(-45deg);
-}
-
-.format-wrapper.active .tip .dot:before {
-  transform: translateY(-50%) rotateZ(-45deg);
-}
-
-.format-wrapper.active .tip .dot:after {
-  transform: translateY(-50%) rotateZ(45deg);
 }
 
 .download-tip {
@@ -186,14 +157,20 @@ page {
   position: relative;
 }
 
-.client image {
+.client button {
   width: 100rpx;
   height: 100rpx;
   position: absolute;
   top: 0;
   right: 0;
-  box-shadow:0 2rpx 4rpx 0 rgba(0,0,0,0.12);
-  border-radius: 50%;
+  z-index: 2;
+  padding: 0;
+  background: transparent;
+}
+
+.client button image {
+  width: 100rpx;
+  height: 100rpx;
 }
 
 .copy {

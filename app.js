@@ -22,7 +22,7 @@ App({
       });
     });
 
-    this.getActivitySetting();
+    // this.getActivitySetting();
     this.getPlatForm();
   },
   getActivitySetting() {

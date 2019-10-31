@@ -51,6 +51,14 @@ Page({
   onHide: function () {
     // 暂停播放
     this.data.beatComponent.pausePlay()
+    // let that = this.data.beatComponent
+    // let beat = that.data.page.list[index]
+    // let BAC = that.data.BAC
+    // BAC.title = beat.goods_name
+    // BAC.epname = beat.goods_name
+    // BAC.singer = beat.author
+    // BAC.coverImgUrl = beat.cover_images[0]
+    // BAC.src = beat.try_beat_url
   },
 
   /**

@@ -1,10 +1,10 @@
 {
   "pages": [
     "pages/zmall/index/index",
+    "pages/zmall/orderDetail/index",
     "pages/user/order/index/index",
     "pages/main/index",
     "pages/zmall/beatDetail/index",
-    "pages/zmall/orderDetail/index",
     "pages/zmall/buy/index",
     "pages/user/collection/index",
     "pages/freestyle/play/index",
@@ -38,6 +38,7 @@
     "pages/user/skill/index",
     "pages/user/editInfo/index"
   ],
+  "requiredBackgroundModes": ["audio"],
   "window": {
     "backgroundColor": "#f7f7f7",
     "backgroundTextStyle": "dark",

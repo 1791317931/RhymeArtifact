@@ -1,4 +1,5 @@
 import TimeUtil from '../../../assets/js/TimeUtil'
+import * as api from '../../../assets/js/api'
 
 Page({
 
@@ -9,6 +10,8 @@ Page({
     id: null,
     order: {},
     beat: {},
+    user: {},
+    goodsSku: {},
     loading: false,
     loadModalComponent: null,
     orderStatusMap: {
@@ -35,7 +38,8 @@ Page({
         title: '独家买断',
         format: 'MP3、WAV和分轨格式音频文件'
       }
-    }
+    },
+    url: 'www.peaceandlovemusic.cn'
   },
 
   /**
@@ -45,7 +49,7 @@ Page({
     let loadModalComponent = this.selectComponent('#loadModalComponent')
     this.setData({
       loadModalComponent,
-      // id: options.id
+      id: options.id || 119
     })
 
     this.getById()
@@ -106,52 +110,20 @@ Page({
   },
   getById() {
     this.toggleLoading(true)
-    setTimeout(() => {
-      let beat = {
-        id: 1,
-        title: '机器铃 砍菜刀',
-        cover: '/assets/imgs/end-record.png',
-        author: '张三',
-        duration: 240,
-        skus: [
-          {
-            id: 1,
-            price: 100,
-            level: 1
-          },
-          {
-            id: 2,
-            price: 200,
-            level: 2
-          },
-          {
-            id: 3,
-            price: 300,
-            level: 3
-          },
-          {
-            id: 4,
-            price: 400,
-            level: 4
-          }
-        ]
-      }
-      let order = {
-        id: 1,
-        code: 'lfdjfklsjfklf',
-        status: 2,
-        level: 1,
-        created_time: TimeUtil.getFormatTime(new Date(), 'yyyy-MM-dd HH:mm'),
-        price: 3000
-      }
-
+    api.getOrderDetail({
+      id: this.data.id,
+      include: 'goods,goodsSku,goodsUser'
+    }, (res) => {
+      let data = res.data
       this.setData({
-        beat,
-        order
+        beat: data.goods.data,
+        goodsSku: data.goodsSku.data,
+        user: data.goodsUser.data,
+        order: data
       })
-
+    }, () => {
       this.toggleLoading(false)
-    }, 1000)
+    })
   },
   toggleTip() {
     this.setData({
@@ -160,10 +132,7 @@ Page({
   },
   copy() {
     wx.setClipboardData({
-      data: '复制的链接'
+      data: `https://${this.data.url}`
     })
-  },
-  buy() {
-    
   }
 })

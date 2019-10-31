@@ -126,7 +126,7 @@ Page({
           wx.setStorageSync('token', res.data.token);
           wx.setStorageSync('userInfo', res.data.userInfo);
           wx.switchTab({
-            url: 'pages/zmall/index/index'
+            url: '/pages/zmall/index/index'
           });
         });
       }
