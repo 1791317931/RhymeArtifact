@@ -23,11 +23,11 @@ let UrlUtil = {
       url = PathUtil.getPath(url);
     }
 
-    let userInfo = wx.getStorageSync('userInfo')
-    if (url.indexOf('authorizations') == -1 && url.indexOf('getAuthPhone') == -1 && !userInfo) {
-        UrlUtil.toLogin()
-        return
-    }
+    // let userInfo = wx.getStorageSync('userInfo')
+    // if (url.indexOf('authorizations') == -1 && url.indexOf('getAuthPhone') == -1 && !userInfo) {
+    //     UrlUtil.toLogin()
+    //     return
+    // }
 
     let param = {
       url,

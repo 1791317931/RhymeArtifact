@@ -31,15 +31,23 @@
   color:rgba(51,51,51,1);
 }
 
-button {
-  width:510rpx;
-  height:88rpx;
-  line-height:88rpx;
+.btn-group {
   margin-top: 80rpx;
+  padding: 0 100rpx;
+}
+
+.btn-group button {
+  width: 250rpx;
+  display: inline-block;
+  line-height:88rpx;
   background:rgba(37,37,37,1);
   border-radius:14rpx;
   font-size:32rpx;
   font-family:PingFangSC-Light;
   color:rgba(255,255,255,1);
   letter-spacing:1rpx;
+}
+
+.btn-group button:not(:first-child) {
+  margin-left: 50rpx;
 }

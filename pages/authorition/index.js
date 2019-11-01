@@ -74,6 +74,11 @@ Page({
   onShareAppMessage: function (e) {
     return CommonUtil.share();
   },
+  cancel() {
+    wx.switchTab({
+      url: '/pages/zmall/index/index'
+    })
+  },
   bindGetUserInfo(e) {
     // 1、先在微信服务器登录
     wx.login({
