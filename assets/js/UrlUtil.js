@@ -23,14 +23,10 @@ let UrlUtil = {
       url = PathUtil.getPath(url);
     }
 
-    let authStatus = wx.getStorageSync('authStatus')
     let userInfo = wx.getStorageSync('userInfo')
-    if (url.indexOf('authorizations') == -1 && url.indexOf('getAuthPhone') == -1) {
-      if (authStatus == 1 && (!userInfo || (userInfo && !userInfo.mobile))) {
-        // 绑定手机号
+    if (url.indexOf('authorizations') == -1 && url.indexOf('getAuthPhone') == -1 && !userInfo) {
         UrlUtil.toLogin()
         return
-      }
     }
 
     let param = {
@@ -84,10 +80,10 @@ let UrlUtil = {
 
     wx.request(param);
   },
-  toLogin() {
+  toLogin(shouldBindPhone = false) {
     if (!UrlUtil.isLogin) {
       UrlUtil.isLogin = true;
-      CommonUtil.toLogin();
+      CommonUtil.toLogin(shouldBindPhone);
     }
   }
 };

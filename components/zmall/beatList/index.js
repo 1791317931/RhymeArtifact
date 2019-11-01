@@ -282,12 +282,11 @@ Component({
         url: `/pages/zmall/buy/index?id=${this.data.page.list[this.data.playIndex].id}`
       })
     },
-    toDetail() {
-      wx.navigateTo({
-        url: `/pages/zmall/beatDetail/index?id=${this.data.page.list[this.data.playIndex].id}`
-      })
-    },
     toggleCollectionItem() {
+      if (!CommonUtil.hasBindMobile()) {
+        return
+      }
+
       if (this.data.collecting) {
         return
       }
@@ -394,7 +393,7 @@ Component({
 
         let originList = page.list
         list.forEach(item => {
-          item.isCollection = true
+          // item.isCollection = true
           item.price = new Number(parseFloat(item.original_price)).toFixed(2)
           originList.push(item)
         })

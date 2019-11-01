@@ -131,7 +131,6 @@ Component({
         per_page: page.per_page,
         include: 'goods,goodsSku,goodsUser'
       }
-      console.log(JSON.stringify(param))
       let list = [];
 
       if (current_page > 1) {

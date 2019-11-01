@@ -40,9 +40,9 @@
       <image hidden="{{beat.collection}}" src="/assets/imgs/mall/collection-88.png"/>
       <image hidden="{{!beat.collection}}" src="/assets/imgs/mall/collection-active-88.png"/>
     </view>
-    <view hidden="{{isIos}}" class="buy" catchtap="toBuy">
-      <image src="/assets/imgs/mall/btn-shopcar.png"/>
-      <view>去购买</view>
+    <view class="buy" catchtap="toBuy">
+      <image hidden="{{isIos}}" src="/assets/imgs/mall/btn-shopcar.png"/>
+      <view class="{{isIos ? 'no-padding' : ''}}">{{isIos ? 'Beat详情' : '去购买'}}</view>
     </view>
   </view>
 </view>

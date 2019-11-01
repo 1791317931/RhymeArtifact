@@ -1,5 +1,6 @@
 import TimeUtil from '../../../assets/js/TimeUtil'
 import TipUtil from '../../../assets/js/TipUtil'
+import CommonUtil from '../../../assets/js/CommonUtil'
 import * as api from '../../../assets/js/api';
 
 Page({
@@ -164,11 +165,19 @@ Page({
     commentComponent.getPage(1)
   },
   showListModal() {
+    if (!CommonUtil.hasBindMobile()) {
+      return
+    }
+
     this.setData({
       showList: true
     })
   },
   showCommentModal() {
+    if (!CommonUtil.hasBindMobile()) {
+      return
+    }
+
     this.setData({
       showCommentList: true
     })
@@ -243,6 +252,10 @@ Page({
     })
   },
   toggleCollection(e) {
+    if (!CommonUtil.hasBindMobile()) {
+      return
+    }
+    
     if (this.data.collecting) {
       return
     }

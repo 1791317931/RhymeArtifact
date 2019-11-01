@@ -24,7 +24,6 @@ App({
 
     // this.getActivitySetting();
     this.getPlatForm();
-    this.getSystemStatus()
   },
   getActivitySetting() {
     api.getActivitySetting(null, (res) => {
@@ -38,13 +37,6 @@ App({
 
       this.globalData.activity = activity;
     });
-  },
-  getSystemStatus() {
-    // 默认不校验
-    wx.setStorageSync('authStatus', 0)
-    api.getSystemStatus((res) => {
-      wx.setStorageSync('authStatus', res.authStatus)
-    })
   },
   getPlatForm() {
     wx.getSystemInfo({

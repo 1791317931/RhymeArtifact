@@ -221,6 +221,11 @@ page {
   color:rgba(255,255,255,1);
 }
 
+.option .buy view.no-padding {
+  padding: 0;
+  text-align: center;
+}
+
 .mask {
   position: fixed;
   top: 0;

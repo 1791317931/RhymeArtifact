@@ -164,3 +164,24 @@ page {
 .download-tip text {
   color: #F84D78;
 }
+
+.ios-tip {
+  margin-top: 30rpx;
+  font-size:28rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(4,4,4,1);
+  line-height:40rpx;
+}
+
+.copy {
+  margin-top: 107rpx;
+  line-height:100rpx;
+  background:rgba(12,207,142,1);
+  border-radius:55rpx;
+  text-align: center;
+  font-size:34rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(255,255,255,1);
+}

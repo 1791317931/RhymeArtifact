@@ -44,7 +44,11 @@
       <text>www.peaceandlovemusic.cn</text>
     </view>
   </view>
-  <view class="download-tip">
+  <view hidden="{{isIos}}" class="download-tip">
     Beat购买成功请使用电脑访问官网登录账号点击{{'<'}}<text>头像-我的购买</text>{{'>'}}中进行下载使用
   </view>
+  <view hidden="{{!isIos}}" class="ios-tip">
+    由于iOS制度问题，移动端无法进行支付请在PC端注册登录进行购买下载Beat
+  </view>
+  <view hidden="{{!isIos}}" class="copy" catchtap="copyUrl">点击复制网址</view>
 </view>

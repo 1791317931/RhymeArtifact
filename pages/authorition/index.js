@@ -18,6 +18,12 @@ Page({
    */
   onLoad: function (options) {
     UrlUtil.isLogin = true
+
+    if (options.shouldBindPhone) {
+      this.setData({
+        shouldBindPhone: options.shouldBindPhone == 'Y'
+      })
+    }
   },
 
   /**
@@ -90,16 +96,20 @@ Page({
               wx.setStorageSync('token', res.data.token);
               wx.setStorageSync('userInfo', res.data.userInfo);
 
-              if (res.data.userInfo.mobile) {
-                wx.switchTab({
-                  url: '/pages/zmall/index/index'
-                });
-              } else {
-                TipUtil.message('请绑定手机号')
-                this.setData({
-                  shouldBindPhone: true
-                })
-              }
+              wx.switchTab({
+                url: '/pages/zmall/index/index'
+              });
+
+              // if (res.data.userInfo.mobile) {
+              //   wx.switchTab({
+              //     url: '/pages/zmall/index/index'
+              //   });
+              // } else {
+              //   TipUtil.message('请绑定手机号')
+              //   this.setData({
+              //     shouldBindPhone: true
+              //   })
+              // }
             });
           }
         });

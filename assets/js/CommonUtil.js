@@ -1,5 +1,6 @@
 import * as api from './api'
 import PathUtil from './PathUtil';
+import UrlUtil from './UrlUtil';
 
 function S4() {
   return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
@@ -10,10 +11,19 @@ function uuid() {
 }
 
 let CommonUtil = {
-  toLogin() {
+  toLogin(shouldBindPhone = false) {
     wx.navigateTo({
-      url: `/pages/authorition/index`
+      url: `/pages/authorition/index?shouldBindPhone=${shouldBindPhone ? 'Y' : 'N'}`
     });
+  },
+  hasBindMobile() {
+    let user = wx.getStorageSync('userInfo');
+    if (!user.mobile) {
+      UrlUtil.toLogin(true)
+      return false
+    }
+
+    return true
   },
   // 禁止出现正则、function
   copyObject(obj) {

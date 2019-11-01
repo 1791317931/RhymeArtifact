@@ -1,5 +1,6 @@
 import TimeUtil from '../../../assets/js/TimeUtil'
 import TipUtil from '../../../assets/js/TipUtil'
+import CommonUtil from '../../../assets/js/CommonUtil'
 import ConfigUtil from '../../../assets/js/ConfigUtil'
 import * as api from '../../../assets/js/api';
 
@@ -9,6 +10,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    isIos: false,
     id: null,
     beat: {},
     loading: false,
@@ -40,7 +42,8 @@ Page({
     let loadModalComponent = this.selectComponent('#loadModalComponent')
     this.setData({
       loadModalComponent,
-      id: options.id
+      id: options.id,
+      isIos: getApp().globalData.platform == 'ios'
     })
 
     this.getById()
@@ -135,7 +138,21 @@ Page({
       beat
     })
   },
+  copyUrl() {
+    wx.setClipboardData({
+      data: `https://peaceandlovemusic.cn/#/beat/detail?id=${this.data.id}`
+    })
+  },
   buy(e) {
+    if (this.data.isIos) {
+      TipUtil.message('iOS端手机用户请用电脑登录进行下载')
+      return
+    }
+
+    if (!CommonUtil.hasBindMobile()) {
+      return
+    }
+
     // 免费的不用购买
     let sku = this.getItem(e)
     if (sku.price <= 0) {
