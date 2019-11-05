@@ -283,7 +283,7 @@ Component({
       })
     },
     toggleCollectionItem() {
-      if (!CommonUtil.hasBindMobile()) {
+      if (!CommonUtil.hasBindUserInfo()) {
         return
       }
 

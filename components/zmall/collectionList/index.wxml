@@ -17,7 +17,7 @@
         <view class="title">{{item.goods_name}}</view>
         <view class="author">{{beat.author || beat.authorInfo.nickname}}</view>
       </view>
-      <view class="price">
+      <view hidden="{{isIos}}" class="price">
         <view wx:if="{{item.price > 0}}" class="value">{{item.price}}</view>
         <view wx:else class="free">免费</view>
       </view>

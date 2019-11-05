@@ -16,9 +16,16 @@ let CommonUtil = {
       url: `/pages/authorition/index?shouldBindPhone=${shouldBindPhone ? 'Y' : 'N'}`
     });
   },
-  hasBindMobile() {
+  hasBindUserInfo() {
     let user = wx.getStorageSync('userInfo');
+
+    if (!user) {
+      // 登录
+      UrlUtil.toLogin(false)
+      return false
+    }
     if (!user.mobile) {
+      // 绑定手机号
       UrlUtil.toLogin(true)
       return false
     }

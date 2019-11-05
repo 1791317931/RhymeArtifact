@@ -7,7 +7,7 @@
         <image src="{{userInfo.avatar}}"/>
       </view>
       <view class="info">
-        <view class="name">{{userInfo.nickname}}</view>
+        <view class="name">{{userInfo.nickname || '未登录'}}</view>
         <image class="arrow" src="/assets/imgs/arrow_right_white.png"/>
       </view>
     </view>

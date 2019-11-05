@@ -149,7 +149,7 @@ Page({
       return
     }
 
-    if (!CommonUtil.hasBindMobile()) {
+    if (!CommonUtil.hasBindUserInfo()) {
       return
     }
 
@@ -184,15 +184,8 @@ Page({
           })
         },
         fail: (res) => {
-          if (ConfigUtil.isDev()) {
-            wx.showModal({
-              title: 'x',
-              content: '' + JSON.stringify(res),
-            });
-          } else {
-            if (!/cancel/.test(res.errMsg || '')) {
-              TipUtil.error('支付失败');
-            }
+          if (!/cancel/.test(res.errMsg || '')) {
+            TipUtil.error('支付失败');
           }
         }
       });

@@ -1,0 +1,10 @@
+<view hidden="{{!showUserInfo && !showMobile}}" class="login-modal" catchtap="closeModal">
+  <view class="content-body" catchtap="prevent">
+    <view wx:if="showUserInfo">
+      <view class="system-info">
+        <image src="/assets/imgs/logo.png"/>
+        PAL Music 申请使用
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,34 @@
+.login-modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.login-modal:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  background: rgba(0, 0, 0, .6);
+}
+
+.content-body {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: #fff;
+  border-radius: 5rpx;
+  padding: 50rpx;
+}
+
+.system-info {
+  padding-left: 50rpx;
+  
+}

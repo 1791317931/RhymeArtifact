@@ -101,24 +101,38 @@ Page({
   getUserInfo() {
     this.toggleLoading(true)
     api.getUserInfoByToken((res) => {
-      this.setData({
-        userInfo: res.data
-      });
+      if (res) {
+        this.setData({
+          userInfo: res.data
+        });
+      }
     }, () => {
       this.toggleLoading(false)
     })
   },
   toOrderList() {
+    if (!CommonUtil.hasBindUserInfo()) {
+      return
+    }
+
     wx.navigateTo({
       url: '/pages/user/order/index/index'
     })
   },
   toCollectionList() {
+    if (!CommonUtil.hasBindUserInfo()) {
+      return
+    }
+
     wx.navigateTo({
       url: '/pages/zmall/beatDetail/index?type=collection'
     })
   },
   clickMenu(e) {
+    if (!CommonUtil.hasBindUserInfo()) {
+      return
+    }
+
     let index = e.target.dataset.index
     let item = this.data.menus[index]
     let openType = item.openType
@@ -138,6 +152,10 @@ Page({
     }
   },
   toDetail() {
+    if (!CommonUtil.hasBindUserInfo()) {
+      return
+    }
+
     wx.navigateTo({
       url: '/pages/user/info/index'
     })

@@ -165,7 +165,7 @@ Page({
     commentComponent.getPage(1)
   },
   showListModal() {
-    if (!CommonUtil.hasBindMobile()) {
+    if (!CommonUtil.hasBindUserInfo()) {
       return
     }
 
@@ -174,7 +174,7 @@ Page({
     })
   },
   showCommentModal() {
-    if (!CommonUtil.hasBindMobile()) {
+    if (!CommonUtil.hasBindUserInfo()) {
       return
     }
 
@@ -252,7 +252,7 @@ Page({
     })
   },
   toggleCollection(e) {
-    if (!CommonUtil.hasBindMobile()) {
+    if (!CommonUtil.hasBindUserInfo()) {
       return
     }
     

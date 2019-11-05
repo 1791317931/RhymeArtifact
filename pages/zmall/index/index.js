@@ -42,6 +42,8 @@ Page({
     let beatComponent = this.data.beatComponent
     if (!beatComponent.data.tabs.length) {
       beatComponent.getCategoryList()
+    } else if (!beatComponent.data.page.list.length) {
+      beatComponent.getPage(1)
     }
   },
 
