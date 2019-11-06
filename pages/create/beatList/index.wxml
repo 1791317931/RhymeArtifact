@@ -1,12 +1,4 @@
-<!-- 创作列表 -->
 <view class="create-container">
-  <view class="top-btn-container">
-    <button catchtap="toCreateMusicList">作品中心</button>
-    <button catchtap="toCreateLyricsList">写歌词</button>
-  </view>
-  <view class="list-container">
-    <canvas class="poster-canvas" canvas-id="poster-canvas"/>
-    <musicPoster id="musicPosterComponent"/>
-    <beatList id="beatComponent"/>
-  </view>
+  <image wx:for="{{list}}" wx:for-item="item" wx:for-index="index" wx:key="{{item.url}}"
+  class="item" data-index="{{index}}" src="{{item.img}}" catchtap="clickItem"/>
 </view>

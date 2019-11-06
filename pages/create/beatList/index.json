@@ -3,6 +3,6 @@
     "beatList": "/components/beatList/index",
     "musicPoster": "/components/musicPoster/index"
   },
-  "navigationBarTitleText": "音乐创作",
+  "navigationBarTitleText": "PAL Music",
   "enablePullDownRefresh": true
 }

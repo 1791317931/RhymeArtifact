@@ -1,9 +1,10 @@
 {
   "usingComponents": {
     "musicPoster": "/components/musicPoster/index",
+    "createMusicList": "/components/createMusicList/index",
     "studyVideoList": "/components/studyVideoList/index",
     "studyArticleList": "/components/studyArticleList/index"
   },
-  "navigationBarTitleText": "学习",
+  "navigationBarTitleText": "PAL Music",
   "enablePullDownRefresh": true
 }

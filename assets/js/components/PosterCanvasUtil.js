@@ -21,7 +21,7 @@ let PosterCanvasUtil = {
     paramMap = {
       // nothing=1为了构建场景值
       beat: 'path=pages/create/beatList/index&nothing=1',
-      music: 'path=pages/create/beatList/index&type=music'
+      music: 'path=pages/study/studyList/index&type=music'
     },
     param;
 

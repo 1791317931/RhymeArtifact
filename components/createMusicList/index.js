@@ -328,7 +328,7 @@ Component({
         return {
           title: CommonUtil.getShareTitle(),
           imageUrl: CommonUtil.getShareImage(),
-          path: '/pages/create/beatList/index?type=music'
+          path: '/pages/study/studyList/index?type=music'
         };
       }
     }

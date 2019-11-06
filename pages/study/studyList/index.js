@@ -13,6 +13,7 @@ Page({
     activeIndex: 0,
     videoComponent: null,
     articleComponent: null,
+    musicComponent: null,
     musicPosterComponent: null,
     onLoaded: false
   },
@@ -68,14 +69,17 @@ Page({
       });
     }
 
-    let videoComponent = this.selectComponent('#videoComponent'),
-    articleComponent = this.selectComponent('#articleComponent'),
-    musicPosterComponent = this.selectComponent('#musicPosterComponent');
+    let musicComponent = this.selectComponent('#musicComponent')
+    let videoComponent = this.selectComponent('#videoComponent')
+    let articleComponent = this.selectComponent('#articleComponent')
+    let musicPosterComponent = this.selectComponent('#musicPosterComponent');
 
+    musicComponent.init(this)
     videoComponent.init(this);
     articleComponent.init(this);
 
     this.setData({
+      musicComponent,
       videoComponent,
       articleComponent,
       musicPosterComponent
@@ -144,8 +148,10 @@ Page({
     item = tabs[data.activeIndex],
     id = item.id || item.flag;
 
-    if (id == tabs[tabs.length - 1].flag) {
+    if (item.flag == 'article') {
       this.data.articleComponent.onReachBottom();
+    } else if (item.flag == 'music') {
+      this.data.musicComponent.onReachBottom();
     } else {
       for (let i = 0; i < tabs.length - 1; i++) {
         if (tabs[i].id == id) {
@@ -170,8 +176,10 @@ Page({
       item = tabs[this.data.activeIndex],
       id = item.id || item.flag;
 
-      if (id == tabs[tabs.length - 1].flag) {
+      if (item.flag == 'article') {
         return this.data.articleComponent.shareItem(e);
+      } else if (item.flag == 'music') {
+        return this.data.musicComponent.shareItem(e);
       } else {
         return this.data.videoComponent.shareItem(e);
       }
@@ -183,8 +191,12 @@ Page({
     item = tabs[data.activeIndex],
     id = item.id || item.flag;
 
-    if (id == tabs[tabs.length - 1].flag) {
+    if (item.flag == 'article') {
       if (!data.articleComponent.data.page.list.length) {
+        this.getPage(1);
+      }
+    } else if (item.flag == 'music') {
+      if (!data.musicComponent.data.page.list.length) {
         this.getPage(1);
       }
     } else {
@@ -208,6 +220,11 @@ Page({
         flag: 'article',
         name: '文章'
       });
+
+      tabs.unshift({
+        flag: 'music',
+        name: '音乐'
+      })
 
       this.setData({
         tabs
@@ -247,8 +264,10 @@ Page({
     item = data.tabs[data.activeIndex],
     id = item.id || item.flag;
 
-    if (id == tabs[tabs.length - 1].flag) {
+    if (item.flag == 'article') {
       this.data.articleComponent.getPage(current_page);
+    } else if (item.flag == 'music') {
+      this.data.musicComponent.getPage(current_page)
     } else {
       for (let i = 0; i < tabs.length - 1; i++) {
         if (tabs[i].id == id) {

@@ -24,7 +24,7 @@
           <view class="title">{{item.music_title}}</view>
               <view class="detail-container">
               <text>作曲：{{item.beat.data.beat_author}}</text>
-              <text>作词：{{item.music_author}}</text>
+              <text>作词：{{item.lyricist}}</text>
               </view>
               <view class="duration">
                 {{item.surplusTimeArr[0]}}:
