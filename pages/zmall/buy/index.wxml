@@ -24,14 +24,14 @@
           显示使用条款
         </view>
       </view>
-      <view class="buy">
+      <view wx:if="{{!isIos}}" class="buy">
         <view wx:if="{{beat.buy_level >= item.level}}" class="btn-item">
           已购买
         </view>
         <view wx:elif="{{item.price == 0}}" class="btn-item">
           免费
         </view>
-        <view wx:elif="{{!isIos}}" class="btn" data-index="{{index}}" catchtap="buy">
+        <view wx:else class="btn" data-index="{{index}}" catchtap="buy">
           <image class="shopcar" src="/assets/imgs/mall/btn-shopcar.png" />
           {{item.price}}
         </view>

@@ -23,7 +23,7 @@
         <view class="createMusicList_item_detail">
           <view class="title">{{item.music_title}}</view>
               <view class="detail-container">
-              <text>作曲：{{item.beat.data.beat_author}}</text>
+              <text>作曲：{{item.composer}}</text>
               <text>作词：{{item.lyricist}}</text>
               </view>
               <view class="duration">

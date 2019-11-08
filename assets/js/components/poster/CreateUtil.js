@@ -31,8 +31,8 @@ let CreateUtil = {
     let title, author, composer;
     if (type == 'music') {
       title = data.music_title;
-      author = data.music_author;
-      composer = data.user.data.nickname;
+      author = data.user.data.nickname
+      composer = data.lyricist;
     } else if (type == 'beat') {
       title = data.beat_title;
       composer = data.beat_author;

@@ -25,7 +25,8 @@ Component({
       current_page: 1,
       list: []
     },
-    MAC: null
+    MAC: null,
+    user: null
   },
 
   /**
@@ -45,8 +46,10 @@ Component({
       
       this.setScope(scope);
       let MAC = wx.createInnerAudioContext();
+      let user = wx.getStorageSync('userInfo')
       this.setData({
-        MAC
+        MAC,
+        user
       });
 
       this.bindMACEvent();
@@ -207,9 +210,9 @@ Component({
         page: current_page,
         per_page: page.per_page,
         hasCollection: 1,
-        include: 'user,beat'
-      },
-        list = [];
+        include: 'user'
+      }
+      let list = [];
 
       if (current_page > 1) {
         list = page.list;
@@ -222,12 +225,11 @@ Component({
 
       let fn;
       if (this.data.page.showCollection) {
-        fn = api.getCollection;
-
-        param.type = 'music';
+        fn = api.getCollectionMusicPage;
       } else {
         if (this.data.page.showMine) {
-          fn = api.getMyMusicPage;
+          fn = api.getMusicPage
+          param.user_id = this.data.user.id
         } else {
           fn = api.getMusicPage;
         }
@@ -247,7 +249,7 @@ Component({
           }
 
           // 总时长
-          let totalTime = Math.ceil(parseInt(item.music_duration) / 1000);
+          let totalTime = Math.ceil(parseInt(0) / 1000);
           item.totalTime = totalTime;
           // 剩余时长
           item.surplusTime = totalTime;
@@ -272,7 +274,7 @@ Component({
         type = 'music';
 
       if (item.isCollection || page.showCollection) {
-        api.deleteCollection({
+        api.deleteNewCollection({
           id: item.id,
           type
         }, (res) => {
@@ -296,7 +298,7 @@ Component({
           }
         });
       } else {
-        api.addCollection({
+        api.addNewCollection({
           id: item.id,
           type
         }, (res) => {

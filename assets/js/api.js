@@ -124,15 +124,15 @@ export function createMusic(data, fn, completeFn) {
 }
 
 export function getMusicPage(data, fn, completeFn) {
-  UrlUtil.get('musics', data, fn, completeFn);
+  UrlUtil.get(PathUtil.getNewPath('musics'), data, fn, completeFn);
 }
 
-export function getMyMusicPage(data, fn, completeFn) {
-  UrlUtil.get('user/musics', data, fn, completeFn);
+export function getCollectionMusicPage(data, fn, completeFn) {
+  UrlUtil.get(PathUtil.getNewPath('user/collectionsMusics'), data, fn, completeFn);
 }
 
 export function removeMusic(data, fn, completeFn) {
-  UrlUtil.delete('musics/' + data.id, data, fn, completeFn);
+  UrlUtil.delete(PathUtil.getNewPath('musics/' + data.id), data, fn, completeFn);
 }
 // ---------------------创作------------------------
 

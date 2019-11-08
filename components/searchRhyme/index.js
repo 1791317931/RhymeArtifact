@@ -48,12 +48,15 @@ Component({
    */
   methods: {
     getWechatInfo() {
-      api.getWechatInfo({
-        key: 'wechat'
-      }, (res) => {
-        this.setData({
-          wechat: res.data.config_value
-        });
+      // api.getWechatInfo({
+      //   key: 'wechat'
+      // }, (res) => {
+      //   this.setData({
+      //     wechat: res.data.config_value
+      //   });
+      // });
+      this.setData({
+        wechat: 'yayunrap'
       });
     },
     handleOpenModal() {
