@@ -11,7 +11,7 @@ Page({
   data: {
     isIos: false,
     id: null,
-    beat: null,
+    music: null,
     loading: false,
     loadModalComponent: null,
     playTimeArr: [],
@@ -19,8 +19,8 @@ Page({
     playIndex: 0,
     total: 0,
     playing: false,
-    beatComponent: null,
-    commentComment: null,
+    musicComponent: null,
+    commentComponent: null,
     commentCount: 0,
     showList: false,
     showCommentList: false,
@@ -41,13 +41,16 @@ Page({
    */
   onLoad: function (options) {
     let loadModalComponent = this.selectComponent('#loadModalComponent')
-    let beatComponent = this.selectComponent('#beatComponent')
+    let musicComponent = this.selectComponent('#musicComponent')
     let commentComponent = this.selectComponent('#commentComponent')
 
     let BAC = wx.createInnerAudioContext()
-    beatComponent.init(this, {
+    musicComponent.init(this, {
       audioContext: BAC
     });
+    commentComponent.setData({
+      type: 'music'
+    })
     commentComponent.init(this);
     // 保持不锁屏
     wx.setKeepScreenOn({
@@ -56,7 +59,7 @@ Page({
 
     this.setData({
       loadModalComponent,
-      beatComponent,
+      musicComponent,
       commentComponent,
       isIos: getApp().globalData.platform == 'ios'
     })
@@ -67,7 +70,7 @@ Page({
       })
       this.getById()
     } else {
-      beatComponent.getPage(1)
+      musicComponent.getPage(1)
     }
 
     const query = wx.createSelectorQuery().in(this);
@@ -97,14 +100,14 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-    this.data.beatComponent.pausePlay()
+    this.data.musicComponent.pausePlay()
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    this.data.beatComponent.onUnload()
+    this.data.musicComponent.onUnload()
   },
 
   /**
@@ -125,9 +128,14 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-    
+    let item = this.data.music
+    return {
+      title: item.music_title,
+      imageUrl: item.musics_cover,
+      path: '/pages/create/musicDetail/index?type=music&id=' + item.id
+    }
   },
-  prevent() {},
+  prevent() { },
   toggleLoading(loading) {
     this.data.loadModalComponent.setData({
       loading
@@ -135,32 +143,33 @@ Page({
   },
   getById() {
     this.toggleLoading(true)
-    api.getGoodsById({
-      id: this.data.id
+    api.getMusicById({
+      id: this.data.id,
+      include: 'user'
     }, (res) => {
-      let beat = res.data
+      let music = res.data
       this.setData({
-        beat
+        music
       })
 
-      let beatComponent = this.data.beatComponent
-      beatComponent.setData({
-        beat
+      let musicComponent = this.data.musicComponent
+      musicComponent.setData({
+        music
       })
-      beatComponent.getPage(1)
+      musicComponent.getPage(1)
     }, () => {
       this.toggleLoading(false)
     })
   },
   setTitle(item) {
     wx.setNavigationBarTitle({
-      title: item.goods_name
+      title: item.music_title
     })
   },
   getCommentPage() {
     let commentComponent = this.data.commentComponent
     commentComponent.setData({
-      targetId: this.data.beat.id
+      targetId: this.data.music.id
     })
     commentComponent.getPage(1)
   },
@@ -217,13 +226,13 @@ Page({
 
     if (time >= duration) {
       time = duration;
-      this.data.beatComponent.beatAudioEnded();
+      this.data.musicComponent.musicAudioEnded();
     }
 
-    this.data.beatComponent.caculateTime(time)
+    this.data.musicComponent.caculateTime(time)
   },
   touchEnd(e) {
-    let that = this.data.beatComponent
+    let that = this.data.musicComponent
     let BAC = that.data.BAC;
     this.setData({
       movingBar: false
@@ -233,18 +242,18 @@ Page({
   },
   // ---------------------拖动指针--------------------------
   prev() {
-    let beatComponent = this.data.beatComponent
-    beatComponent.prevItem()
+    let musicComponent = this.data.musicComponent
+    musicComponent.prevItem()
   },
   next() {
-    let beatComponent = this.data.beatComponent
-    beatComponent.nextItem()
+    let musicComponent = this.data.musicComponent
+    musicComponent.nextItem()
   },
   continuePlay() {
-    this.data.beatComponent.continuePlay()
+    this.data.musicComponent.continuePlay()
   },
   pausePlay() {
-    this.data.beatComponent.pausePlay()
+    this.data.musicComponent.pausePlay()
   },
   toggleCollecting(collecting) {
     this.setData({
@@ -255,17 +264,17 @@ Page({
     if (!CommonUtil.hasBindUserInfo()) {
       return
     }
-    
+
     if (this.data.collecting) {
       return
     }
 
     this.toggleCollecting(true)
     let index = typeof e == 'number' ? e : this.data.playIndex
-    let beatComponent = this.data.beatComponent
-    let list = beatComponent.data.page.list
-    let beat = list[index]
-    let isCollected = beat.collection
+    let musicComponent = this.data.musicComponent
+    let list = musicComponent.data.page.list
+    let music = list[index]
+    let isCollected = music.collection
     let fn
 
     if (isCollected) {
@@ -275,25 +284,20 @@ Page({
     }
 
     fn({
-      id: beat.id,
-      type: 'goods'
+      id: music.id,
+      type: 'music'
     }, (res) => {
-      beat.collection = !isCollected
+      music.collection = !isCollected
 
-      beatComponent.setData({
-        [`page.list[${index}]`]: beat
+      musicComponent.setData({
+        [`page.list[${index}]`]: music
       })
-      // 操作的可能是正在播放的beat
+      // 操作的可能是正在播放的music
       this.setData({
-        beat: list[this.data.playIndex]
+        music: list[this.data.playIndex]
       })
     }, () => {
       this.toggleCollecting(false)
-    })
-  },
-  toBuy() {
-    wx.navigateTo({
-      url: `/pages/zmall/buy/index?id=${this.data.beat.id}`
     })
   }
 })

@@ -73,6 +73,13 @@ Component({
         this.musicAudioEnded();
       });
     },
+    clickItem(e) {
+      let item = this.getItem(e)
+      wx.navigateTo({
+        url: `/pages/create/musicDetail/index?id=${item.id}`
+      })
+    },
+    prevent() {},
     toggleItemStatus(e) {
       let index = this.getIndex(e),
         page = this.data.page,
@@ -245,6 +252,7 @@ Component({
           item.share_num = parseInt(item.share_num);
 
           if (!this.data.page.showMine) {
+            item.isCollection = item.is_collections != 0
             item.user.data.avatar = PathUtil.getFilePath(item.user.data.avatar);
           }
 
@@ -314,11 +322,12 @@ Component({
     },
     shareItem(e) {
       if (e.from == 'button') {
-        let item = this.getItem(e),
-        index = this.getIndex(e);
+      let item = this.getItem(e)
+      let index = this.getIndex(e)
+      let id = item.id
 
         api.share({
-          id: item.id,
+          id,
           type: 'music'
         }, (res) => {
           item.share_num = item.share_num + 1;
@@ -330,7 +339,7 @@ Component({
         return {
           title: CommonUtil.getShareTitle(),
           imageUrl: CommonUtil.getShareImage(),
-          path: '/pages/study/studyList/index?type=music'
+          path: `/pages/study/studyList/index?type=music&id=${id}`
         };
       }
     }

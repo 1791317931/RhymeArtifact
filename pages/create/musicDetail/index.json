@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "loadModal": "/components/common/loadModal/index",
+    "musicList": "/components/collection/music/index",
+    "commentList": "/components/zmall/comment/index"
+  },
+  "navigationBarTitleText": "音乐详情"
+}

@@ -3,7 +3,10 @@
     wx:for="{{page.list}}" 
     wx:for-index="index" 
     wx:for-item="item" 
-    wx:key="{{item.id}}">
+    wx:key="{{item.id}}"
+    data-index="{{index}}"
+    catchtap="clickItem"
+  >
     <view hidden="{{page.showHead == false}}" 
       class="createMusicList_item_name">
       <view>
@@ -12,10 +15,8 @@
       </view>
     </view>
     <view class="createMusicList_item_content">
-      <view class="createMusicList_item_info"
-        data-index="{{index}}"
-        catchtap="toggleItemStatus">
-        <view class="createMusicList_item_status">
+      <view class="createMusicList_item_info">
+        <view class="createMusicList_item_status" data-index="{{index}}" catchtap="toggleItemStatus">
           <image src="/assets/imgs/disk.png" />
           <image hidden="{{page.playingIndex == index && page.playing}}" src="/assets/imgs/to-play.png" />
           <image hidden="{{page.playingIndex != index || !page.playing}}" src="/assets/imgs/to-pause.png" />
@@ -33,7 +34,7 @@
               </view>
         </view>
       </view>
-      <view class="createMusicList_item_operate">
+      <view class="createMusicList_item_operate" catchtap="prevent">
           <view class="btn collection" 
           data-index="{{index}}" 
           catchtap="toggleCollectItem">

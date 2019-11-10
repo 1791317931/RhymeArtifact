@@ -1,0 +1,252 @@
+page {
+  background: #fff;
+}
+
+.wrapper-container {
+  height: 100%;
+  padding-bottom: 175rpx;
+}
+
+.cover-info {
+  padding: 50rpx 0 0;
+}
+
+.cover-info .cover {
+  display: block;
+  width: 366rpx;
+  height: 366rpx;
+  box-shadow:0 2rpx 30rpx 0 rgba(0,0,0,0.44);
+  margin: 0 auto;
+}
+
+.cover-info .title {
+  width: 470rpx;
+  margin: 50rpx auto 0;
+  text-align: center;
+  font-size:34rpx;
+  font-family:PingFangSC-Semibold,PingFangSC;
+  font-weight:600;
+  color:rgba(0,0,0,1);
+  line-height:48rpx;
+}
+
+.cover-info .author {
+  margin-top: 20rpx;
+  font-size:24rpx;
+  font-family:PingFangSC-Regular,PingFangSC;
+  font-weight:400;
+  color:rgba(0,0,0,1);
+  line-height:33rpx;
+  text-align: center;
+}
+
+.play-info {
+  width: 500rpx;
+  height: 83rpx;
+  margin: 25rpx auto 0;
+  position: relative;
+}
+
+.play-info .progress {
+  height: 68rpx;
+  position: relative;
+}
+
+.play-info .progress:before {
+  content: '';
+  height:4rpx;
+  background:rgba(230,230,230,1);
+  border-radius:2rpx;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+}
+
+.play-info .progress .progress-bar {
+  height:68rpx;
+  position: relative;
+}
+
+.play-info .progress .progress-bar:before {
+  content: '';
+  height:4rpx;
+  background:rgba(0,0,0,1);
+  border-radius:2rpx;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+}
+
+.play-info .progress .progress-bar .circle-bar {
+  width: 68rpx;
+  height: 68rpx;
+  border-radius: 34rpx;
+  background: transparent;
+  position: absolute;
+  top: 0;
+  right: -34rpx;
+}
+
+.play-info .progress .progress-bar .circle-bar.active {
+  background:rgba(1,1,1, .1);
+}
+
+.play-info .progress .progress-bar .circle-bar:before {
+  content: '';
+  width:20rpx;
+  height:20rpx;
+  border-radius: 10rpx;
+  background:rgba(1,1,1,1);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.time-info {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  font-size:24rpx;
+  font-family:PingFangSC-Regular,PingFangSC;
+  font-weight:400;
+  color:rgba(0,0,0,1);
+  line-height:33rpx;
+}
+
+.time-info .play-time {
+  float: left;
+}
+
+.time-info .total-time {
+  float: right;
+}
+
+.play-option {
+  margin-top: 60rpx;
+  height: 150rpx;
+  position: relative;
+}
+
+.play-option .prev, .play-option .next {
+  width: 54rpx;
+  height: 54rpx;
+  position: absolute;
+  top: 50%;
+  left: 136rpx;
+  transform: translateY(-50%);
+}
+
+.play-option .next {
+  left: auto;
+  right: 136rpx;
+}
+
+.play-option .play {
+  width: 150rpx;
+  height: 150rpx;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.option {
+  height: 88rpx;
+  position: fixed;
+  left: 40rpx;
+  right: 40rpx;
+  bottom: 60rpx;
+}
+
+.option .item {
+  float: left;
+  width: 88rpx;
+  height: 88rpx;
+  position: relative;
+}
+
+.option .item image {
+  width: 88rpx;
+  height: 88rpx;
+}
+
+.option .item.comment .count {
+  min-width: 40rpx;
+  padding: 0 6rpx;
+  line-height:34rpx;
+  background:rgba(254,37,83,1);
+  border-radius:17rpx;
+  font-size:20rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(255,255,255,1);
+  position: absolute;
+  top: 8rpx;
+  left: 44rpx;
+  text-align: center;
+}
+
+.option .share {
+  width: 248rpx;
+  line-height: 76rpx;
+  background:rgba(9,205,154,1);
+  border-radius:55rpx;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  font-size:28rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(255,255,255,1);
+  text-align: center;
+}
+
+.option .share button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+  z-index: 100;
+}
+
+.mask {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, .6);
+  z-index: 1;
+}
+
+.list-wrapper {
+  padding: 50rpx 0 30rpx;
+  background:rgba(255,255,255,1);
+  border-radius:40rpx 40rpx 0 0;
+  position: fixed;
+  top: 200rpx;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: #fff;
+  z-index: 2;
+}
+
+.list-wrapper:before {
+  content: '';
+  width:80rpx;
+  height:10rpx;
+  display: block;
+  margin: 0 auto 50rpx;
+  background:rgba(230,230,230,1);
+  border-radius:8rpx;
+}

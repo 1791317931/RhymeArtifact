@@ -23,7 +23,7 @@ Component({
       total_count: 0
     },
     loadModalComponent: null,
-    beatId: null,
+    targetId: null,
     commentContent: '',
     commentFocus: false,
     replyContent: '',
@@ -88,7 +88,7 @@ Component({
 
       api.addNewComment({
         type: this.data.type,
-        product_id: data.beatId,
+        product_id: data.targetId,
         parent_id: 0,
         content
       }, (res) => {
@@ -110,7 +110,7 @@ Component({
 
       api.addNewComment({
         type: this.data.type,
-        product_id: data.beatId,
+        product_id: data.targetId,
         parent_id: this.data.page.list[this.data.tempIndex].id,
         content
       }, (res) => {
@@ -194,7 +194,7 @@ Component({
         page: pageNum,
         type: this.data.type,
         include: 'user,parentuser,parentcomment',
-        id: this.data.beatId
+        id: this.data.targetId
       }
 
       api.getNewCommentPage(param, (res) => {

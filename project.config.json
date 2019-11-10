@@ -52,8 +52,8 @@
 				{
 					"id": 1,
 					"name": "扫码进入",
-					"pathName": "pages/user/order/detail/index",
-					"query": "id=1",
+					"pathName": "pages/create/musicDetail/index",
+					"query": "id=44",
 					"scene": null
 				}
 			]
