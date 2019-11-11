@@ -31,6 +31,10 @@ export function getRapQrcode(fn, completeFn, failFn) {
 }
 
 // 分类列表
+export function getNewCategoryList(data, fn, completeFn) {
+  UrlUtil.get(PathUtil.getNewPath('categories'), data, fn, completeFn);
+}
+
 export function getCategoryList(data, fn, completeFn) {
   UrlUtil.get('categories', data, fn, completeFn);
 }
@@ -249,10 +253,6 @@ export function getMyIncomePage(data, fn, completeFn) {
 // ---------------------用户------------------------
 
 // ---------------------商品------------------------
-export function getGoodsCategoryList(data, fn, completeFn) {
-  UrlUtil.get(PathUtil.getNewPath('categories'), data, fn, completeFn);
-}
-
 export function getGoodsPage(data, fn, completeFn) {
   UrlUtil.get(PathUtil.getNewPath(`goods`), data, fn, completeFn);
 }

@@ -41,3 +41,8 @@
 .study-wrapper {
   padding-top: 110rpx;
 }
+
+.music-container {
+  position: relative;
+  top: -20rpx;
+}

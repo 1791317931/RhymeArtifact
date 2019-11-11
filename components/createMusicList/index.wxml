@@ -1,61 +1,71 @@
  <view class="createMusicList_list">
-  <view class="createMusicList_item" 
-    wx:for="{{page.list}}" 
-    wx:for-index="index" 
-    wx:for-item="item" 
-    wx:key="{{item.id}}">
-    <view hidden="{{page.showHead == false}}" 
-      class="createMusicList_item_name">
-      <view>
-        <image src="{{item.user.data.avatar}}"/>
-        {{item.user.data.nickname}}
+  <view class="tab-container">
+    <view class="clearfix" style="width: {{tabWidth}}px">
+      <view wx:for="{{tabs}}" wx:for-item="item" wx:for-index="index" wx:key="{{item.id}}"
+      class="tab-item {{activeId == item.id ? 'active' : ''}} item-{{index}}" data-index="{{index}}" catchtap="toggleTab">
+        {{item.name}}
       </view>
     </view>
-    <view class="createMusicList_item_content">
-      <view class="createMusicList_item_info"
-        data-index="{{index}}"
-        catchtap="toggleItemStatus">
-        <view class="createMusicList_item_status">
-          <image src="/assets/imgs/disk.png" />
-          <image hidden="{{page.playingIndex == index && page.playing}}" src="/assets/imgs/to-play.png" />
-          <image hidden="{{page.playingIndex != index || !page.playing}}" src="/assets/imgs/to-pause.png" />
-        </view>
-        <view class="createMusicList_item_detail">
-          <view class="title">{{item.music_title}}</view>
-              <view class="detail-container">
-              <text>作曲：{{item.composer}}</text>
-              <text>作词：{{item.lyricist}}</text>
-              </view>
-              <view class="duration">
-                {{item.surplusTimeArr[0]}}:
-                {{item.surplusTimeArr[1]}}:
-                {{item.surplusTimeArr[2]}}
-              </view>
+  </view>
+  <view class="inner">
+    <view class="createMusicList_item" 
+      wx:for="{{page.list}}" 
+      wx:for-index="index" 
+      wx:for-item="item" 
+      wx:key="{{item.id}}">
+      <view hidden="{{page.showHead == false}}" 
+        class="createMusicList_item_name">
+        <view>
+          <image src="{{item.user.data.avatar}}"/>
+          {{item.user.data.nickname}}
         </view>
       </view>
-      <view class="createMusicList_item_operate">
-          <view class="btn collection" 
-          data-index="{{index}}" 
-          catchtap="toggleCollectItem">
-            <image hidden="{{item.isCollection ||  page.showCollection}}" src="/assets/imgs/collection.png"/>
-            <image hidden="{{!item.isCollection && !page.showCollection}}" src="/assets/imgs/collection-active.png"/>
-            <text>{{item.collection_num}}</text>
+      <view class="createMusicList_item_content">
+        <view class="createMusicList_item_info"
+          data-index="{{index}}"
+          catchtap="toggleItemStatus">
+          <view class="createMusicList_item_status">
+            <image src="/assets/imgs/disk.png" />
+            <image hidden="{{page.playingIndex == index && page.playing}}" src="/assets/imgs/to-play.png" />
+            <image hidden="{{page.playingIndex != index || !page.playing}}" src="/assets/imgs/to-pause.png" />
           </view>
-          <view class="btn share">
-            <image src="/assets/imgs/wechat-share.png"/>
-            <text>{{item.share_num}}</text>
-            <button open-type="share" data-index="{{index}}"></button>
+          <view class="createMusicList_item_detail">
+            <view class="title">{{item.music_title}}</view>
+                <view class="detail-container">
+                <text>作曲：{{item.composer}}</text>
+                <text>作词：{{item.lyricist}}</text>
+                </view>
+                <view class="duration">
+                  {{item.surplusTimeArr[0]}}:
+                  {{item.surplusTimeArr[1]}}:
+                  {{item.surplusTimeArr[2]}}
+                </view>
           </view>
-          <view class="moments-container" data-index="{{index}}" catchtap="generatePoster">
-            <image src="/assets/imgs/moments.png"/>
-            <text>海报分享</text>
-          </view>
-          <view class="btn remove"
-            hidden="{{page.showHead != false}}" 
-            catchtap="removeItem" data-index="{{index}}">
-            <image src="/assets/imgs/delete.png" 
-              hidden="{{page.showHead != false}}" />
-          </view>
+        </view>
+        <view class="createMusicList_item_operate">
+            <view class="btn collection" 
+            data-index="{{index}}" 
+            catchtap="toggleCollectItem">
+              <image hidden="{{item.isCollection ||  page.showCollection}}" src="/assets/imgs/collection.png"/>
+              <image hidden="{{!item.isCollection && !page.showCollection}}" src="/assets/imgs/collection-active.png"/>
+              <text>{{item.collection_num}}</text>
+            </view>
+            <view class="btn share">
+              <image src="/assets/imgs/wechat-share.png"/>
+              <text>{{item.share_num}}</text>
+              <button open-type="share" data-index="{{index}}"></button>
+            </view>
+            <view class="moments-container" data-index="{{index}}" catchtap="generatePoster">
+              <image src="/assets/imgs/moments.png"/>
+              <text>海报分享</text>
+            </view>
+            <view class="btn remove"
+              hidden="{{page.showHead != false}}" 
+              catchtap="removeItem" data-index="{{index}}">
+              <image src="/assets/imgs/delete.png" 
+                hidden="{{page.showHead != false}}" />
+            </view>
+        </view>
       </view>
     </view>
   </view>

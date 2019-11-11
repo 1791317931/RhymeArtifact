@@ -1,5 +1,4 @@
 import CommonUtil from '../../../assets/js/CommonUtil';
-import CategoryType from '../../../assets/js/CategoryType';
 import * as api from '../../../assets/js/api';
 
 Page({
@@ -196,8 +195,11 @@ Page({
         this.getPage(1);
       }
     } else if (item.flag == 'music') {
-      if (!data.musicComponent.data.page.list.length) {
-        this.getPage(1);
+      let musicComponent = this.data.musicComponent
+      if (!musicComponent.data.tabs.length) {
+        musicComponent.getCategoryList()
+      } else if (!musicComponent.data.page.list.length) {
+        musicComponent.getPage(1)
       }
     } else {
       for (let i = 0; i < tabs.length - 1; i++) {
@@ -269,6 +271,12 @@ Page({
       this.data.articleComponent.getPage(current_page);
     } else if (item.flag == 'music') {
       this.data.musicComponent.getPage(current_page)
+      let musicComponent = this.data.musicComponent
+      if (!musicComponent.data.tabs.length) {
+        musicComponent.getCategoryList()
+      } else {
+        musicComponent.getPage(current_page)
+      }
     } else {
       for (let i = 0; i < tabs.length - 1; i++) {
         if (tabs[i].id == id) {

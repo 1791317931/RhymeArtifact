@@ -4,6 +4,7 @@ import ConfigUtil from '../../assets/js/ConfigUtil';
 import PathUtil from '../../assets/js/PathUtil';
 import TimeUtil from '../../assets/js/TimeUtil';
 import * as api from '../../assets/js/api';
+import CategoryType from '../../assets/js/CategoryType'
 
 Component({
   /**
@@ -17,6 +18,9 @@ Component({
    * 组件的初始数据
    */
   data: {
+    tabs: [],
+    activeId: -1,
+    tabWidth: 10000,
     page: {
       loading: false,
       playingIndex: -1,
@@ -56,6 +60,45 @@ Component({
     },
     onUnload() {
       this.data.MAC.destroy();
+    },
+    getCategoryList() {
+      api.getNewCategoryList({
+        type: CategoryType.MUSIC
+      }, (res) => {
+        let tabs = res.data.category || []
+        tabs.unshift({
+          id: -1,
+          name: '全部'
+        })
+        this.setData({
+          tabs
+        })
+
+        this.setTabWidth()
+        this.getPage(1)
+      })
+    },
+    toggleTab(e) {
+      let index = this.getIndex(e);
+      let item = this.data.tabs[index]
+      this.setData({
+        activeId: item.id
+      })
+      this.getPage(1)
+    },
+    setTabWidth() {
+      let query = wx.createSelectorQuery().in(this)
+      let that = this;
+      query.selectAll('.tab-item').boundingClientRect(function (rectList) {
+        let tabWidth = 0;
+        for (let i = 0; i < rectList.length; i++) {
+          tabWidth += Math.ceil(rectList[i].width);
+        }
+
+        that.setData({
+          tabWidth
+        });
+      }).exec();
     },
     bindMACEvent() {
       let MAC = this.data.MAC;
@@ -212,7 +255,12 @@ Component({
         hasCollection: 1,
         include: 'user'
       }
-      let list = [];
+      let list = []
+
+      let categoryId = this.data.activeId
+      if (categoryId != -1) {
+        param.category_id = categoryId
+      }
 
       if (current_page > 1) {
         list = page.list;

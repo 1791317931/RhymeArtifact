@@ -184,7 +184,7 @@ Component({
       }).exec();
     },
     getCategoryList() {
-      api.getGoodsCategoryList({
+      api.getNewCategoryList({
         type: CategoryType.BEAT
       }, (res) => {
         let tabs = res.data.category || []

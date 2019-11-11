@@ -9,10 +9,10 @@
 <canvas class="poster-canvas" canvas-id="poster-canvas"/>
 <musicPoster id="musicPosterComponent"/>
 <view class="study-wrapper">
-  <view hidden="{{tabs[activeIndex].flag != 'music'}}" class="article-container">
+  <view hidden="{{tabs[activeIndex].flag != 'music'}}" class="music-container">
     <createMusicList id="musicComponent"/>
   </view>
-  <view hidden="{{tabs[activeIndex].flag != 'article'}}" class="article-container">
+  <view hidden="{{tabs[activeIndex].flag != 'article'}}">
     <studyArticleList id="articleComponent"/>
   </view>
   <view hidden="{{tabs[activeIndex].flag}}">
