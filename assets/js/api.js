@@ -63,8 +63,12 @@ export function deleteCollection(data, fn, completeFn) {
   UrlUtil.delete(`collections/${data.type}/${data.id}`, data, fn, completeFn);
 }
 
-export function getNewCollection(data, fn, completeFn) {
+export function getBeatCollection(data, fn, completeFn) {
   UrlUtil.get(PathUtil.getNewPath('user/collectionsBeats'), data, fn, completeFn);
+}
+
+export function getMusicCollection(data, fn, completeFn) {
+  UrlUtil.get(PathUtil.getNewPath('user/collectionsMusics'), data, fn, completeFn);
 }
 
 export function addNewCollection(data, fn, completeFn) {
@@ -125,6 +129,10 @@ export function getBeatPage(data, fn, completeFn) {
 // ---------------------创作------------------------
 export function createMusic(data, fn, completeFn) {
   UrlUtil.post('musics', data, fn, completeFn);
+}
+
+export function getMusicById(data, fn, completeFn) {
+  UrlUtil.get(PathUtil.getNewPath(`musics/${data.id}`), data, fn, completeFn);
 }
 
 export function getMusicPage(data, fn, completeFn) {

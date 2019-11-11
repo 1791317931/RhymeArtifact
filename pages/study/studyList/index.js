@@ -66,6 +66,12 @@ Page({
       wx.navigateTo({
         url
       });
+    } else if (type == 'music') {
+      url = '/pages/create/musicDetail/index?id=' + id;
+
+      wx.navigateTo({
+        url
+      });
     }
 
     let musicComponent = this.selectComponent('#musicComponent')

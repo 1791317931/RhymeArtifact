@@ -1,4 +1,4 @@
- <view class="createMusicList_list">
+<view class="wrapper">
   <view class="tab-container">
     <view class="clearfix" style="width: {{tabWidth}}px">
       <view wx:for="{{tabs}}" wx:for-item="item" wx:for-index="index" wx:key="{{item.id}}"
@@ -7,70 +7,82 @@
       </view>
     </view>
   </view>
-  <view class="inner">
-    <view class="createMusicList_item" 
-      wx:for="{{page.list}}" 
-      wx:for-index="index" 
-      wx:for-item="item" 
-      wx:key="{{item.id}}">
-      <view hidden="{{page.showHead == false}}" 
-        class="createMusicList_item_name">
-        <view>
-          <image src="{{item.user.data.avatar}}"/>
-          {{item.user.data.nickname}}
+  <view class="list-container">
+    <view class="item" wx:for="{{page.list}}" wx:for-index="index" wx:for-item="item" wx:key="{{item.id}}"
+      data-index="{{index}}" catchtap="clickItem">
+      <view class="cover-container" data-index="{{index}}" catchtap="toggleItemStatus">
+        <image src="{{item.musics_cover}}" class="cover" />
+        <view hidden="{{playIndex != index}}" class="play-container">
+          <image hidden="{{playIndex != index || playing}}" src="/assets/imgs/dash-to-play.png" class="play" />
+          <image hidden="{{playIndex != index || !playing}}" src="/assets/imgs/dash-to-pause.png" class="play" />
         </view>
       </view>
-      <view class="createMusicList_item_content">
-        <view class="createMusicList_item_info"
-          data-index="{{index}}"
-          catchtap="toggleItemStatus">
-          <view class="createMusicList_item_status">
-            <image src="/assets/imgs/disk.png" />
-            <image hidden="{{page.playingIndex == index && page.playing}}" src="/assets/imgs/to-play.png" />
-            <image hidden="{{page.playingIndex != index || !page.playing}}" src="/assets/imgs/to-pause.png" />
-          </view>
-          <view class="createMusicList_item_detail">
-            <view class="title">{{item.music_title}}</view>
-                <view class="detail-container">
-                <text>作曲：{{item.composer}}</text>
-                <text>作词：{{item.lyricist}}</text>
-                </view>
-                <view class="duration">
-                  {{item.surplusTimeArr[0]}}:
-                  {{item.surplusTimeArr[1]}}:
-                  {{item.surplusTimeArr[2]}}
-                </view>
-          </view>
-        </view>
-        <view class="createMusicList_item_operate">
-            <view class="btn collection" 
-            data-index="{{index}}" 
-            catchtap="toggleCollectItem">
-              <image hidden="{{item.isCollection ||  page.showCollection}}" src="/assets/imgs/collection.png"/>
-              <image hidden="{{!item.isCollection && !page.showCollection}}" src="/assets/imgs/collection-active.png"/>
-              <text>{{item.collection_num}}</text>
-            </view>
-            <view class="btn share">
-              <image src="/assets/imgs/wechat-share.png"/>
-              <text>{{item.share_num}}</text>
-              <button open-type="share" data-index="{{index}}"></button>
-            </view>
-            <view class="moments-container" data-index="{{index}}" catchtap="generatePoster">
-              <image src="/assets/imgs/moments.png"/>
-              <text>海报分享</text>
-            </view>
-            <view class="btn remove"
-              hidden="{{page.showHead != false}}" 
-              catchtap="removeItem" data-index="{{index}}">
-              <image src="/assets/imgs/delete.png" 
-                hidden="{{page.showHead != false}}" />
-            </view>
-        </view>
+      <view class="info">
+        <view class="title">{{item.music_title}}</view>
+        <view class="author">{{item.lyricist}}</view>
+      </view>
+      <view class="more" data-index="{{index}}" catchtap="clickMore">
+        <image src="/assets/imgs/dash.png" />
       </view>
     </view>
   </view>
 </view>
 <empty 
-    loading="{{page.loading}}"
-    hasData="{{!!page.list.length}}"
-    hasMore="{{page.current_page < page.total_pages}}"/>
+  loading="{{page.loading}}"
+  hasData="{{!!page.list.length}}"
+  hasMore="{{page.current_page < page.total_pages}}"/>
+<view class="beat-modal {{playing ? 'active' : ''}}" catchtouchmove="prevent">
+  <view class="cover-container" catchtap="togglePlay">
+    <image src="{{page.list[playIndex].musics_cover}}" class="cover" />
+    <view class="play-container" data-index="{{playIndex}}" catchtap="toggleItemStatus">
+      <image hidden="{{playing}}" src="/assets/imgs/dash-to-play.png" class="play" />
+      <image hidden="{{!playing}}" src="/assets/imgs/dash-to-pause.png" class="play" />
+    </view>
+  </view>
+  <view class="info">
+    <view class="title">{{page.list[playIndex].music_title}}</view>
+    <view class="play-info">
+      <view class="time">
+        {{playTimeArr[1]}}:{{playTimeArr[2]}}/{{totalTimeArr[1]}}:{{totalTimeArr[2]}}
+      </view>
+      <view class="progress" id="progress">
+        <view class="progress-bar" style="width: {{playPercent}}%">
+          <view
+            class="circle-bar {{movingBar ? 'active' : ''}}"
+            catchtouchmove="movePointer"
+            catchtouchstart="touchStart"
+            catchtouchend="touchEnd">
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="operation">
+    <view class="buy" catchtap="playToBuy">详情</view>
+  </view>
+</view>
+<view hidden="{{showIndex == -1}}" class="more-modal" catchtouchmove="prevent">
+  <view class="mask" catchtap="hideMoreModal"></view>
+  <view class="modal-inner">
+    <view class="clearfix">
+      <view hidden="{{page.list[showIndex].isCollection}}" class="item" catchtap="toggleCollectionItem">
+        <image src="/assets/imgs/mall/collection.png"/>
+        <view>喜欢</view>
+      </view>
+      <view hidden="{{!page.list[showIndex].isCollection}}" class="item" catchtap="toggleCollectionItem">
+        <image src="/assets/imgs/mall/collection-active.png"/>
+        <view>不喜欢</view>
+      </view>
+      <view class="item" catchtap="nextItem">
+        <image src="/assets/imgs/mall/next.png" />
+        <view>下一首</view>
+      </view>
+      <view class="item" catchtap="share">
+        <image src="/assets/imgs/mall/share.png" />
+        <view>分享</view>
+        <button open-type="share" class="open-type"></button>
+      </view>
+    </view>
+    <view class="close-more-modal" catchtap="hideMoreModal">取消</view>
+  </view>
+</view>

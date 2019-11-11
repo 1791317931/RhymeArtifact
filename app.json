@@ -36,9 +36,12 @@
     "pages/user/order/detail/index",
     "pages/user/info/index",
     "pages/user/skill/index",
-    "pages/user/editInfo/index"
+    "pages/user/editInfo/index",
+    "pages/create/musicDetail/index"
   ],
-  "requiredBackgroundModes": ["audio"],
+  "requiredBackgroundModes": [
+    "audio"
+  ],
   "window": {
     "backgroundColor": "#f7f7f7",
     "backgroundTextStyle": "dark",

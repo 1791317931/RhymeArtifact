@@ -393,7 +393,6 @@ Component({
 
         let originList = page.list
         list.forEach(item => {
-          // item.isCollection = true
           item.price = new Number(parseFloat(item.original_price)).toFixed(2)
           originList.push(item)
         })
@@ -409,10 +408,14 @@ Component({
     toggleTab(e) {
       let index = this.getIndex(e);
       let item = this.data.tabs[index]
-      this.setData({
-        activeId: item.id
-      })
-      this.getPage(1)
+      if (item.id != this.data.activeId) {
+        this.pausePlay()
+        this.setData({
+          activeId: item.id,
+          playIndex: -1
+        })
+        this.getPage(1)
+      }
     }
   }
 })

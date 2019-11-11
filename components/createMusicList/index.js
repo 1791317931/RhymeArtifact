@@ -11,26 +11,42 @@ Component({
    * 组件的属性列表
    */
   properties: {
-    
+
   },
 
   /**
    * 组件的初始数据
    */
   data: {
+    scope: null,
     tabs: [],
+    BAC: null,
     activeId: -1,
     tabWidth: 10000,
     page: {
       loading: false,
       playingIndex: -1,
       playing: false,
-      per_page: 10,
       current_page: 1,
+      per_page: 10,
+      total_pages: 0,
       list: []
     },
-    MAC: null,
-    user: null
+    playIndex: -1,
+    playing: false,
+    playTimeArr: 0,
+    totalTimeArr: 0,
+    showIndex: -1,
+    collecting: false,
+    currentTime: 0,
+    duration: 0,
+    movingBar: false,
+    trackContainerWidth: null,
+    pageX: null,
+    playPercent: 0,
+    startPercent: null,
+    startPageX: null,
+    startPercent: null
   },
 
   /**
@@ -42,24 +58,128 @@ Component({
         scope
       });
     },
-    init(scope) {
+    // audioContext
+    init(scope, option = {}) {
       // 保持不锁屏
       wx.setKeepScreenOn({
         keepScreenOn: true
       });
-      
-      this.setScope(scope);
-      let MAC = wx.createInnerAudioContext();
-      let user = wx.getStorageSync('userInfo')
-      this.setData({
-        MAC,
-        user
-      });
 
-      this.bindMACEvent();
+      let BAC = option.audioContext || wx.createInnerAudioContext()
+      // let BAC = option.audioContext || wx.getBackgroundAudioManager()
+      this.setData({
+        BAC
+      })
+      this.setScope(scope)
+      this.bindBACEvent()
+
+      const query = wx.createSelectorQuery().in(this);
+      query.select('#progress').boundingClientRect();
+      query.exec((res) => {
+        this.setData({
+          trackContainerWidth: res[0].width
+        });
+      });
     },
     onUnload() {
-      this.data.MAC.destroy();
+      this.data.BAC.destroy()
+    },
+    prevent() { },
+    caculateTime(currentTime) {
+      let BAC = this.data.BAC
+      let totalTime = BAC.duration
+      let totalTimeArr = TimeUtil.numberToArr(Math.round(totalTime))
+      let playPercent = (currentTime / totalTime > 1 ? 1 : currentTime / totalTime) * 100
+      this.setData({
+        totalTimeArr,
+        duration: totalTime,
+        currentTime,
+        playTimeArr: TimeUtil.numberToArr(Math.round(currentTime)),
+        playPercent
+      })
+    },
+    bindBACEvent() {
+      let BAC = this.data.BAC;
+
+      BAC.autoplay = true;
+      BAC.onTimeUpdate(() => {
+        this.caculateTime(BAC.currentTime)
+      });
+
+      BAC.onError((res) => {
+        this.audioError();
+      });
+
+      BAC.onEnded((res) => {
+        this.musicAudioEnded();
+      });
+    },
+    musicAudioEnded(e) {
+      let BAC = this.data.BAC;
+      this.setData({
+        playing: false
+      });
+
+      BAC.seek(0);
+    },
+    audioError(e) {
+      if (e.detail.errMsg == 'MEDIA_ERR_SRC_NOT_SUPPORTED') {
+        TipUtil.message('播放失败');
+      }
+      this.musicAudioEnded(e);
+    },
+    // ---------------------拖动指针--------------------------
+    touchStart(e) {
+      this.setData({
+        startPageX: e.touches[0].pageX,
+        startPercent: this.data.playPercent,
+        movingBar: true
+      });
+
+      this.pausePlay()
+    },
+    movePointer(e) {
+      let touches = e.touches
+      let prePageX = this.data.startPageX
+      let pageX = e.touches[0].pageX
+      let duration = this.data.duration;
+
+      let width = pageX - prePageX
+      let percent = width / this.data.trackContainerWidth;
+      let currentPercent = this.data.startPercent / 100 + percent;
+      currentPercent = Math.min(1, currentPercent);
+      currentPercent = Math.max(0, currentPercent);
+      let time = currentPercent * duration
+
+      if (time >= duration) {
+        time = duration;
+        this.musicAudioEnded();
+      }
+
+      this.caculateTime(time)
+    },
+    touchEnd(e) {
+      let BAC = this.data.BAC;
+      this.setData({
+        movingBar: false
+      })
+      BAC.seek(this.data.currentTime);
+      this.continuePlay()
+    },
+    // ---------------------拖动指针--------------------------
+    setTabWidth() {
+      let query = wx.createSelectorQuery().in(this)
+      let that = this;
+      query.selectAll('.tab-item').boundingClientRect(function (rectList) {
+        let tabWidth = 0;
+        for (let i = 0; i < rectList.length; i++) {
+          tabWidth += Math.ceil(rectList[i].width);
+        }
+
+        that.setData({
+          tabWidth
+        });
+      }).exec();
     },
     getCategoryList() {
       api.getNewCategoryList({
@@ -78,51 +198,22 @@ Component({
         this.getPage(1)
       })
     },
-    toggleTab(e) {
-      let index = this.getIndex(e);
-      let item = this.data.tabs[index]
-      this.setData({
-        activeId: item.id
+    onReachBottom() {
+      let page = this.data.page;
+      if (page.current_page < page.total_pages) {
+        this.getPage(page.current_page + 1);
+      }
+    },
+    clickItem(e) {
+      wx.navigateTo({
+        url: `/pages/create/musicDetail/index?id=${this.getItem(e).id}`
       })
-      this.getPage(1)
-    },
-    setTabWidth() {
-      let query = wx.createSelectorQuery().in(this)
-      let that = this;
-      query.selectAll('.tab-item').boundingClientRect(function (rectList) {
-        let tabWidth = 0;
-        for (let i = 0; i < rectList.length; i++) {
-          tabWidth += Math.ceil(rectList[i].width);
-        }
-
-        that.setData({
-          tabWidth
-        });
-      }).exec();
-    },
-    bindMACEvent() {
-      let MAC = this.data.MAC;
-
-      MAC.autoplay = true;
-      MAC.onTimeUpdate(() => {
-        this.musicAudioTimeUpdate(MAC.duration, MAC.currentTime);
-      });
-
-      MAC.onError((res) => {
-        this.musicAudioError();
-      });
-
-      MAC.onEnded((res) => {
-        this.musicAudioEnded();
-      });
     },
     toggleItemStatus(e) {
-      let index = this.getIndex(e),
-        page = this.data.page,
-        playing = page.playing,
-        MAC = this.data.MAC;
+      let index = e.currentTarget.dataset.index
+      let playing = this.data.playing
 
-      if (page.playingIndex == index) {
+      if (this.data.playIndex == index) {
         if (playing) {
           this.pausePlay(e);
         } else {
@@ -132,81 +223,125 @@ Component({
         this.startPlay(e);
       }
     },
-    onReachBottom() {
-      let page = this.data.page;
-      if (page.current_page < page.total_pages) {
-        this.getPage(page.current_page + 1);
-      }
-    },
-    // 下载海报
-    generatePoster(e) {
-      let item = this.getItem(e);
-      this.data.scope.data.musicPosterComponent.generatePoster(item, 'music');
-    },
     startPlay(e) {
-      let index = this.getIndex(e),
-      item = this.getItem(e),
-      MAC = this.data.MAC;
+      let index = this.getIndex(e)
+      this.play(index)
+    },
+    play(index) {
+      let BAC = this.data.BAC
+      let music = this.data.page.list[index]
+      BAC.src = music.origin_url
 
-      MAC.src = item.mixture_url || item.origin_url;
       this.setData({
-        'page.playingIndex': index,
-        'page.playing': true
+        playIndex: index,
+        playing: true
       });
 
       // 播放音频
-      MAC.seek(0);
-      MAC.play();
+      BAC.seek(0);
+      BAC.play();
     },
-    continuePlay(e) {
-      let MAC = this.data.MAC;
-
+    toggleStatus(playing) {
       this.setData({
-        'page.playing': true
+        playing
       });
+    },
+    continuePlay() {
+      let BAC = this.data.BAC;
 
+      this.toggleStatus(true)
       // 播放音频
-      MAC.play();
+      BAC.play();
     },
-    pausePlay(e) {
-      let MAC = this.data.MAC;
+    pausePlay() {
+      let BAC = this.data.BAC;
+      this.toggleStatus(false)
 
+      BAC.pause();
+    },
+    clickMore(e) {
+      let index = this.getIndex(e)
       this.setData({
-        'page.playing': false
-      });
-
-      MAC.pause();
+        showIndex: index
+      })
     },
-    musicAudioEnded(e) {
-      let MAC = this.data.MAC;
-
+    hideMoreModal() {
       this.setData({
-        'page.playing': false
-      });
-
-      MAC.seek(0);
+        showIndex: -1
+      })
     },
-    musicAudioError(e) {
-      if (e.detail.errMsg == 'MEDIA_ERR_SRC_NOT_SUPPORTED') {
-        TipUtil.message('播放失败');
+    toggleCollecting(collecting) {
+      this.setData({
+        collecting
+      })
+    },
+    playToBuy() {
+      wx.navigateTo({
+        url: `/pages/create/musicDetail/index?id=${this.data.page.list[this.data.playIndex].id}`
+      })
+    },
+    toggleCollectionItem() {
+      if (!CommonUtil.hasBindUserInfo()) {
+        return
       }
-      this.musicAudioEnded(e);
-    },
-    musicAudioTimeUpdate(totalTime, time) {
-      this.caculateSurplusTime(totalTime, time);
-    },
-    // 计算剩余时间
-    caculateSurplusTime(totalTime, currentTime) {
-      let surplusTime = parseInt(totalTime - currentTime),
-        playingIndex = this.data.page.playingIndex,
-        item = this.data.page.list[playingIndex];
 
-      item.surplusTime = surplusTime;
-      item.surplusTimeArr = TimeUtil.numberToArr(surplusTime);
+      if (this.data.collecting) {
+        return
+      }
 
-      this.setData({
-        [`page.list[${playingIndex}]`]: item
-      });
+      this.toggleCollecting(true)
+      let index = this.data.showIndex
+      let music = this.data.page.list[index]
+      let isCollected = music.isCollection
+      let fn
+
+      if (isCollected) {
+        fn = api.deleteNewCollection
+      } else {
+        fn = api.addNewCollection
+      }
+
+      fn({
+        id: music.id,
+        type: 'music'
+      }, (res) => {
+        music.isCollection = !isCollected
+
+        this.setData({
+          [`page.list[${index}].isCollection`]: music.isCollection
+        })
+        // 操作的可能是正在播放的music
+        this.data.scope.setData({
+          'music.isCollection': music.isCollection
+        })
+      }, () => {
+        this.toggleCollecting(false)
+      })
+    },
+    prevItem() {
+      let showIndex = this.data.showIndex
+      this.play(showIndex - 1)
+    },
+    nextItem() {
+      let showIndex = this.data.showIndex
+      if (showIndex == this.data.page.list.length - 1) {
+        showIndex = -1
+      }
+      this.play(showIndex + 1)
+      this.hideMoreModal()
+    },
+    toBuy() {
+      wx.navigateTo({
+        url: `/pages/create/musicDetail/index?id=${this.data.page.list[this.data.showIndex].id}`
+      })
+    },
+    shareItem() {
+      let item = this.data.page.list[this.data.showIndex]
+      return {
+        title: item.music_title,
+        imageUrl: item.musics_cover,
+        path: `/pages/study/studyList/index?t=music&id=${item.id}`
+      }
     },
     getIndex(e) {
       let index = e.target.dataset.index;
@@ -225,162 +360,60 @@ Component({
         'page.loading': loading
       });
     },
-    removeItem(e) {
-      wx.showModal({
-        title: '系统提示',
-        content: '是否删除当前音乐作品？',
-        success: (res) => {
-          if (res.confirm) {
-            let item = this.getItem(e)
-            api.removeMusic({
-              id: item.id
-            }, (res) => {
-              TipUtil.message('操作成功');
-              this.getPage(1);
-            });
-          }
-        }
-      });
-    },
-    getPage(current_page = 1) {
-      let page = this.data.page;
-      if (page.loading) {
-        return;
+    getPage(pageNum = 1) {
+      if (this.data.loading) {
+        return
       }
 
-      this.pausePlay(null);
+      this.togglePageLoading(true)
+      let page = this.data.page
+      if (pageNum == 1) {
+        this.setData({
+          'page.list': []
+        })
+      }
+
       let param = {
-        page: current_page,
         per_page: page.per_page,
-        hasCollection: 1,
-        include: 'user'
+        page: pageNum,
+        hasCollection: 1
       }
-      let list = []
-
       let categoryId = this.data.activeId
       if (categoryId != -1) {
         param.category_id = categoryId
       }
 
-      if (current_page > 1) {
-        list = page.list;
-      }
+      api.getMusicPage(param, (res) => {
+        let list = res.data
+        let pagination = res.meta.pagination
+        page.total_pages = pagination.total_pages
+        page.current_page = pageNum
 
-      this.togglePageLoading(true);
-      this.setData({
-        'page.page': current_page
-      });
-
-      let fn;
-      if (this.data.page.showCollection) {
-        fn = api.getCollectionMusicPage;
-      } else {
-        if (this.data.page.showMine) {
-          fn = api.getMusicPage
-          param.user_id = this.data.user.id
-        } else {
-          fn = api.getMusicPage;
-        }
-      }
-
-      fn(param, (res) => {
-        let pagination = res.meta.pagination;
-
-        res.data.forEach((item, index) => {
-          item.origin_url = PathUtil.getFilePath(item.origin_url);
-          item.mixture_url = item.mixture_url && PathUtil.getFilePath(item.mixture_url);
-          item.collection_num = parseInt(item.collection_num);
-          item.share_num = parseInt(item.share_num);
-
-          if (!this.data.page.showMine) {
-            item.user.data.avatar = PathUtil.getFilePath(item.user.data.avatar);
-          }
-
-          // 总时长
-          let totalTime = Math.ceil(parseInt(0) / 1000);
-          item.totalTime = totalTime;
-          // 剩余时长
-          item.surplusTime = totalTime;
-          item.surplusTimeArr = TimeUtil.numberToArr(totalTime);
-
-          list.push(item);
-        });
+        let originList = page.list
+        list.forEach(item => {
+          item.isCollection = item.is_collections != 0
+          originList.push(item)
+        })
+        page.list = originList
 
         this.setData({
-          'page.list': list,
-          'page.current_page': pagination.current_page || 1,
-          'page.total_pages': pagination.total_pages || 0
-        });
+          page
+        })
       }, () => {
-        this.togglePageLoading(false);
-      });
+        this.togglePageLoading(false)
+      })
     },
-    toggleCollectItem(e) {
-      let item = this.getItem(e),
-        index = this.getIndex(e),
-        page = this.data.page,
-        type = 'music';
-
-      if (item.isCollection || page.showCollection) {
-        api.deleteNewCollection({
-          id: item.id,
-          type
-        }, (res) => {
-          TipUtil.message('已取消收藏');
-
-          // 显示我的收藏，把被取消收藏的创作去掉
-          if (this.data.page.showCollection) {
-            let list = page.list;
-            list.splice(index, 1);
-
-            this.setData({
-              'page.list': list
-            });
-          } else {
-            item.collection_num--;
-            item.isCollection = false;
-
-            this.setData({
-              [`page.list[${index}]`]: item
-            });
-          }
-        });
-      } else {
-        api.addNewCollection({
-          id: item.id,
-          type
-        }, (res) => {
-          TipUtil.message('收藏成功');
-          item.collection_num++;
-          item.isCollection = true;
-
-          this.setData({
-            [`page.list[${index}]`]: item
-          });
-        });
-      }
-    },
-    shareItem(e) {
-      if (e.from == 'button') {
-        let item = this.getItem(e),
-        index = this.getIndex(e);
-
-        api.share({
-          id: item.id,
-          type: 'music'
-        }, (res) => {
-          item.share_num = item.share_num + 1;
-          this.setData({
-            [`page.list[${index}]`]: item
-          });
-        });
-
-        return {
-          title: CommonUtil.getShareTitle(),
-          imageUrl: CommonUtil.getShareImage(),
-          path: '/pages/study/studyList/index?type=music'
-        };
+    toggleTab(e) {
+      let index = this.getIndex(e);
+      let item = this.data.tabs[index]
+      if (item.id != this.data.activeId) {
+        this.pausePlay()
+        this.setData({
+          activeId: item.id,
+          playIndex: -1
+        })
+        this.getPage(1)
       }
     }
-  },
+  }
 })

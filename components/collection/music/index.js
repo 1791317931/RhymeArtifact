@@ -39,8 +39,8 @@ Component({
     totalTimeArr: 0,
     playPercent: 0,
     showIndex: -1,
-    // 外部可能单独传递了一个beat，goods详情页
-    beat: null
+    // 外部可能单独传递了一个music，goods详情页
+    music: null
   },
 
   /**
@@ -97,7 +97,7 @@ Component({
       });
 
       BAC.onEnded((res) => {
-        this.beatAudioEnded();
+        this.musicAudioEnded();
       });
     },
     setPlayProgress(data) {
@@ -109,7 +109,7 @@ Component({
         ...data
       })
     },
-    beatAudioEnded(e) {
+    musicAudioEnded(e) {
       let BAC = this.data.BAC;
       this.setData({
         playing: false
@@ -121,7 +121,7 @@ Component({
       if (e.detail.errMsg == 'MEDIA_ERR_SRC_NOT_SUPPORTED') {
         TipUtil.message('播放失败');
       }
-      this.beatAudioEnded(e);
+      this.musicAudioEnded(e);
     },
     onReachBottom() {
       let page = this.data.page;
@@ -158,8 +158,8 @@ Component({
     },
     play(index) {
       let BAC = this.data.BAC
-      let beat = this.data.page.list[index]
-      BAC.src = beat.beat_try_url
+      let music = this.data.page.list[index]
+      BAC.src = music.origin_url
 
       this.toggleStatus(true)
       this.setData({
@@ -167,9 +167,9 @@ Component({
       })
       this.data.scope.setData({
         playIndex: index,
-        beat
+        music
       })
-      this.data.scope.setTitle(beat)
+      this.data.scope.setTitle(music)
 
       // 播放音频
       BAC.seek(0);
@@ -230,7 +230,7 @@ Component({
       return {
         title: item.goods_name,
         imageUrl: item.cover_images[0],
-        path: `/pages/mall/beatList/index?id=${item.id}`
+        path: `/pages/create/musicDetail/index?type=music&id=${item.id}`
       }
     },
     getIndex(e) {
@@ -269,7 +269,7 @@ Component({
         page: page.current_page
       }
 
-      api.getBeatCollection(param, (res) => {
+      api.getMusicCollection(param, (res) => {
         let list = res.data
         let pagination = res.meta.pagination
         page.total_pages = pagination.total_pages
@@ -278,26 +278,26 @@ Component({
         // 默认没有收藏
         let flagIndex = -1
         let originList = page.list
-        // 可能没有beat
-        let beat = this.data.beat
+        // 可能没有music
+        let music = this.data.music
         list.forEach((item, index) => {
           item.price = new Number(parseFloat(item.original_price)).toFixed(2)
           item.collection = true
           originList.push(item)
 
-          if (beat && beat.id == item.id) {
+          if (music && music.id == item.id) {
             flagIndex = index
           }
         })
 
         let playIndex = 0
         // 存在
-        if (beat) {
+        if (music) {
           if (flagIndex != -1) {
             playIndex = flagIndex
           } else {
             // 没有在收藏列表，需要添加到首位
-            originList.unshift(beat)
+            originList.unshift(music)
           }
         }
 
