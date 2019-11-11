@@ -20,9 +20,17 @@
   transform: translate(-50%, -50%);
 }
 
+.poster-container.music-container {
+  width: 504rpx;
+}
+
 .poster-container .poster-body {
   background: #fff;
   height: 660rpx;
+}
+
+.poster-container.music-container .poster-body {
+  height: 700rpx;
 }
 
 .poster-container .poster-body image {

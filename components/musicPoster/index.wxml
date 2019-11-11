@@ -1,5 +1,5 @@
 <view hidden="{{!posterUrl}}" class="z-modal">
-  <view  class="poster-container">
+  <view  class="poster-container {{type == 'music' ? 'music-container' : ''}}">
     <view class="poster-body">
       <image catchtap="previewImage" wx:if="{{posterUrl}}" src="{{posterUrl}}"/>
     </view>

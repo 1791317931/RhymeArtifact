@@ -1,5 +1,5 @@
 <loadModal id="loadModalComponent"/>
-<canvas class="poster-canvas" canvas-id="poster-canvas"/>
+<canvas class="poster-canvas music-canvas" canvas-id="poster-canvas"/>
 <musicPoster id="musicPosterComponent"/>
 <view class="wrapper-container">
   <view class="cover-info">

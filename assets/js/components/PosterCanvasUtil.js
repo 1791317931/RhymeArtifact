@@ -4,6 +4,7 @@ import PathUtil from '../PathUtil';
 import DownloadUtil from '../DownloadUtil';
 import CommonUtil from '../CommonUtil';
 import CreateUtil from './poster/CreateUtil';
+import MusicUtil from './poster/MusicUtil';
 import StudyUtil from './poster/StudyUtil';
 import FreestyleUtil from './poster/FreestyleUtil';
 
@@ -57,8 +58,10 @@ let PosterCanvasUtil = {
           context.setFillStyle('#fff');
           context.fillRect(0, 0, 610, 661);
 
-          if (['beat', 'music'].indexOf(type) != -1) {
+          if (['beat'].indexOf(type) != -1) {
             CreateUtil.draw(context, data, type, '/assets/imgs/logo.png', qrCodePath);
+          } else if (['music'].indexOf(type) != -1) {
+            MusicUtil.draw(context, data, qrCodePath);
           } else if (['article', 'video'].indexOf(type) != -1) {
             StudyUtil.draw(context, data, type, qrCodePath);
           }

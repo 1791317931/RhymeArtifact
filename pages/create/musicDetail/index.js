@@ -59,6 +59,9 @@ Page({
     wx.setKeepScreenOn({
       keepScreenOn: true
     });
+    musicPosterComponent.setData({
+      type: 'music'
+    })
 
     this.setData({
       loadModalComponent,

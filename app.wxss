@@ -95,6 +95,12 @@ button:after {
   width: 610px;
   height: 660px;
 }
+
+.poster-canvas.music-canvas {
+  width: 540px;
+  height: 750px;
+}
+
 .freestyle-poster-canvas {
   position: fixed;
   left: 120%;

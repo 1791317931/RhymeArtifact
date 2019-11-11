@@ -29,11 +29,7 @@ let CreateUtil = {
     context.drawImage('/assets/imgs/to-play.png', 110, 318, 52, 54);
 
     let title, author, composer;
-    if (type == 'music') {
-      title = data.music_title;
-      author = data.lyricist
-      composer = data.composer;
-    } else if (type == 'beat') {
+    if (type == 'beat') {
       title = data.beat_title;
       composer = data.beat_author;
     }
