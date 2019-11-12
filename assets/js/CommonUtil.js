@@ -58,7 +58,7 @@ let CommonUtil = {
     return {
       title: CommonUtil.getShareTitle(),
       imageUrl: CommonUtil.getShareImage(),
-      path: '/pages/main/index'
+      path: '/pages/zmall/index/index'
     };
   },
   uuid() {

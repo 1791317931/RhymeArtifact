@@ -138,7 +138,7 @@ Page({
     return {
       title: item.music_title,
       imageUrl: item.musics_cover,
-      path: '/pages/create/musicDetail/index?type=music&id=' + item.id
+      path: '/pages/study/studyList/index?t=music&id=' + item.id
     }
   },
   toggleShareModal(showShareModal) {

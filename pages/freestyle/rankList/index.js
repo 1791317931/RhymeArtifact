@@ -133,11 +133,7 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-    return {
-      title: CommonUtil.getShareTitle(),
-      imageUrl: CommonUtil.getShareImage(),
-      path: '/pages/main/index'
-    };
+    return CommonUtil.share();
   },
   toggleTab(e) {
     let index = e.target.dataset.index;

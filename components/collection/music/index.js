@@ -230,7 +230,7 @@ Component({
       return {
         title: item.goods_name,
         imageUrl: item.cover_images[0],
-        path: `/pages/create/musicDetail/index?type=music&id=${item.id}`
+        path: `/pages/study/studyList/index?t=music&id=${item.id}`
       }
     },
     getIndex(e) {

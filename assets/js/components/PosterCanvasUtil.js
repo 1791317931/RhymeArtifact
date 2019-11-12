@@ -61,7 +61,7 @@ let PosterCanvasUtil = {
           if (['beat'].indexOf(type) != -1) {
             CreateUtil.draw(context, data, type, '/assets/imgs/logo.png', qrCodePath);
           } else if (['music'].indexOf(type) != -1) {
-            MusicUtil.draw(context, data, qrCodePath);
+            MusicUtil.draw(context, posterId, data, qrCodePath);
           } else if (['article', 'video'].indexOf(type) != -1) {
             StudyUtil.draw(context, data, type, qrCodePath);
           }

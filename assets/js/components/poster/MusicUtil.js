@@ -1,5 +1,5 @@
 let CreateUtil = {
-  draw(context, data, qrCodePath) {
+  draw(context, posterId, data, qrCodePath) {
     let totalWidth = 540
     let totalHeight = 750
     let imgWidth = 540
@@ -8,10 +8,11 @@ let CreateUtil = {
     let qrHeight = 117
     let appNameWidth = 127
     let appNameHeight = 20
+    const coverImg = data.musics_cover
 
-    CreateUtil.fillImage(context, data.musics_cover, 0, 0, imgWidth, imgHeight);
+    CreateUtil.fillImage(context, coverImg, 0, 0, imgWidth, imgHeight);
     CreateUtil.fillAppName(context, '/assets/imgs/create/app-name.png', (totalWidth - appNameWidth) / 2, 710, appNameWidth, appNameHeight);
-    CreateUtil.drawContent(context, data);
+    CreateUtil.drawContent(context, posterId, data);
     CreateUtil.drawQrCodeInfo(context, qrCodePath, 397, 570, qrWidth, qrHeight);
   },
   fillImage(context, url, marginLeft, marginTop, width, height) {
@@ -20,7 +21,23 @@ let CreateUtil = {
   fillAppName(context, url, marginLeft, marginTop, width, height) {
     context.drawImage(url, marginLeft, marginTop, width, height);
   },
-  drawContent(context, data) {
+  drawContent(context, posterId, data) {
+    // context.draw(false, () => {
+    //   wx.canvasGetImageData({
+    //     canvasId: posterId,
+    //     x: 0,
+    //     y: 0,
+    //     width: 10,
+    //     height: 10,
+    //     success(res) {
+    //       console.log(res)
+    //     }
+    //   })
+    // })
+    
+
+
+
     let title, author, composer;
     title = data.music_title;
     composer = data.lyricist
