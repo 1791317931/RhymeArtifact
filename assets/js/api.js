@@ -323,3 +323,9 @@ export function getNewCommentPage(data, fn, completeFn) {
   UrlUtil.get(PathUtil.getNewPath(`comments`), data, fn, completeFn);
 }
 // ---------------------评论------------------------
+
+// ---------------------圈内文章------------------------
+export function getNewArticlePage(data, fn, completeFn) {
+  UrlUtil.get(PathUtil.getNewPath(`posts`), data, fn, completeFn);
+}
+// ---------------------圈内文章------------------------

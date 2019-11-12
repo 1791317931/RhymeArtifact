@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/user/info/index",
     "pages/zmall/index/index",
     "pages/zmall/orderDetail/index",
     "pages/user/order/index/index",
@@ -34,7 +35,6 @@
     "pages/mall/address/edit/index",
     "pages/mall/address/list/index",
     "pages/user/order/detail/index",
-    "pages/user/info/index",
     "pages/user/skill/index",
     "pages/user/editInfo/index",
     "pages/create/musicDetail/index"
