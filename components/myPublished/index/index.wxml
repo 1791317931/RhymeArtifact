@@ -1,0 +1,22 @@
+<view class="tab-container">
+  <view class="clearfix" style="width: {{totalWidth}}px">
+    <view wx:for="{{tabs}}" wx:for-item="item" wx:for-index="index" wx:key="{{item.flag}}"
+    class="tab-item {{activeIndex == index ? 'active' : ''}}" data-index="{{index}}" catchtap="toggleTab">
+      {{item.name}}
+    </view>
+  </view>
+</view>
+<view class="list-container">
+  <view hidden="{{tabs[activeIndex].flag != 'music'}}">
+    <musicList id="musicComponent" />
+  </view>
+  <view hidden="{{tabs[activeIndex].flag != 'beat'}}">
+    <beatList id="beatComponent" />
+  </view>
+  <view hidden="{{tabs[activeIndex].flag != 'article'}}">
+    <articleList id="articleComponent" />
+  </view>
+  <view hidden="{{tabs[activeIndex].flag != 'video'}}">
+    <videoList id="videoComponent" />
+  </view>
+</view>

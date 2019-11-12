@@ -1,0 +1,60 @@
+<view class="tab-container">
+  <view class="clearfix" style="width: {{totalWidth}}px">
+    <view wx:for="{{tabs}}" wx:for-item="item" wx:for-index="index" wx:key="{{item.flag}}"
+    class="tab-item {{activeId == item.id ? 'active' : ''}}" data-index="{{index}}" catchtap="toggleTab">
+      {{item.name}}
+    </view>
+  </view>
+</view>
+<scroll-view
+  class="list-container"
+  bindscrolltolower="onReachBottom"
+  scroll-y
+>
+  <view class="list-container-inner">
+    <view class="item" wx:for="{{page.list}}" wx:for-index="index" wx:for-item="item" wx:key="{{item.id}}"
+      data-index="{{index}}" catchtap="clickItem">
+      <view class="author-container">
+        <image class="avatar" src="{{item.cover}}" />
+        <view class="name">{{item.user.data.avatar}}</view>
+        <view class="date">{{item.created_at}}</view>
+        <view class="more" data-index="{{index}}" catchtap="showMore">
+          <image src="/assets/imgs/dash.png" />
+        </view>
+      </view>
+    </view>
+    <empty 
+      loading="{{page.loading}}"
+      hasData="{{!!page.list.length}}"
+      hasMore="{{page.current_page < page.total_pages}}"/>
+  </view>
+</scroll-view>
+<view hidden="{{showIndex == -1}}" class="more-modal">
+  <view class="mask" catchtap="hideMoreModal"></view>
+  <view class="modal-inner">
+    <view class="clearfix">
+      <view hidden="{{page.list[showIndex].collection}}" class="item" catchtap="toggleCollectionItem">
+        <image src="/assets/imgs/mall/collection.png"/>
+        <view>喜欢</view>
+      </view>
+      <view hidden="{{!page.list[showIndex].collection}}" class="item" catchtap="toggleCollectionItem">
+        <image src="/assets/imgs/mall/collection-active.png"/>
+        <view>不喜欢</view>
+      </view>
+      <view class="item" catchtap="nextItem">
+        <image src="/assets/imgs/mall/next.png" />
+        <view>下一首</view>
+      </view>
+      <view hidden="{{isIos}}" class="item" catchtap="toBuy">
+        <image src="/assets/imgs/mall/shopcar.png" />
+        <view>去购买</view>
+      </view>
+      <view class="item" catchtap="share">
+        <image src="/assets/imgs/mall/share.png" />
+        <view>分享</view>
+        <button open-type="share" class="open-type"></button>
+      </view>
+    </view>
+    <view class="close-more-modal" catchtap="hideMoreModal">取消</view>
+  </view>
+</view>

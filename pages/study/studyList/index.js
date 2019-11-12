@@ -276,7 +276,6 @@ Page({
     if (item.flag == 'article') {
       this.data.articleComponent.getPage(current_page);
     } else if (item.flag == 'music') {
-      this.data.musicComponent.getPage(current_page)
       let musicComponent = this.data.musicComponent
       if (!musicComponent.data.tabs.length) {
         musicComponent.getCategoryList()

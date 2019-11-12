@@ -138,8 +138,9 @@ Component({
     clickItem(e) {
       let item = this.getItem(e);
 
+      let param = `https://www.peaceandlovemusic.cn/#/article/detail?id=${item.id}&source=miniprogram&token=${wx.getStorageSync('token')}`
       wx.navigateTo({
-        url: '/pages/study/studyArticle/index?id=' + item.id
+        url: '/pages/webview/index?path=' + encodeURIComponent(param)
       });
     },
     togglePageLoading(loading) {
