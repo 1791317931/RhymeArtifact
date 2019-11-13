@@ -138,10 +138,13 @@ Component({
     clickItem(e) {
       let item = this.getItem(e);
 
-      let param = `https://www.peaceandlovemusic.cn/#/article/detail?id=${item.id}&source=miniprogram&token=${wx.getStorageSync('token')}`
+      // let param = `https://www.peaceandlovemusic.cn/#/article/detail?id=${item.id}&source=miniprogram&token=${wx.getStorageSync('token')}`
+      // wx.navigateTo({
+      //   url: '/pages/webview/index?path=' + encodeURIComponent(param)
+      // });
       wx.navigateTo({
-        url: '/pages/webview/index?path=' + encodeURIComponent(param)
-      });
+        url: `/pages/study/studyArticle/index?id=${item.id}`
+      })
     },
     togglePageLoading(loading) {
       this.setData({

@@ -36,7 +36,10 @@ Component({
       }
     },
     clickItem(e) {
-
+      let item = this.getItem(e)
+      // wx.navigateTo({
+      //   url: ''
+      // })
     },
     showMore(e) {
 
