@@ -14,7 +14,8 @@ Page({
     articleComponent: null,
     musicComponent: null,
     musicPosterComponent: null,
-    onLoaded: false
+    onLoaded: false,
+    isAudient: CommonUtil.isAudient()
   },
 
   /**
@@ -219,20 +220,12 @@ Page({
     }
   },
   getCategoryList(callback) {
-    api.getCategoryList({
-      type: 5
-    }, (res) => {
-      let tabs = res.data;
-
+    if (this.data.isAudient) {
+      let tabs = []
       tabs.push({
         flag: 'article',
         name: '文章'
       });
-
-      tabs.unshift({
-        flag: 'music',
-        name: '音乐'
-      })
 
       this.setData({
         tabs
@@ -240,7 +233,30 @@ Page({
       this.setTabWidth()
 
       callback && callback();
-    });
+    } else {
+      api.getCategoryList({
+        type: 5
+      }, (res) => {
+        let tabs = res.data;
+
+        tabs.push({
+          flag: 'article',
+          name: '文章'
+        });
+
+        tabs.unshift({
+          flag: 'music',
+          name: '音乐'
+        })
+
+        this.setData({
+          tabs
+        });
+        this.setTabWidth()
+
+        callback && callback();
+      });
+    }
   },
   setTabWidth() {
     let query = wx.createSelectorQuery().in(this),

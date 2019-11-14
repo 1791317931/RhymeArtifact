@@ -24,6 +24,7 @@ App({
 
     // this.getActivitySetting();
     this.getPlatForm();
+    this.getAppStatus()
   },
   getActivitySetting() {
     api.getActivitySetting(null, (res) => {
@@ -50,6 +51,10 @@ App({
         }
       }
     });
+  },
+  getAppStatus() {
+    // app是否审核中
+    wx.setStorageSync('audient', true)
   },
   globalData: {
     userInfo: null,

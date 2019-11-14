@@ -101,6 +101,9 @@ let CommonUtil = {
         completeFn && completeFn(res);
       }
     });
+  },
+  isAudient() {
+    return wx.getStorageSync('audient') == true
   }
 };
 

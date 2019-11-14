@@ -8,12 +8,14 @@ Page({
    * 页面的初始数据
    */
   data: {
+    isAudient: CommonUtil.isAudient(),
     menus: [
       {
         html: 'https://www.peaceandlovemusic.cn/#/residence',
         text: '成为音乐人'
       },
       {
+        flag: 'collection',
         path: '/pages/user/collection/index',
         text: '我的喜欢'
       },
@@ -22,6 +24,7 @@ Page({
         text: '我的歌词创作'
       },
       {
+        flag: 'music',
         path: '/pages/user/music/index',
         text: '我的音乐创作'
       },
@@ -39,6 +42,19 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    if (this.data.isAudient) {
+      let menus = this.data.menus
+      menus.forEach(item => {
+        if (['collection', 'music'].indexOf(item.flag) != -1) {
+          item.hide = true
+        }
+      })
+
+      this.setData({
+        menus
+      })
+    }
+
     let loadModalComponent = this.selectComponent('#loadModalComponent')
     this.setData({
       loadModalComponent
