@@ -6,25 +6,28 @@ Page({
    * 页面的初始数据
    */
   data: {
-    beatComponent: null
+    beatComponent: null,
+    isAudient: CommonUtil.isAudient()
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let beatComponent = this.selectComponent('#beatComponent')
-    beatComponent.init(this);
+    if (!this.data.isAudient) {
+      let beatComponent = this.selectComponent('#beatComponent')
+      beatComponent.init(this);
 
-    this.setData({
-      beatComponent
-    })
-
-    let id = options.id
-    if (id) {
-      wx.navigateTo({
-        url: `/pages/zmall/beatDetail/index?type=list&id=${id}`
+      this.setData({
+        beatComponent
       })
+
+      let id = options.id
+      if (id) {
+        wx.navigateTo({
+          url: `/pages/zmall/beatDetail/index?type=list&id=${id}`
+        })
+      }
     }
   },
 
@@ -39,11 +42,13 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    let beatComponent = this.data.beatComponent
-    if (!beatComponent.data.tabs.length) {
-      beatComponent.getCategoryList()
-    } else if (!beatComponent.data.page.list.length) {
-      beatComponent.getPage(1)
+    if (!this.data.isAudient) {
+      let beatComponent = this.data.beatComponent
+      if (!beatComponent.data.tabs.length) {
+        beatComponent.getCategoryList()
+      } else if (!beatComponent.data.page.list.length) {
+        beatComponent.getPage(1)
+      }
     }
   },
 
@@ -52,7 +57,9 @@ Page({
    */
   onHide: function () {
     // 暂停播放
-    this.data.beatComponent.pausePlay()
+    if (!this.data.isAudient) {
+      this.data.beatComponent.pausePlay()
+    }
     // let that = this.data.beatComponent
     // let beat = that.data.page.list[index]
     // let BAC = that.data.BAC
@@ -67,7 +74,9 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    this.data.beatComponent.onUnload()
+    if (!this.data.isAudient) {
+      this.data.beatComponent.onUnload()
+    }
   },
 
   /**
@@ -75,14 +84,18 @@ Page({
    */
   onPullDownRefresh: function () {
     wx.stopPullDownRefresh();
-    this.data.beatComponent.getPage(1);
+    if (!this.data.isAudient) {
+      this.data.beatComponent.getPage(1);
+    }
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    this.data.beatComponent.onReachBottom()
+    if (!this.data.isAudient) {
+      this.data.beatComponent.onReachBottom()
+    }
   },
 
   /**
@@ -94,5 +107,10 @@ Page({
     } else {
       return this.data.beatComponent.shareItem()
     }
+  },
+  toActivityDetail() {
+    wx.navigateTo({
+      url: '/pages/study/activityDetail/index'
+    })
   }
 })

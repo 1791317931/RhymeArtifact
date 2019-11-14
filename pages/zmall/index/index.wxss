@@ -1,1 +1,6 @@
-/* pages/zmall/index/index.wxss */
+.activity {
+  display: block;
+  margin: 30rpx auto 0;
+  width:670rpx;
+  height:268rpx;
+}

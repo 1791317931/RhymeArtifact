@@ -1,1 +1,4 @@
-<beatList id="beatComponent" />
+<image class="activity" src="/assets/imgs/study/activity-banner.png" catchtap='toActivityDetail' />
+<view hidden="{{isAudient}}">
+  <beatList id="beatComponent" />
+</view>
