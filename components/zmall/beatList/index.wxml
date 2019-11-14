@@ -1,4 +1,4 @@
-<view class="tab-container">
+<view wx:if="{{showCategory !== false}}" class="tab-container">
   <view class="clearfix" style="width: {{tabWidth}}px">
     <view wx:for="{{tabs}}" wx:for-item="item" wx:for-index="index" wx:key="{{item.id}}"
     class="tab-item {{activeId == item.id ? 'active' : ''}} item-{{index}}" data-index="{{index}}" catchtap="toggleTab">

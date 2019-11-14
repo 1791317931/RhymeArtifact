@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "beatList": "/components/zmall/beatList/index",
+    "musicList": "/components/createMusicList/index"
+  },
+  "navigationBarTitleText": "交流活动",
+  "enablePullDownRefresh": true
+}

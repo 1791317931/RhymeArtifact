@@ -295,5 +295,10 @@ Page({
         }
       }
     }
+  },
+  toActivity() {
+    wx.navigateTo({
+      url: '/pages/study/activity/index'
+    })
   }
 })

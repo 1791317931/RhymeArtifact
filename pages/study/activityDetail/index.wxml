@@ -1,0 +1,6 @@
+<view class="wrapper">
+  <image class="detail" src="/assets/imgs/study/activity-detail.png" />
+</view>
+<view class="bottom-container">
+  <view class="copy" catchtap='copy'>复制添加主办方微信</view>
+</view>

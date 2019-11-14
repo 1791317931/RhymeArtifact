@@ -1,13 +1,14 @@
 <view class="tab-container">
   <view class="clearfix" style="width: {{tabWidth}}px">
-    <view wx:for="{{tabs}}" wx:for-item="item" wx:for-index="index" wx:key="{{item.flag}}"
-    class="tab-item {{activeIndex == index ? 'active' : ''}} item-{{index}}" data-index="{{index}}" catchtap="toggleTab">
+    <view wx:for="{{tabs}}" wx:for-item="item" wx:for-index="index" wx:key="{{item.flag || item.id}}"
+    class="tab-item {{activeIndex == index ? 'active' : ''}}" data-index="{{index}}" catchtap="toggleTab">
       {{item.name}}
     </view>
   </view>
 </view>
 <canvas class="poster-canvas" canvas-id="poster-canvas"/>
 <musicPoster id="musicPosterComponent"/>
+<image class="activity" src="/assets/imgs/study/activity.png" catchtap='toActivity' />
 <view class="study-wrapper">
   <view hidden="{{tabs[activeIndex].flag != 'music'}}" class="music-container">
     <createMusicList id="musicComponent"/>

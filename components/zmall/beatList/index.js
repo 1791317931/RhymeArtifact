@@ -385,6 +385,12 @@ Component({
         param.category_id = categoryId
       }
 
+      // 活动
+      if (this.data.showCategory === false) {
+        param.hot = 1
+        param.activity = 1
+      }
+
       api.getGoodsPage(param, (res) => {
         let list = res.data
         let pagination = res.meta.pagination

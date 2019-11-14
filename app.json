@@ -37,7 +37,9 @@
     "pages/user/order/detail/index",
     "pages/user/skill/index",
     "pages/user/editInfo/index",
-    "pages/create/musicDetail/index"
+    "pages/create/musicDetail/index",
+    "pages/study/activity/index",
+    "pages/study/activityDetail/index"
   ],
   "requiredBackgroundModes": [
     "audio"

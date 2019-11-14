@@ -1,0 +1,17 @@
+<image class="activity" src="/assets/imgs/study/activity-banner.png" catchtap='toActivityDetail' />
+<view class="tab-container">
+  <view class="clearfix" style="width: {{tabWidth}}px">
+    <view wx:for="{{tabs}}" wx:for-item="item" wx:for-index="index" wx:key="{{item.flag || item.id}}"
+    class="tab-item {{activeIndex == index ? 'active' : ''}}" data-index="{{index}}" catchtap="toggleTab">
+      {{item.name}}
+    </view>
+  </view>
+</view>
+<view class="list-container">
+  <view hidden="{{tabs[activeIndex].flag != 'beat'}}">
+    <beatList id="beatComponent"/>
+  </view>
+  <view hidden="{{tabs[activeIndex].flag != 'music'}}">
+    <musicList id="musicComponent"/>
+  </view>
+</view>
