@@ -55,6 +55,9 @@ App({
   getAppStatus() {
     // app是否审核中
     wx.setStorageSync('audient', true)
+    api.getAppStatus((res) => {
+      wx.setStorageSync('audient', res.status == 0)
+    })
   },
   globalData: {
     userInfo: null,

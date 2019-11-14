@@ -15,7 +15,7 @@ Page({
     musicComponent: null,
     musicPosterComponent: null,
     onLoaded: false,
-    isAudient: CommonUtil.isAudient()
+    isAudient: true
   },
 
   /**
@@ -84,6 +84,10 @@ Page({
     videoComponent.init(this);
     articleComponent.init(this);
 
+    this.setData({
+      isAudient: CommonUtil.isAudient()
+    })
+    
     this.setData({
       musicComponent,
       videoComponent,

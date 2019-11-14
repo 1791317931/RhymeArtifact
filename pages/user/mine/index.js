@@ -8,7 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    isAudient: CommonUtil.isAudient(),
+    isAudient: true,
     menus: [
       {
         html: 'https://www.peaceandlovemusic.cn/#/residence',
@@ -42,6 +42,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.setData({
+      isAudient: CommonUtil.isAudient()
+    })
+    
     if (this.data.isAudient) {
       let menus = this.data.menus
       menus.forEach(item => {
