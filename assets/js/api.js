@@ -2,7 +2,9 @@ import UrlUtil from 'UrlUtil'
 import PathUtil from 'PathUtil'
 
 export function getAppStatus(fn, completeFn) {
-  UrlUtil.get(PathUtil.getNewPath('wechat/review'), null, fn, completeFn);
+  UrlUtil.get(PathUtil.getNewPath('wechat/review'), {
+    version: 1
+  }, fn, completeFn);
 }
 
 export function login(data, fn, completeFn) {

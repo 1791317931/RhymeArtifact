@@ -1,4 +1,5 @@
 import CommonUtil from '../../../assets/js/CommonUtil';
+import * as api from '../../../assets/js/api';
 
 Page({
 
@@ -7,7 +8,8 @@ Page({
    */
   data: {
     beatComponent: null,
-    isAudient: true
+    isAudient: true,
+    loaded: false
   },
 
   /**
@@ -17,22 +19,33 @@ Page({
     this.setData({
       isAudient: CommonUtil.isAudient()
     })
-    
-    if (!this.data.isAudient) {
-      let beatComponent = this.selectComponent('#beatComponent')
-      beatComponent.init(this);
+    let beatComponent = this.selectComponent('#beatComponent')
+    beatComponent.init(this);
 
+    this.setData({
+      beatComponent
+    })
+
+    api.getAppStatus((res) => {
+      let isAudient = res.status == 1
+      wx.setStorageSync('audient', isAudient)
       this.setData({
-        beatComponent
+        isAudient,
+        // 初始化完毕
+        loaded: true
       })
 
-      let id = options.id
-      if (id) {
-        wx.navigateTo({
-          url: `/pages/zmall/beatDetail/index?type=list&id=${id}`
-        })
+      if (!isAudient) {
+        let id = options.id
+        if (id) {
+          wx.navigateTo({
+            url: `/pages/zmall/beatDetail/index?type=list&id=${id}`
+          })
+        }
+
+        this.init()
       }
-    }
+    })
   },
 
   /**
@@ -46,13 +59,8 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    if (!this.data.isAudient) {
-      let beatComponent = this.data.beatComponent
-      if (!beatComponent.data.tabs.length) {
-        beatComponent.getCategoryList()
-      } else if (!beatComponent.data.page.list.length) {
-        beatComponent.getPage(1)
-      }
+    if (this.data.loaded) {
+      this.init()
     }
   },
 
@@ -110,6 +118,16 @@ Page({
       return CommonUtil.share()
     } else {
       return this.data.beatComponent.shareItem()
+    }
+  },
+  init() {
+    if (!this.data.isAudient) {
+      let beatComponent = this.data.beatComponent
+      if (!beatComponent.data.tabs.length) {
+        beatComponent.getCategoryList()
+      } else if (!beatComponent.data.page.list.length) {
+        beatComponent.getPage(1)
+      }
     }
   },
   toActivityDetail() {
