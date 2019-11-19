@@ -89,7 +89,8 @@ Page({
     api.getArticleById({
       id: this.data.id
     }, (res) => {
-      var article = `<div>${res.data.content}</div>`
+      var article = `<div>${this.translateContent(res.data.content)}</div>`
+      console.log(article)
       WxParse.wxParse('wxParseData', 'html', article, this, 0);
       this.setData({
         article: res.data
@@ -99,6 +100,21 @@ Page({
         loading: false
       });
     });
+  },
+  translateContent(content) {
+    let startIndex = content.indexOf('<figure class="media">')
+    let substring
+    let url
+    let urlStartIndex
+    while(startIndex != -1) {
+      substring = content.substring(startIndex, content.indexOf('</figure>', startIndex + 9) + 9)
+      urlStartIndex = substring.indexOf('url="') + 5
+      url = substring.substring(urlStartIndex, substring.indexOf('"', urlStartIndex))
+      content = content.replace(substring, `<video src="${url}" custom-cache="false" controls autoplay></video>`)
+      startIndex = content.indexOf('<figure class="media">')
+    }
+
+    return content
   },
   generatePoster(e) {
     let article = this.data.article;
