@@ -7,6 +7,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    // 音频播放组件
+    audioComponent: null,
     beatComponent: null,
     isAudient: true,
     loaded: false
@@ -23,6 +25,7 @@ Page({
     beatComponent.init(this);
 
     this.setData({
+      audioComponent: beatComponent,
       beatComponent
     })
 
@@ -68,27 +71,14 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-    // 暂停播放
-    if (!this.data.isAudient) {
-      this.data.beatComponent.pausePlay()
-    }
-    // let that = this.data.beatComponent
-    // let beat = that.data.page.list[index]
-    // let BAC = that.data.BAC
-    // BAC.title = beat.goods_name
-    // BAC.epname = beat.goods_name
-    // BAC.singer = beat.author
-    // BAC.coverImgUrl = beat.cover_images[0]
-    // BAC.src = beat.try_beat_url
+
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    if (!this.data.isAudient) {
-      this.data.beatComponent.onUnload()
-    }
+
   },
 
   /**

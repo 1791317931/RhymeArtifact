@@ -5,6 +5,8 @@ import PathUtil from '../../assets/js/PathUtil';
 import TimeUtil from '../../assets/js/TimeUtil';
 import * as api from '../../assets/js/api';
 import CategoryType from '../../assets/js/CategoryType'
+import BAC from '../../assets/js/components/backgroundAudio/BAC'
+import MoveProgressUtil from '../../assets/js/MoveProgressUtil'
 
 Component({
   /**
@@ -20,7 +22,6 @@ Component({
   data: {
     scope: null,
     tabs: [],
-    BAC: null,
     activeId: -1,
     tabWidth: 10000,
     page: {
@@ -42,11 +43,7 @@ Component({
     duration: 0,
     movingBar: false,
     trackContainerWidth: null,
-    pageX: null,
-    playPercent: 0,
-    startPercent: null,
-    startPageX: null,
-    startPercent: null
+    playPercent: 0
   },
 
   /**
@@ -65,13 +62,7 @@ Component({
         keepScreenOn: true
       });
 
-      let BAC = option.audioContext || wx.createInnerAudioContext()
-      // let BAC = option.audioContext || wx.getBackgroundAudioManager()
-      this.setData({
-        BAC
-      })
       this.setScope(scope)
-      this.bindBACEvent()
 
       const query = wx.createSelectorQuery().in(this);
       query.select('#progress').boundingClientRect();
@@ -81,90 +72,16 @@ Component({
         });
       });
     },
-    onUnload() {
-      this.data.BAC.destroy()
-    },
     prevent() { },
-    caculateTime(currentTime) {
-      let BAC = this.data.BAC
-      let totalTime = BAC.duration
-      let totalTimeArr = TimeUtil.numberToArr(Math.round(totalTime))
-      let playPercent = (currentTime / totalTime > 1 ? 1 : currentTime / totalTime) * 100
-      this.setData({
-        totalTimeArr,
-        duration: totalTime,
-        currentTime,
-        playTimeArr: TimeUtil.numberToArr(Math.round(currentTime)),
-        playPercent
-      })
-    },
-    bindBACEvent() {
-      let BAC = this.data.BAC;
-
-      BAC.autoplay = true;
-      BAC.onTimeUpdate(() => {
-        this.caculateTime(BAC.currentTime)
-      });
-
-      BAC.onError((res) => {
-        this.audioError();
-      });
-
-      BAC.onEnded((res) => {
-        this.musicAudioEnded();
-      });
-    },
-    musicAudioEnded(e) {
-      let BAC = this.data.BAC;
-      this.setData({
-        playing: false
-      });
-
-      BAC.seek(0);
-    },
-    audioError(e) {
-      if (e.detail.errMsg == 'MEDIA_ERR_SRC_NOT_SUPPORTED') {
-        TipUtil.message('播放失败');
-      }
-      this.musicAudioEnded(e);
-    },
     // ---------------------拖动指针--------------------------
     touchStart(e) {
-      this.setData({
-        startPageX: e.touches[0].pageX,
-        startPercent: this.data.playPercent,
-        movingBar: true
-      });
-
-      this.pausePlay()
+      MoveProgressUtil.touchStart(e)
     },
     movePointer(e) {
-      let touches = e.touches
-      let prePageX = this.data.startPageX
-      let pageX = e.touches[0].pageX
-      let duration = this.data.duration;
-
-      let width = pageX - prePageX
-      let percent = width / this.data.trackContainerWidth;
-      let currentPercent = this.data.startPercent / 100 + percent;
-      currentPercent = Math.min(1, currentPercent);
-      currentPercent = Math.max(0, currentPercent);
-      let time = currentPercent * duration
-
-      if (time >= duration) {
-        time = duration;
-        this.musicAudioEnded();
-      }
-
-      this.caculateTime(time)
+      MoveProgressUtil.movePointer(e)
     },
     touchEnd(e) {
-      let BAC = this.data.BAC;
-      this.setData({
-        movingBar: false
-      })
-      BAC.seek(this.data.currentTime);
-      this.continuePlay()
+      MoveProgressUtil.touchEnd(e)
     },
     // ---------------------拖动指针--------------------------
     setTabWidth() {
@@ -228,36 +145,27 @@ Component({
       this.play(index)
     },
     play(index) {
-      let BAC = this.data.BAC
       let music = this.data.page.list[index]
-      BAC.src = music.origin_url
+      BAC.play({
+        type: 'music',
+        id: music.id,
+        title: music.music_title,
+        epname: music.music_title,
+        singer: music.composer,
+        coverImgUrl: music.musics_cover,
+        src: music.origin_url
+      })
 
       this.setData({
         playIndex: index,
         playing: true
       });
-
-      // 播放音频
-      BAC.seek(0);
-      BAC.play();
-    },
-    toggleStatus(playing) {
-      this.setData({
-        playing
-      });
     },
     continuePlay() {
-      let BAC = this.data.BAC;
-
-      this.toggleStatus(true)
-      // 播放音频
-      BAC.play();
+      BAC.continuePlay();
     },
     pausePlay() {
-      let BAC = this.data.BAC;
-      this.toggleStatus(false)
-
-      BAC.pause();
+      BAC.pausePlay();
     },
     clickMore(e) {
       let index = this.getIndex(e)
@@ -413,10 +321,8 @@ Component({
       let index = this.getIndex(e);
       let item = this.data.tabs[index]
       if (item.id != this.data.activeId) {
-        this.pausePlay()
         this.setData({
-          activeId: item.id,
-          playIndex: -1
+          activeId: item.id
         })
         this.getPage(1)
       }

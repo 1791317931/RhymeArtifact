@@ -1,6 +1,7 @@
 import * as api from './assets/js/api';
 import PathUtil from './assets/js/PathUtil';
 const ald = require('./utils/ald-stat.js')
+import BAC from './assets/js/components/backgroundAudio/BAC'
 
 App({
   onLaunch: function () {
@@ -25,6 +26,7 @@ App({
     // this.getActivitySetting();
     this.getPlatForm();
     this.getAppStatus()
+    BAC.init()
   },
   getActivitySetting() {
     api.getActivitySetting(null, (res) => {
@@ -69,6 +71,7 @@ App({
     },
     // 活动
     activity: null,
-    platform: null
+    platform: null,
+    BAC
   }
 })

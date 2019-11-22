@@ -4,3 +4,17 @@
   width:670rpx;
   height:268rpx;
 }
+
+.wrapper {
+  position: relative;
+}
+
+.mask {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background: #fff;
+  z-index: 100;
+}

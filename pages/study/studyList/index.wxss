@@ -52,4 +52,10 @@ page {
 .music-container {
   position: relative;
   top: -20rpx;
+  height: 0;
+  overflow: hidden;
+}
+
+.music-container.active {
+  height: auto;
 }

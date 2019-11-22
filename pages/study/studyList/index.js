@@ -12,6 +12,7 @@ Page({
     activeIndex: 0,
     videoComponent: null,
     articleComponent: null,
+    audioComponent: null,
     musicComponent: null,
     musicPosterComponent: null,
     onLoaded: false,
@@ -89,6 +90,7 @@ Page({
     })
     
     this.setData({
+      audioComponent: musicComponent,
       musicComponent,
       videoComponent,
       articleComponent,
@@ -130,7 +132,7 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-    this.data.musicComponent.pausePlay();
+    
   },
 
   /**
@@ -287,7 +289,6 @@ Page({
     }
   },
   getPage(current_page = 1) {
-    this.data.musicComponent.pausePlay();
     let data = this.data,
     tabs = data.tabs,
     item = data.tabs[data.activeIndex],

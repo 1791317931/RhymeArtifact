@@ -2,6 +2,8 @@ import TimeUtil from '../../../assets/js/TimeUtil'
 import TipUtil from '../../../assets/js/TipUtil'
 import CommonUtil from '../../../assets/js/CommonUtil'
 import * as api from '../../../assets/js/api';
+import BAC from '../../../assets/js/components/backgroundAudio/BAC'
+import MoveProgressUtil from '../../../assets/js/MoveProgressUtil'
 
 Page({
 
@@ -19,6 +21,7 @@ Page({
     playIndex: 0,
     total: 0,
     playing: false,
+    audioComponent: null,
     beatComponent: null,
     commentComment: null,
     commentCount: 0,
@@ -29,11 +32,7 @@ Page({
     duration: 0,
     movingBar: false,
     trackContainerWidth: null,
-    pageX: null,
-    playPercent: 0,
-    startPercent: null,
-    startPageX: null,
-    startPercent: null
+    playPercent: 0
   },
 
   /**
@@ -44,10 +43,7 @@ Page({
     let beatComponent = this.selectComponent('#beatComponent')
     let commentComponent = this.selectComponent('#commentComponent')
 
-    let BAC = wx.createInnerAudioContext()
-    beatComponent.init(this, {
-      audioContext: BAC
-    });
+    beatComponent.init(this);
     commentComponent.init(this);
     // 保持不锁屏
     wx.setKeepScreenOn({
@@ -56,6 +52,7 @@ Page({
 
     this.setData({
       loadModalComponent,
+      audioComponent: beatComponent,
       beatComponent,
       commentComponent,
       isIos: getApp().globalData.platform == 'ios'
@@ -97,14 +94,14 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-    this.data.beatComponent.pausePlay()
+    
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    this.data.beatComponent.onUnload()
+    
   },
 
   /**
@@ -194,42 +191,13 @@ Page({
   },
   // ---------------------拖动指针--------------------------
   touchStart(e) {
-    this.setData({
-      startPageX: e.touches[0].pageX,
-      startPercent: this.data.playPercent,
-      movingBar: true
-    });
-
-    this.pausePlay()
+    MoveProgressUtil.touchStart(e)
   },
   movePointer(e) {
-    let touches = e.touches
-    let prePageX = this.data.startPageX
-    let pageX = e.touches[0].pageX
-    let duration = this.data.duration;
-
-    let width = pageX - prePageX
-    let percent = width / this.data.trackContainerWidth;
-    let currentPercent = this.data.startPercent / 100 + percent;
-    currentPercent = Math.min(1, currentPercent);
-    currentPercent = Math.max(0, currentPercent);
-    let time = currentPercent * duration
-
-    if (time >= duration) {
-      time = duration;
-      this.data.beatComponent.beatAudioEnded();
-    }
-
-    this.data.beatComponent.caculateTime(time)
+    MoveProgressUtil.movePointer(e)
   },
   touchEnd(e) {
-    let that = this.data.beatComponent
-    let BAC = that.data.BAC;
-    this.setData({
-      movingBar: false
-    })
-    BAC.seek(this.data.currentTime);
-    this.continuePlay()
+    MoveProgressUtil.touchEnd(e)
   },
   // ---------------------拖动指针--------------------------
   prev() {

@@ -3,7 +3,8 @@ import CommonUtil from '../../../assets/js/CommonUtil';
 import ConfigUtil from '../../../assets/js/ConfigUtil';
 import PathUtil from '../../../assets/js/PathUtil';
 import TimeUtil from '../../../assets/js/TimeUtil';
-import * as api from '../../../assets/js/api';
+import * as api from '../../../assets/js/api'
+import BAC from '../../../assets/js/components/backgroundAudio/BAC'
 
 Component({
   /**
@@ -20,7 +21,6 @@ Component({
     isIos: false,
     scope: null,
     tabs: [],
-    BAC: null,
     activeId: -1,
     tabWidth: 10000,
     page: {
@@ -53,75 +53,16 @@ Component({
       });
     },
     // audioContext
-    init(scope, option = {}) {
+    init(scope) {
       // 保持不锁屏
       wx.setKeepScreenOn({
         keepScreenOn: true
       });
 
-      let BAC = option.audioContext || wx.createInnerAudioContext()
       this.setData({
-        BAC,
         isIos: getApp().globalData.platform == 'ios'
       })
       this.setScope(scope)
-      this.bindBACEvent()
-    },
-    onUnload() {
-      this.data.BAC.destroy()
-    },
-    caculateTime(currentTime) {
-      let BAC = this.data.BAC
-      let totalTime = BAC.duration
-      let totalTimeArr = TimeUtil.numberToArr(Math.round(totalTime))
-      let playPercent = (currentTime / totalTime > 1 ? 1 : currentTime / totalTime) * 100
-
-      this.setPlayProgress({
-        totalTimeArr,
-        duration: totalTime,
-        currentTime,
-        playTimeArr: TimeUtil.numberToArr(Math.round(currentTime)),
-        playPercent
-      })
-    },
-    bindBACEvent() {
-      let BAC = this.data.BAC;
-      BAC.autoplay = true;
-
-      BAC.onTimeUpdate(() => {
-        this.caculateTime(BAC.currentTime)
-      });
-
-      BAC.onError((res) => {
-        this.audioError();
-      });
-
-      BAC.onEnded((res) => {
-        this.beatAudioEnded();
-      });
-    },
-    setPlayProgress(data) {
-      this.setData({
-        ...data
-      })
-
-      this.data.scope.setData({
-        ...data
-      })
-    },
-    beatAudioEnded(e) {
-      let BAC = this.data.BAC;
-      this.setData({
-        playing: false
-      });
-
-      BAC.seek(0);
-    },
-    audioError(e) {
-      if (e.detail.errMsg == 'MEDIA_ERR_SRC_NOT_SUPPORTED') {
-        TipUtil.message('播放失败');
-      }
-      this.beatAudioEnded(e);
     },
     onReachBottom() {
       let page = this.data.page;
@@ -143,25 +84,23 @@ Component({
         this.startPlay(index);
       }
     },
-    toggleStatus(playing) {
-      this.setData({
-        playing
-      });
-      this.data.scope.setData({
-        playing
-      })
-    },
     startPlay(index) {
       this.play(index)
       // 获取评论
       this.data.scope.getCommentPage()
     },
     play(index) {
-      let BAC = this.data.BAC
       let beat = this.data.page.list[index]
-      BAC.src = beat.beat_try_url
 
-      this.toggleStatus(true)
+      BAC.play({
+        type: 'beat',
+        id: beat.id,
+        title: beat.goods_name,
+        epname: beat.goods_name,
+        singer: beat.author,
+        coverImgUrl: beat.cover_images[0],
+        src: beat.beat_try_url
+      })
       this.setData({
         playIndex: index
       })
@@ -170,25 +109,12 @@ Component({
         beat
       })
       this.data.scope.setTitle(beat)
-
-      // 播放音频
-      BAC.seek(0);
-      BAC.play();
     },
     continuePlay(e) {
-      let BAC = this.data.BAC;
-
-      this.toggleStatus(true)
-
-      // 播放音频
-      BAC.play();
+      BAC.continuePlay();
     },
     pausePlay() {
-      let BAC = this.data.BAC;
-
-      this.toggleStatus(false)
-
-      BAC.pause();
+      BAC.pausePlay();
     },
     clickMore(e) {
       let index = this.getIndex(e)

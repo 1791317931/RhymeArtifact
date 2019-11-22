@@ -33,7 +33,7 @@
   loading="{{page.loading}}"
   hasData="{{!!page.list.length}}"
   hasMore="{{page.current_page < page.total_pages}}"/>
-<view class="beat-modal {{playing ? 'active' : ''}}" catchtouchmove="prevent">
+<view class="beat-modal {{playIndex != -1 ? 'active' : ''}}" catchtouchmove="prevent">
   <view class="cover-container" catchtap="togglePlay">
     <image src="{{page.list[playIndex].cover_images[0]}}" class="cover" />
     <view class="play-container" data-index="{{playIndex}}" catchtap="toggleItemStatus">

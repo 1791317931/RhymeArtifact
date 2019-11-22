@@ -10,7 +10,7 @@
 <musicPoster id="musicPosterComponent"/>
 <image hidden="{{isAudient}}" class="activity" src="/assets/imgs/study/activity.png" catchtap='toActivity' />
 <view class="study-wrapper">
-  <view hidden="{{tabs[activeIndex].flag != 'music'}}" class="music-container">
+  <view class="music-container {{tabs[activeIndex].flag == 'music' ? 'active' : ''}}">
     <createMusicList id="musicComponent"/>
   </view>
   <view hidden="{{tabs[activeIndex].flag != 'article'}}">
