@@ -12,7 +12,7 @@
       data-index="{{index}}" catchtap="clickItem">
       <view class="cover-container" data-index="{{index}}" catchtap="toggleItemStatus">
         <image src="{{item.musics_cover}}" class="cover" />
-        <view hidden="{{playIndex != index}}" class="play-container">
+        <view hidden="{{autoPlay || playIndex != index}}" class="play-container">
           <image hidden="{{playIndex != index || playing}}" src="/assets/imgs/dash-to-play.png" class="play" />
           <image hidden="{{playIndex != index || !playing}}" src="/assets/imgs/dash-to-pause.png" class="play" />
         </view>
@@ -31,7 +31,7 @@
   loading="{{page.loading}}"
   hasData="{{!!page.list.length}}"
   hasMore="{{page.current_page < page.total_pages}}"/>
-<view class="beat-modal {{playIndex != -1 ? 'active' : ''}}" catchtouchmove="prevent">
+<view class="beat-modal {{!autoPlay && playIndex != -1 ? 'active' : ''}}" catchtouchmove="prevent">
   <view class="cover-container" catchtap="togglePlay">
     <image src="{{page.list[playIndex].musics_cover}}" class="cover" />
     <view class="play-container" data-index="{{playIndex}}" catchtap="toggleItemStatus">

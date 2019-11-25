@@ -42,14 +42,14 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-    this.data.musicComponent.pausePlay();
+    
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    this.data.musicComponent.onUnload();
+    
   },
 
   /**

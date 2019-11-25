@@ -5,6 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    audioComponent: null,
     musicComponent: null,
     musicPosterComponent: null
   },
@@ -17,11 +18,8 @@ Page({
     musicPosterComponent = this.selectComponent('#musicPosterComponent');
 
     musicComponent.init(this);
-    musicComponent.setData({
-      'page.showHead': false,
-      'page.showMine': true
-    });
     this.setData({
+      audioComponent: musicComponent,
       musicComponent,
       musicPosterComponent
     });
@@ -40,21 +38,21 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
+    this.data.musicComponent.setStatus()
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-    this.data.musicComponent.pausePlay();
+    
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    this.data.musicComponent.onUnload();
+    
   },
 
   /**

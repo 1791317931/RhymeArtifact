@@ -87,7 +87,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.data.beatComponent.setStatus()
   },
 
   /**
@@ -122,7 +122,12 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-    
+    let data = this.data.beat
+    return {
+      title: beat.goods_name,
+      imageUrl: beat.cover_images[0],
+      path: `/pages/zmall/index?id=${data.id}`
+    }
   },
   prevent() {},
   toggleLoading(loading) {

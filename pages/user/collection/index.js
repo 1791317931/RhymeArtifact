@@ -7,8 +7,8 @@ Page({
    */
   data: {
     posterUrl: null,
+    audioComponent: null,
     musicPosterComponent: null,
-    beatComponent: null,
     musicComponent: null,
     videoComponent: null,
     articleComponent: null,
@@ -24,10 +24,6 @@ Page({
       {
         flag: 'article',
         name: '文章'
-      },
-      {
-        flag: 'beat',
-        name: 'beat'
       }
     ],
     activeIndex: 0
@@ -37,15 +33,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let beatComponent = this.selectComponent('#beatComponent'),
-    musicComponent = this.selectComponent('#musicComponent'),
+    let musicComponent = this.selectComponent('#musicComponent'),
     videoComponent = this.selectComponent('#videoComponent'),
     articleComponent = this.selectComponent('#articleComponent'),
     musicPosterComponent = this.selectComponent('#musicPosterComponent');
 
-    beatComponent.setData({
-      'page.showCollection': true
-    });
     musicComponent.setData({
       'page.showCollection': true
     });
@@ -58,14 +50,9 @@ Page({
     musicComponent.init(this);
     videoComponent.init(this);
     articleComponent.init(this);
-    // 不显示分类
-    beatComponent.setData({
-      showTab: false
-    });
-    beatComponent.init(this);
 
     this.setData({
-      beatComponent,
+      audioComponent: musicComponent,
       musicComponent,
       videoComponent,
       articleComponent,
@@ -86,23 +73,21 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
+    this.data.musicComponent.setStatus()
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-    this.data.beatComponent.pausePlay();
-    this.data.musicComponent.pausePlay();
+
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    this.data.beatComponent.onUnload();
-    this.data.musicComponent.onUnload();
+    
   },
 
   /**
@@ -118,8 +103,6 @@ Page({
       this.data.videoComponent.getPage(1);
     } else if (flag == 'article') {
       this.data.articleComponent.getPage(1);
-    } else if (flag == 'beat') {
-      this.data.beatComponent.getPage(1);
     }
   },
 
@@ -134,8 +117,6 @@ Page({
       this.data.videoComponent.onReachBottom();
     } else if (flag == 'article') {
       this.data.articleComponent.onReachBottom();
-    } else if (flag == 'beat') {
-      this.data.beatComponent.onReachBottom();
     }
   },
 
@@ -153,8 +134,6 @@ Page({
         return this.data.videoComponent.shareItem(e);
       } else if (flag == 'article') {
         return this.data.articleComponent.shareItem(e);
-      } else if (flag == 'beat') {
-        return this.data.beatComponent.shareItem(e);
       }
     }
   },
@@ -166,8 +145,6 @@ Page({
       this.data.videoComponent.getPage(1);
     } else if (flag == 'article') {
       this.data.articleComponent.getPage(1);
-    } else if (flag == 'beat') {
-      this.data.beatComponent.getPage(1);
     }
   },
   getFlag() {
@@ -180,8 +157,6 @@ Page({
         activeIndex
       });
 
-      this.data.musicComponent.pausePlay(e);
-      this.data.beatComponent.pausePlay(e);
       this.init();
     }
   },

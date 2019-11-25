@@ -1,5 +1,6 @@
 import CommonUtil from '../../../assets/js/CommonUtil';
-import * as api from '../../../assets/js/api';
+import * as api from '../../../assets/js/api'
+import BAC from '../../../assets/js/components/backgroundAudio/BAC'
 
 Page({
 
@@ -118,6 +119,7 @@ Page({
       } else if (!beatComponent.data.page.list.length) {
         beatComponent.getPage(1)
       }
+      beatComponent.setStatus()
     }
   },
   toActivityDetail() {

@@ -43,7 +43,8 @@ Component({
     duration: 0,
     movingBar: false,
     trackContainerWidth: null,
-    playPercent: 0
+    playPercent: 0,
+    autoPlay: true
   },
 
   /**
@@ -71,6 +72,11 @@ Component({
           trackContainerWidth: res[0].width
         });
       });
+    },
+    setStatus() {
+      this.setData({
+        autoPlay: BAC.autoPlay
+      })
     },
     prevent() { },
     // ---------------------拖动指针--------------------------

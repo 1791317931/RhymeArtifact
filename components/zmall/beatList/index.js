@@ -35,7 +35,6 @@ Component({
       total_pages: 0,
       list: []
     },
-    playIndex: -1,
     playing: false,
     playTimeArr: 0,
     totalTimeArr: 0,
@@ -45,7 +44,9 @@ Component({
     duration: 0,
     movingBar: false,
     trackContainerWidth: null,
-    playPercent: 0
+    playPercent: 0,
+    playIndex: -1,
+    autoPlay: true
   },
 
   /**
@@ -76,6 +77,11 @@ Component({
           trackContainerWidth: res[0].width
         });
       });
+    },
+    setStatus() {
+      this.setData({
+        autoPlay: BAC.autoPlay
+      })
     },
     prevent() {},
     // ---------------------拖动指针--------------------------
@@ -168,7 +174,7 @@ Component({
 
       this.setData({
         playIndex: index
-      });
+      })
     },
     continuePlay() {
       // 播放音频

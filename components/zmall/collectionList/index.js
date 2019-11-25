@@ -64,6 +64,11 @@ Component({
       })
       this.setScope(scope)
     },
+    setStatus() {
+      this.setData({
+        autoPlay: BAC.autoPlay
+      })
+    },
     onReachBottom() {
       let page = this.data.page;
       if (page.current_page < page.total_pages) {

@@ -2,8 +2,6 @@ import TimeUtil from '../../TimeUtil'
 import TipUtil from '../../TipUtil'
 
 const BAC = {
-  scope: null,
-  type: null,
   playIndex: -1,
   audio: null,
   playing: false,
@@ -11,6 +9,11 @@ const BAC = {
   currentTime: 0,
   totalTimeArr: 0,
   playPercent: 0,
+  // 是否是自动播放
+  autoPlay: false,
+  list: [],
+  // 播放序号
+  listIndex: -1,
   init() {
     let audio = wx.getBackgroundAudioManager()
     this.audio = audio
@@ -47,7 +50,8 @@ const BAC = {
   getAudio() {
     return this.audio
   },
-  play(param) {
+  // autoPlay:是否是自动循环播放
+  play(param, autoPlay = false) {
     let audio = this.getAudio()
 
     if (param) {
@@ -62,6 +66,17 @@ const BAC = {
       audio.src = param.src
       // 播放音频
       audio.seek(0);
+      this.setState({
+        autoPlay
+      })
+      this.autoPlay = autoPlay
+
+      // 如果用用户自己点击播放，需要添加到播放序列
+      if (!autoPlay) {
+        let list = this.list
+        list.push(param)
+        this.listIndex = list.length - 1
+      }
     }
 
     audio.play();
@@ -101,6 +116,9 @@ const BAC = {
     this.setState({
       playing: false
     })
+
+    // 播放结束后，自动循环播放下一首
+    this.next()
   },
   error(e) {
     if (e.detail.errMsg == 'MEDIA_ERR_SRC_NOT_SUPPORTED') {
@@ -108,6 +126,20 @@ const BAC = {
     }
 
     this.ended(e);
+  },
+  next() {
+    let list = this.list
+    let listIndex = (this.listIndex + 1) % list.length
+
+    this.listIndex = listIndex
+    // 循环播放下一首
+    let item = list[listIndex]
+    this.play(item, true)
+
+    // 自动播放
+    this.setState({
+      autoPlay: true
+    })
   },
   setState(state) {
     let page = this.getPage()

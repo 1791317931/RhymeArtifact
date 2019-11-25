@@ -4,6 +4,8 @@ import ConfigUtil from '../../../assets/js/ConfigUtil';
 import PathUtil from '../../../assets/js/PathUtil';
 import TimeUtil from '../../../assets/js/TimeUtil';
 import * as api from '../../../assets/js/api';
+import BAC from '../../../assets/js/components/backgroundAudio/BAC'
+import MoveProgressUtil from '../../../assets/js/MoveProgressUtil'
 
 Component({
   /**
@@ -65,63 +67,11 @@ Component({
         isIos: getApp().globalData.platform == 'ios'
       })
       this.setScope(scope)
-      this.bindBACEvent()
     },
-    onUnload() {
-      this.data.BAC.destroy()
-    },
-    caculateTime(currentTime) {
-      let BAC = this.data.BAC
-      let totalTime = BAC.duration
-      let totalTimeArr = TimeUtil.numberToArr(Math.round(totalTime))
-      let playPercent = (currentTime / totalTime > 1 ? 1 : currentTime / totalTime) * 100
-
-      this.setPlayProgress({
-        totalTimeArr,
-        duration: totalTime,
-        currentTime,
-        playTimeArr: TimeUtil.numberToArr(Math.round(currentTime)),
-        playPercent
-      })
-    },
-    bindBACEvent() {
-      let BAC = this.data.BAC;
-      BAC.autoplay = true;
-
-      BAC.onTimeUpdate(() => {
-        this.caculateTime(BAC.currentTime)
-      });
-
-      BAC.onError((res) => {
-        this.audioError();
-      });
-
-      BAC.onEnded((res) => {
-        this.musicAudioEnded();
-      });
-    },
-    setPlayProgress(data) {
+    setStatus() {
       this.setData({
-        ...data
+        autoPlay: BAC.autoPlay
       })
-
-      this.data.scope.setData({
-        ...data
-      })
-    },
-    musicAudioEnded(e) {
-      let BAC = this.data.BAC;
-      this.setData({
-        playing: false
-      });
-
-      BAC.seek(0);
-    },
-    audioError(e) {
-      if (e.detail.errMsg == 'MEDIA_ERR_SRC_NOT_SUPPORTED') {
-        TipUtil.message('播放失败');
-      }
-      this.musicAudioEnded(e);
     },
     onReachBottom() {
       let page = this.data.page;
@@ -157,38 +107,28 @@ Component({
       this.data.scope.getCommentPage()
     },
     play(index) {
-      let BAC = this.data.BAC
       let music = this.data.page.list[index]
-      BAC.src = music.origin_url
 
-      this.toggleStatus(true)
+      BAC.play({
+        type: 'music',
+        id: music.id,
+        title: music.music_title,
+        epname: music.music_title,
+        singer: music.composer,
+        coverImgUrl: music.musics_cover,
+        src: music.origin_url
+      })
+
       this.setData({
-        playIndex: index
-      })
-      this.data.scope.setData({
         playIndex: index,
-        music
-      })
-      this.data.scope.setTitle(music)
-
-      // 播放音频
-      BAC.seek(0);
-      BAC.play();
+        playing: true
+      });
     },
-    continuePlay(e) {
-      let BAC = this.data.BAC;
-
-      this.toggleStatus(true)
-
-      // 播放音频
-      BAC.play();
+    continuePlay() {
+      BAC.continuePlay();
     },
     pausePlay() {
-      let BAC = this.data.BAC;
-
-      this.toggleStatus(false)
-
-      BAC.pause();
+      BAC.pausePlay();
     },
     clickMore(e) {
       let index = this.getIndex(e)
@@ -309,8 +249,6 @@ Component({
         this.setData({
           page
         })
-
-        this.startPlay(playIndex)
       }, () => {
         this.togglePageLoading(false)
       })

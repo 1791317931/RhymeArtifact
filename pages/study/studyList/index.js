@@ -126,6 +126,11 @@ Page({
     } else {
       this.renderForOnShow();
     }
+
+    let musicComponent = this.data.musicComponent
+    if (musicComponent) {
+      musicComponent.setStatus()
+    }
   },
 
   /**
