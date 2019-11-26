@@ -17,6 +17,7 @@
     bindtimeupdate="bindTimeUpdate"
     bindended="bindEnded"
     binderror="bindError"
+    poster="{{list[playIndex].section_cover}}"
   />
   <view class="title-container">{{list[playIndex].section_title}}</view>
   <!-- 安卓video必须在显示的状况下才能start或者puase -->
