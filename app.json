@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/user/residence/index/index",
     "pages/zmall/index/index",
     "pages/user/info/index",
     "pages/zmall/orderDetail/index",

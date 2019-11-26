@@ -1,0 +1,144 @@
+page {
+  background: #fff;
+}
+
+.form {
+  padding: 0 40rpx;
+}
+
+.form .item {
+  display: flex;
+  line-height: 90rpx;
+}
+
+.form .item view:first-child {
+  width: 110rpx;
+  font-size:26rpx;
+  font-family:PingFang-SC-Medium,PingFang-SC;
+  font-weight:500;
+  color:rgba(0,0,0,1);
+}
+
+.form .item view:nth-child(2) {
+  flex: 1;
+}
+
+.form .item view:nth-child(2) input {
+  width: 100%;
+  height: 90rpx;
+  background:rgba(248,248,248,1);
+  border-radius:60rpx;
+  padding: 0 40rpx;
+}
+
+.form .item:not(:first-child) {
+  margin-top: 30rpx;
+}
+
+.form .item input {
+  font-size:26rpx;
+  font-family:PingFang-SC-Medium,PingFang-SC;
+  font-weight:500;
+  color:rgba(196,196,196,1);
+}
+
+.upload-container {
+  margin-top: 40rpx;
+  padding: 0 32rpx;
+}
+
+.upload-container .title {
+  font-size:32rpx;
+  font-family:PingFang-SC-Medium,PingFang-SC;
+  font-weight:500;
+  color:rgba(51,51,51,1);
+  line-height:40rpx;
+}
+
+.upload-container .upload-wrapper {
+  width: 100%;
+  margin-top: 30rpx;
+  display: flex;
+}
+
+.upload-container .upload-wrapper .item {
+  flex: 1;
+  height: 337rpx;
+  position: relative;
+}
+
+.upload-container .upload-wrapper .item:not(:first-child) {
+  margin-left: 12rpx;
+}
+
+.upload-container .upload-wrapper .item .upload-rect {
+  width: 100%;
+  height: 100%;
+}
+
+.upload-container .upload-wrapper .item .upload-add {
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
+.upload-container .upload-wrapper .item .upload-add image {
+  width: 60rpx;
+  height: 60rpx;
+  display: block;
+  margin: 0 auto;
+}
+
+.upload-container .upload-wrapper .item .upload-add view {
+  margin-top: 60rpx;
+  font-size:28rpx;
+  font-family:PingFang-SC-Medium,PingFang-SC;
+  font-weight:500;
+  color:rgba(9,201,137,1);
+  line-height:40rpx;
+  text-align: center;
+}
+
+.upload-demo {
+  padding: 0 32rpx;
+  margin-top: 48rpx;
+}
+
+.upload-demo .title {
+  font-size:32rpx;
+  font-family:PingFang-SC-Medium,PingFang-SC;
+  font-weight:500;
+  color:rgba(51,51,51,1);
+  line-height:40rpx;
+}
+
+.upload-demo .upload-wrapper {
+  margin-top: 32rpx;
+  display: flex;
+}
+
+.upload-demo .item {
+  flex: 1;
+}
+
+.upload-demo .item:not(:first-child) {
+  margin-left: 12rpx;
+}
+
+.upload-demo .item image {
+  width: 100%;
+  height: 212rpx;
+  display: block;
+}
+
+.upload-demo .item view {
+  margin-top: 30rpx;
+  font-size:28rpx;
+  font-family:PingFang-SC-Medium,PingFang-SC;
+  font-weight:500;
+  color:rgba(51,51,51,1);
+  line-height:40rpx;
+  text-align: center;
+}

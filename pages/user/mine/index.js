@@ -11,7 +11,8 @@ Page({
     isAudient: true,
     menus: [
       {
-        html: 'https://www.peaceandlovemusic.cn/#/residence',
+        // html: 'https://www.peaceandlovemusic.cn/#/residence',
+        path: '/pages/user/residence/index/index',
         text: '成为音乐人'
       },
       {
