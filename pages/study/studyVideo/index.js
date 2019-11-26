@@ -461,10 +461,10 @@ Page({
         },
         fail: (res) => {
           if (ConfigUtil.isDev()) {
-            wx.showModal({
-              title: 'x',
-              content: '' + JSON.stringify(res),
-            });
+            // wx.showModal({
+            //   title: 'x',
+            //   content: '' + JSON.stringify(res),
+            // });
           } else {
             if (!/cancel/.test(res.errMsg || '')) {
               TipUtil.error('支付失败');
