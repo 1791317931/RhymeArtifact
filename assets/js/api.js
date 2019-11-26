@@ -144,14 +144,6 @@ export function getMusicById(data, fn, completeFn) {
 export function getMusicPage(data, fn, completeFn) {
   UrlUtil.get(PathUtil.getNewPath('musics'), data, fn, completeFn);
 }
-
-export function getCollectionMusicPage(data, fn, completeFn) {
-  UrlUtil.get(PathUtil.getNewPath('user/collectionsMusics'), data, fn, completeFn);
-}
-
-export function removeMusic(data, fn, completeFn) {
-  UrlUtil.delete(PathUtil.getNewPath('musics/' + data.id), data, fn, completeFn);
-}
 // ---------------------创作------------------------
 
 // ---------------------学习------------------------

@@ -33,6 +33,8 @@ Component({
       total_pages: 0,
       list: []
     },
+    // 如果是collection，证明是从“红心歌单”进入，需要获取第一个收藏的beat开始播放
+    type: null,
     playIndex: -1,
     playing: false,
     playTimeArr: 0,
@@ -241,7 +243,11 @@ Component({
           page
         })
 
-        this.startPlay(playIndex)
+        if (this.data.type == 'collection') {
+          if (originList.length) {
+            this.startPlay(0)
+          }
+        }
       }, () => {
         this.togglePageLoading(false)
       })

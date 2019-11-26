@@ -20,8 +20,7 @@ Page({
     totalTimeArr: [],
     playIndex: 0,
     total: 0,
-    playing: false,
-    audioComponent: null,
+    playing: true,
     beatComponent: null,
     commentComment: null,
     commentCount: 0,
@@ -43,6 +42,8 @@ Page({
     let beatComponent = this.selectComponent('#beatComponent')
     let commentComponent = this.selectComponent('#commentComponent')
 
+    // 详情页也有播放功能，可能会导致背景音乐与外部列表页播放不同步
+    BAC.autoPlay = true
     beatComponent.init(this);
     commentComponent.init(this);
     // 保持不锁屏
@@ -52,7 +53,6 @@ Page({
 
     this.setData({
       loadModalComponent,
-      audioComponent: beatComponent,
       beatComponent,
       commentComponent,
       isIos: getApp().globalData.platform == 'ios'
@@ -64,6 +64,12 @@ Page({
       })
       this.getById()
     } else {
+      let type = options.type
+      if (type) {
+        beatComponent.setData({
+          type
+        })
+      }
       beatComponent.getPage(1)
     }
 

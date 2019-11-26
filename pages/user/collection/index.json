@@ -1,6 +1,6 @@
 {
   "usingComponents": {
-    "createMusicList": "/components/createMusicList/index",
+    "musicList": "/components/createMusicList/index",
     "videoList": "/components/studyVideoList/index",
     "articleList": "/components/studyArticleList/index",
     "musicPoster": "/components/musicPoster/index"

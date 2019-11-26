@@ -24,7 +24,10 @@ Component({
     tabs: [],
     activeId: -1,
     tabWidth: 10000,
+    user: null,
     page: {
+      // 默认是所有音乐列表
+      showType: null,
       loading: false,
       playingIndex: -1,
       playing: false,
@@ -72,6 +75,9 @@ Component({
           trackContainerWidth: res[0].width
         });
       });
+      this.setData({
+        user: wx.getStorageSync('userInfo')
+      })
     },
     setStatus() {
       this.setData({
@@ -128,6 +134,11 @@ Component({
       }
     },
     clickItem(e) {
+      let index = this.getIndex(e)
+      if (index != this.data.playIndex) {
+        this.play(index)
+      }
+
       wx.navigateTo({
         url: `/pages/create/musicDetail/index?id=${this.getItem(e).id}`
       })
@@ -244,11 +255,6 @@ Component({
       this.play(showIndex + 1)
       this.hideMoreModal()
     },
-    toBuy() {
-      wx.navigateTo({
-        url: `/pages/create/musicDetail/index?id=${this.data.page.list[this.data.showIndex].id}`
-      })
-    },
     shareItem() {
       let item = this.data.page.list[this.data.showIndex]
       return {
@@ -303,7 +309,15 @@ Component({
         param.activity = 1
       }
 
-      api.getMusicPage(param, (res) => {
+      let fn = api.getMusicPage
+      if (page.showType == 'myCollection') {
+        fn = api.getMusicCollection
+      } else if (page.showType == 'mine') {
+        fn = api.getMusicPage
+        param.user_id = this.data.user.id
+      }
+
+      fn(param, (res) => {
         let list = res.data
         let pagination = res.meta.pagination
         page.total_pages = pagination.total_pages

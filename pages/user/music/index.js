@@ -17,6 +17,9 @@ Page({
     let musicComponent = this.selectComponent('#musicComponent'),
     musicPosterComponent = this.selectComponent('#musicPosterComponent');
 
+    musicComponent.setData({
+      'page.showType': 'mine'
+    })
     musicComponent.init(this);
     this.setData({
       audioComponent: musicComponent,

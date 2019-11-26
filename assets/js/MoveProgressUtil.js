@@ -1,5 +1,6 @@
 import BAC from './components/backgroundAudio/BAC'
 
+// 背景音乐与详情页同步，所以音乐和beat详情页不需要audioComponent
 const MoveProgressUtil = {
   scope: null,
   playPercent: null,

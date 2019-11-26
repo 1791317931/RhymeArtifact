@@ -11,7 +11,7 @@
 </view>
 <view class="collection-container">
   <view class="mt30" hidden="{{tabs[activeIndex].flag != 'music'}}">
-    <createMusicList id="musicComponent"/>
+    <musicList id="musicComponent"/>
   </view>
   <view class="mt30" hidden="{{tabs[activeIndex].flag != 'video'}}">
     <videoList id="videoComponent"/>

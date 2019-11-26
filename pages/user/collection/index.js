@@ -39,7 +39,7 @@ Page({
     musicPosterComponent = this.selectComponent('#musicPosterComponent');
 
     musicComponent.setData({
-      'page.showCollection': true
+      'page.showType': 'myCollection'
     });
     videoComponent.setData({
       'page.showCollection': true

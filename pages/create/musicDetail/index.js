@@ -3,6 +3,8 @@ import TipUtil from '../../../assets/js/TipUtil'
 import CommonUtil from '../../../assets/js/CommonUtil'
 import * as api from '../../../assets/js/api';
 import PosterCanvasUtil from '../../../assets/js/components/PosterCanvasUtil';
+import BAC from '../../../assets/js/components/backgroundAudio/BAC'
+import MoveProgressUtil from '../../../assets/js/MoveProgressUtil'
 
 Page({
 
@@ -18,7 +20,7 @@ Page({
     totalTimeArr: [],
     playIndex: 0,
     total: 0,
-    playing: false,
+    playing: true,
     musicComponent: null,
     commentComponent: null,
     commentCount: 0,
@@ -47,10 +49,9 @@ Page({
     let commentComponent = this.selectComponent('#commentComponent')
     let musicPosterComponent = this.selectComponent('#musicPosterComponent');
 
-    let BAC = wx.createInnerAudioContext()
-    musicComponent.init(this, {
-      audioContext: BAC
-    });
+    // 详情页也有播放功能，可能会导致背景音乐与外部列表页播放不同步
+    BAC.autoPlay = true
+    musicComponent.init(this);
     commentComponent.setData({
       type: 'music'
     })
@@ -220,42 +221,13 @@ Page({
   },
   // ---------------------拖动指针--------------------------
   touchStart(e) {
-    this.setData({
-      startPageX: e.touches[0].pageX,
-      startPercent: this.data.playPercent,
-      movingBar: true
-    });
-
-    this.pausePlay()
+    MoveProgressUtil.touchStart(e)
   },
   movePointer(e) {
-    let touches = e.touches
-    let prePageX = this.data.startPageX
-    let pageX = e.touches[0].pageX
-    let duration = this.data.duration;
-
-    let width = pageX - prePageX
-    let percent = width / this.data.trackContainerWidth;
-    let currentPercent = this.data.startPercent / 100 + percent;
-    currentPercent = Math.min(1, currentPercent);
-    currentPercent = Math.max(0, currentPercent);
-    let time = currentPercent * duration
-
-    if (time >= duration) {
-      time = duration;
-      this.data.musicComponent.musicAudioEnded();
-    }
-
-    this.data.musicComponent.caculateTime(time)
+    MoveProgressUtil.movePointer(e)
   },
   touchEnd(e) {
-    let that = this.data.musicComponent
-    let BAC = that.data.BAC;
-    this.setData({
-      movingBar: false
-    })
-    BAC.seek(this.data.currentTime);
-    this.continuePlay()
+    MoveProgressUtil.touchEnd(e)
   },
   // ---------------------拖动指针--------------------------
   prev() {
