@@ -101,8 +101,16 @@ page {
   text-align: center;
 }
 
+.front-card {
+  position: absolute;
+  top: 95rpx;
+  left: 34rpx;
+  width: 270rpx;
+  height: 170rpx;
+}
+
 .upload-demo {
-  padding: 0 32rpx;
+  padding: 0 32rpx 20rpx;
   margin-top: 48rpx;
 }
 
@@ -119,21 +127,21 @@ page {
   display: flex;
 }
 
-.upload-demo .item {
+.upload-demo .upload-wrapper .item {
   flex: 1;
 }
 
-.upload-demo .item:not(:first-child) {
+.upload-demo .upload-wrapper .item:not(:first-child) {
   margin-left: 12rpx;
 }
 
-.upload-demo .item image {
+.upload-demo .upload-wrapper .item image {
   width: 100%;
   height: 212rpx;
   display: block;
 }
 
-.upload-demo .item view {
+.upload-demo .upload-wrapper .item view {
   margin-top: 30rpx;
   font-size:28rpx;
   font-family:PingFang-SC-Medium,PingFang-SC;
@@ -141,4 +149,40 @@ page {
   color:rgba(51,51,51,1);
   line-height:40rpx;
   text-align: center;
+}
+
+.desc {
+  margin-top: 40rpx;
+  counter-reset: index;
+}
+
+.desc .item {
+  margin-top: 10rpx;
+  padding: 0 0 0 46rpx;
+  font-size:28rpx;
+  font-family:PingFang-SC-Regular,PingFang-SC;
+  font-weight:400;
+  color:rgba(51,51,51,1);
+  line-height:50rpx;
+  position: relative;
+}
+
+.desc .item:before {
+  counter-increment:index;
+  content: counter(index)'、';
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.submit {
+  margin-top: 166rpx;
+  line-height:88rpx;
+  background:rgba(9,201,137,1);
+  border-radius:55rpx;
+  text-align: center;
+  font-size:32rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(255,255,255,1);
 }

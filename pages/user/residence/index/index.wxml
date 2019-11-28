@@ -1,46 +1,54 @@
-<view class="form">
-  <view class="item">
-    <view>姓名</view>
-    <view>
-      <input name="username" placeholder="输入真实姓名" placeholder-class="input-placeholder" />
-    </view>
-  </view>
-  <view class="item">
-    <view>身份证</view>
-    <view>
-      <input name="card_no" placeholder="请输入您的购买的身份证件号" placeholder-class="input-placeholder" />
-    </view>
-  </view>
-</view>
-<view class="upload-container">
-  <view class="title">上传证件照：</view>
-  <view class="upload-wrapper">
+<loadModal id="loadModalComponent"/>
+<form bindsubmit="submit">
+  <view class="form">
     <view class="item">
-      <image src="/assets/imgs/residence/upload-rect.png" class="upload-rect"/>
-      <view class="upload-add">
-        <image src="/assets/imgs/residence/upload-add.png"/>
-        <view>上传证件正面照</view>
+      <view>姓名</view>
+      <view>
+        <input name="true_name" placeholder="输入真实姓名" placeholder-class="input-placeholder" maxlength="20" bindblur="changeName" />
       </view>
     </view>
     <view class="item">
-      <image src="/assets/imgs/residence/upload-rect.png" class="upload-rect"/>
-      <view class="upload-add">
-        <image src="/assets/imgs/residence/upload-add.png"/>
-        <view>上传证件反面照</view>
+      <view>身份证</view>
+      <view>
+        <input name="idcard_no" placeholder="请输入您的购买的身份证件号" placeholder-class="input-placeholder" bindblur="changeCardNo" />
       </view>
     </view>
   </view>
-</view>
-<view class="upload-demo">
-  <view class="title">示例：</view>
-  <view class="upload-wrapper">
-    <view class="item">
-      <image src="/assets/imgs/residence/front-card.png"/>
-      <view>证件正面照</view>
-    </view>
-    <view class="item">
-      <image src="/assets/imgs/residence/back-card.png"/>
-      <view>证件反面照</view>
+  <view class="upload-container">
+    <view class="title">上传证件照：</view>
+    <view class="upload-wrapper">
+      <view class="item" catchtap="toUploadFrontCard">
+        <image src="/assets/imgs/residence/upload-rect.png" class="upload-rect"/>
+        <image hidden="{{!form.idcard_pic}}" class="front-card" src="{{form.idcard_pic}}" />
+        <view hidden="{{form.idcard_pic}}" class="upload-add">
+          <image src="/assets/imgs/residence/upload-add.png"/>
+          <view>上传证件正面照</view>
+        </view>
+      </view>
+      <view class="item" catchtap="toUploadBackCard">
+        <image src="/assets/imgs/residence/upload-rect.png" class="upload-rect"/>
+        <view class="upload-add">
+          <image src="/assets/imgs/residence/upload-add.png"/>
+          <view>上传证件反面照</view>
+        </view>
+      </view>
     </view>
   </view>
-</view>
+  <view class="upload-demo">
+    <view class="title">示例：</view>
+    <view class="upload-wrapper">
+      <view class="item">
+        <image src="/assets/imgs/residence/front-card.png"/>
+        <view>证件正面照</view>
+      </view>
+      <view class="item">
+        <image src="/assets/imgs/residence/back-card.png"/>
+        <view>证件反面照</view>
+      </view>
+    </view>
+    <view class="desc">
+      <view wx:for="{{descArr}}" wx:for-item="item" wx:for-index="index" wx:key="{{index}}" class="item">{{item}}</view>
+    </view>
+    <button class="submit" formType="submit">确定</button>
+  </view>
+</form>

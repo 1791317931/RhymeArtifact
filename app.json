@@ -40,7 +40,8 @@
     "pages/user/editInfo/index",
     "pages/create/musicDetail/index",
     "pages/study/activity/index",
-    "pages/study/activityDetail/index"
+    "pages/study/activityDetail/index",
+    "pages/user/residence/success/index"
   ],
   "requiredBackgroundModes": [
     "audio"
