@@ -5,6 +5,7 @@ import FileType from '../../../assets/js/FileType';
 import ConfigUtil from '../../../assets/js/ConfigUtil';
 import TimeUtil from '../../../assets/js/TimeUtil';
 import CommonUtil from '../../../assets/js/CommonUtil';
+import BackgroundAC from '../../../assets/js/components/backgroundAudio/BAC'
 
 Page({
   /**
@@ -71,16 +72,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    BackgroundAC.pausePlay()
     // 保持不锁屏
     wx.setKeepScreenOn({
       keepScreenOn: true
     });
 
-    let userInfo = wx.getStorageSync('userInfo');
-
-    this.setData({
-      'recordForm.author': userInfo.nickName
-    });
+    this.getUserInfo()
 
     let scales = [];
     for (let i = 0; i <= 50; i += 2) {
@@ -212,6 +210,14 @@ Page({
 
     this.bindBACEvent(BAC);
     this.bindRACEvent(RAC);
+  },
+  getUserInfo() {
+    api.getUserInfoByToken((res) => {
+      let userInfo = res.data
+      this.setData({
+        'recordForm.author': userInfo.nickname
+      });
+    })
   },
   getFreestyleTheme() {
     api.getFreestyleTheme(null, (res) => {
