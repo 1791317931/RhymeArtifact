@@ -1,6 +1,5 @@
 {
   "pages": [
-    "pages/user/residence/index/index",
     "pages/zmall/index/index",
     "pages/user/info/index",
     "pages/zmall/orderDetail/index",
@@ -41,7 +40,8 @@
     "pages/create/musicDetail/index",
     "pages/study/activity/index",
     "pages/study/activityDetail/index",
-    "pages/user/residence/success/index"
+    "pages/user/residence/success/index",
+    "pages/user/residence/index/index"
   ],
   "requiredBackgroundModes": [
     "audio"

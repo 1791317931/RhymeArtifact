@@ -5,6 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    isAudient: true,
     list: [
       {
         img: '/assets/imgs/create/rhyme.png',
@@ -13,6 +14,16 @@ Page({
       {
         img: '/assets/imgs/create/lyric.png',
         url: '/pages/create/createLyricsList/index'
+      },
+      // {
+      //   audient: true,
+      //   img: '/assets/imgs/create/record.png',
+      //   url: '/pages/create/record/index'
+      // },
+      {
+        audient: true,
+        img: '/assets/imgs/create/freestyle.png',
+        url: '/pages/freestyle/index/index'
       }
     ]
   },
@@ -21,7 +32,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+    this.setData({
+      isAudient: CommonUtil.isAudient()
+    })
   },
 
   /**
