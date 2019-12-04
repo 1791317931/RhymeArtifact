@@ -46,7 +46,9 @@ Component({
     trackContainerWidth: null,
     playPercent: 0,
     playIndex: -1,
-    autoPlay: true
+    autoPlay: true,
+    // 是否显示播放状态
+    showPlaying: true
   },
 
   /**
@@ -137,6 +139,9 @@ Component({
       if (index != this.data.playIndex) {
         this.play(index)
       }
+      this.setData({
+        showPlaying: false
+      })
 
       wx.navigateTo({
         url: `/pages/zmall/beatDetail/index?id=${this.getItem(e).id}`
@@ -145,8 +150,12 @@ Component({
     toggleItemStatus(e) {
       let index = e.currentTarget.dataset.index
       let playing = this.data.playing
+      this.setData({
+        autoPlay: false
+      })
 
-      if (this.data.playIndex == index) {
+      // 必须是允许显示播放状态的情况下，才能继续播放或者暂停
+      if (this.data.showPlaying && this.data.playIndex == index) {
         if (playing) {
           this.pausePlay(e);
         } else {
@@ -173,7 +182,8 @@ Component({
       })
 
       this.setData({
-        playIndex: index
+        playIndex: index,
+        showPlaying: true
       })
     },
     continuePlay() {

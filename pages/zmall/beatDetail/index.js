@@ -274,5 +274,10 @@ Page({
     wx.navigateTo({
       url: `/pages/zmall/buy/index?id=${this.data.beat.id}`
     })
+  },
+  setAutoPlay(autoPlay) {
+    this.data.beatComponent.setData({
+      autoPlay
+    })
   }
 })

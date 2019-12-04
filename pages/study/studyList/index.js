@@ -1,5 +1,6 @@
 import CommonUtil from '../../../assets/js/CommonUtil';
 import * as api from '../../../assets/js/api';
+import BAC from '../../../assets/js/components/backgroundAudio/BAC'
 
 Page({
 
@@ -137,7 +138,11 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-    
+    // 只要触发hide，就默认为自动播放，避免tab之间切换，出现bug
+    this.data.musicComponent.setData({
+      autoPlay: true
+    })
+    BAC.autoPlay = true
   },
 
   /**

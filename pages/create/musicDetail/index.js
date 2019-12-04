@@ -293,4 +293,9 @@ Page({
   generatePoster(e) {
     this.data.musicPosterComponent.generatePoster(this.data.music, 'music');
   },
+  setAutoPlay(autoPlay) {
+    this.data.musicComponent.setData({
+      autoPlay
+    })
+  }
 })

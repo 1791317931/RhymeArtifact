@@ -81,6 +81,7 @@ button:after {
   content: '没有更多数据了';
 }
 .hide {display: none !important;}
+.invisible {visibility: hidden !important;}
 
 .mt10 {margin-top: 10rpx !important;}
 .mt20 {margin-top: 20rpx !important;}

@@ -42,7 +42,9 @@ Component({
     playPercent: 0,
     showIndex: -1,
     // 外部可能单独传递了一个beat，goods详情页
-    beat: null
+    beat: null,
+    // 是否显示播放状态
+    showPlaying: true
   },
 
   /**
@@ -80,8 +82,12 @@ Component({
     toggleItemStatus(e) {
       let index = e.currentTarget.dataset.index
       let playing = this.data.playing
+      this.setData({
+        autoPlay: false
+      })
 
-      if (this.data.playIndex == index) {
+      // 必须是允许显示播放状态的情况下，才能继续播放或者暂停
+      if (this.data.showPlaying && this.data.playIndex == index) {
         if (playing) {
           this.pausePlay(e);
         } else {
@@ -109,7 +115,8 @@ Component({
         src: beat.beat_try_url
       })
       this.setData({
-        playIndex: index
+        playIndex: index,
+        showPlaying: true
       })
       this.data.scope.setData({
         playIndex: index,
@@ -247,6 +254,8 @@ Component({
           if (originList.length) {
             this.startPlay(0)
           }
+        } else if (!BAC.playing) {
+          this.startPlay(0)
         }
       }, () => {
         this.togglePageLoading(false)

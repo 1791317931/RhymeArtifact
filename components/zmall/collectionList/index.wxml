@@ -8,7 +8,7 @@
       data-index="{{index}}" catchtap="toggleItemStatus">
       <view class="cover-container">
         <image src="{{item.cover_images[0]}}" class="cover" />
-        <view hidden="{{!autoPlay && playIndex != index}}" class="play-container">
+        <view hidden="{{!showPlaying || autoPlay || playIndex != index}}" class="play-container">
           <image hidden="{{playIndex != index || playing}}" src="/assets/imgs/dash-to-play.png" class="play" />
           <image hidden="{{playIndex != index || !playing}}" src="/assets/imgs/dash-to-pause.png" class="play" />
         </view>

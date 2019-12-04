@@ -42,7 +42,10 @@ Component({
     playPercent: 0,
     showIndex: -1,
     // 外部可能单独传递了一个music，goods详情页
-    music: null
+    music: null,
+    // 是否显示播放状态
+    showPlaying: true,
+    autoPlay: false
   },
 
   /**
@@ -82,8 +85,12 @@ Component({
     toggleItemStatus(e) {
       let index = e.currentTarget.dataset.index
       let playing = this.data.playing
+      this.setData({
+        autoPlay: false
+      })
 
-      if (this.data.playIndex == index) {
+      // 必须是允许显示播放状态的情况下，才能继续播放或者暂停
+      if (this.data.showPlaying && this.data.playIndex == index) {
         if (playing) {
           this.pausePlay(e);
         } else {
@@ -121,7 +128,8 @@ Component({
 
       this.setData({
         playIndex: index,
-        playing: true
+        playing: true,
+        showPlaying: true
       });
     },
     continuePlay() {
@@ -249,6 +257,10 @@ Component({
         this.setData({
           page
         })
+
+        if(!BAC.playing) {
+          this.startPlay(0)
+        }
       }, () => {
         this.togglePageLoading(false)
       })

@@ -72,7 +72,11 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+    // 只要触发hide，就默认为自动播放，避免tab之间切换，出现bug
+    this.data.beatComponent.setData({
+      autoPlay: true
+    })
+    BAC.autoPlay = true
   },
 
   /**

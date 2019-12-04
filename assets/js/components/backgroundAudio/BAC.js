@@ -69,6 +69,9 @@ const BAC = {
       this.setState({
         autoPlay
       })
+      let page = this.getPage()
+      // 有就执行，有些页面比如beat详情和音乐详情，不能设置audioComponent，只能通过该方法设置组件的autoPlay
+      page.setAutoPlay && page.setAutoPlay(autoPlay)
       this.autoPlay = autoPlay
 
       // 如果用用户自己点击播放，需要添加到播放序列
