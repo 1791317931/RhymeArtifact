@@ -207,7 +207,7 @@ Component({
       let index = this.getIndex(e),
       BAC = this.data.BAC;
 
-      BAC.src = this.getItem(e).beat_url;
+      BAC.src = PathUtil.getFilePath(this.getItem(e).beat_url);
       this.setData({
         'page.playingIndex': index,
         'page.playing': true

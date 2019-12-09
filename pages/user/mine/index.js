@@ -31,6 +31,11 @@ Page({
       },
       {
         path: '',
+        text: '联系客服',
+        openType: 'contact'
+      },
+      {
+        path: '',
         text: '商务合作',
         openType: 'contact'
       }

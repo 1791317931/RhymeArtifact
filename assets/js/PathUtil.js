@@ -33,7 +33,8 @@ let PathUtil = {
       if (ConfigUtil.isProd()) {
         return PathUtil.prodFilePrefix + url;
       } else {
-        return PathUtil.devFilePrefix + url;
+        return PathUtil.prodFilePrefix + url;
+        // return PathUtil.devFilePrefix + url;
       }
     }
 

@@ -17,7 +17,8 @@ Page({
     form: {
       true_name: '',
       idcard_no: '',
-      idcard_pic: ''
+      idcard_pic_front: '',
+      idcard_pic_back: ''
     },
     loadModalComponent: null,
     loading: false
@@ -130,11 +131,11 @@ Page({
               let avatar = host + '/' + key
               if (type == 'front') {
                 this.setData({
-                  'form.idcard_pic': avatar
+                  'form.idcard_pic_front': avatar
                 })
               } else {
                 this.setData({
-                  'form.idcard_pic': avatar
+                  'form.idcard_pic_back': avatar
                 })
               }
               this.toggleLoading(false)

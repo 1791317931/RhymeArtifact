@@ -19,15 +19,16 @@
     <view class="upload-wrapper">
       <view class="item" catchtap="toUploadFrontCard">
         <image src="/assets/imgs/residence/upload-rect.png" class="upload-rect"/>
-        <image hidden="{{!form.idcard_pic}}" class="front-card" src="{{form.idcard_pic}}" />
-        <view hidden="{{form.idcard_pic}}" class="upload-add">
+        <image hidden="{{!form.idcard_pic_front}}" class="front-card" src="{{form.idcard_pic_front}}" />
+        <view hidden="{{form.idcard_pic_front}}" class="upload-add">
           <image src="/assets/imgs/residence/upload-add.png"/>
           <view>上传证件正面照</view>
         </view>
       </view>
       <view class="item" catchtap="toUploadBackCard">
         <image src="/assets/imgs/residence/upload-rect.png" class="upload-rect"/>
-        <view class="upload-add">
+        <image hidden="{{!form.idcard_pic_back}}" class="front-card" src="{{form.idcard_pic_back}}" />
+        <view hidden="{{form.idcard_pic_back}}" class="upload-add">
           <image src="/assets/imgs/residence/upload-add.png"/>
           <view>上传证件反面照</view>
         </view>

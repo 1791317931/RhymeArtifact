@@ -113,3 +113,69 @@
   right: 0;
   transform: translateY(-50%);
 }
+
+.more-modal .mask {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, .6);
+}
+
+.more-modal .modal-inner {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1001;
+  background:rgba(255,255,255,1);
+  border-radius:40rpx 40rpx 0px 0px;
+  padding: 25rpx 40rpx 60rpx;
+}
+
+.more-modal .modal-inner .item {
+  margin-top: 40rpx;
+  width: 25%;
+  float: left;
+  text-align: center;
+  position: relative;
+}
+
+.more-modal .modal-inner .item image {
+  width: 54rpx;
+  height: 54rpx;
+  display: block;
+  margin: 0 auto;
+}
+
+.more-modal .modal-inner .item view {
+  margin-top: 20rpx;
+  font-size:28rpx;
+  font-family:PingFangSC-Regular,PingFangSC;
+  font-weight:400;
+  color:rgba(113,113,113,1);
+  line-height:40rpx;
+}
+
+.more-modal .modal-inner .item .open-type {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: transparent;
+}
+
+.more-modal .modal-inner .close-more-modal {
+  margin-top: 25rpx;
+  line-height:100rpx;
+  text-align: center;
+  background:rgba(242,242,242,1);
+  border-radius:55rpx;
+  font-size:34rpx;
+  font-family:PingFangSC-Regular,PingFangSC;
+  font-weight:400;
+  color:rgba(4,4,4,1);
+}
