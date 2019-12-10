@@ -1,4 +1,5 @@
 <loadModal id="loadModalComponent"/>
+<linkUs id="linkUsComponent"/>
 <view class="mine-container">
   <view class="user-container">
     <image class="bg" src="/assets/imgs/user-bg.png"/>

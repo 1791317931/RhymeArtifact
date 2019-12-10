@@ -256,6 +256,11 @@ export function updateUser(data, fn, completeFn) {
 export function getMyIncomePage(data, fn, completeFn) {
   UrlUtil.get(PathUtil.getNewPath(`user/income`), data, fn, completeFn);
 }
+
+// 入驻
+export function settled(data, fn, completeFn) {
+  UrlUtil.post(PathUtil.getNewPath(`settled`), data, fn, completeFn);
+}
 // ---------------------用户------------------------
 
 // ---------------------商品------------------------
@@ -327,3 +332,13 @@ export function getNewArticlePage(data, fn, completeFn) {
   UrlUtil.get(PathUtil.getNewPath(`posts`), data, fn, completeFn);
 }
 // ---------------------圈内文章------------------------
+
+// ---------------------关注某人------------------------
+export function addFollow(data, fn, completeFn) {
+  UrlUtil.post(PathUtil.getNewPath(`followers`), data, fn, completeFn);
+}
+
+export function deleteFollow(data, fn, completeFn) {
+  UrlUtil.delete(PathUtil.getNewPath(`followers/${data.follow_id}`), data, fn, completeFn);
+}
+// ---------------------关注某人------------------------

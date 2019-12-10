@@ -11,7 +11,7 @@ Page({
     isAudient: true,
     menus: [
       {
-        // html: 'https://www.peaceandlovemusic.cn/#/residence',
+        flag: 'residence',
         path: '/pages/user/residence/index/index',
         text: '成为音乐人'
       },
@@ -30,9 +30,10 @@ Page({
         text: '我的音乐创作'
       },
       {
+        flag: 'linkUs',
+        fn: 'showLinkUsModal',
         path: '',
         text: '联系客服',
-        openType: 'contact'
       },
       {
         path: '',
@@ -41,6 +42,7 @@ Page({
       }
     ],
     loadModalComponent: null,
+    linkUsComponent: null,
     userInfo: null
   },
 
@@ -55,7 +57,7 @@ Page({
     if (this.data.isAudient) {
       let menus = this.data.menus
       menus.forEach(item => {
-        if (['collection', 'music'].indexOf(item.flag) != -1) {
+        if (['collection', 'music', 'linkUs'].indexOf(item.flag) != -1) {
           item.hide = true
         }
       })
@@ -66,8 +68,10 @@ Page({
     }
 
     let loadModalComponent = this.selectComponent('#loadModalComponent')
+    let linkUsComponent = this.selectComponent('#linkUsComponent')
     this.setData({
-      loadModalComponent
+      loadModalComponent,
+      linkUsComponent
     })
   },
 
@@ -128,9 +132,25 @@ Page({
     this.toggleLoading(true)
     api.getUserInfoByToken((res) => {
       if (res) {
+        let data = res.data
         this.setData({
-          userInfo: res.data
-        });
+          userInfo: data
+        })
+
+        // 入驻成功或者入驻审核中
+        if (data.is_certify != 0) {
+          let menus = this.data.menus
+          let menu
+          for (let i = 0; i < menus.length; i++) {
+            menu = menus[i]
+            if (menu.flag == 'residence') {
+              this.setData({
+                [`menus[${i}].path`]: '/pages/user/residence/success/index'
+              })
+              break
+            }
+          }
+        }
       }
     }, () => {
       this.toggleLoading(false)
@@ -165,6 +185,11 @@ Page({
     let url = item.path
     let html = item.html
 
+    if (item.fn) {
+      this[item.fn]()
+      return
+    }
+
     if (openType == 'concat') {
       // 不用加代码
     } else if (html) {
@@ -176,6 +201,9 @@ Page({
         url
       })
     }
+  },
+  showLinkUsModal() {
+    this.data.linkUsComponent.toggleModal(true)
   },
   toDetail() {
     if (!CommonUtil.hasBindUserInfo()) {

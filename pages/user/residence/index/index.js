@@ -17,8 +17,8 @@ Page({
     form: {
       true_name: '',
       idcard_no: '',
-      idcard_pic_front: '',
-      idcard_pic_back: ''
+      idcard_front: '',
+      idcard_behind: ''
     },
     loadModalComponent: null,
     loading: false
@@ -131,11 +131,11 @@ Page({
               let avatar = host + '/' + key
               if (type == 'front') {
                 this.setData({
-                  'form.idcard_pic_front': avatar
+                  'form.idcard_front': avatar
                 })
               } else {
                 this.setData({
-                  'form.idcard_pic_back': avatar
+                  'form.idcard_behind': avatar
                 })
               }
               this.toggleLoading(false)
@@ -152,27 +152,29 @@ Page({
     })
   },
   submit(e) {
-    let user = this.data.user
-    let info = this.data.user.info
+    let form = this.data.form
 
-    if (!info.introduce.trim()) {
+    if (!form.true_name.trim()) {
       TipUtil.warning('请填写用户名')
       return
     }
 
-    this.save({
-      nickname: user.nickname,
-      introduce: info.introduce,
-      team: info.team,
-      school: info.school,
-      skill_tag: info.skill_tag,
-      // 修改用户信息
-      type: 'info'
-    }, (res) => {
-      wx.setStorageSync('userInfo', user)
-      wx.navigateBack({
+    let idcard_no = form.idcard_no.trim()
+    if (!idcard_no) {
+      TipUtil.warning('请填写身份证号')
+      return
+    } else if (!/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(idcard_no)) {
+      TipUtil.warning('请填写正确格式身份证号')
+      return
+    }
 
+    this.toggleLoading(true)
+    api.settled(form, (res) => {
+      wx.redirectTo({
+        url: '/pages/user/residence/success/index'
       })
+    }, () => {
+      this.toggleLoading(false)
     })
   }
 })

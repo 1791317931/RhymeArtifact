@@ -1,6 +1,7 @@
 {
   "usingComponents": {
-    "loadModal": "/components/common/loadModal/index"
+    "loadModal": "/components/common/loadModal/index",
+    "linkUs": "/components/linkUs/index"
   },
   "navigationBarTitleText": "个人中心"
 }

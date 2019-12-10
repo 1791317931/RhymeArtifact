@@ -1,4 +1,4 @@
-// pages/user/residence/success/index.js
+import CommonUtil from '../../../../assets/js/CommonUtil';
 Page({
 
   /**
@@ -60,7 +60,15 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
-
+  onShareAppMessage: function (e) {
+    return CommonUtil.share(e);
+  },
+  copy() {
+    wx.setClipboardData({
+      data: 'https://www.peaceandlovemusic.cn',
+      success: () => {
+        this.toggleModal(false)
+      }
+    })
   }
 })

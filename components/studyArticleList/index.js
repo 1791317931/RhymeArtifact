@@ -24,7 +24,8 @@ Component({
       total_pages: 0,
       showCollection: false
     },
-    scope: null
+    scope: null,
+    changeFollowing: false
   },
 
   /**
@@ -137,11 +138,6 @@ Component({
     },
     clickItem(e) {
       let item = this.getItem(e);
-
-      // let param = `https://www.peaceandlovemusic.cn/#/article/detail?id=${item.id}&source=miniprogram&token=${wx.getStorageSync('token')}`
-      // wx.navigateTo({
-      //   url: '/pages/webview/index?path=' + encodeURIComponent(param)
-      // });
       wx.navigateTo({
         url: `/pages/study/studyArticle/index?id=${item.id}`
       })
@@ -161,7 +157,7 @@ Component({
         page: current_page,
         per_page: page.per_page,
         type: 'posts',
-        include: 'author',
+        include: 'user,author',
         hasCollection: 1
       },
       list = [];
@@ -177,7 +173,7 @@ Component({
         param.type = 'post';
         delete param.include;
       } else {
-        fn = api.getStudyPage;
+        fn = api.getNewArticlePage;
       }
 
       this.togglePageLoading(true);
@@ -201,29 +197,38 @@ Component({
         });
       });
     },
-    getPosterInfo(item, index, callback) {
-      // 已经获取过本地图片
-      if (item.temp_cover) {
-        callback && callback(path);
-        return;
+    toggleFollowing(changeFollowing) {
+      this.setData({
+        changeFollowing
+      })
+    },
+    toggleFollow(e) {
+      if (this.data.changeFollowing) {
+        return
       }
 
-      wx.showLoading({
-        title: '海报生成中...',
-      });
-      wx.getImageInfo({
-        src: item.cover,
-        success: (res) => {
-          let path = res.path;
-          this.setData({
-            [`page.list[${index}].temp_cover`]: path
-          });
-          callback && callback(path);
-        },
-        complete: () => {
-          wx.hideLoading();
-        }
-      });
+      let index = this.getIndex(e)
+      let item = this.getItem(e)
+      let followStatus = item.user.data.follow_status
+      let param = {
+        follow_id: item.user_id
+      }
+
+      let fn
+      if (followStatus == 0) {
+        fn = api.addFollow
+      } else {
+        fn = api.deleteFollow
+      }
+
+      this.toggleFollowing(true)
+      fn(param, (res) => {
+        this.setData({
+          [`page.list[${index}].user.data.follow_status`]: followStatus == 1 ? 0 : 1
+        })
+      }, () => {
+        this.toggleFollowing(false)
+      })
     }
   }
 })

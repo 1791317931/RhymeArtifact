@@ -1,1 +1,38 @@
-/* pages/user/residence/success/index.wxss */
+.success-container {
+  height: 100%;
+  background: #fff;
+  padding: 240rpx 0 120rpx;
+}
+
+.success-img {
+  display: block;
+  width: 205rpx;
+  height: 219rpx;
+  margin: 0 auto;
+}
+
+.desc {
+  margin-top: 42rpx;
+  font-size:26rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(4,4,4,1);
+  line-height:37rpx;
+  text-align: center;
+}
+
+.copy {
+  position: fixed;
+  left: 40rpx;
+  bottom: 16rpx;
+  width:670rpx;
+  height:88rpx;
+  line-height:88rpx;
+  background:rgba(9,201,137,1);
+  border-radius:55rpx;
+  text-align: center;
+  font-size:32rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(255,255,255,1);
+}

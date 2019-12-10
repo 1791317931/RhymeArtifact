@@ -6,7 +6,8 @@ let PathUtil = {
   prodNewApiPrefix: 'https://rapper-api.miyupp.com/api/',
   devNewApiPrefix: 'https://rapper-test.miyupp.com/api/',
   prodFilePrefix: 'https://file.ihammer.cn',
-  devFilePrefix: 'https://oss.miyupp.com',
+  // devFilePrefix: 'https://oss.miyupp.com',
+  devFilePrefix: 'https://rappertest.oss-cn-beijing.aliyuncs.com',
   // 老接口
   getPath(url) {
     if (ConfigUtil.isProd()) {
@@ -33,8 +34,23 @@ let PathUtil = {
       if (ConfigUtil.isProd()) {
         return PathUtil.prodFilePrefix + url;
       } else {
+        // return PathUtil.prodFilePrefix + url;
+        return PathUtil.devFilePrefix + url;
+      }
+    }
+
+    return url;
+  },
+  getAvatar(url) {
+    if (!url) {
+      return '/assets/imgs/avatar-default.png';
+    }
+
+    if (!/^http/.test(url)) {
+      if (ConfigUtil.isProd()) {
         return PathUtil.prodFilePrefix + url;
-        // return PathUtil.devFilePrefix + url;
+      } else {
+        return PathUtil.devFilePrefix + url;
       }
     }
 

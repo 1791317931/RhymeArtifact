@@ -1,0 +1,12 @@
+<view hidden="{{!show}}" class="modal" catchtap="close">
+  <view class="inner" catchtap="prevent">
+    <image class="kefu" src="/assets/imgs/kefu.png"/>
+    <view class="desc">
+      <view>加一个添加小Y</view>
+      <view>微信：jy5464826498</view>
+      <view>带你进入黑怕世界一起交朋友</view>
+      <view>添加说明来意和身份不然不加哦~</view>
+    </view>
+    <view class="copy" catchtap="copy">点击复制微信去添加</view>
+  </view>
+</view>

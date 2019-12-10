@@ -29,7 +29,7 @@ page {
   content: '';
   width:25rpx;
   height:7rpx;
-  background:rgba(29,29,29,1);
+  background:#09CD9A;
   border-radius:4rpx;
   position: absolute;
   left: 50%;

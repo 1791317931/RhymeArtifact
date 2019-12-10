@@ -12,12 +12,12 @@ Component({
   data: {
     tabs: [
       {
-        flag: 'music',
-        name: '音乐作品'
-      },
-      {
         flag: 'beat',
         name: 'Beat商城'
+      },
+      {
+        flag: 'music',
+        name: '音乐作品'
       },
       {
         flag: 'article',

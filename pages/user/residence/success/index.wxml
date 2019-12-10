@@ -1,2 +1,9 @@
-<!--pages/user/residence/success/index.wxml-->
-<text>pages/user/residence/success/index.wxml</text>
+<view class="success-container">
+  <image class="success-img" src="/assets/imgs/residence/laohei.png"/>
+  <view class="desc">
+    <view>恭喜你已经入驻平台</view>
+    <view>成为平台音乐人快去上传你的作品吧~</view>
+    <view>www.peaceandlovemusic.cn</view>
+  </view>
+  <view class="copy" catchtap="copy">点击复制</view>
+</view>

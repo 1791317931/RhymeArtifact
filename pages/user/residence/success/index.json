@@ -2,5 +2,5 @@
   "usingComponents": {
     "loadModal": "/components/common/loadModal/index"
   },
-  "navigationBarTitleText": "入驻音乐人"
+  "navigationBarTitleText": "入驻成功"
 }

@@ -22,7 +22,8 @@ Component({
       total_pages: 0,
       list: []
     },
-    activeId: -1
+    activeId: -1,
+    showIndex: -1
   },
 
   /**

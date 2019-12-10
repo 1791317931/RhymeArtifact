@@ -90,7 +90,6 @@ Page({
       id: this.data.id
     }, (res) => {
       var article = `<div>${this.translateContent(res.data.content)}</div>`
-      console.log(article)
       WxParse.wxParse('wxParseData', 'html', article, this, 0);
       this.setData({
         article: res.data
