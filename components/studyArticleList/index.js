@@ -215,7 +215,7 @@ Component({
       }
 
       let fn
-      if (followStatus == 0) {
+      if ([0, 3].indexOf(followStatus) != -1) {
         fn = api.addFollow
       } else {
         fn = api.deleteFollow
@@ -223,8 +223,14 @@ Component({
 
       this.toggleFollowing(true)
       fn(param, (res) => {
+        TipUtil.success('操作成功')
+        let list = this.data.page.list
+        list.forEach(item => {
+          item.user.data.follow_status = followStatus == 1 ? 0 : 1
+        })
+
         this.setData({
-          [`page.list[${index}].user.data.follow_status`]: followStatus == 1 ? 0 : 1
+          'page.list': list
         })
       }, () => {
         this.toggleFollowing(false)

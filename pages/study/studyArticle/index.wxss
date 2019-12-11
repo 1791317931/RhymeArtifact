@@ -1,26 +1,58 @@
-/* pages/study/studyArticle/index.wxss */
 @import "../../wxParse/wxParse.wxss";
 
 .article {
-  padding: 30rpx 30rpx 98rpx 30rpx;
+  padding: 30rpx 40rpx 120rpx 40rpx;
   background-color: #fff;
 }
 
-.article .title {
-  color: #1D1D1D;
-  font-weight:500;
-  font-size: 38rpx;
-  line-height:53rpx;
-  letter-spacing:1rpx;
+.head {
+  position: relative;
+  height: 33rpx;
 }
 
-.article .info {
-  font-size:32rpx;
-  font-weight:500;
-  color:rgba(153,153,153,1);
-  line-height:45rpx;
-  letter-spacing:1rpx;
+.time {
+  font-size:24rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(173,173,173,1);
+  line-height:33rpx;
 }
+
+.collection {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  padding: 0 0 0 27rpx;
+  font-size:24rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(173,173,173,1);
+  line-height:33rpx;
+}
+
+.collection image {
+  width: 22rpx;
+  height: 20rpx;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
+.article .title {
+  margin-top: 40rpx;
+  font-size:50rpx;
+  font-family:PingFangSC-Semibold,PingFang SC;
+  font-weight:600;
+  color:rgba(4,4,4,1);
+  line-height:70rpx;
+}
+
+.content {
+  margin-top: 20rpx;
+}
+
 .wxparser--wxParser-img {
   width: 100%;
 }

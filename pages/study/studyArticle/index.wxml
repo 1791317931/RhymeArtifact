@@ -3,10 +3,13 @@
 <musicPoster id="musicPosterComponent"/>
 <loadModal id="loadModal" />
 <view class="article">
-  <text class="title">{{article.title}}</text>
-  <view>
-    <text class="info">{{article.updated_at}}</text>
+  <view class="head">
+    <view class="time">{{article.updated_at}}</view>
+    <view class="collection">
+      <image src="/assets/imgs/article/collection-24-24.png"/>{{0}}人
+    </view>
   </view>
+  <view class="title">{{article.title}}</view>
   <view class="content">
     <template is="wxParse" data="{{wxParseData:wxParseData.nodes}}"/>
   </view>
