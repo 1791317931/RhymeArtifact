@@ -13,8 +13,9 @@
   <view class="content">
     <template is="wxParse" data="{{wxParseData:wxParseData.nodes}}"/>
   </view>
+  <commentList id="commentComponent" />
 </view>
-<view class="operation-container clearfix">
+<!-- <view class="operation-container clearfix">
   <view class="poster-share-container" catchtap="generatePoster">
     <image src="/assets/imgs/moments.png"/>
     <text>海报分享</text>
@@ -25,4 +26,4 @@
     <text>微信分享</text>
     <button open-type="share"></button>
   </view>
-</view>
+</view> -->

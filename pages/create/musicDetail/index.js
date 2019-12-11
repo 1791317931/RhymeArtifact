@@ -175,6 +175,7 @@ Page({
         music
       })
       musicComponent.getPage(1)
+      this.getCommentPage()
     }, () => {
       this.toggleLoading(false)
     })

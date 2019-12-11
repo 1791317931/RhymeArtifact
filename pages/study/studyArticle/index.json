@@ -1,7 +1,7 @@
 {
   "usingComponents": {
     "loadModal": "/components/common/loadModal/index",
-    "musicPoster": "/components/musicPoster/index"
+    "commentList": "/components/comment/article/index"
   },
   "navigationBarTitleText": "文章详情"
 }

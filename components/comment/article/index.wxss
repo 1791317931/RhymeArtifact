@@ -1,1 +1,240 @@
-/* components/comment/article/index.wxss */
+.title {
+  padding: 0 40rpx 0 0;
+  font-size:32rpx;
+  font-family:PingFangSC-Medium,PingFangSC;
+  font-weight:500;
+  color:rgba(4,4,4,1);
+  line-height:45rpx;
+}
+
+.list-container-inner {
+  padding: 0 0 180rpx;
+}
+
+.list {
+  height: 100%;
+}
+
+.list .item {
+  display: flex;
+  margin-top: 30rpx;
+  border-bottom: 2rpx solid rgba(240,240,240,1);
+  padding: 0 40rpx 30rpx 0;
+}
+
+.list .item .head {
+  width: 80rpx;
+}
+
+.list .item .head image {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+}
+
+.list .item .info {
+  flex: 1;
+  padding: 0 0 0 20rpx;
+}
+
+.name {
+  font-size:26rpx;
+  font-family:PingFangSC-Regular,PingFangSC;
+  font-weight:400;
+  color:rgba(4,4,4,1);
+  line-height:37rpx;
+}
+
+.time {
+  margin-top: 5rpx;
+  font-size:24rpx;
+  font-family:PingFangSC-Regular,PingFangSC;
+  font-weight:400;
+  color:rgba(173,173,173,1);
+  line-height:33rpx;
+}
+
+.option {
+  margin-top: 10rpx;
+}
+
+.option .item {
+  margin-right: 20rpx;
+  display: inline-block;
+  font-size:28rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(88,88,88,1);
+  line-height:40rpx;
+}
+
+.option .item.to-reply {
+  color: rgba(173,173,173,1);
+}
+
+.option .item.to-delete {
+  color: #F84D78;
+}
+
+.content {
+  margin-top: 10rpx;
+  font-size:28rpx;
+  font-family:PingFangSC-Regular,PingFangSC;
+  font-weight:400;
+  color:rgba(88,88,88,1);
+  line-height:40rpx;
+  word-break: break-all;
+}
+
+.content text {
+  color: #0BE79E;
+}
+
+.comment-area {
+  width: 750rpx;
+  height: 110rpx;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  padding: 22rpx 40rpx 0 40rpx;
+  background: #fff;
+}
+
+textarea {
+  width: 400rpx;
+  height:70rpx;
+  background:rgba(244,244,244,1);
+  border-radius:35rpx;
+  padding: 20rpx 40rpx;
+  font-size:24rpx;
+  font-family:PingFangSC-Regular,PingFangSC;
+  font-weight:400;
+  color:rgb(88, 88, 88);
+  line-height:33rpx;
+  border-top: 2rpx solid rgba(240,240,240,1);
+}
+
+.comment-area.active {
+  height: 194rpx;
+}
+
+.comment-area.active textarea {
+  width: 520rpx;
+  height: 150rpx;
+}
+
+.comment-area .publish {
+  position: absolute;
+  top: 50%;
+  right: 40rpx;
+  transform: translateY(-50%);
+  width: 120rpx;
+  line-height:70rpx;
+  background:rgba(12,207,142,1);
+  border-radius:20rpx;
+  text-align: center;
+  font-size:28rpx;
+  font-family:PingFangSC-Regular,PingFangSC;
+  font-weight:400;
+  color:rgba(255,255,255,1);
+}
+
+.ph {
+  color:rgba(173,173,173,1);
+}
+
+.option {
+  margin-top: 10rpx;
+}
+
+.option > view {
+  margin-right: 20rpx;
+  display: inline-block;
+  line-height: 40rpx;
+  font-size:26rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgb(10, 112, 245);
+}
+
+.option > view.to-delete {
+  color: rgba(248,77,120,1);
+}
+
+.inner-area {
+  margin-top: 20rpx;
+}
+
+.inner-area textarea {
+  width: 100%;
+  height: 300rpx;
+  border-radius: 0;
+}
+
+.inner-option {
+  margin-top: 20rpx;
+}
+
+.inner-area button {
+  display: inline-block;
+  padding: 0 20rpx;
+  line-height: 50rpx;
+  background:rgba(9,205,154,1);
+  font-size:28rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(255,255,255,1);
+  text-align: center;
+  margin-right: 20rpx;
+}
+
+.inner-area button.cancel {
+  background: #eee;
+  color: #000;
+}
+
+.option-item {
+  width: 60rpx;
+  height: 70rpx;
+  position: absolute;
+  bottom: 16rpx;
+  left: 473rpx;
+}
+
+.option-item.collection {
+  left: 557rpx;
+}
+
+.option-item.share {
+  left: 668rpx;
+}
+
+.option-item image {
+  display: block;
+  width: 44rpx;
+  height: 44rpx;
+  margin: 0 auto;
+}
+
+.option-item view {
+  width: 100%;
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  font-size:20rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(173,173,173,1);
+  text-align: center;
+}
+
+.option-item button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  opacity: 0;
+}

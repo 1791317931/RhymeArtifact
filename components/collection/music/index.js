@@ -259,7 +259,7 @@ Component({
         })
 
         if(!BAC.playing) {
-          this.startPlay(0)
+          this.play(0)
         }
       }, () => {
         this.togglePageLoading(false)

@@ -1,2 +1,82 @@
-<!--components/comment/article/index.wxml-->
-<text>components/comment/article/index.wxml</text>
+<loadModal id="loadModalComponent"/>
+<view class="title">{{typeMap[type]}}评论({{page.total_count}})</view>
+<scroll-view
+  class="list"
+  bindscrolltolower="onReachBottom"
+  scroll-y
+>
+  <view class="list-container-inner">
+    <view class="item" wx:for="{{page.list}}" wx:for-index="index" wx:for-item="item" wx:key="{{item.id}}">
+      <view class="head">
+        <image src="{{item.user.data.avatar}}"/>
+      </view>
+      <view class="info">
+        <view class="name">{{item.user.data.nickname}}</view>
+        <view class="time">{{item.created_at}}</view>
+        <view class="content">
+          <text wx:if="{{item.parent_id != 0}}">@{{item.parentuser.data.nickname}}：</text>
+          {{item.content}}
+        </view>
+        <view class="option">
+          <view wx:if="{{item.user_id != user.id}}" data-index="{{index}}" bindtap="toReply">回复</view>
+          <view wx:if="{{item.user_id == user.id}}" class="to-delete" data-index="{{index}}" bindtap="toDelete">删除</view>
+        </view>
+        <view wx:if="{{tempIndex == index}}" class="inner-area">
+          <form bindsubmit="reply">
+            <textarea
+              value="{{replyContent}}"
+              name="replyContent"
+              class="comment-input"
+              placeholder="@{{item.user.data.nickname}}"
+              placeholder-class="ph"
+              maxlength="{{commentMaxLength}}"
+              cursor-spacing="40"
+              fixed="{{true}}"
+              bindfocus="replyContentFocus"
+              bindblur="changeReplyContent"/>
+            <view class="inner-option">
+              <button formType="submit">发布</button>
+              <button class="cancel" catchtap="cancelReply">取消</button>
+            </view>
+          </form>
+        </view>
+      </view>
+    </view>
+    <empty 
+      loading="{{page.loading}}"
+      hasData="{{!!page.list.length}}"
+      hasMore="{{page.current_page < page.total_pages}}"/>
+  </view>
+</scroll-view>
+<view class="comment-area {{commentFocus ? 'active' : ''}}">
+  <form bindsubmit="sendComment">
+    <textarea
+      value="{{commentContent}}"
+      name="commentContent"
+      class="comment-input"
+      placeholder="用freestyle来评论吧~"
+      placeholder-class="ph"
+      maxlength="{{commentMaxLength}}"
+      cursor-spacing="40"
+      fixed="{{true}}"
+      bindfocus="commentContentFocus"
+      bindblur="changeCommentContent"/>
+    <button hidden="{{!commentFocus}}" class="publish" formType="submit">发布</button>
+    <view hidden="{{commentFocus}}">
+      <view class="option-item">
+        <image src="/assets/imgs/wechat-share-44-44.png"/>
+        <view>微信</view>
+      </view>
+      <view class="option-item collection">
+        <image src="/assets/imgs/article/collection-active-44-44.png"/>
+        <!-- <image src="/assets/imgs/article/collection-44-44.png"/> -->
+        <view>{{0}}</view>
+      </view>
+      <view class="option-item share">
+        <image src="/assets/imgs/article/share-44-44.png"/>
+        <view>分享</view>
+        <button open-type="share"></button>
+      </view>
+    </view>
+  </form>
+</view>

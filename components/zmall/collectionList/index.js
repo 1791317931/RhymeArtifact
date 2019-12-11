@@ -252,10 +252,10 @@ Component({
 
         if (this.data.type == 'collection') {
           if (originList.length) {
-            this.startPlay(0)
+            this.play(0)
           }
         } else if (!BAC.playing) {
-          this.startPlay(0)
+          this.play(0)
         }
       }, () => {
         this.togglePageLoading(false)

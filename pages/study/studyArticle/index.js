@@ -12,20 +12,27 @@ Page({
     id: null,
     article: null,
     loadModal: null,
-    musicPosterComponent: null
+    commentComponent: null
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let musicPosterComponent = this.selectComponent('#musicPosterComponent');
+    let id = options.id
+    let commentComponent = this.selectComponent('#commentComponent');
+    commentComponent.init(this)
+    commentComponent.setData({
+      type: 'posts',
+      targetId: id
+    })
 
     this.setData({
-      id: options.id,
+      id,
       loadModal: this.selectComponent('#loadModal'),
-      musicPosterComponent
+      commentComponent
     });
+    this.init();
   },
 
   /**
@@ -39,7 +46,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.init();
+    
   },
 
   /**
@@ -99,6 +106,7 @@ Page({
         loading: false
       });
     });
+    this.data.commentComponent.getPage()
   },
   translateContent(content) {
     let startIndex = content.indexOf('<figure class="media">')

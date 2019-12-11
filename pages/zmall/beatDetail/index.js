@@ -22,7 +22,7 @@ Page({
     total: 0,
     playing: true,
     beatComponent: null,
-    commentComment: null,
+    commentComponent: null,
     commentCount: 0,
     showList: false,
     showCommentList: false,
@@ -156,6 +156,7 @@ Page({
         beat
       })
       beatComponent.getPage(1)
+      this.getCommentPage()
     }, () => {
       this.toggleLoading(false)
     })
