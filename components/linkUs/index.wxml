@@ -1,4 +1,4 @@
-<view hidden="{{!show}}" class="modal" catchtap="close">
+<view hidden="{{!show}}" class="modal" catchtap="close" catchtouchmove="{{true}}">
   <view class="inner" catchtap="prevent">
     <image class="kefu" src="/assets/imgs/kefu.png"/>
     <view class="desc">

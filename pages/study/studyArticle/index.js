@@ -84,6 +84,7 @@ Page({
     let article = this.data.article;
     return {
       title: article.title,
+      imageUrl: article.cover,
       path: '/pages/study/studyList/index?t=article&id=' + article.id
     };
   },
@@ -96,11 +97,15 @@ Page({
     api.getArticleById({
       id: this.data.id
     }, (res) => {
-      var article = `<div>${this.translateContent(res.data.content)}</div>`
+      let data = res.data
+      var article = `<div>${this.translateContent(data.content)}</div>`
       WxParse.wxParse('wxParseData', 'html', article, this, 0);
       this.setData({
-        article: res.data
+        article: data
       });
+      this.data.commentComponent.setData({
+        data
+      })
     }, () => {
       loadModal.setData({
         loading: false
@@ -123,34 +128,34 @@ Page({
 
     return content
   },
-  generatePoster(e) {
-    let article = this.data.article;
-    this.getPosterInfo(article, () => {
-      this.data.musicPosterComponent.generatePoster(article, 'article');
-    });
-  },
-  getPosterInfo(article, callback) {
-    // 已经获取过本地图片
-    if (article.temp_cover) {
-      callback && callback(path);
-      return;
-    }
+  // generatePoster(e) {
+  //   let article = this.data.article;
+  //   this.getPosterInfo(article, () => {
+  //     this.data.musicPosterComponent.generatePoster(article, 'article');
+  //   });
+  // },
+  // getPosterInfo(article, callback) {
+  //   // 已经获取过本地图片
+  //   if (article.temp_cover) {
+  //     callback && callback(path);
+  //     return;
+  //   }
 
-    wx.showLoading({
-      title: '海报生成中...',
-    });
-    wx.getImageInfo({
-      src: article.cover,
-      success: (res) => {
-        let path = res.path;
-        this.setData({
-          'article.temp_cover': path
-        });
-        callback && callback(path);
-      },
-      complete: () => {
-        wx.hideLoading();
-      }
-    });
-  }
+  //   wx.showLoading({
+  //     title: '海报生成中...',
+  //   });
+  //   wx.getImageInfo({
+  //     src: article.cover,
+  //     success: (res) => {
+  //       let path = res.path;
+  //       this.setData({
+  //         'article.temp_cover': path
+  //       });
+  //       callback && callback(path);
+  //     },
+  //     complete: () => {
+  //       wx.hideLoading();
+  //     }
+  //   });
+  // }
 })

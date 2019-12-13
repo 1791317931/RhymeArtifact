@@ -1,4 +1,5 @@
 <loadModal id="loadModalComponent"/>
+<linkUs id="linkUsComponent"/>
 <view class="title">{{typeMap[type]}}评论({{page.total_count}})</view>
 <scroll-view
   class="list"
@@ -63,14 +64,14 @@
       bindblur="changeCommentContent"/>
     <button hidden="{{!commentFocus}}" class="publish" formType="submit">发布</button>
     <view hidden="{{commentFocus}}">
-      <view class="option-item">
+      <view hidden="{{isAudient}}" class="option-item" catchtap="showLinkUsModal">
         <image src="/assets/imgs/wechat-share-44-44.png"/>
         <view>微信</view>
       </view>
-      <view class="option-item collection">
-        <image src="/assets/imgs/article/collection-active-44-44.png"/>
-        <!-- <image src="/assets/imgs/article/collection-44-44.png"/> -->
-        <view>{{0}}</view>
+      <view class="option-item collection" catchtap="toggleCollection">
+        <image class="{{data.is_collections == 1 ? 'hide' : ''}}" src="/assets/imgs/article/collection-active-44-44.png"/>
+        <image class="{{data.is_collections == 1 ? '' : 'hide'}}" src="/assets/imgs/article/collection-44-44.png"/>
+        <view>{{data.collection_num}}</view>
       </view>
       <view class="option-item share">
         <image src="/assets/imgs/article/share-44-44.png"/>

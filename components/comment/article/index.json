@@ -1,6 +1,8 @@
 {
   "component": true,
   "usingComponents": {
-    "empty": "/components/common/empty/index"
+    "loadModal": "/components/common/loadModal/index",
+    "empty": "/components/common/empty/index",
+    "linkUs": "/components/linkUs/index"
   }
 }

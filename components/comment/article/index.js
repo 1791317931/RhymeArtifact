@@ -1,3 +1,4 @@
+import CommonUtil from '../../../assets/js/CommonUtil'
 import DateUtil from '../../../assets/js/DateUtil'
 import TipUtil from '../../../assets/js/TipUtil'
 import * as api from '../../../assets/js/api'
@@ -14,6 +15,7 @@ Component({
    * 组件的初始数据
    */
   data: {
+    isAudient: true,
     page: {
       loading: false,
       current_page: 1,
@@ -35,7 +37,10 @@ Component({
     typeMap: {
       posts: '文章',
       video: '视频'
-    }
+    },
+    linkUsComponent: null,
+    data: null,
+    isCollecting: false
   },
 
   /**
@@ -50,9 +55,12 @@ Component({
     init(scope) {
       this.setScope(scope)
       let loadModalComponent = this.selectComponent('#loadModalComponent')
+      let linkUsComponent = this.selectComponent('#linkUsComponent')
       this.setData({
         user: wx.getStorageSync('userInfo'),
-        loadModalComponent
+        loadModalComponent,
+        linkUsComponent,
+        isAudient: CommonUtil.isAudient()
       })
     },
     onReachBottom() {
@@ -224,6 +232,44 @@ Component({
         })
       }, () => {
         this.togglePageLoading(false)
+      })
+    },
+    showLinkUsModal() {
+      this.data.linkUsComponent.toggleModal(true)
+    },
+    toggleCollecting(isCollecting) {
+      this.setData({
+        isCollecting
+      })
+    },
+    toggleCollection() {
+      if (this.data.isCollecting) {
+        return
+      }
+
+      let data = this.data.data
+      let fn
+      let param = {
+        type: this.data.type,
+        id: data.id
+      }
+
+      if (data.is_collections == 1) {
+        fn = api.deleteNewCollection
+      } else {
+        fn = api.addNewCollection
+      }
+
+      this.toggleCollecting(true)
+      fn(param, (res) => {
+        TipUtil.success('操作成功')
+        // 需要同步组件即可，不需要同步到外部
+        this.setData({
+          'data.is_collections': data.is_collections == 1 ? 0 : 1,
+          'data.collection_num': data.is_collections == 1 ? --data.collection_num : ++data.collection_num
+        })
+      }, () => {
+        this.toggleCollecting(false)
       })
     }
   }

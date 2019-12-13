@@ -67,7 +67,7 @@ Page({
     wx.setClipboardData({
       data: 'https://www.peaceandlovemusic.cn',
       success: () => {
-        this.toggleModal(false)
+        
       }
     })
   }
