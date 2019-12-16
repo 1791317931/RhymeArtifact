@@ -39,7 +39,9 @@ Page({
     musicPosterComponent = this.selectComponent('#musicPosterComponent');
 
     musicComponent.setData({
-      'page.showType': 'myCollection'
+      'page.showType': 'myCollection',
+      // 不显示分类
+      showCategory: false
     });
     videoComponent.setData({
       'page.showCollection': true

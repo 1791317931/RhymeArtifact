@@ -1,6 +1,6 @@
-import CommonUtil from '../../../assets/js/CommonUtil';
-import PathUtil from '../../../assets/js/PathUtil';
-import * as api from '../../../assets/js/api'
+import CommonUtil from '../../assets/js/CommonUtil';
+import PathUtil from '../../assets/js/PathUtil';
+import * as api from '../../assets/js/api'
 
 Page({
 
@@ -53,7 +53,7 @@ Page({
     this.setData({
       isAudient: CommonUtil.isAudient()
     })
-    
+
     if (this.data.isAudient) {
       let menus = this.data.menus
       menus.forEach(item => {

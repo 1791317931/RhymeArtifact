@@ -1,20 +1,11 @@
 {
   "pages": [
     "pages/zmall/index/index",
-    "pages/user/info/index",
     "pages/zmall/orderDetail/index",
-    "pages/user/order/index/index",
     "pages/main/index",
     "pages/zmall/beatDetail/index",
     "pages/zmall/buy/index",
-    "pages/user/collection/index",
-    "pages/freestyle/play/index",
-    "pages/freestyle/beatList/index",
     "pages/study/studyList/index",
-    "pages/user/freestyle/index",
-    "pages/freestyle/index/index",
-    "pages/freestyle/rankList/index",
-    "pages/freestyle/record/index",
     "pages/create/beatList/index",
     "pages/create/createMusicList/index",
     "pages/create/record/index",
@@ -22,26 +13,47 @@
     "pages/create/lyrics/index",
     "pages/authorition/index",
     "pages/create/record/lyrics/index",
-    "pages/user/music/index",
-    "pages/user/mine/index",
     "pages/study/studyVideo/index",
     "pages/study/studyArticle/index",
-    "pages/user/officialAccounts/index",
     "pages/webview/index",
-    "pages/user/fans/index",
     "pages/mall/index/index",
     "pages/mall/beatList/index",
     "pages/mall/beatDetail/index",
     "pages/mall/address/edit/index",
     "pages/mall/address/list/index",
-    "pages/user/order/detail/index",
-    "pages/user/skill/index",
-    "pages/user/editInfo/index",
     "pages/create/musicDetail/index",
     "pages/study/activity/index",
     "pages/study/activityDetail/index",
-    "pages/user/residence/success/index",
-    "pages/user/residence/index/index"
+    "pages/mine/index"
+  ],
+  "subPackages": [
+    {
+      "root": "pages/freestyle/",
+      "pages": [
+        "play/index",
+        "beatList/index",
+        "index/index",
+        "rankList/index",
+        "record/index"
+      ]
+    },
+    {
+      "root": "pages/user/",
+      "pages": [
+        "collection/index",
+        "order/index/index",
+        "info/index",
+        "music/index",
+        "officialAccounts/index",
+        "fans/index",
+        "order/detail/index",
+        "skill/index",
+        "editInfo/index",
+        "residence/success/index",
+        "residence/index/index",
+        "freestyle/index"
+      ]
+    }
   ],
   "requiredBackgroundModes": [
     "audio"
@@ -80,7 +92,7 @@
       {
         "selectedIconPath": "assets/imgs/nav/mine-active.png",
         "iconPath": "assets/imgs/nav/mine.png",
-        "pagePath": "pages/user/mine/index",
+        "pagePath": "pages/mine/index",
         "text": "我的"
       }
     ]

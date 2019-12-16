@@ -3,7 +3,7 @@ import CommonUtil from '../../../assets/js/CommonUtil';
 import ConfigUtil from '../../../assets/js/ConfigUtil';
 import PathUtil from '../../../assets/js/PathUtil';
 import TimeUtil from '../../../assets/js/TimeUtil';
-import * as api from '../../../assets/js/api';
+import * as api from '../../../assets/js/api'
 
 Page({
 
