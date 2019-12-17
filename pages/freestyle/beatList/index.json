@@ -1,6 +1,6 @@
 {
   "usingComponents": {
-    "beatList": "/components/beatList/index"
+    "beatList": "/components/beat/freestyle/index"
   },
   "navigationBarTitleText": "beat列表",
   "enablePullDownRefresh": true

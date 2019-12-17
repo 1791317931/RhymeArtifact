@@ -86,7 +86,7 @@
     </view>
     <view class="bottom-container">
       <view class="time-start">{{beatItem.tryBeatTimeArr[1]}}:{{beatItem.tryBeatTimeArr[2]}}</view>
-      <view class="time-end">{{beatItem.beatTimeArr[1]}}:{{beatItem.beatTimeArr[2]}}</view>
+      <view class="time-end {{beatItem.beatTimeArr[1] ? '' : 'hide'}}">{{beatItem.beatTimeArr[1]}}:{{beatItem.beatTimeArr[2]}}</view>
     </view>
   </view>
   <view class="combine-container">
@@ -110,7 +110,7 @@
     </view>
     <view class="bottom-container">
       <view class="time-start">{{beatItem.recordBeatTimeArr[1]}}:{{beatItem.recordBeatTimeArr[2]}}</view>
-      <view class="time-end">{{beatItem.beatTimeArr[1]}}:{{beatItem.beatTimeArr[2]}}</view>
+      <view class="time-end {{beatItem.beatTimeArr[1] ? '' : 'hide'}}">{{beatItem.beatTimeArr[1]}}:{{beatItem.beatTimeArr[2]}}</view>
     </view>
   </view>
   <view class="center-btn-container clearfix">

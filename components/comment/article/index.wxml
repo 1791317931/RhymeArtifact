@@ -6,7 +6,7 @@
   bindscrolltolower="onReachBottom"
   scroll-y
 >
-  <view class="list-container-inner">
+  <view class="list-container-inner" catchtap="cancelReply">
     <view class="item" wx:for="{{page.list}}" wx:for-index="index" wx:for-item="item" wx:key="{{item.id}}">
       <view class="head">
         <image src="{{item.user.data.avatar}}"/>
@@ -19,27 +19,9 @@
           {{item.content}}
         </view>
         <view class="option">
-          <view wx:if="{{item.user_id != user.id}}" data-index="{{index}}" bindtap="toReply">回复</view>
-          <view wx:if="{{item.user_id == user.id}}" class="to-delete" data-index="{{index}}" bindtap="toDelete">删除</view>
-        </view>
-        <view wx:if="{{tempIndex == index}}" class="inner-area">
-          <form bindsubmit="reply">
-            <textarea
-              value="{{replyContent}}"
-              name="replyContent"
-              class="comment-input"
-              placeholder="@{{item.user.data.nickname}}"
-              placeholder-class="ph"
-              maxlength="{{commentMaxLength}}"
-              cursor-spacing="40"
-              fixed="{{true}}"
-              bindfocus="replyContentFocus"
-              bindblur="changeReplyContent"/>
-            <view class="inner-option">
-              <button formType="submit">发布</button>
-              <button class="cancel" catchtap="cancelReply">取消</button>
-            </view>
-          </form>
+          <!-- <view data-index="{{index}}" catchtap="toReply">回复</view> -->
+          <view wx:if="{{item.user_id != user.id}}" data-index="{{index}}" catchtap="toReply">回复</view>
+          <view wx:if="{{item.user_id == user.id}}" class="to-delete" data-index="{{index}}" catchtap="toDelete">删除</view>
         </view>
       </view>
     </view>
@@ -49,6 +31,25 @@
       hasMore="{{page.current_page < page.total_pages}}"/>
   </view>
 </scroll-view>
+<view hidden="{{tempIndex == -1}}" class="inner-area">
+  <form bindsubmit="reply">
+    <textarea
+      value="{{replyContent}}"
+      name="replyContent"
+      class="comment-input"
+      placeholder="@{{page.list[tempIndex].user.data.nickname}}"
+      placeholder-class="ph"
+      maxlength="{{commentMaxLength}}"
+      cursor-spacing="40"
+      fixed="{{true}}"
+      bindfocus="replyContentFocus"
+      bindblur="changeReplyContent"/>
+    <view class="inner-option">
+      <button formType="submit">发布</button>
+      <button class="cancel" catchtap="cancelReply">取消</button>
+    </view>
+  </form>
+</view>
 <view class="comment-area {{commentFocus ? 'active' : ''}}">
   <form bindsubmit="sendComment">
     <textarea
@@ -62,7 +63,9 @@
       fixed="{{true}}"
       bindfocus="commentContentFocus"
       bindblur="changeCommentContent"/>
-    <button hidden="{{!commentFocus}}" class="publish" formType="submit">发布</button>
+    <view class="publish">
+      <button hidden="{{!commentFocus}}" formType="submit">发布</button>
+    </view>
     <view hidden="{{commentFocus}}">
       <view hidden="{{isAudient}}" class="option-item" catchtap="showLinkUsModal">
         <image src="/assets/imgs/wechat-share-44-44.png"/>

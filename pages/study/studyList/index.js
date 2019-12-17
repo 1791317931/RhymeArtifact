@@ -64,7 +64,7 @@ Page({
         url
       });
     } else if (type == 'article') {
-      url = '/pages/study/studyArticle/index?id=' + id;
+      url = '/pages/sub/study/studyArticle/index?id=' + id;
 
       wx.navigateTo({
         url

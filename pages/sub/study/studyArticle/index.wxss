@@ -1,4 +1,4 @@
-@import "../../wxParse/wxParse.wxss";
+@import "../../../wxParse/wxParse.wxss";
 
 .article {
   padding: 30rpx 40rpx 120rpx 40rpx;

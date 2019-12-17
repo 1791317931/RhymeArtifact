@@ -139,7 +139,7 @@ Component({
     clickItem(e) {
       let item = this.getItem(e);
       wx.navigateTo({
-        url: `/pages/study/studyArticle/index?id=${item.id}`
+        url: `/pages/sub/study/studyArticle/index?id=${item.id}`
       })
     },
     togglePageLoading(loading) {

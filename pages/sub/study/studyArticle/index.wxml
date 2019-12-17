@@ -1,4 +1,4 @@
-<import src="../../wxParse/wxParse.wxml"/>
+<import src="../../../wxParse/wxParse.wxml"/>
 <canvas class="poster-canvas" canvas-id="poster-canvas"/>
 <musicPoster id="musicPosterComponent"/>
 <loadModal id="loadModal" />

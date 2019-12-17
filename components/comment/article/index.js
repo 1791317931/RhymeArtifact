@@ -135,9 +135,10 @@ Component({
       });
     },
     toReply(e) {
+      let tempIndex = this.getIndex(e)
+
       this.setData({
-        tempIndex: this.getIndex(e),
-        replyContent: ''
+        tempIndex
       })
     },
     cancelReply() {

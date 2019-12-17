@@ -59,9 +59,9 @@
 				},
 				{
 					"id": 1,
-					"name": "扫码进入",
-					"pathName": "pages/create/musicDetail/index",
-					"query": "id=44",
+					"name": "pages/study/studyArticle/index",
+					"pathName": "pages/study/studyArticle/index",
+					"query": "id=215",
 					"scene": null
 				}
 			]

@@ -14,7 +14,6 @@
     "pages/authorition/index",
     "pages/create/record/lyrics/index",
     "pages/study/studyVideo/index",
-    "pages/study/studyArticle/index",
     "pages/webview/index",
     "pages/mall/index/index",
     "pages/mall/beatList/index",
@@ -52,6 +51,12 @@
         "residence/success/index",
         "residence/index/index",
         "freestyle/index"
+      ]
+    },
+    {
+      "root": "pages/sub/study",
+      "pages": [
+        "studyArticle/index"
       ]
     }
   ],

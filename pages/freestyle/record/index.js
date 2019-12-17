@@ -72,7 +72,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    BackgroundAC.pausePlay()
     // 保持不锁屏
     wx.setKeepScreenOn({
       keepScreenOn: true
@@ -139,6 +138,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    BackgroundAC.pausePlay()
     // 这里不能继续播放，调用BAC.play()无法播放
     if (this.data.mode == 'try' && this.data.tryPlaying) {
       this.tryPlayStart();
@@ -241,12 +241,11 @@ Page({
       this.data.BAC.seek(0);
       this.data.RAC.seek(0);
 
-      beatItem.beatTimeArr = TimeUtil.numberToArr(Math.ceil(beatItem.beat_duration / 1000));
       this.setData({
         'recordForm.beatId': beatItem.id,
         'recordForm.path': null
       });
-      this.data.BAC.src = beatItem.beat_url;
+      this.data.BAC.src = beatItem.beat_try_url;
 
       wx.setStorageSync('beatItem', beatItem);
       this.setFreestyleMode('beat');
@@ -255,7 +254,6 @@ Page({
       timeArr = TimeUtil.numberToArr(totalTime);
       beatItem = {
         beatTimeArr: timeArr,
-        beat_duration: timeArr,
         totalTime
       };
 
@@ -384,6 +382,13 @@ Page({
   },
   bindBACEvent(BAC) {
     BAC.onTimeUpdate((res) => {
+      let time = BAC.duration
+      let timeArr = TimeUtil.numberToArr(Math.ceil(time));
+      this.setData({
+        'beatItem.beatTimeArr': timeArr,
+        'beatItem.totalTime': time
+      })
+
       this.beatAudioTimeUpdate(BAC.currentTime);
     });
 
@@ -612,7 +617,7 @@ Page({
     this.changeMode('record');
 
     // 伴奏录制
-    if (this.data.beatItem.beat_url) {
+    if (this.data.beatItem.beat_try_url) {
       BAC.volume = this.data.volume;
       // 从头播放
       BAC.seek(0);

@@ -1,8 +1,8 @@
-import * as api from '../../../assets/js/api';
-import PathUtil from '../../../assets/js/PathUtil';
-import TipUtil from '../../../assets/js/TipUtil';
-import PosterCanvasUtil from '../../../assets/js/components/PosterCanvasUtil';
-import WxParse from '../../../pages/wxParse/wxParse.js';
+import * as api from '../../../../assets/js/api';
+import PathUtil from '../../../../assets/js/PathUtil';
+import TipUtil from '../../../../assets/js/TipUtil';
+import PosterCanvasUtil from '../../../../assets/js/components/PosterCanvasUtil';
+import WxParse from '../../../../pages/wxParse/wxParse.js';
 Page({
 
   /**
@@ -46,7 +46,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
+
   },
 
   /**
@@ -118,7 +118,7 @@ Page({
     let substring
     let url
     let urlStartIndex
-    while(startIndex != -1) {
+    while (startIndex != -1) {
       substring = content.substring(startIndex, content.indexOf('</figure>', startIndex + 9) + 9)
       urlStartIndex = substring.indexOf('url="') + 5
       url = substring.substring(urlStartIndex, substring.indexOf('"', urlStartIndex))

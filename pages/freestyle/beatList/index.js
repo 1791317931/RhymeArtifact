@@ -1,16 +1,15 @@
 import CommonUtil from '../../../assets/js/CommonUtil';
 import TipUtil from '../../../assets/js/TipUtil';
-import * as api from '../../../assets/js/api';
+import * as api from '../../../assets/js/api'
+import BAC from '../../../assets/js/components/backgroundAudio/BAC'
 
 Page({
   /**
    * 页面的初始数据
    */
   data: {
-    beatComponent: null,
-    // 需要跳转的页面
-    targetPath: null,
-    posterUrl: null
+    audioComponent: null,
+    beatComponent: null
   },
 
   /**
@@ -19,12 +18,14 @@ Page({
   onLoad: function (options) {
     let beatComponent = this.selectComponent('#beatComponent');
     this.setData({
+      audioComponent: beatComponent,
       beatComponent
-    });
-    beatComponent.isFreeStyle(true);
-    beatComponent.init(this, () => {
-      this.getPage(1);
-    });
+    })
+    beatComponent.setData({
+      'page.isFreeStyle': true
+    })
+    beatComponent.init(this)
+    beatComponent.getCategoryList()
   },
 
   /**
@@ -45,7 +46,11 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-    
+    // 只要触发hide，就默认为自动播放，避免tab之间切换，出现bug
+    this.data.beatComponent.setData({
+      autoPlay: true
+    })
+    BAC.autoPlay = true
   },
 
   /**
