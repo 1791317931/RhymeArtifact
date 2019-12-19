@@ -123,7 +123,7 @@ Page({
 
 
     this.init();
-    this.getFreestyleTheme();
+    // this.getFreestyleTheme();
     this.getMyInfo();
   },
 
@@ -743,11 +743,6 @@ Page({
     });
   },
   uploadRecordAndSubmit(e) {
-    api.saveFormId({
-      formid: e.detail.formId
-    });
-
-    this.closeSaveModal();
     let form = this.data.recordForm;
     if (!form.title) {
       TipUtil.message('主题不能为空');
@@ -759,6 +754,10 @@ Page({
       return;
     }
 
+    api.saveFormId({
+      formid: e.detail.formId
+    });
+    this.closeSaveModal();
     this.uploadToOss();
   },
   uploadToOss() {

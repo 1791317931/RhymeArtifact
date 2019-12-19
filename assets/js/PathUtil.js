@@ -55,6 +55,21 @@ let PathUtil = {
     }
 
     return url;
+  },
+  // 资源文件存放到oss
+  getOssImg(url) {
+    return 'https://miyupp.oss-cn-beijing.aliyuncs.com/wxapp/' + url
+  },
+  getResourceFile(url) {
+    if (!url) {
+      return '/assets/imgs/logo.png';
+    }
+
+    if (!/^http/.test(url)) {
+      return PathUtil.prodFilePrefix + url;
+    }
+
+    return url;
   }
 };
 

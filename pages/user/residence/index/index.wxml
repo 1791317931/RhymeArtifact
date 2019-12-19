@@ -39,11 +39,11 @@
     <view class="title">示例：</view>
     <view class="upload-wrapper">
       <view class="item">
-        <image src="/assets/imgs/residence/front-card.png"/>
+        <image src="{{frontCardImg}}"/>
         <view>证件正面照</view>
       </view>
       <view class="item">
-        <image src="/assets/imgs/residence/back-card.png"/>
+        <image src="{{backCardImg}}"/>
         <view>证件反面照</view>
       </view>
     </view>

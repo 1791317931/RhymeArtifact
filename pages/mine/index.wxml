@@ -2,7 +2,7 @@
 <linkUs id="linkUsComponent"/>
 <view class="mine-container">
   <view class="user-container">
-    <image class="bg" src="/assets/imgs/user-bg.png"/>
+    <image class="bg" src="{{userBgImg}}"/>
     <view class="flex" catchtap="toDetail">
       <view class="head">
         <image src="{{userInfo.avatar}}"/>

@@ -1,4 +1,12 @@
 <view class="study-article-container">
+  <view hidden="{{page.showCollection}}" class="tab-container">
+    <view class="clearfix" style="width: {{tabWidth}}px">
+      <view wx:for="{{tabs}}" wx:for-item="item" wx:for-index="index" wx:key="{{item.id}}"
+      class="tab-item {{activeId == item.id ? 'active' : ''}} item-{{index}}" data-index="{{index}}" catchtap="toggleTab">
+        {{item.name}}
+      </view>
+    </view>
+  </view>
   <view wx:for="{{page.list}}" wx:for-item="item" wx:for-index="index" wx:key="{{item.id}}" data-index="{{index}}"
     class="item" catchtap="clickItem">
     <view class="head-info">

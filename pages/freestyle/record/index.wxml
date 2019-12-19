@@ -31,7 +31,7 @@
     <view class="modal-title">发布Freestyle</view>
     <view class="row">
       <view>主题：</view>
-      <input value="{{recordForm.title}}" disabled="{{true}}"/>
+      <input value="{{recordForm.title}}"/>
     </view>
     <view class="row">
       <view>作词：</view>
@@ -123,7 +123,7 @@
     </view>
   </view>
   <view class="freestyle-detail-container">
-    <view class="title">Freestyle主题：{{recordForm.title}}</view>
+    <!-- <view class="title">Freestyle主题：{{recordForm.title}}</view> -->
     <view class="tip">Freestyle录制建议最短60秒！</view>
   </view>
   <view class="bottom-btn-container">

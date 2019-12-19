@@ -1,6 +1,7 @@
 import TipUtil from '../../assets/js/TipUtil';
 import ConfigUtil from '../../assets/js/ConfigUtil';
 import PathUtil from '../../assets/js/PathUtil';
+import CategoryType from '../../assets/js/CategoryType'
 import * as api from '../../assets/js/api';
 
 Component({
@@ -24,6 +25,9 @@ Component({
       total_pages: 0,
       showCollection: false
     },
+    tabWidth: 10000,
+    activeId: -1,
+    tabs: [],
     scope: null,
     changeFollowing: false
   },
@@ -130,6 +134,37 @@ Component({
         };
       }
     },
+    setTabWidth() {
+      let query = wx.createSelectorQuery().in(this)
+      let that = this;
+      query.selectAll('.tab-item').boundingClientRect(function (rectList) {
+        let tabWidth = 0;
+        for (let i = 0; i < rectList.length; i++) {
+          tabWidth += Math.ceil(rectList[i].width);
+        }
+
+        that.setData({
+          tabWidth
+        });
+      }).exec();
+    },
+    getCategoryList() {
+      api.getNewCategoryList({
+        type: CategoryType.ARTICLE
+      }, (res) => {
+        let tabs = res.data.category || []
+        tabs.unshift({
+          id: -1,
+          name: '全部'
+        })
+        this.setData({
+          tabs
+        })
+
+        this.setTabWidth()
+        this.getPage(1)
+      })
+    },
     onReachBottom() {
       let page = this.data.page;
       if (page.current_page < page.total_pages) {
@@ -162,6 +197,11 @@ Component({
       },
       list = [];
 
+      let categoryId = this.data.activeId
+      if (categoryId != -1) {
+        param.category_id = categoryId
+      }
+
       if (current_page > 1) {
         list = page.list;
       }
@@ -171,7 +211,6 @@ Component({
         fn = api.getCollection;
 
         param.type = 'post';
-        delete param.include;
       } else {
         fn = api.getNewArticlePage;
       }
@@ -196,6 +235,16 @@ Component({
           'page.loading': false
         });
       });
+    },
+    toggleTab(e) {
+      let index = this.getIndex(e);
+      let item = this.data.tabs[index]
+      if (item.id != this.data.activeId) {
+        this.setData({
+          activeId: item.id
+        })
+        this.getPage(1)
+      }
     },
     toggleFollowing(changeFollowing) {
       this.setData({

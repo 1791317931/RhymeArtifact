@@ -234,22 +234,22 @@ page {
 }
 
 .beat-modal .info .play-info {
-  display: flex;
   margin-top: 10rpx;
   font-size:20rpx;
   font-family:PingFangSC-Regular,PingFangSC;
   font-weight:400;
   color:rgba(173,173,173,1);
   line-height:28rpx;
-}
-
-.beat-modal .info .play-info .time {
-  flex: 1;
+  padding: 0 200rpx 0 0;
+  position: relative;
 }
 
 .beat-modal .info .play-info .progress {
   width: 200rpx;
-  position: relative;
+  height: 28rpx;
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 .beat-modal .info .play-info .progress:before {

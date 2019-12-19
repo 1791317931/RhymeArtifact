@@ -21,7 +21,9 @@ Page({
       idcard_behind: ''
     },
     loadModalComponent: null,
-    loading: false
+    loading: false,
+    frontCardImg: PathUtil.getOssImg('front-card.png'),
+    backCardImg: PathUtil.getOssImg('back-card.png')
   },
 
   /**

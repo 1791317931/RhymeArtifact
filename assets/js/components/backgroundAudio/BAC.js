@@ -39,7 +39,7 @@ const BAC = {
       this.caculateTime(audio.currentTime)
     })
 
-    audio.onError((res) => {
+    audio.onError((e) => {
       if (e.detail.errMsg == 'MEDIA_ERR_SRC_NOT_SUPPORTED') {
         TipUtil.message('播放失败');
       }

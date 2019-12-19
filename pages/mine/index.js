@@ -43,7 +43,8 @@ Page({
     ],
     loadModalComponent: null,
     linkUsComponent: null,
-    userInfo: null
+    userInfo: null,
+    userBgImg: PathUtil.getOssImg('user-bg.png')
   },
 
   /**

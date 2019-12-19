@@ -25,7 +25,7 @@ Page({
       'page.isFreeStyle': true
     })
     beatComponent.init(this)
-    beatComponent.getCategoryList()
+    beatComponent.getPage()
   },
 
   /**

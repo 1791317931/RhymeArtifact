@@ -1,11 +1,12 @@
-// pages/study/activityDetail/index.js
+import PathUtil from '../../../assets/js/PathUtil'
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    activityImg: PathUtil.getOssImg('activity-detail.png')
   },
 
   /**

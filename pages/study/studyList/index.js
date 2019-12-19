@@ -214,8 +214,11 @@ Page({
     id = item.id || item.flag;
 
     if (item.flag == 'article') {
-      if (!data.articleComponent.data.page.list.length) {
-        this.getPage(1);
+      let articleComponent = this.data.articleComponent
+      if (!articleComponent.data.tabs.length) {
+        articleComponent.getCategoryList()
+      } else if (!articleComponent.data.page.list.length) {
+        articleComponent.getPage(1)
       }
     } else if (item.flag == 'music') {
       let musicComponent = this.data.musicComponent
@@ -305,7 +308,12 @@ Page({
     id = item.id || item.flag;
 
     if (item.flag == 'article') {
-      this.data.articleComponent.getPage(current_page);
+      let articleComponent = this.data.articleComponent
+      if (!articleComponent.data.tabs.length) {
+        articleComponent.getCategoryList()
+      } else {
+        articleComponent.getPage(current_page)
+      }
     } else if (item.flag == 'music') {
       let musicComponent = this.data.musicComponent
       if (!musicComponent.data.tabs.length) {

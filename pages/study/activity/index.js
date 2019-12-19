@@ -1,4 +1,5 @@
 import CommonUtil from '../../../assets/js/CommonUtil';
+import BAC from '../../../assets/js/components/backgroundAudio/BAC'
 
 Page({
 
@@ -17,6 +18,8 @@ Page({
       }
     ],
     activeIndex: 0,
+    // 音频播放组件
+    audioComponent: null,
     beatComponent: null,
     musicComponent: null
   },
@@ -38,6 +41,7 @@ Page({
     musicComponent.init(this)
     
     this.setData({
+      audioComponent: beatComponent,
       beatComponent,
       musicComponent
     })
@@ -63,8 +67,14 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-    this.data.musicComponent.pausePlay()
-    this.data.beatComponent.pausePlay();
+    // 只要触发hide，就默认为自动播放，避免tab之间切换，出现bug
+    this.data.beatComponent.setData({
+      autoPlay: true
+    })
+    this.data.musicComponent.setData({
+      autoPlay: true
+    })
+    BAC.autoPlay = true
   },
 
   /**
@@ -120,16 +130,21 @@ Page({
   toggleTab(e) {
     let index = e.target.dataset.index;
     if (index != this.data.activeIndex) {
+      let audioComponent
+      if (index == 0) {
+        audioComponent = this.data.beatComponent
+      } else if (index == 1) {
+        audioComponent = this.data.musicComponent
+      }
       this.setData({
-        activeIndex: index
+        activeIndex: index,
+        audioComponent
       });
 
       this.getPage(1);
     }
   },
   getPage(current_page = 1) {
-    this.data.beatComponent.pausePlay();
-    this.data.musicComponent.pausePlay();
     let data = this.data,
       tabs = data.tabs,
       item = data.tabs[data.activeIndex],

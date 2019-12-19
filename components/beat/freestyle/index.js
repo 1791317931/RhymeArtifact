@@ -108,23 +108,6 @@ Component({
         });
       }).exec();
     },
-    getCategoryList() {
-      api.getNewCategoryList({
-        type: CategoryType.BEAT
-      }, (res) => {
-        let tabs = res.data.category || []
-        tabs.unshift({
-          id: -1,
-          name: '全部'
-        })
-        this.setData({
-          tabs
-        })
-
-        this.setTabWidth()
-        this.getPage(1)
-      })
-    },
     onReachBottom() {
       let page = this.data.page;
       if (page.current_page < page.total_pages) {
@@ -239,7 +222,9 @@ Component({
       let param = {
         per_page: page.per_page,
         page: pageNum,
-        hasCollection: 1
+        hasCollection: 1,
+        // 免费
+        category_id: 29
       }
       let categoryId = this.data.activeId
       if (categoryId != -1) {
@@ -271,16 +256,6 @@ Component({
       }, () => {
         this.togglePageLoading(false)
       })
-    },
-    toggleTab(e) {
-      let index = this.getIndex(e);
-      let item = this.data.tabs[index]
-      if (item.id != this.data.activeId) {
-        this.setData({
-          activeId: item.id
-        })
-        this.getPage(1)
-      }
     }
   }
 })

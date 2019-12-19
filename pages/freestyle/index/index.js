@@ -10,7 +10,8 @@ Page({
   data: {
     loadModalComponent: null,
     user: null,
-    rankListImg: null
+    rankListImg: null,
+    freestyleRecordImg: PathUtil.getOssImg('freestyle-record.png')
   },
 
   /**

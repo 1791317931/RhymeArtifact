@@ -4,6 +4,7 @@ import ConfigUtil from '../../../assets/js/ConfigUtil';
 import PathUtil from '../../../assets/js/PathUtil';
 import TimeUtil from '../../../assets/js/TimeUtil';
 import * as api from '../../../assets/js/api'
+import BAC from '../../../assets/js/components/backgroundAudio/BAC'
 
 Page({
 
@@ -29,13 +30,15 @@ Page({
     commentMaxLength: 150,
     commentContent: '',
     commentFocus: false,
-    totalComment: 0
+    totalComment: 0,
+    freestylePlayBgImg: PathUtil.getOssImg('fs-play-bg.png')
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    BAC.pausePlay()
     // 保持不锁屏
     wx.setKeepScreenOn({
       keepScreenOn: true
@@ -311,7 +314,7 @@ Page({
     fs = data.fs,
     audio = data.audio;
 
-    audio.src = PathUtil.getFilePath(fs.mixture_url || fs.origin_url);
+    audio.src = PathUtil.getResourceFile(fs.mixture_url || fs.origin_url);
     this.setData({
       playing: true
     });
