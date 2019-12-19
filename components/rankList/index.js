@@ -136,6 +136,11 @@ Component({
         let pagination = res.meta.pagination;
 
         res.data.forEach((item, index) => {
+          if (!item.user || !item.user.data) {
+            item.user = {
+              data: {}
+            }
+          }
           item.user.data.avatarUrl = PathUtil.getFilePath(item.user.data.avatar);
 
           list.push(item);

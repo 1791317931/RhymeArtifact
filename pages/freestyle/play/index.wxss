@@ -97,7 +97,7 @@
 .comment-container-wrapper .comment-area.active {
   height: 188rpx;
   background:rgba(255,255,255,1);
-  padding: 34rpx 120rpx 34rpx 29rpx;
+  padding: 34rpx 140rpx 34rpx 29rpx;
 }
 
 .comment-container-wrapper .comment-area.active .comment-input {
@@ -113,17 +113,18 @@
 
 .comment-container-wrapper .comment-area button {
   display: none;
-  height: 188rpx;
   width: 120rpx;
-  line-height: 188rpx;
+  line-height: 56rpx;
+  height: 56rpx;
+  color: #fff;
   position: absolute;
-  right: 0;
-  top: 0;
+  right: 10rpx;
+  top: 50%;
+  transform: translateY(-50%);
   font-size:30rpx;
   font-family:PingFangSC-Medium;
   font-weight:500;
-  color:rgba(51,51,51,1);
-  background: #fff;
+  background: #0CCD9A;
   text-align: center;
 }
 
