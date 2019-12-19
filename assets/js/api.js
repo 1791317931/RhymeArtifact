@@ -3,7 +3,7 @@ import PathUtil from 'PathUtil'
 
 export function getAppStatus(fn, completeFn) {
   UrlUtil.get(PathUtil.getNewPath('wechat/review'), {
-    version: 4
+    version: 5
   }, fn, completeFn);
 }
 
