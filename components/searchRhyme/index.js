@@ -41,6 +41,10 @@ Component({
   },
   attached() {
     this.getWechatInfo();
+    let linkUsComponent = this.selectComponent('#linkUsComponent')
+    this.setData({
+      linkUsComponent
+    })
   },
 
   /**
@@ -59,12 +63,16 @@ Component({
         wechat: 'yayunrap'
       });
     },
+    showLinkUsModal() {
+      this.data.linkUsComponent.toggleModal(true)
+    },
     handleOpenModal() {
       app.aldstat.sendEvent('添加微信群', '添加微信群')
       this.setData({
         showShareModal: !this.data.showShareModal
       })
     },
+
     toOfficialAccounts() {
       app.aldstat.sendEvent('关注公众号', '关注公众号')
       wx.navigateTo({

@@ -737,6 +737,16 @@ Page({
   closeSaveModal() {
     this.toggleSaveModal(false);
   },
+  changeTitle(e) {
+    this.setData({
+      'recordForm.title': e.detail.value.trim()
+    })
+  },
+  changeAuthor(e) {
+    this.setData({
+      'recordForm.author': e.detail.value.trim()
+    })
+  },
   toggleSubmitting(hideSubmittingModal) {
     this.setData({
       hideSubmittingModal

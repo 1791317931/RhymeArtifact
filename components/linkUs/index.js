@@ -10,7 +10,8 @@ Component({
    * 组件的初始数据
    */
   data: {
-    show: false
+    show: false,
+    showShare: false
   },
 
   /**
@@ -21,7 +22,9 @@ Component({
       wx.setClipboardData({
         data: 'yayunrap',
         success: () => {
-          this.toggleModal(false)
+          this.setData({
+            showShare: true
+          })
         }
       })
     },
@@ -31,6 +34,9 @@ Component({
       })
     },
     close() {
+      this.setData({
+        showShare: false
+      })
       this.toggleModal(false)
     },
     prevent() {}

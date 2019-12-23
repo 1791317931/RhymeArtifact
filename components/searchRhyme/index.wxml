@@ -1,4 +1,4 @@
-<!--components/searchLyric/index.wxml-->
+<linkUs id="linkUsComponent"/>
 <view class="searchLyric searchLyric_{{placement}}">
   <view class="searchLyric_placement searchLyric_placement_{{placement}}">
     <view class="searchLyric_container">
@@ -26,10 +26,12 @@
       catchtap="setClipboardData"
       wx:for-item="item" wx:key="index">{{item}}</button>
   </view>
-  <!-- <view class="btn-container clearfix" hidden="{{placement != 'bottom' || rhymePage.list.length}}">
-    <button catchtap="handleOpenModal">添加微信群</button>
+  <view class="btn-container clearfix" hidden="{{placement != 'bottom' || rhymePage.list.length}}">
+    <!-- <button catchtap="handleOpenModal">添加微信群</button>
+    <button catchtap="toOfficialAccounts">关注公众号</button> -->
+    <button catchtap="showLinkUsModal">联系客服</button>
     <button catchtap="toOfficialAccounts">关注公众号</button>
-  </view> -->
+  </view>
   <loading hidden="{{!rhymePage.loading}}">
     搜索中...
   </loading>

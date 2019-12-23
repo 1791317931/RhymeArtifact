@@ -31,7 +31,7 @@
     <view class="modal-title">发布Freestyle</view>
     <view class="row">
       <view>主题：</view>
-      <input value="{{recordForm.title}}"/>
+      <input value="{{recordForm.title}}" name="title" bindchange="changeTitle"/>
     </view>
     <view class="row">
       <view>作词：</view>

@@ -60,3 +60,45 @@
   color:rgba(255,255,255,1);
   text-align: center;
 }
+
+.mask {
+  width: 750rpx;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, .6);
+}
+
+.inner-share .content-wrapper {
+  width: 600rpx;
+  padding: 40rpx;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  border-radius: 40rpx;
+}
+
+.inner-share .content-wrapper .content {
+  text-align: center;
+  font-size:34rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(4,4,4,1);
+  line-height:52rpx;
+}
+
+.inner-share .content-wrapper button {
+  display: block;
+  width: 300rpx;
+  margin: 30rpx auto 0;
+  line-height:80rpx;
+  background:rgba(9,201,137,1);
+  border-radius:55rpx;
+  font-size:34rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(255,255,255,1);
+  text-align: center;
+}
