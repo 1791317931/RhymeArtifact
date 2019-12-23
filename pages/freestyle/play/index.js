@@ -314,7 +314,13 @@ Page({
     fs = data.fs,
     audio = data.audio;
 
-    audio.src = PathUtil.getResourceFile(fs.mixture_url || fs.origin_url);
+    // 2019-12-01之后都用新路径
+    if (new Date(fs.created_at) > new Date('2019-12-01')) {
+      audio.src = PathUtil.getResourceFile(fs.mixture_url || fs.origin_url);
+    } else {
+      audio.src = PathUtil.getOldResourceFile(fs.mixture_url || fs.origin_url);
+    }
+    
     this.setData({
       playing: true
     });

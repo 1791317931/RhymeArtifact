@@ -60,13 +60,24 @@ let PathUtil = {
   getOssImg(url) {
     return 'https://miyupp.oss-cn-beijing.aliyuncs.com/wxapp/' + url
   },
-  getResourceFile(url) {
+  getOldResourceFile(url) {
     if (!url) {
       return '/assets/imgs/logo.png';
     }
 
     if (!/^http/.test(url)) {
       return PathUtil.prodFilePrefix + url;
+    }
+
+    return url;
+  },
+  getResourceFile(url) {
+    if (!url) {
+      return '/assets/imgs/logo.png';
+    }
+
+    if (!/^http/.test(url)) {
+      return PathUtil.devFilePrefix + url;
     }
 
     return url;
