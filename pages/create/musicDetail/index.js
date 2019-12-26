@@ -176,6 +176,23 @@ Page({
       })
       musicComponent.getPage(1)
       this.getCommentPage()
+
+      BAC.play({
+        type: 'music',
+        id: music.id,
+        title: music.music_title,
+        epname: music.music_title,
+        singer: music.composer,
+        coverImgUrl: music.musics_cover,
+        src: music.origin_url
+      })
+
+      this.data.musicComponent.setData({
+        playing: true,
+        showPlaying: true
+      });
+
+      this.setTitle(music)
     }, () => {
       this.toggleLoading(false)
     })

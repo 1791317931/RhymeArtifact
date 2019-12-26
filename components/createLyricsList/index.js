@@ -1,4 +1,5 @@
 import TipUtil from '../../assets/js/TipUtil';
+import DateUtil from '../../assets/js/DateUtil';
 import ConfigUtil from '../../assets/js/ConfigUtil';
 import * as api from '../../assets/js/api';
 import CommonUtil from '../../assets/js/CommonUtil';
@@ -124,6 +125,7 @@ Component({
         let pagination = res.meta.pagination;
 
         res.data.forEach((item, index) => {
+          item.created_at = DateUtil.friendlyTime(item.created_at)
           list.push(item);
         });
 

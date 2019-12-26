@@ -136,13 +136,7 @@ Component({
     },
     clickItem(e) {
       let index = this.getIndex(e)
-      if (index != this.data.playIndex) {
-        this.play(index)
-      }
-      this.setData({
-        showPlaying: false
-      })
-
+      
       wx.navigateTo({
         url: `/pages/zmall/beatDetail/index?id=${this.getItem(e).id}`
       })

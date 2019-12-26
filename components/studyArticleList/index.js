@@ -1,4 +1,5 @@
 import TipUtil from '../../assets/js/TipUtil';
+import DateUtil from '../../assets/js/DateUtil';
 import ConfigUtil from '../../assets/js/ConfigUtil';
 import PathUtil from '../../assets/js/PathUtil';
 import CategoryType from '../../assets/js/CategoryType'
@@ -222,6 +223,7 @@ Component({
           let cover = PathUtil.getFilePath(item.cover);
           item.cover = cover;
           item.collection_num = parseInt(item.collection_num);
+          item.created_at = DateUtil.friendlyTime(item.created_at)
           list.push(item);
         });
 

@@ -1,5 +1,6 @@
 import * as api from '../../../../assets/js/api';
 import PathUtil from '../../../../assets/js/PathUtil';
+import DateUtil from '../../../../assets/js/DateUtil';
 import TipUtil from '../../../../assets/js/TipUtil';
 import PosterCanvasUtil from '../../../../assets/js/components/PosterCanvasUtil';
 import WxParse from '../../../../pages/wxParse/wxParse.js';
@@ -100,6 +101,7 @@ Page({
       let data = res.data
       var article = `<div>${this.translateContent(data.content)}</div>`
       WxParse.wxParse('wxParseData', 'html', article, this, 0);
+      data.updated_at = DateUtil.friendlyTime(data.updated_at)
       this.setData({
         article: data
       });

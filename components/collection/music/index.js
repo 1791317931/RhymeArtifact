@@ -131,6 +131,8 @@ Component({
         playing: true,
         showPlaying: true
       });
+
+      this.data.scope.setTitle(music)
     },
     continuePlay() {
       BAC.continuePlay();
@@ -250,12 +252,14 @@ Component({
         }
 
         this.data.scope.setData({
-          total: originList.length
+          total: originList.length,
+          playIndex
         })
         page.list = originList
 
         this.setData({
-          page
+          page,
+          playIndex
         })
 
         if(!BAC.playing) {

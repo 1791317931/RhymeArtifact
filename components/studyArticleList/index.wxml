@@ -13,7 +13,7 @@
       <image class="avatar" src="{{item.author.data.avatar || '/assets/imgs/avatar-default.png'}}"/>
       <view class="info">
         <view class="name">{{item.author.data.nickname}}</view>
-        <view class="time">{{item.author.data.created_at}}</view>
+        <view class="time">{{item.created_at}}</view>
       </view>
       <view hidden="{{item.user.data.follow_status != 0 && item.user.data.follow_status != 3}}" class="follow" data-index="{{index}}" catchtap="toggleFollow">{{item.user.data.follow_status == 0 ? '关注' : '互粉'}}</view>
       <view hidden="{{item.user.data.follow_status != 1 && item.user.data.follow_status != 2}}" class="follow active" data-index="{{index}}" catchtap="toggleFollow">{{item.user.data.follow_status == 1 ? '取消' : '取消互粉'}}</view>

@@ -59,9 +59,9 @@
 				},
 				{
 					"id": 1,
-					"name": "pages/study/studyArticle/index",
-					"pathName": "pages/study/studyArticle/index",
-					"query": "id=215",
+					"name": "pages/study/studyList/index",
+					"pathName": "pages/study/studyList/index",
+					"query": "id=133&t=music",
 					"scene": null
 				}
 			]

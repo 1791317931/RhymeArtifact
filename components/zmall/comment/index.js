@@ -211,6 +211,7 @@ Component({
         list.forEach(item => {
           item.price = new Number(parseFloat(item.original_price)).toFixed(2)
           item.active = false
+          item.created_at = DateUtil.friendlyTime(item.created_at)
           originList.push(item)
         })
         page.list = originList

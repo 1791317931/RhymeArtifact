@@ -157,6 +157,23 @@ Page({
       })
       beatComponent.getPage(1)
       this.getCommentPage()
+
+      BAC.play({
+        type: 'beat',
+        id: beat.id,
+        title: beat.goods_name,
+        epname: beat.goods_name,
+        singer: beat.author,
+        coverImgUrl: beat.cover_images[0],
+        src: beat.beat_try_url
+      })
+      beatComponent.setData({
+        showPlaying: true
+      })
+      this.setData({
+        beat
+      })
+      this.setTitle(beat)
     }, () => {
       this.toggleLoading(false)
     })

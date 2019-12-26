@@ -16,7 +16,7 @@ Page({
     audioComponent: null,
     musicComponent: null,
     musicPosterComponent: null,
-    onLoaded: false,
+    loaded: false,
     isAudient: true
   },
 
@@ -98,7 +98,22 @@ Page({
       musicPosterComponent
     });
 
-    this.getCategoryList(this.getPage);
+    // 可能是直接点击分享卡片或者扫码进入，此时isAudient必定是true
+    if (this.data.isAudient) {
+      api.getAppStatus((res) => {
+        let isAudient = res.status == 1
+        wx.setStorageSync('audient', isAudient)
+        this.setData({
+          isAudient
+        })
+
+        if (!isAudient) {
+          this.getCategoryList(this.getPage);
+        }
+      })
+    } else {
+      this.getCategoryList(this.getPage);
+    }
   },
 
   /**
@@ -112,9 +127,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    if (!this.data.onLoaded) {
+    if (!this.data.loaded) {
       this.setData({
-        onLoaded: true
+        loaded: true
       });
       return;
     }

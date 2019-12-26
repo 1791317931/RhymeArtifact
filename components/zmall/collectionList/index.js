@@ -242,11 +242,13 @@ Component({
         }
 
         this.data.scope.setData({
+          playIndex,
           total: originList.length
         })
         page.list = originList
 
         this.setData({
+          playIndex,
           page
         })
 
@@ -254,8 +256,6 @@ Component({
           if (originList.length) {
             this.play(0)
           }
-        } else if (!BAC.playing) {
-          this.play(0)
         }
       }, () => {
         this.togglePageLoading(false)

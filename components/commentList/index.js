@@ -1,4 +1,5 @@
 import TipUtil from '../../assets/js/TipUtil';
+import DateUtil from '../../assets/js/DateUtil';
 import CommonUtil from '../../assets/js/CommonUtil';
 import ConfigUtil from '../../assets/js/ConfigUtil';
 import PathUtil from '../../assets/js/PathUtil';
@@ -163,7 +164,7 @@ Component({
         res.data.forEach((item, index) => {
           item.like_count = parseInt(item.like_count || 0);
           item.user.avatar = PathUtil.getFilePath(item.user.data.avatar);
-
+          item.created_at = DateUtil.friendlyTime(item.created_at)
           list.push(item);
         });
 
