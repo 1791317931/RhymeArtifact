@@ -16,7 +16,6 @@ Page({
     audioComponent: null,
     musicComponent: null,
     musicPosterComponent: null,
-    loaded: false,
     isAudient: true
   },
 
@@ -127,13 +126,6 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    if (!this.data.loaded) {
-      this.setData({
-        loaded: true
-      });
-      return;
-    }
-
     let data = this.data,
     tabs = data.tabs;
 
