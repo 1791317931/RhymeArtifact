@@ -30,7 +30,8 @@ Component({
     activeId: -1,
     tabs: [],
     scope: null,
-    changeFollowing: false
+    changeFollowing: false,
+    userId: null
   },
 
   /**
@@ -205,6 +206,10 @@ Component({
 
       if (current_page > 1) {
         list = page.list;
+      }
+
+      if (this.data.userId) {
+        param.user_id = this.data.userId
       }
 
       let fn;

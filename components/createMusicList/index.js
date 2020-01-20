@@ -49,7 +49,9 @@ Component({
     playPercent: 0,
     autoPlay: true,
     // 是否显示播放状态
-    showPlaying: true
+    showPlaying: true,
+    // 某人发布的
+    userId: null
   },
 
   /**
@@ -311,6 +313,10 @@ Component({
       let categoryId = this.data.activeId
       if (categoryId != -1) {
         param.category_id = categoryId
+      }
+
+      if (this.data.userId) {
+        param.user_id = this.data.userId
       }
 
       // 活动

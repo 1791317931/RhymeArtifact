@@ -48,7 +48,9 @@ Component({
     playIndex: -1,
     autoPlay: true,
     // 是否显示播放状态
-    showPlaying: true
+    showPlaying: true,
+    // 某人发布的
+    userId: null
   },
 
   /**
@@ -317,7 +319,16 @@ Component({
         param.activity = 1
       }
 
-      api.getGoodsPage(param, (res) => {
+      let fn
+      if (this.data.userId) {
+        fn = api.getMyGoodsPage
+        param.user_id = this.data.userId
+        param.activity = 0
+      } else {
+        fn = api.getGoodsPage
+      }
+
+      fn(param, (res) => {
         let list = res.data
         let pagination = res.meta.pagination
         page.total_pages = pagination.total_pages

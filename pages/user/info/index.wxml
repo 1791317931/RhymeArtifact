@@ -8,7 +8,7 @@
       <view class="name">{{userInfo.nickname}}</view>
       <view class="sex">{{sexMap[userInfo.gender] || '未知'}}</view>
     </view>
-    <view class="edit" catchtap="edit">编辑</view>
+    <view hidden="{{userId}}" class="edit" catchtap="edit">编辑</view>
   </view>
   <view class="desc">{{userInfo.info.introduce || '暂无介绍'}}</view>
   <view class="ex-info">
@@ -19,16 +19,16 @@
           {{item}}
         </view>
       </view>
-      <image class="arrow" src="/assets/imgs/arrow_right_25_40.png" />
+      <image hidden="{{userId}}" class="arrow" src="/assets/imgs/arrow_right_25_40.png" />
     </view>
     <view class="item">
       <label>厂牌</label>
-      <label>{{userInfo.info.team}}</label>
+      <label>{{userInfo.info.team || '无'}}</label>
     </view>
     <view class="item">
       <label>毕业学校</label>
-      <label>{{userInfo.info.school}}</label>
+      <label>{{userInfo.info.school || '无'}}</label>
     </view>
   </view>
 </view>
-<!-- <myPublished /> -->
+<myPublished id="myPublished" />

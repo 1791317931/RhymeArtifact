@@ -25,7 +25,8 @@ Component({
       showCollection: false
     },
     scope: null,
-    category_id: null
+    category_id: null,
+    userId: null
   },
 
   /**
@@ -173,15 +174,22 @@ Component({
         list = page.list;
       }
 
-      let fn;
-      if (this.data.page.showCollection) {
+      let userId = this.data.userId
+      if (userId) {
+        param.user_id = userId
+      }
+
+      let fn
+      if (userId) {
+        fn = api.getMyVideoPage
+      } else if (this.data.page.showCollection) {
         fn = api.getCollection;
 
         param.type = 'course';
         delete param.include;
         delete param.category_id
       } else {
-        fn = api.getStudyPage;
+        fn = api.getStudyPage
       }
 
       this.togglePageLoading(true);

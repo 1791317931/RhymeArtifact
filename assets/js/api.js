@@ -3,7 +3,7 @@ import PathUtil from 'PathUtil'
 
 export function getAppStatus(fn, completeFn) {
   UrlUtil.get(PathUtil.getNewPath('wechat/review'), {
-    version: 6
+    version: 5
   }, fn, completeFn);
 }
 
@@ -147,6 +147,10 @@ export function getMusicPage(data, fn, completeFn) {
 // ---------------------创作------------------------
 
 // ---------------------学习------------------------
+export function getMyVideoPage(data, fn, completeFn) {
+  UrlUtil.get(PathUtil.getNewPath('performs'), fn, completeFn);
+}
+
 export function getStudyPage(data, fn, completeFn) {
   UrlUtil.get(data.type, data, fn, completeFn);
 }
@@ -249,6 +253,10 @@ export function getUserInfoByToken(fn, completeFn) {
   UrlUtil.post(PathUtil.getNewPath(`getUserInfoByToken`), null, fn, completeFn);
 }
 
+export function getUserInfoById(data, fn, completeFn) {
+  UrlUtil.get(PathUtil.getNewPath(`userDetail/${data.id}`), null, fn, completeFn);
+}
+
 export function updateUser(data, fn, completeFn) {
   UrlUtil.put(PathUtil.getNewPath(`user-info`), data, fn, completeFn);
 }
@@ -264,6 +272,10 @@ export function settled(data, fn, completeFn) {
 // ---------------------用户------------------------
 
 // ---------------------商品------------------------
+export function getMyGoodsPage(data, fn, completeFn) {
+  UrlUtil.get(PathUtil.getNewPath('user/goods'), data, fn, completeFn);
+}
+
 export function getGoodsPage(data, fn, completeFn) {
   UrlUtil.get(PathUtil.getNewPath(`goods`), data, fn, completeFn);
 }

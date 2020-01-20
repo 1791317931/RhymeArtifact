@@ -13,7 +13,8 @@ Page({
     sexMap: {
       0: '男',
       1: '女'
-    }
+    },
+    userId: null
   },
 
   /**
@@ -21,8 +22,22 @@ Page({
    */
   onLoad: function (options) {
     let loadModalComponent = this.selectComponent('#loadModalComponent')
+    let myPublishedComponent = this.selectComponent('#myPublished')
+
+    let userId = options.userId
+    if (userId) {
+      myPublishedComponent.setData({
+        userId
+      })
+
+      this.setData({
+        userId
+      })
+    }
+
     this.setData({
-      loadModalComponent
+      loadModalComponent,
+      myPublishedComponent
     })
   },
 
@@ -83,16 +98,45 @@ Page({
     })
   },
   getUserInfo() {
+    let component = this.data.myPublishedComponent
+
     this.toggleLoading(true)
-    api.getUserInfoByToken((res) => {
-      let userInfo = res.data
-      this.setData({
-        userInfo,
-        skills: JSON.parse(userInfo.info.skill_tag || '[]')
-      });
-    }, () => {
-      this.toggleLoading(false)
-    })
+    if (this.data.userId) {
+      // 查看别人
+      api.getUserInfoById({
+        id: this.data.userId
+      }, (res) => {
+        let userInfo = res.data
+        userInfo.avatar = PathUtil.getAvatar(userInfo.avatar)
+
+        this.setData({
+          userInfo,
+          skills: JSON.parse(userInfo.info.skill_tag || '[]')
+        });
+        
+        component.init()
+      }, () => {
+        this.toggleLoading(false)
+      })
+    } else {
+      // 查看自己
+      api.getUserInfoByToken((res) => {
+        let userInfo = res.data
+        userInfo.avatar = PathUtil.getAvatar(userInfo.avatar)
+        
+        this.setData({
+          userInfo,
+          skills: JSON.parse(userInfo.info.skill_tag || '[]')
+        });
+
+        component.setData({
+          userId: userInfo.id
+        })
+        component.init()
+      }, () => {
+        this.toggleLoading(false)
+      })
+    }
   },
   edit() {
     wx.navigateTo({

@@ -1,9 +1,10 @@
 {
   "component": true,
   "usingComponents": {
-    "musicList": "/components/myPublished/music/index",
-    "beatList": "/components/myPublished/beat/index",
-    "articleList": "/components/myPublished/article/index",
-    "videoList": "/components/myPublished/video/index"
+    "musicPoster": "/components/musicPoster/index",
+    "musicList": "/components/createMusicList/index",
+    "beatList": "/components/zmall/beatList/index",
+    "articleList": "/components/studyArticleList/index",
+    "videoList": "/components/studyVideoList/index"
   }
 }

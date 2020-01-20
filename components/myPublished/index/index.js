@@ -28,18 +28,27 @@ Component({
         name: '圈内视频'
       }
     ],
-    activeIndex: 2,
+    activeIndex: 0,
     totalWidth: 1000,
     musicComponent: null,
     beatComponent: null,
     articleComponent: null,
-    videoComponent: null
+    videoComponent: null,
+    musicPosterComponent: null,
+    userId: null
   },
   ready() {
     let musicComponent = this.selectComponent('#musicComponent')
     let beatComponent = this.selectComponent('#beatComponent')
     let articleComponent = this.selectComponent('#articleComponent')
     let videoComponent = this.selectComponent('#videoComponent')
+    let musicPosterComponent = this.selectComponent('#musicPosterComponent');
+
+    musicComponent.init(this)
+    beatComponent.init(this)
+    articleComponent.init(this)
+    videoComponent.init(this)
+
     this.setData({
       musicComponent,
       beatComponent,
@@ -48,7 +57,6 @@ Component({
     })
 
     this.setWidth()
-    this.getPage(1)
   },
   /**
    * 组件的方法列表
@@ -56,6 +64,29 @@ Component({
   methods: {
     onHide() {
 
+    },
+    init() {
+      let data = this.data
+      let userId = data.userId
+      if (userId) {
+        data.beatComponent.setData({
+          userId
+        })
+
+        data.musicComponent.setData({
+          userId
+        })
+
+        data.articleComponent.setData({
+          userId
+        })
+
+        data.videoComponent.setData({
+          userId
+        })
+      }
+
+      this.getPage(1)
     },
     setWidth() {
       let query = wx.createSelectorQuery().in(this)
@@ -122,11 +153,27 @@ Component({
         }
       } else if (item.flag == 'video') {
         let videoComponent = this.data.videoComponent
-        if (!videoComponent.data.tabs.length) {
-          videoComponent.getCategoryList()
-        } else {
-          videoComponent.getPage(current_page)
-        }
+        videoComponent.getPage(current_page)
+      }
+    },
+    onReachBottom() {
+      let data = this.data,
+        tabs = data.tabs,
+        item = data.tabs[data.activeIndex],
+        id = item.flag;
+
+      if (item.flag == 'article') {
+        let articleComponent = this.data.articleComponent
+        articleComponent.onReachBottom()
+      } else if (item.flag == 'music') {
+        let musicComponent = this.data.musicComponent
+        musicComponent.onReachBottom()
+      } else if (item.flag == 'beat') {
+        let beatComponent = this.data.beatComponent
+        beatComponent.onReachBottom()
+      } else if (item.flag == 'video') {
+        let videoComponent = this.data.videoComponent
+        videoComponent.onReachBottom()
       }
     }
   }

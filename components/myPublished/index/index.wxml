@@ -1,3 +1,5 @@
+<canvas class="poster-canvas" canvas-id="poster-canvas"/>
+<musicPoster id="musicPosterComponent"/>
 <view class="tab-container">
   <view class="clearfix" style="width: {{totalWidth}}px">
     <view wx:for="{{tabs}}" wx:for-item="item" wx:for-index="index" wx:key="{{item.flag}}"
@@ -6,7 +8,11 @@
     </view>
   </view>
 </view>
-<view class="list-container">
+<scroll-view
+    class="list-container"
+    scroll-y
+    bindscrolltolower="onReachBottom"
+  >
   <view hidden="{{tabs[activeIndex].flag != 'music'}}">
     <musicList id="musicComponent" />
   </view>
@@ -19,4 +25,4 @@
   <view hidden="{{tabs[activeIndex].flag != 'video'}}">
     <videoList id="videoComponent" />
   </view>
-</view>
+</scroll-view>

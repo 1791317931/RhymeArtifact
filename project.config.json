@@ -59,9 +59,9 @@
 				},
 				{
 					"id": 1,
-					"name": "pages/study/studyList/index",
-					"pathName": "pages/study/studyList/index",
-					"query": "id=133&t=music",
+					"name": "用户信息",
+					"pathName": "pages/user/info/index",
+					"query": "userId=100",
 					"scene": null
 				}
 			]

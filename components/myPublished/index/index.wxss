@@ -8,6 +8,14 @@
   clear: both;
 }
 
+.poster-canvas {
+  position: fixed;
+  left: 120%;
+  top: 120%;
+  width: 610px;
+  height: 660px;
+}
+
 .tab-container {
   overflow-x: auto;
   padding: 30rpx 40rpx;
@@ -46,4 +54,8 @@
 
 .tab-container .clearfix .tab-item.active:first-child:before {
   transform: translateX(-50%);
+}
+
+.list-container {
+  max-height: 1200rpx;
 }
