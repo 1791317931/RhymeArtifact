@@ -98,21 +98,26 @@ Page({
     });
 
     // 可能是直接点击分享卡片或者扫码进入，此时isAudient必定是true
-    if (this.data.isAudient) {
-      api.getAppStatus((res) => {
-        let isAudient = res.status == 1
-        wx.setStorageSync('audient', isAudient)
-        this.setData({
-          isAudient
-        })
+    // if (this.data.isAudient) {
+    //   api.getAppStatus((res) => {
+    //     let isAudient = res.status == 1
+    //     wx.setStorageSync('audient', isAudient)
+    //     this.setData({
+    //       isAudient
+    //     })
 
-        if (!isAudient) {
-          this.getCategoryList(this.getPage);
-        }
-      })
-    } else {
-      this.getCategoryList(this.getPage);
-    }
+    //     if (!isAudient) {
+    //       this.getCategoryList(this.getPage);
+    //     }
+    //   })
+    // } else {
+    //   this.getCategoryList(this.getPage);
+    // }
+    this.getCategoryList(this.getPage);
+
+
+
+
   },
 
   /**
@@ -246,12 +251,23 @@ Page({
     }
   },
   getCategoryList(callback) {
-    if (this.data.isAudient) {
-      let tabs = []
+
+
+
+    api.getCategoryList({
+      type: 5
+    }, (res) => {
+      let tabs = res.data;
+
       tabs.push({
         flag: 'article',
         name: '文章'
       });
+
+      tabs.unshift({
+        flag: 'music',
+        name: '音乐'
+      })
 
       this.setData({
         tabs
@@ -259,30 +275,47 @@ Page({
       this.setTabWidth()
 
       callback && callback();
-    } else {
-      api.getCategoryList({
-        type: 5
-      }, (res) => {
-        let tabs = res.data;
+    });
+    // if (this.data.isAudient) {
+    //   let tabs = []
+    //   tabs.push({
+    //     flag: 'article',
+    //     name: '文章'
+    //   });
 
-        tabs.push({
-          flag: 'article',
-          name: '文章'
-        });
+    //   this.setData({
+    //     tabs
+    //   });
+    //   this.setTabWidth()
 
-        tabs.unshift({
-          flag: 'music',
-          name: '音乐'
-        })
+    //   callback && callback();
+    // } else {
+    //   api.getCategoryList({
+    //     type: 5
+    //   }, (res) => {
+    //     let tabs = res.data;
 
-        this.setData({
-          tabs
-        });
-        this.setTabWidth()
+    //     tabs.push({
+    //       flag: 'article',
+    //       name: '文章'
+    //     });
 
-        callback && callback();
-      });
-    }
+    //     tabs.unshift({
+    //       flag: 'music',
+    //       name: '音乐'
+    //     })
+
+    //     this.setData({
+    //       tabs
+    //     });
+    //     this.setTabWidth()
+
+    //     callback && callback();
+    //   });
+    // }
+
+
+    
   },
   setTabWidth() {
     let query = wx.createSelectorQuery().in(this),

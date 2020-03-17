@@ -30,26 +30,41 @@ Page({
       beatComponent
     })
 
-    api.getAppStatus((res) => {
-      let isAudient = res.status == 1
-      wx.setStorageSync('audient', isAudient)
-      this.setData({
-        isAudient,
-        // 初始化完毕
-        loaded: true
+
+
+
+    // api.getAppStatus((res) => {
+    //   let isAudient = res.status == 1
+    //   wx.setStorageSync('audient', isAudient)
+    //   this.setData({
+    //     isAudient,
+    //     // 初始化完毕
+    //     loaded: true
+    //   })
+
+    //   if (!isAudient) {
+    //     let id = options.id
+    //     if (id) {
+    //       wx.navigateTo({
+    //         url: `/pages/zmall/beatDetail/index?type=list&id=${id}`
+    //       })
+    //     }
+
+    //     this.init()
+    //   }
+    // })
+    let id = options.id
+    if (id) {
+      wx.navigateTo({
+        url: `/pages/zmall/beatDetail/index?type=list&id=${id}`
       })
+    }
 
-      if (!isAudient) {
-        let id = options.id
-        if (id) {
-          wx.navigateTo({
-            url: `/pages/zmall/beatDetail/index?type=list&id=${id}`
-          })
-        }
+    this.init()
 
-        this.init()
-      }
-    })
+
+
+
   },
 
   /**
@@ -91,18 +106,22 @@ Page({
    */
   onPullDownRefresh: function () {
     wx.stopPullDownRefresh();
-    if (!this.data.isAudient) {
-      this.data.beatComponent.getPage(1);
-    }
+
+
+    // if (!this.data.isAudient) {
+    //   this.data.beatComponent.getPage(1);
+    // }
+    this.data.beatComponent.getPage(1);
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    if (!this.data.isAudient) {
-      this.data.beatComponent.onReachBottom()
-    }
+    // if (!this.data.isAudient) {
+    //   this.data.beatComponent.onReachBottom()
+    // }
+    this.data.beatComponent.onReachBottom()
   },
 
   /**
@@ -116,15 +135,22 @@ Page({
     }
   },
   init() {
-    if (!this.data.isAudient) {
-      let beatComponent = this.data.beatComponent
-      if (!beatComponent.data.tabs.length) {
-        beatComponent.getCategoryList()
-      } else if (!beatComponent.data.page.list.length) {
-        beatComponent.getPage(1)
-      }
-      beatComponent.setStatus()
+    let beatComponent = this.data.beatComponent
+    if (!beatComponent.data.tabs.length) {
+      beatComponent.getCategoryList()
+    } else if (!beatComponent.data.page.list.length) {
+      beatComponent.getPage(1)
     }
+    beatComponent.setStatus()
+    // if (!this.data.isAudient) {
+    //   let beatComponent = this.data.beatComponent
+    //   if (!beatComponent.data.tabs.length) {
+    //     beatComponent.getCategoryList()
+    //   } else if (!beatComponent.data.page.list.length) {
+    //     beatComponent.getPage(1)
+    //   }
+    //   beatComponent.setStatus()
+    // }
   },
   toActivityDetail() {
     wx.navigateTo({

@@ -1,5 +1,5 @@
 <image class="activity" src="/assets/imgs/study/activity-banner.png" catchtap='toActivityDetail' />
 <view class="wrapper">
-  <view hidden="{{!isAudient}}" class="mask"></view>
+  <!-- <view hidden="{{!isAudient}}" class="mask"></view> -->
   <beatList id="beatComponent" />
 </view>

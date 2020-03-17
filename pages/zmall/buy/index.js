@@ -144,10 +144,10 @@ Page({
     })
   },
   buy(e) {
-    if (this.data.isIos) {
-      TipUtil.message('iOS端手机用户请用电脑登录进行下载')
-      return
-    }
+    // if (this.data.isIos) {
+    //   TipUtil.message('iOS端手机用户请用电脑登录进行下载')
+    //   return
+    // }
 
     if (!CommonUtil.hasBindUserInfo()) {
       return

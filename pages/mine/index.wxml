@@ -17,7 +17,7 @@
         <image src="/assets/imgs/order.png"/>
         <view>订单中心</view>
       </view>
-      <view hidden="{{isAudient}}" class="item" catchtap="toCollectionList">
+      <view class="item" catchtap="toCollectionList">
         <image src="/assets/imgs/collection-active-60.png"/>
         <view>红心歌单</view>
       </view>

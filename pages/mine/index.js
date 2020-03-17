@@ -55,18 +55,18 @@ Page({
       isAudient: CommonUtil.isAudient()
     })
 
-    if (this.data.isAudient) {
-      let menus = this.data.menus
-      menus.forEach(item => {
-        if (['collection', 'music', 'linkUs'].indexOf(item.flag) != -1) {
-          item.hide = true
-        }
-      })
+    // if (this.data.isAudient) {
+    //   let menus = this.data.menus
+    //   menus.forEach(item => {
+    //     if (['collection', 'music', 'linkUs'].indexOf(item.flag) != -1) {
+    //       item.hide = true
+    //     }
+    //   })
 
-      this.setData({
-        menus
-      })
-    }
+    //   this.setData({
+    //     menus
+    //   })
+    // }
 
     let loadModalComponent = this.selectComponent('#loadModalComponent')
     let linkUsComponent = this.selectComponent('#linkUsComponent')

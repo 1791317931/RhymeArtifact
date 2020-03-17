@@ -17,7 +17,7 @@
         <view class="title">{{item.goods_name}}</view>
         <view class="author">{{beat.author || beat.authorInfo.nickname}}</view>
       </view>
-      <view hidden="{{isIos}}" class="price">
+      <view class="price">
         <view wx:if="{{item.price > 0}}" class="value">{{item.price}}</view>
         <view wx:else class="free">免费</view>
       </view>
@@ -47,7 +47,7 @@
         <image src="/assets/imgs/mall/next.png" />
         <view>下一首</view>
       </view>
-      <view hidden="{{isIos}}" class="item" catchtap="toBuy">
+      <view class="item" catchtap="toBuy">
         <image src="/assets/imgs/mall/shopcar.png" />
         <view>去购买</view>
       </view>

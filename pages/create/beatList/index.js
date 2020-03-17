@@ -21,7 +21,7 @@ Page({
       //   url: '/pages/create/record/index'
       // },
       {
-        audient: true,
+        audient: false,
         img: '/assets/imgs/create/freestyle.png',
         url: '/pages/freestyle/index/index'
       }

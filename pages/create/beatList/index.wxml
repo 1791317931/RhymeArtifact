@@ -1,4 +1,4 @@
 <view class="create-container">
   <image wx:for="{{list}}" wx:for-item="item" wx:for-index="index" wx:key="{{item.url}}"
-  class="item {{item.audient && isAudient ? 'hide' : ''}}" data-index="{{index}}" src="{{item.img}}" catchtap="clickItem"/>
+  class="item {{item.audient ? 'hide' : ''}}" data-index="{{index}}" src="{{item.img}}" catchtap="clickItem"/>
 </view>

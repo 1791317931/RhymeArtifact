@@ -20,7 +20,7 @@
       <view class="title">{{item.goods_name}}</view>
       <view class="author">{{item.author}}</view>
     </view>
-    <view hidden="{{isIos}}" class="price">
+    <view class="price">
       <view wx:if="{{item.price > 0}}" class="value">{{item.price}}</view>
       <view wx:else class="free">免费</view>
     </view>
@@ -60,7 +60,8 @@
     </view>
   </view>
   <view class="operation">
-    <view class="buy" catchtap="playToBuy">{{isIos ? '详情' : '去购买'}}</view>
+    <!-- <view class="buy" catchtap="playToBuy">{{isIos ? '详情' : '去购买'}}</view> -->
+    <view class="buy" catchtap="playToBuy">去购买</view>
   </view>
 </view>
 <view hidden="{{showIndex == -1}}" class="more-modal" catchtouchmove="prevent">
@@ -81,7 +82,8 @@
       </view>
       <view class="item" catchtap="toBuy">
         <image src="/assets/imgs/mall/shopcar.png" />
-        <view>{{isIos ? '详情' : '去购买'}}</view>
+        <!-- <view>{{isIos ? '详情' : '去购买'}}</view> -->
+        <view>去购买</view>
       </view>
       <view class="item" catchtap="share">
         <image src="/assets/imgs/mall/share.png" />

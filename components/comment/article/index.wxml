@@ -67,7 +67,7 @@
       <button hidden="{{!commentFocus}}" formType="submit">发布</button>
     </view>
     <view hidden="{{commentFocus}}">
-      <view hidden="{{isAudient}}" class="option-item" catchtap="showLinkUsModal">
+      <view class="option-item" catchtap="showLinkUsModal">
         <image src="/assets/imgs/wechat-share-44-44.png"/>
         <view>微信</view>
       </view>

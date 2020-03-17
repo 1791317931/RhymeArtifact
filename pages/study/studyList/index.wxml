@@ -8,7 +8,7 @@
 </view>
 <canvas class="poster-canvas" canvas-id="poster-canvas"/>
 <musicPoster id="musicPosterComponent"/>
-<image hidden="{{isAudient}}" class="activity" src="/assets/imgs/study/activity.png" catchtap='toActivity' />
+<image class="activity" src="/assets/imgs/study/activity.png" catchtap='toActivity' />
 <view class="study-wrapper">
   <view class="music-container {{tabs[activeIndex].flag == 'music' ? 'active' : ''}}">
     <createMusicList id="musicComponent"/>

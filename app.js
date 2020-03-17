@@ -25,7 +25,7 @@ App({
 
     this.getActivitySetting();
     this.getPlatForm();
-    this.getAppStatus()
+    // this.getAppStatus()
     BAC.init()
   },
   getActivitySetting() {
