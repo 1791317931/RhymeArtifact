@@ -51,7 +51,10 @@ Component({
     showPlaying: true,
     // 某人发布的
     userId: null,
-    isShowTabMask: false
+
+    isShowTabMask: false,       // 是否显示tab遮罩
+    tabSortListType: 'single',  // tab排序列表类型 single：单列，double：双列
+    tabSortList: []             // tab排序列表
   },
 
   /**
@@ -362,8 +365,13 @@ Component({
 
     // 风格排序
     styleSortHandle () {
-      this.tabScrollTopHandle()
-      
+      this.tabScrollTopHandle().then(() => {
+        this.setData({
+          isShowTabMask: true,
+          tabSortList: [...this.data.tabs],
+          tabSortListType: 'double'
+        })
+      })
     },
 
     // 价格排序
@@ -378,18 +386,12 @@ Component({
 
     // tab置顶
     tabScrollTopHandle () {
-      wx.pageScrollTo({
+      return wx.pageScrollTo({
         scrollTop: 300,
-        success: () => {
-          this.showTabMaskHandle()
-        }
       })
     },
-    showTabMaskHandle () {
-      this.setData({
-        isShowTabMask: true
-      })
-    },
+
+    // 隐藏tab遮罩
     hideTabMaskHandle () {
       this.setData({
         isShowTabMask: false
