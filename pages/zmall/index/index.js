@@ -124,6 +124,15 @@ Page({
     this.data.beatComponent.onReachBottom()
   },
 
+  onPageScroll: function ({scrollTop}) {
+    if (scrollTop < 300) {
+      const beatList = this.selectComponent('#beatComponent')
+      if (beatList.data.isShowTabMask) {
+        beatList.hideTabMaskHandle() 
+      }
+    }
+  },
+
   /**
    * 用户点击右上角分享
    */

@@ -50,7 +50,8 @@ Component({
     // 是否显示播放状态
     showPlaying: true,
     // 某人发布的
-    userId: null
+    userId: null,
+    isShowTabMask: false
   },
 
   /**
@@ -357,6 +358,42 @@ Component({
         })
         this.getPage(1)
       }
-    }
+    },
+
+    // 风格排序
+    styleSortHandle () {
+      this.tabScrollTopHandle()
+      
+    },
+
+    // 价格排序
+    priceSortHandle () {
+      this.tabScrollTopHandle()
+    },
+
+    // 排序
+    listSortHandle () {
+      this.tabScrollTopHandle()
+    },
+
+    // tab置顶
+    tabScrollTopHandle () {
+      wx.pageScrollTo({
+        scrollTop: 300,
+        success: () => {
+          this.showTabMaskHandle()
+        }
+      })
+    },
+    showTabMaskHandle () {
+      this.setData({
+        isShowTabMask: true
+      })
+    },
+    hideTabMaskHandle () {
+      this.setData({
+        isShowTabMask: false
+      })
+    },
   }
 })

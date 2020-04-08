@@ -31,7 +31,11 @@ Page({
     duration: 0,
     movingBar: false,
     trackContainerWidth: null,
-    playPercent: 0
+    playPercent: 0,
+    isShowModalShare: false, // 是否显示分享modal
+    isPosterCreate: false,   // 是否创建海报
+    posterRatio: 1,          // 海报尺寸比
+    posterCanvas: null       // 海报canvas实例
   },
 
   /**
@@ -130,8 +134,8 @@ Page({
   onShareAppMessage: function () {
     let data = this.data.beat
     return {
-      title: beat.goods_name,
-      imageUrl: beat.cover_images[0],
+      title: data.goods_name,
+      imageUrl: data.cover_images[0],
       path: `/pages/zmall/index?id=${data.id}`
     }
   },
@@ -208,6 +212,139 @@ Page({
       showCommentList: true
     })
   },
+  
+  // 显示分享modal
+  showModalShareHandle() {
+    if (!CommonUtil.hasBindUserInfo()) {
+      return
+    }
+    this.setData({
+      isShowModalShare: true
+    })
+  },
+  // 隐藏分享modal
+  hideModalShareHandle() {
+    this.setData({
+      isShowModalShare: false
+    })
+  },
+  // 显示海报modal
+  showModalPosterHandle() {
+    this.setData({
+      isShowModalShare: false,
+      isPosterCreate: true
+    })
+
+    this.createPosterHandle()
+  },
+  // 隐藏海报modal
+  hideModalPosterHandle() {
+    this.setData({
+      isPosterCreate: false
+    })
+  },
+  // 创建海报
+  createPosterHandle() {
+    const query = wx.createSelectorQuery()
+    
+    query.select('#poster')
+      .fields({
+        node: true,
+        size: true
+      })
+      .exec((res) => {
+        this.setData({
+          posterCanvas: res[0].node,
+          posterRatio: res[0].width / 540 // wxss canvas宽高影响
+        }, () => {
+          const ctx = this.data.posterCanvas.getContext('2d')
+          const dpr = wx.getSystemInfoSync().pixelRatio
+          this.data.posterCanvas.width = res[0].width * dpr
+          this.data.posterCanvas.height = res[0].height * dpr
+          ctx.scale(dpr, dpr)
+          
+          // 背景色
+          ctx.fillStyle = '#252B37'
+          ctx.fillRect(0, 0, res[0].width * dpr, res[0].height * dpr)
+
+          ctx.fillStyle = '#fff'
+          ctx.fillRect(this.posterComputeSize(30), this.posterComputeSize(30), this.posterComputeSize(480), this.posterComputeSize(480))
+
+          // 封面
+          const poster = this.data.posterCanvas.createImage()
+          poster.src = this.data.beat.cover_images[0]
+          poster.onload = () => {
+            ctx.drawImage(poster, this.posterComputeSize(30), this.posterComputeSize(30), this.posterComputeSize(480), this.posterComputeSize(480))
+          }
+
+          // 标题
+          ctx.fillStyle = '#fff'
+
+          ctx.font = `${this.posterComputeSize(28)}px sans-serif`
+          const title = this.data.beat.goods_name.length > 16 ? `${this.data.beat.goods_name.substring(0, 16)}...` : this.data.beat.goods_name
+          ctx.fillText(title, this.posterComputeSize(30), this.posterComputeSize(560))
+          ctx.save()
+
+          // 作者
+          ctx.font = `${this.posterComputeSize(24)}px sans-serif`
+          ctx.fillText(this.data.beat.author, this.posterComputeSize(30), this.posterComputeSize(600))
+
+          // 二维码
+          const code = this.data.posterCanvas.createImage()
+          code.src = '/assets/imgs/mall/code.png'
+          code.onload = () => {
+            ctx.drawImage(code, this.posterComputeSize(386), this.posterComputeSize(522), this.posterComputeSize(124), this.posterComputeSize(124))
+          }
+
+          // logo
+          const logo = this.data.posterCanvas.createImage()
+          logo.src = '/assets/imgs/mall/logo-text.png'
+          logo.onload = () => {
+            ctx.drawImage(logo, this.posterComputeSize(216), this.posterComputeSize(708), this.posterComputeSize(110), this.posterComputeSize(22))
+          }
+        })
+      })
+  },
+  // 保存海报
+  savePosterHandle() {
+    const dpr = wx.getSystemInfoSync().pixelRatio
+
+    wx.authorize({
+      scope: 'scope.writePhotosAlbum',
+      success: () => {
+        wx.canvasToTempFilePath({
+          x: 0,
+          y: 0,
+          width: 540,
+          height: 746,
+          destWidth: 540 * dpr,
+          destHeight: 746 * dpr,
+          canvas: this.data.posterCanvas,
+          fileType: 'jpg',
+          success: ({tempFilePath}) => {
+            wx.saveImageToPhotosAlbum({
+              filePath: tempFilePath,
+              success: () => {
+                wx.showToast({
+                  title: `已保存`
+                })
+                this.hideModalPosterHandle()
+              }
+            })
+          }
+        })
+      },
+      fail: () => {
+        wx.showToast({
+          title: '取消了授权'
+        })
+      }
+    })
+  },
+  posterComputeSize(size) {
+    return this.data.posterRatio * size
+  },
+
   closeListModal() {
     this.setData({
       showList: false

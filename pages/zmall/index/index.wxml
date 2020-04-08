@@ -1,4 +1,44 @@
-<image class="activity" src="/assets/imgs/study/activity-banner.png" catchtap='toActivityDetail' />
+<view class="search-entry">
+  <image src="/assets/imgs/mall/search-icon.png" class="icon"></image>
+  <view class="txt">输入歌名或歌手</view>
+</view>
+
+<swiper
+  indicator-dots="{{true}}"
+  indicator-color="#D8D8D8"
+  indicator-active-color="#070707"
+  autoplay
+  class="top-swiper"
+>
+  <swiper-item>
+    <image
+      mode="aspectFit"
+      src="/assets/imgs/study/activity-banner.jpg"
+      catchtap='toActivityDetail'
+      class="img"
+    ></image>
+  </swiper-item>
+</swiper>
+
+<view class="menu">
+  <view class="menu-item">
+    <image src="/assets/imgs/mall/menu1.png"></image>
+    <view class="menu-title">歌词创作</view>
+  </view>
+  <view class="menu-item">
+    <image src="/assets/imgs/mall/menu2.png"></image>
+    <view class="menu-title">押韵机器</view>
+  </view>
+  <view class="menu-item">
+    <image src="/assets/imgs/mall/menu3.png"></image>
+    <view class="menu-title">入驻平台</view>
+  </view>
+  <view class="menu-item">
+    <image src="/assets/imgs/mall/menu4.png"></image>
+    <view class="menu-title">PAL说唱圈</view>
+  </view>
+</view>
+
 <view class="wrapper">
   <!-- <view hidden="{{!isAudient}}" class="mask"></view> -->
   <beatList id="beatComponent" />

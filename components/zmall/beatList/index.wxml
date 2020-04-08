@@ -1,11 +1,41 @@
-<view wx:if="{{showCategory !== false}}" class="tab-container">
+<!-- <view wx:if="{{showCategory !== false}}" class="tab-container">
   <view class="clearfix" style="width: {{tabWidth}}px">
     <view wx:for="{{tabs}}" wx:for-item="item" wx:for-index="index" wx:key="{{item.id}}"
     class="tab-item {{activeId == item.id ? 'active' : ''}} item-{{index}}" data-index="{{index}}" catchtap="toggleTab">
       {{item.name}}
     </view>
   </view>
+</view> -->
+
+<view class="tab-sort">
+  <view class="tab-item" catchtap="styleSortHandle">风格</view>
+  <view class="tab-item" catchtap="priceSortHandle">价格</view>
+  <view class="tab-item" catchtap="listSortHandle">排序</view>
 </view>
+<view class="tab-mask" hidden="{{!isShowTabMask}}">
+  <view class="tab-list tab-double">
+    <view class="tab-double-item">
+      <text>全部</text>
+      <image src="/assets/imgs/mall/sort-select.png"></image>
+    </view>
+    <view class="tab-double-item">
+      <text>全部</text>
+      <image src="/assets/imgs/mall/sort-select.png"></image>
+    </view>
+    <view class="tab-double-item">
+      <text>全部</text>
+      <image src="/assets/imgs/mall/sort-select.png"></image>
+    </view>
+    <view class="tab-double-btn">确认</view>
+  </view>
+
+  <!-- <view class="tab-list tab-single">
+    <view class="tab-single-item tab-active">不限</view>
+    <view class="tab-single-item">免费不可商用</view>
+    <view class="tab-single-item">100元以下</view>
+  </view> -->
+</view>
+
 <view class="list-container">
   <view class="item" wx:for="{{page.list}}" wx:for-index="index" wx:for-item="item" wx:key="{{item.id}}"
     data-index="{{index}}" catchtap="clickItem">
@@ -60,8 +90,8 @@
     </view>
   </view>
   <view class="operation">
-    <!-- <view class="buy" catchtap="playToBuy">{{isIos ? '详情' : '去购买'}}</view> -->
-    <view class="buy" catchtap="playToBuy">去购买</view>
+    <view class="buy" catchtap="playToBuy">{{isIos ? '详情' : '去购买'}}</view>
+    <!-- <view class="buy" catchtap="playToBuy">去购买</view> -->
   </view>
 </view>
 <view hidden="{{showIndex == -1}}" class="more-modal" catchtouchmove="prevent">
@@ -82,8 +112,8 @@
       </view>
       <view class="item" catchtap="toBuy">
         <image src="/assets/imgs/mall/shopcar.png" />
-        <!-- <view>{{isIos ? '详情' : '去购买'}}</view> -->
-        <view>去购买</view>
+        <view>{{isIos ? '详情' : '去购买'}}</view>
+        <!-- <view>去购买</view> -->
       </view>
       <view class="item" catchtap="share">
         <image src="/assets/imgs/mall/share.png" />

@@ -80,25 +80,25 @@
         "selectedIconPath": "assets/imgs/nav/mall-active.png",
         "iconPath": "assets/imgs/nav/mall.png",
         "pagePath": "pages/zmall/index/index",
-        "text": "BEAT"
+        "text": "Drop da beat"
       },
       {
         "selectedIconPath": "assets/imgs/nav/study-active.png",
         "iconPath": "assets/imgs/nav/study.png",
         "pagePath": "pages/study/studyList/index",
-        "text": "玩家"
+        "text": "Rapper"
       },
       {
         "selectedIconPath": "assets/imgs/nav/create-active.png",
         "iconPath": "assets/imgs/nav/create.png",
         "pagePath": "pages/create/beatList/index",
-        "text": "创作"
+        "text": "Live House"
       },
       {
         "selectedIconPath": "assets/imgs/nav/mine-active.png",
         "iconPath": "assets/imgs/nav/mine.png",
         "pagePath": "pages/mine/index",
-        "text": "我的"
+        "text": "Homie"
       }
     ]
   },

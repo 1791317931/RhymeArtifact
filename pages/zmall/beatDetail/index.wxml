@@ -40,11 +40,10 @@
       <image hidden="{{beat.collection}}" src="/assets/imgs/mall/collection-88.png"/>
       <image hidden="{{!beat.collection}}" src="/assets/imgs/mall/collection-active-88.png"/>
     </view>
-    <view class="buy" catchtap="toBuy">
-      <image src="/assets/imgs/mall/btn-shopcar.png"/>
-      <!-- <view class="{{isIos ? 'no-padding' : ''}}">{{isIos ? 'Beat详情' : '去购买'}}</view> -->
-      <view>去购买</view>
+    <view class="item" catchtap="showModalShareHandle">
+      <image src="/assets/imgs/mall/share-icon.png"></image>
     </view>
+    <view class="buy" catchtap="toBuy">查看详情</view>
   </view>
 </view>
 <view hidden="{{!showList}}" catchtouchmove="prevent">
@@ -57,5 +56,18 @@
   <view class="mask" catchtap="closeCommentModal"></view>
   <view class="list-wrapper">
     <commentList id="commentComponent" />
+  </view>
+</view>
+<view class="modal" hidden="{{!isShowModalShare}}" catchtap="hideModalShareHandle">
+  <view class="modal-share" catchtap="prevent">
+    <view class="poster-share" catchtap="showModalPosterHandle">海报朋友圈分享</view>
+    <button open-type="share" class="friend-share">分享给好友</button>
+    <view class="modal-cancel" catchtap="hideModalShareHandle">取消</view>
+  </view>
+</view>
+<view class="modal" hidden="{{!isPosterCreate}}" catchtap="hideModalPosterHandle">
+  <view class="modal-poster" catchtap="prevent">
+    <canvas type="2d" id="poster"></canvas>
+    <view class="poster-save" catchtap="savePosterHandle">保存到相册分享</view>
   </view>
 </view>

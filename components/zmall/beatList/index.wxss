@@ -1,7 +1,7 @@
 page {
   background: #fff;
 }
-
+/* 
 .clearfix:before {
   content: ' ';
   display: table !important;
@@ -50,7 +50,134 @@ page {
 
 .tab-container .clearfix .tab-item.active:first-child:before {
   transform: translateX(-50%);
+} */
+
+.tab-sort {
+  z-index: 2;
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20rpx;
+  margin-bottom: 20rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  font-size: 28rpx;
+  color: #000;
+  text-align: center;
+  background-color: #fff;
 }
+
+.tab-item {
+  position: relative;
+  padding-right: 40rpx;
+  flex: 1;
+}
+
+.tab-item:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 90rpx;
+  margin-top: -5rpx;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-color: #BCBCBC transparent transparent transparent;
+  border-width: 10rpx;
+}
+
+.tab-mask {
+  z-index: 1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.tab-list {
+  margin-top: 80rpx;
+  background-color: #fff;
+}
+
+/* tab-double */
+.tab-double {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 17rpx 50rpx;
+}
+
+.tab-double-item {
+  margin: 32rpx 20rpx 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 318rpx;
+  line-height: 68rpx;
+  background-color: #F7F7F7;
+  border-radius: 16rpx;
+}
+
+.tab-active {
+  color: #0ACA9F;
+}
+
+.tab-double-item image {
+  width: 28rpx;
+  height: 28rpx;
+  margin-left: 10rpx;
+}
+
+.tab-double-btn {
+  margin: 76rpx auto 0;
+  width: 542rpx;
+  line-height: 84rpx;
+  font-size: 32rpx;
+  color: #fff;
+  text-align: center;
+  background:#0ACA9F;
+  border-radius: 16rpx;
+}
+
+/* tab-single */
+.tab-single-item {
+  position: relative;
+  line-height: 80rpx;
+  font-size: 30rpx;
+}
+
+.tab-active:after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 200rpx;
+  height: 4rpx;
+  background-color: #0ACA9F;
+  border-radius: 2rpx;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .list-container {
   padding: 0 30rpx 0;
